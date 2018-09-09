@@ -1,6 +1,6 @@
 swagger: '2.0'
-host: api.weixin.qq.com
-basePath: /
+host: 127.0.0.1:7788
+basePath: /gateway
 info:
   title: 微信接口工具
   description: 整理自[微信官方文档](https://mp.weixin.qq.com)及社区贡献

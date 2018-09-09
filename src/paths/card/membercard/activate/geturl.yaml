@@ -1,0 +1,16 @@
+post:
+  summary: 获取开卡组件链接接口
+  operationId: card/membercard/activate/geturl
+  security:
+    - accessToken: []
+  tags:
+    - 卡券/会员卡
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

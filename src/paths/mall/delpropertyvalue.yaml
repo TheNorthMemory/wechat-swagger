@@ -1,0 +1,25 @@
+post:
+  summary: 删除属性值
+  operationId: mall/delpropertyvalue
+  security:
+    - accessToken: []
+  tags:
+    - 精品店/类目属性管理
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          property_value_id:
+            type: integer
+            format: int32
+            description: 属性值 id
+        required:
+          - property_value_id
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'

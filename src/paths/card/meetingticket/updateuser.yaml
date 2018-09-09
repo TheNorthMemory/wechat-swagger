@@ -1,0 +1,16 @@
+post:
+  summary: 更新会议门票
+  operationId: card/meetingticket/updateuser
+  security:
+    - accessToken: []
+  tags:
+    - 卡券/会议门票
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

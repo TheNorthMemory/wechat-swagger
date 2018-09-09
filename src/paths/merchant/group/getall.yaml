@@ -1,0 +1,11 @@
+get:
+  summary: 获取所有分组
+  operationId: merchant/group/getall
+  security:
+    - accessToken: []
+  tags:
+    - 小店/分组管理
+  parameters: []
+  responses:
+    '200':
+      description: ''

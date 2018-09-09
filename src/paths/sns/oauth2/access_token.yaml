@@ -1,0 +1,30 @@
+get:
+  summary: 通过code换取网页授权access_token
+  operationId: sns/oauth2/access_token
+  tags:
+    - 网页授权
+  parameters:
+    - in: query
+      name: grant_type
+      type: string
+      required: true
+      enum:
+        - authorization_code
+    - in: query
+      name: appid
+      type: string
+      description: 第三方用户唯一凭证
+      required: true
+    - in: query
+      name: secret
+      type: string
+      description: 第三方用户唯一凭证密钥，即appsecret
+      required: true
+    - in: query
+      name: code
+      type: string
+      description: 登录时获取的 code
+      required: true
+  responses:
+    '200':
+      description: ''

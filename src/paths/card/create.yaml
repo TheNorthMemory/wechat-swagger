@@ -1,0 +1,147 @@
+post:
+  summary: 创建卡券
+  operationId: card/create
+  security:
+    - accessToken: []
+  tags:
+    - 卡券
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          card:
+            type: object
+            properties:
+              card_type:
+                type: string
+                enum:
+                  - GROUPON
+                  - CASH
+                  - DISCOUNT
+                  - GIFT
+                  - GENERAL_COUPON
+                  - GENERAL_CARD
+                  - MEETING_TICKET
+                  - SCENIC_TICKET
+                  - MOVIE_TICKET
+                  - BOARDING_PASS
+              groupon:
+                description: 团购券数据结构
+                type: object
+                properties:
+                  base_info:
+                    description: 基本的卡券数据
+                    type: object
+                    properties: {}
+                  advanced_info:
+                    description: 卡券高级信息
+                    type: object
+                    properties: {}
+                  deal_detail:
+                    type: string
+                    description: 团购券专用，团购详情。
+              cach:
+                description: 代金券数据结构
+                type: object
+                properties:
+                  base_info:
+                    description: 基本的卡券数据
+                    type: object
+                    properties: {}
+                  advanced_info:
+                    type: object
+                    properties: {}
+                  least_cost:
+                    type: integer
+                    format: int32
+                    description: '代金券专用，表示起用金额（单位为分）,如果无起用门槛则填0。'
+                  reduce_cost:
+                    type: integer
+                    format: int32
+                    description: 代金券专用，表示减免金额。（单位为分）
+              discount:
+                description: 折扣券数据结构
+                type: object
+                properties:
+                  base_info:
+                    description: 基本的卡券数据
+                    type: object
+                    properties: {}
+                  advanced_info:
+                    type: object
+                    properties: {}
+                  discount:
+                    type: integer
+                    format: int32
+                    description: 折扣券专用，表示打折额度（百分比）。填30就是七折。
+              gift:
+                description: 兑换券数据结构
+                type: object
+                properties:
+                  base_info:
+                    description: 基本的卡券数据
+                    type: object
+                    properties: {}
+                  advanced_info:
+                    type: object
+                    properties: {}
+                  gift:
+                    type: string
+                    description: 兑换券专用，填写兑换内容的名称。
+              general_coupon:
+                description: 优惠券数据结构
+                type: object
+                properties:
+                  base_info:
+                    description: 基本的卡券数据
+                    type: object
+                    properties: {}
+                  advanced_info:
+                    type: object
+                    properties: {}
+                  default_detail:
+                    type: string
+                    description: 优惠券专用，填写优惠详情。
+              general_card:
+                description: 礼品卡数据结构
+                type: object
+                properties:
+                  base_info:
+                    description: 基本的卡券数据
+                    type: object
+                    properties: {}
+                  advanced_info:
+                    type: object
+                    properties: {}
+                  background_pic_url:
+                    type: string
+                  auto_activate:
+                    type: boolean
+                  sub_card_type:
+                    type: string
+                    description: 卡类型，目前支持GIFT_CARD=礼品卡 VOUCHER=兑换卡
+                    enum:
+                      - GIFT_CARD
+                      - VOUCHER
+                  supply_bonus:
+                    type: boolean
+                  supply_balance:
+                    type: boolean
+                    description: 是否支持余额，填写true或者false。默认为false
+                  init_balance: null
+                  custom_field1:
+                    type: object
+                    properties: {}
+                  custom_field2:
+                    type: object
+                    properties: {}
+                  custom_field3:
+                    type: object
+                    properties: {}
+                  need_push_on_view:
+                    type: boolean
+  responses:
+    '200':
+      description: ''

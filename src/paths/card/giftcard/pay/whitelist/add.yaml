@@ -1,0 +1,16 @@
+post:
+  summary: 开通微信支付礼品卡权限
+  operationId: card/giftcard/pay/whitelist/add
+  security:
+    - accessToken: []
+  tags:
+    - 卡券/礼品卡/小程序
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

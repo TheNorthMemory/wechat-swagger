@@ -1,0 +1,16 @@
+post:
+  summary: 设置测试人员白名单
+  operationId: scan/testwhitelist/set
+  security:
+    - accessToken: []
+  tags:
+    - 扫一扫
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

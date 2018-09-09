@@ -1,0 +1,16 @@
+get:
+  summary: 高清语音素材获取接口
+  operationId: cgi-bin/media/get/jssdk
+  security:
+    - accessToken: []
+  tags:
+    - 基础支持
+  parameters:
+    - in: query
+      name: media_id
+      type: string
+      description: 媒体文件id
+      required: true
+  responses:
+    '200':
+      description: ''

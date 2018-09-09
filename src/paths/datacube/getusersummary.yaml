@@ -1,0 +1,16 @@
+post:
+  summary: 获取用户增减数据
+  operationId: datacube/getusersummary
+  security:
+    - accessToken: []
+  tags:
+    - 数据统计/用户分析
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

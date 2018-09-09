@@ -1,0 +1,16 @@
+post:
+  summary: 获取接口分析分时数据
+  operationId: datacube/getinterfacesummaryhour
+  security:
+    - accessToken: []
+  tags:
+    - 数据统计/接口分析
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

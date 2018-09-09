@@ -1,0 +1,15 @@
+get:
+  summary: 获取客户会话状态
+  operationId: customservice/kfsession/getsession
+  security:
+    - accessToken: []
+  tags:
+    - 多客服/会话控制
+  parameters:
+    - in: query
+      name: openid
+      type: string
+      description: 粉丝的openid
+  responses:
+    '200':
+      description: ''

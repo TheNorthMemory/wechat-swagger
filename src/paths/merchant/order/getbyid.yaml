@@ -1,0 +1,19 @@
+post:
+  summary: 根据订单 ID 获取订单详情
+  operationId: merchant/order/getbyid
+  security:
+    - accessToken: []
+  tags:
+    - 小店/订单管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          order_id:
+            type: string
+            description: 订单ID
+  responses:
+    '200':
+      description: ''

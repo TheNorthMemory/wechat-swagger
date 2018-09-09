@@ -1,0 +1,19 @@
+get:
+  summary: 拉取用户信息
+  operationId: sns/userinfo
+  tags:
+    - 网页授权
+  parameters:
+    - in: query
+      name: openid
+      type: string
+      description: 用户的唯一标识
+      required: true
+    - in: query
+      name: lang
+      type: string
+      description: 返回国家地区语言版本，zh_CN 简体，zh_TW 繁体，en 英语
+      required: true
+  responses:
+    '200':
+      description: ''

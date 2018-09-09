@@ -1,0 +1,29 @@
+post:
+  summary: 根据订单状态/创建时间获取订单详情
+  operationId: merchant/order/getbyfilter
+  security:
+    - accessToken: []
+  tags:
+    - 小店/订单管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          status:
+            type: integer
+            format: int32
+            description: '订单状态(不带该字段-全部状态, 2-待发货, 3-已发货, 5-已完成, 8-维权中)'
+          begintime:
+            type: integer
+            format: int32
+            description: 订单创建时间起始时间(不带该字段则不按 照时间做筛选)
+          endtime:
+            type: integer
+            format: int32
+            description: 订单创建时间终止时间(不带该字段则不按 照时间做筛选)
+        example: {}
+  responses:
+    '200':
+      description: ''

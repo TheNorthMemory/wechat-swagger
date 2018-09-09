@@ -1,0 +1,31 @@
+post:
+  summary: 设置自助核销
+  operationId: card/selfconsumecell/set
+  security:
+    - accessToken: []
+  tags:
+    - 卡券
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          card_id:
+            type: string
+            description: 卡券ID。
+          is_open:
+            type: boolean
+            default: false
+            description: 是否开启自助核销功能，填true/false，默认为false
+          need_verify_cod:
+            type: boolean
+            default: false
+            description: 用户核销时是否需要输入验证码， 填true/false， 默认为false
+          need_remark_amount:
+            type: boolean
+            default: false
+            description: 用户核销时是否需要备注核销金额， 填true/false， 默认为false
+  responses:
+    '200':
+      description: ''

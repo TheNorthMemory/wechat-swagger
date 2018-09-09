@@ -1,0 +1,11 @@
+get:
+  summary: 获取未接入会话列表
+  operationId: customservice/kfsession/getwaitcase
+  security:
+    - accessToken: []
+  tags:
+    - 多客服/会话控制
+  parameters: []
+  responses:
+    '200':
+      description: ''

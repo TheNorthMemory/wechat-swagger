@@ -1,0 +1,31 @@
+post:
+  summary: 设置支付后开票信息
+  operationId: card/invoice/setbizattr
+  security:
+    - accessToken: []
+  tags:
+    - 卡券/礼品卡/财务
+  parameters:
+    - in: query
+      name: action
+      type: string
+      required: true
+      enum:
+        - set_pay_mch
+        - get_pay_mch
+        - set_auth_field
+        - get_auth_field
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties:
+          paymch_info:
+            type: object
+            properties: {}
+          auth_field:
+            type: object
+            properties: {}
+  responses:
+    '200':
+      description: ''

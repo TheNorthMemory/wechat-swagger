@@ -1,0 +1,22 @@
+post:
+  summary: 修改商品
+  operationId: merchant/update
+  security:
+    - accessToken: []
+  tags:
+    - 小店/商品管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        allOf:
+          - type: object
+            description: 从未上架的商品所有信息均可修改，否则商品的名称(name)、商品分类(category)、商品属性(property)这三个字段不可修改。
+            properties:
+              product_id:
+                type: string
+                description: 要更新的商品的ID
+          - $ref: '#/definitions/merchant.ProductBo'
+  responses:
+    '200':
+      description: ''

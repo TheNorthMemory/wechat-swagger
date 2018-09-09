@@ -1,0 +1,18 @@
+type: object
+description: 类目基本结构
+properties:
+  id:
+    type: integer
+    format: int64
+    description: 类目 id
+  category_name:
+    type: string
+    description: 类目名称
+  parent_id:
+    type: integer
+    format: int64
+    description: 节点上级父 id
+  has_sub:
+    type: integer
+    format: int32
+    description: 是否有下级节点

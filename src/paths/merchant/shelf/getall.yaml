@@ -1,0 +1,11 @@
+get:
+  summary: 获取所有货架
+  operationId: merchant/shelf/getall
+  security:
+    - accessToken: []
+  tags:
+    - 小店/货架管理
+  parameters: []
+  responses:
+    '200':
+      description: ''

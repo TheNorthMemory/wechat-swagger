@@ -1,0 +1,118 @@
+post:
+  summary: 客服接口-发消息
+  operationId: cgi-bin/message/custom/send
+  security:
+    - accessToken: []
+  tags:
+    - 多客服/客服消息
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          touser:
+            type: string
+            description: 普通用户openid
+          msgtype:
+            type: string
+            description: 消息类型，文本为text，图片为image，语音为voice，视频消息为video，音乐消息为music，图文消息（点击跳转到外链）为news，图文消息（点击跳转到图文消息页面）为mpnews，卡券为wxcard，小程序为miniprogrampage
+            enum:
+              - text
+              - image
+              - voice
+              - video
+              - music
+              - news
+              - mpnews
+              - wxcard
+              - miniprogrampage
+          text:
+            type: object
+            properties:
+              content:
+                type: string
+                description: 文本消息内容
+          image:
+            type: object
+            properties:
+              media_id:
+                type: string
+                description: 发送的图片/语音/视频/图文消息（点击跳转到图文消息页）的媒体ID
+          voice:
+            type: object
+            properties:
+              media_id:
+                type: string
+                description: 发送的图片/语音/视频/图文消息（点击跳转到图文消息页）的媒体ID
+          video:
+            type: object
+            properties:
+              media_id:
+                type: string
+                description: 发送的图片/语音/视频/图文消息（点击跳转到图文消息页）的媒体ID
+              thumb_media_id:
+                type: string
+                description: 缩略图/小程序卡片图片的媒体ID，小程序卡片图片建议大小为520*416
+              title:
+                type: string
+              description:
+                type: string
+          music:
+            type: object
+            properties:
+              musicurl:
+                type: string
+              hqmusicurl:
+                type: string
+              thumb_media_id:
+                type: string
+                description: 缩略图/小程序卡片图片的媒体ID，小程序卡片图片建议大小为520*416
+              title:
+                type: string
+              description:
+                type: string
+          news:
+            type: array
+            items:
+              type: object
+              properties:
+                articles:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      title:
+                        type: string
+                      description:
+                        type: string
+                      url:
+                        type: string
+                      picurl:
+                        type: string
+          mpnews:
+            type: object
+            properties:
+              media_id:
+                type: string
+                description: 发送的图片/语音/视频/图文消息（点击跳转到图文消息页）的媒体ID
+          wxcard:
+            type: object
+            properties:
+              card_id:
+                type: string
+          miniprogrampage:
+            type: object
+            properties:
+              title:
+                type: string
+              appid:
+                type: string
+              pagepath:
+                type: string
+              thumb_media_id:
+                type: string
+                description: 缩略图/小程序卡片图片的媒体ID，小程序卡片图片建议大小为520*416
+  responses:
+    '200':
+      description: ''

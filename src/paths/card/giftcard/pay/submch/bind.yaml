@@ -1,0 +1,16 @@
+post:
+  summary: 绑定商户号到礼品卡小程序接口
+  operationId: card/giftcard/pay/submch/bind
+  security:
+    - accessToken: []
+  tags:
+    - 卡券/礼品卡/小程序
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

@@ -1,0 +1,26 @@
+post:
+  summary: 商品上下架
+  operationId: merchant/modproductstatus
+  security:
+    - accessToken: []
+  tags:
+    - 小店/商品管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          product_id:
+            type: string
+            description: 商品 ID
+          status:
+            type: integer
+            format: int32
+            description: '商品上下架标识(0-下架, 1-上架)'
+        example:
+          product_id: pDF3iYwktviE3BzU3BKiSWWi9Nkw
+          status: 0
+  responses:
+    '200':
+      description: ''

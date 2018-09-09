@@ -1,0 +1,16 @@
+post:
+  summary: 创建-礼品卡货架接口
+  operationId: card/giftcard/page/add
+  security:
+    - accessToken: []
+  tags:
+    - 卡券/礼品卡/货架
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

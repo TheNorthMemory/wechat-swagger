@@ -1,0 +1,33 @@
+post:
+  summary: 商品批量加入分组
+  operationId: mall/additemgrouprelation
+  security:
+    - accessToken: []
+  tags:
+    - 精品店/分组管理
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          relation_list:
+            description: 需要建立的商品和分组之间的关系
+            type: array
+            items:
+              type: object
+              properties:
+                group_id:
+                  description: 分组ID
+                  type: integer
+                  format: int32
+                item_code:
+                  description: 商品编码，最大32个字符
+                  type: string
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'

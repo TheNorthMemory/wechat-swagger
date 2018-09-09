@@ -1,0 +1,18 @@
+type: object
+description: 商品库存价格修改结构
+properties:
+  sku_code:
+    description: 库存编码，最大32个字符
+    type: string
+  stock_number:
+    description: 最终库存数量，结合ori_stock_number字段来实现加库存和扣减库存
+    type: integer
+    format: int32
+  ori_stock_number:
+    description: 修改时库存数量，结合stock_number字段来实现加库存和扣减库存
+    type: integer
+    format: int32
+  stock_price:
+    description: 库存价格 (价格单位：分)
+    type: integer
+    format: int64

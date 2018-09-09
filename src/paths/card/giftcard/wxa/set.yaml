@@ -1,0 +1,16 @@
+post:
+  summary: 上传小程序代码
+  operationId: card/giftcard/wxa/set
+  security:
+    - accessToken: []
+  tags:
+    - 卡券/礼品卡/小程序
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

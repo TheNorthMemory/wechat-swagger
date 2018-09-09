@@ -1,0 +1,42 @@
+post:
+  summary: 创建货架
+  operationId: card/landingpage/create
+  security:
+    - accessToken: []
+  tags:
+    - 卡券
+  parameters:
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties:
+          banner:
+            type: string
+          title:
+            type: string
+          can_share:
+            type: boolean
+          scene:
+            type: string
+            description: 投放页面的场景值； SCENE_NEAR_BY 附近 SCENE_MENU 自定义菜单 SCENE_QRCODE 二维码 SCENE_ARTICLE 公众号文章 SCENE_H5 h5页面 SCENE_IVR 自动回复 SCENE_CARD_CUSTOM_CELL 卡券自定义cell
+            enum:
+              - SCENE_NEAR_BY
+              - SCENE_MENU
+              - SCENE_QRCODE
+              - SCENE_ARTICLE
+              - SCENE_H5
+              - SCENE_IVR
+              - SCENE_CARD_CUSTOM_CELL
+          card_list:
+            type: array
+            items:
+              type: object
+              properties:
+                card_id:
+                  type: string
+                thumb_url:
+                  type: string
+  responses:
+    '200':
+      description: ''

@@ -1,0 +1,25 @@
+post:
+  summary: 客服输入状态
+  operationId: cgi-bin/message/custom/typing
+  security:
+    - accessToken: []
+  tags:
+    - 多客服/客服消息
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          touser:
+            type: string
+            description: 普通用户openid
+          command:
+            type: string
+            description: Typing-对用户下发“正在输入"状态 CancelTyping-取消对用户的”正在输入"状态
+            enum:
+              - Typing
+              - CancelTyping
+  responses:
+    '200':
+      description: ''

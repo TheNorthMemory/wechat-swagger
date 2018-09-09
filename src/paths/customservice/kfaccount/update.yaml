@@ -1,0 +1,16 @@
+post:
+  summary: 设置客服信息
+  operationId: customservice/kfaccount/update
+  security:
+    - accessToken: []
+  tags:
+    - 多客服/客服管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

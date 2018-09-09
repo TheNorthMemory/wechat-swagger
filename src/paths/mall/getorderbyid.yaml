@@ -1,0 +1,31 @@
+post:
+  summary: 拉取单个订单
+  operationId: mall/getorderbyid
+  security:
+    - accessToken: []
+  tags:
+    - 精品店/订单管理
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          order_id:
+            type: string
+            description: 订单id
+        required:
+          - order_id
+        example:
+          order_id: AQCAjcgBgrAaiZsKEs7DE9FeVQIA
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              order:
+                $ref: '#/definitions/mall.OrderBo'

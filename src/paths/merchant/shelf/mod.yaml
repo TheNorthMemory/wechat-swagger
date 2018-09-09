@@ -1,0 +1,16 @@
+post:
+  summary: 修改货架
+  operationId: merchant/shelf/mod
+  security:
+    - accessToken: []
+  tags:
+    - 小店/货架管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

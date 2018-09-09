@@ -1,0 +1,16 @@
+post:
+  summary: 用户画像
+  operationId: datacube/getweanalysisappiduserportrait
+  security:
+    - accessToken: []
+  tags:
+    - 小程序/数据/用户画像
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

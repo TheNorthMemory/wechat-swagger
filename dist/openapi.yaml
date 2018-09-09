@@ -1,0 +1,4975 @@
+swagger: '2.0'
+host: api.weixin.qq.com
+basePath: /
+info:
+  title: 微信接口工具
+  description: 整理自[微信官方文档](https://mp.weixin.qq.com)及社区贡献
+  version: 2.0.0
+schemes:
+  - http
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  accessToken:
+    in: query
+    type: apiKey
+    name: access_token
+tags:
+  - name: 基础支持
+  - name: 卡券
+  - name: 卡券/会员卡
+  - name: 卡券/会议门票
+  - name: 卡券/电影票
+  - name: 卡券/飞机票
+  - name: 卡券/礼品卡
+  - name: 卡券/礼品卡/货架
+  - name: 卡券/礼品卡/小程序
+  - name: 卡券/礼品卡/订单
+  - name: 卡券/礼品卡/财务
+  - name: 多客服/客服消息
+  - name: 多客服/客服管理
+  - name: 多客服/会话控制
+  - name: 多客服/聊天记录
+  - name: 小店/商品管理
+  - name: 小店/库存管理
+  - name: 小店/邮费模板管理
+  - name: 小店/分组管理
+  - name: 小店/货架管理
+  - name: 小店/订单管理
+  - name: 小店/功能接口
+  - name: 精品店/商品管理
+  - name: 精品店/类目属性管理
+  - name: 精品店/分组管理
+  - name: 精品店/订单管理
+  - name: 门店
+  - name: 门店/小程序
+  - name: 智能接口/语义理解
+  - name: 智能接口/AI开放接口
+  - name: 数据统计/用户分析
+  - name: 数据统计/图文分析
+  - name: 数据统计/消息分析
+  - name: 数据统计/接口分析
+  - name: 小程序/数据/常规分析
+  - name: 小程序/数据/访问分析/访问趋势
+  - name: 小程序/数据/访问分析/访问分布
+  - name: 小程序/数据/访问分析/访问留存
+  - name: 小程序/数据/访问分析/访问页面
+  - name: 小程序/数据/用户画像
+  - name: 小程序/文件/内容安全
+paths:
+  /card/boardingpass/checkin:
+    post:
+      summary: 更新飞机票信息接口
+      operationId: card/boardingpass/checkin
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/飞机票
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /card/code/checkcode:
+    post:
+      summary: 核查code接口
+      operationId: card/code/checkcode
+      security:
+        - accessToken: []
+      tags:
+        - 卡券
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              card_id:
+                type: string
+              code:
+                type: array
+                items:
+                  type: string
+      responses:
+        '200':
+          description: ''
+  /card/code/consume:
+    post:
+      summary: 核销 Code
+      operationId: card/code/consume
+      security:
+        - accessToken: []
+      tags:
+        - 卡券
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              card_id:
+                type: string
+              code:
+                type: string
+      responses:
+        '200':
+          description: ''
+  /card/code/decrypt:
+    post:
+      summary: Code解码
+      operationId: card/code/decrypt
+      security:
+        - accessToken: []
+      tags:
+        - 卡券
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              encrypt_code:
+                type: string
+      responses:
+        '200':
+          description: ''
+  /card/code/deposit:
+    post:
+      summary: 导入code接口
+      operationId: card/code/deposit
+      security:
+        - accessToken: []
+      tags:
+        - 卡券
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              card_id:
+                type: string
+              code:
+                type: array
+                items:
+                  type: string
+      responses:
+        '200':
+          description: ''
+  /card/code/get:
+    post:
+      summary: 查询Code
+      operationId: card/code/get
+      security:
+        - accessToken: []
+      tags:
+        - 卡券
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              card_id:
+                type: string
+              code:
+                type: string
+              check_consume:
+                type: boolean
+      responses:
+        '200':
+          description: ''
+  /card/code/getdepositcount:
+    post:
+      summary: 查询导入code数目接口
+      operationId: card/code/getdepositcount
+      security:
+        - accessToken: []
+      tags:
+        - 卡券
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              card_id:
+                type: string
+      responses:
+        '200':
+          description: ''
+  /card/code/unavailable:
+    post:
+      summary: 设置卡券失效
+      operationId: card/code/unavailable
+      security:
+        - accessToken: []
+      tags:
+        - 卡券
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              card_id:
+                type: string
+              code:
+                type: string
+      responses:
+        '200':
+          description: ''
+  /card/code/update:
+    post:
+      summary: 更改Code
+      operationId: card/code/update
+      security:
+        - accessToken: []
+      tags:
+        - 卡券
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              card_id:
+                type: string
+              code:
+                type: string
+              new_code:
+                type: string
+      responses:
+        '200':
+          description: ''
+  /card/create:
+    post:
+      summary: 创建卡券
+      operationId: card/create
+      security:
+        - accessToken: []
+      tags:
+        - 卡券
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              card:
+                type: object
+                properties:
+                  card_type:
+                    type: string
+                    enum:
+                      - GROUPON
+                      - CASH
+                      - DISCOUNT
+                      - GIFT
+                      - GENERAL_COUPON
+                      - GENERAL_CARD
+                      - MEETING_TICKET
+                      - SCENIC_TICKET
+                      - MOVIE_TICKET
+                      - BOARDING_PASS
+                  groupon:
+                    description: 团购券数据结构
+                    type: object
+                    properties:
+                      base_info:
+                        description: 基本的卡券数据
+                        type: object
+                        properties: {}
+                      advanced_info:
+                        description: 卡券高级信息
+                        type: object
+                        properties: {}
+                      deal_detail:
+                        type: string
+                        description: 团购券专用，团购详情。
+                  cach:
+                    description: 代金券数据结构
+                    type: object
+                    properties:
+                      base_info:
+                        description: 基本的卡券数据
+                        type: object
+                        properties: {}
+                      advanced_info:
+                        type: object
+                        properties: {}
+                      least_cost:
+                        type: integer
+                        format: int32
+                        description: '代金券专用，表示起用金额（单位为分）,如果无起用门槛则填0。'
+                      reduce_cost:
+                        type: integer
+                        format: int32
+                        description: 代金券专用，表示减免金额。（单位为分）
+                  discount:
+                    description: 折扣券数据结构
+                    type: object
+                    properties:
+                      base_info:
+                        description: 基本的卡券数据
+                        type: object
+                        properties: {}
+                      advanced_info:
+                        type: object
+                        properties: {}
+                      discount:
+                        type: integer
+                        format: int32
+                        description: 折扣券专用，表示打折额度（百分比）。填30就是七折。
+                  gift:
+                    description: 兑换券数据结构
+                    type: object
+                    properties:
+                      base_info:
+                        description: 基本的卡券数据
+                        type: object
+                        properties: {}
+                      advanced_info:
+                        type: object
+                        properties: {}
+                      gift:
+                        type: string
+                        description: 兑换券专用，填写兑换内容的名称。
+                  general_coupon:
+                    description: 优惠券数据结构
+                    type: object
+                    properties:
+                      base_info:
+                        description: 基本的卡券数据
+                        type: object
+                        properties: {}
+                      advanced_info:
+                        type: object
+                        properties: {}
+                      default_detail:
+                        type: string
+                        description: 优惠券专用，填写优惠详情。
+                  general_card:
+                    description: 礼品卡数据结构
+                    type: object
+                    properties:
+                      base_info:
+                        description: 基本的卡券数据
+                        type: object
+                        properties: {}
+                      advanced_info:
+                        type: object
+                        properties: {}
+                      background_pic_url:
+                        type: string
+                      auto_activate:
+                        type: boolean
+                      sub_card_type:
+                        type: string
+                        description: 卡类型，目前支持GIFT_CARD=礼品卡 VOUCHER=兑换卡
+                        enum:
+                          - GIFT_CARD
+                          - VOUCHER
+                      supply_bonus:
+                        type: boolean
+                      supply_balance:
+                        type: boolean
+                        description: 是否支持余额，填写true或者false。默认为false
+                      init_balance: null
+                      custom_field1:
+                        type: object
+                        properties: {}
+                      custom_field2:
+                        type: object
+                        properties: {}
+                      custom_field3:
+                        type: object
+                        properties: {}
+                      need_push_on_view:
+                        type: boolean
+      responses:
+        '200':
+          description: ''
+  /card/generalcard/updateuser:
+    post:
+      summary: 更新用户礼品卡信息接口
+      operationId: card/generalcard/updateuser
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/礼品卡
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /card/getcolors:
+    post:
+      summary: ''
+      operationId: card/getcolors
+      security:
+        - accessToken: []
+      tags:
+        - 卡券
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /card/giftcard/maintain/set:
+    post:
+      summary: 下架-礼品卡货架接口
+      operationId: card/giftcard/maintain/set
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/礼品卡/货架
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /card/giftcard/order/batchget:
+    post:
+      summary: 查询-批量查询礼品卡订单信息接口
+      operationId: card/giftcard/order/batchget
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/礼品卡/订单
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /card/giftcard/order/get:
+    post:
+      summary: 查询-单个礼品卡订单信息接口
+      operationId: card/giftcard/order/get
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/礼品卡/订单
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /card/giftcard/order/refund:
+    post:
+      summary: ''
+      operationId: card/giftcard/order/refund
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/礼品卡/订单
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /card/giftcard/page/add:
+    post:
+      summary: 创建-礼品卡货架接口
+      operationId: card/giftcard/page/add
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/礼品卡/货架
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /card/giftcard/page/batchget:
+    post:
+      summary: 查询-礼品卡货架列表接口
+      operationId: card/giftcard/page/batchget
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/礼品卡/货架
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /card/giftcard/page/get:
+    post:
+      summary: 查询-礼品卡货架信息接口
+      operationId: card/giftcard/page/get
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/礼品卡/货架
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /card/giftcard/page/update:
+    post:
+      summary: 修改-礼品卡货架信息接口
+      operationId: card/giftcard/page/update
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/礼品卡/货架
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /card/giftcard/pay/submch/bind:
+    post:
+      summary: 绑定商户号到礼品卡小程序接口
+      operationId: card/giftcard/pay/submch/bind
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/礼品卡/小程序
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /card/giftcard/pay/whitelist/add:
+    post:
+      summary: 开通微信支付礼品卡权限
+      operationId: card/giftcard/pay/whitelist/add
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/礼品卡/小程序
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /card/giftcard/wxa/set:
+    post:
+      summary: 上传小程序代码
+      operationId: card/giftcard/wxa/set
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/礼品卡/小程序
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /card/invoice/getauthdata:
+    post:
+      summary: 查询开票信息
+      operationId: card/invoice/getauthdata
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/礼品卡/财务
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /card/invoice/setbizattr:
+    post:
+      summary: 设置支付后开票信息
+      operationId: card/invoice/setbizattr
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/礼品卡/财务
+      parameters:
+        - in: query
+          name: action
+          type: string
+          required: true
+          enum:
+            - set_pay_mch
+            - get_pay_mch
+            - set_auth_field
+            - get_auth_field
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              paymch_info:
+                type: object
+                properties: {}
+              auth_field:
+                type: object
+                properties: {}
+      responses:
+        '200':
+          description: ''
+  /card/landingpage/create:
+    post:
+      summary: 创建货架
+      operationId: card/landingpage/create
+      security:
+        - accessToken: []
+      tags:
+        - 卡券
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              banner:
+                type: string
+              title:
+                type: string
+              can_share:
+                type: boolean
+              scene:
+                type: string
+                description: 投放页面的场景值； SCENE_NEAR_BY 附近 SCENE_MENU 自定义菜单 SCENE_QRCODE 二维码 SCENE_ARTICLE 公众号文章 SCENE_H5 h5页面 SCENE_IVR 自动回复 SCENE_CARD_CUSTOM_CELL 卡券自定义cell
+                enum:
+                  - SCENE_NEAR_BY
+                  - SCENE_MENU
+                  - SCENE_QRCODE
+                  - SCENE_ARTICLE
+                  - SCENE_H5
+                  - SCENE_IVR
+                  - SCENE_CARD_CUSTOM_CELL
+              card_list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    card_id:
+                      type: string
+                    thumb_url:
+                      type: string
+      responses:
+        '200':
+          description: ''
+  /card/location/batchadd:
+    post:
+      summary: ''
+      operationId: card/location/batchadd
+      security:
+        - accessToken: []
+      tags:
+        - 卡券
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /card/location/batchget:
+    post:
+      summary: ''
+      operationId: card/location/batchget
+      security:
+        - accessToken: []
+      tags:
+        - 卡券
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /card/luckymonkey/updateuserbalance:
+    post:
+      summary: ''
+      operationId: card/luckymonkey/updateuserbalance
+      security:
+        - accessToken: []
+      tags:
+        - 卡券
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /card/meetingticket/updateuser:
+    post:
+      summary: 更新会议门票
+      operationId: card/meetingticket/updateuser
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/会议门票
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /card/membercard/activate:
+    post:
+      summary: 激活会员卡
+      operationId: card/membercard/activate
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/会员卡
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /card/membercard/activate/geturl:
+    post:
+      summary: 获取开卡组件链接接口
+      operationId: card/membercard/activate/geturl
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/会员卡
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /card/membercard/activatetempinfo/get:
+    post:
+      summary: 获取用户提交资料
+      operationId: card/membercard/activatetempinfo/get
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/会员卡
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /card/membercard/activateuserform/set:
+    post:
+      summary: 设置开卡字段接口
+      operationId: card/membercard/activateuserform/set
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/会员卡
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /card/membercard/updateuser:
+    post:
+      summary: 更新会员信息
+      operationId: card/membercard/updateuser
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/会员卡
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /card/membercard/userinfo/get:
+    post:
+      summary: 拉取会员信息接口
+      operationId: card/membercard/userinfo/get
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/会员卡
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /card/modifystock:
+    post:
+      summary: ''
+      operationId: card/modifystock
+      security:
+        - accessToken: []
+      tags:
+        - 卡券
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /card/movieticket/updateuser:
+    post:
+      summary: 更新电影票
+      operationId: card/movieticket/updateuser
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/电影票
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /card/mpnews/gethtml:
+    post:
+      summary: 获取卡券嵌入图文消息文本
+      operationId: card/mpnews/gethtml
+      security:
+        - accessToken: []
+      tags:
+        - 卡券
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              card_id:
+                type: string
+      responses:
+        '200':
+          description: ''
+  /card/paycell/set:
+    post:
+      summary: 设置买单
+      operationId: card/paycell/set
+      security:
+        - accessToken: []
+      tags:
+        - 卡券
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              card_id:
+                type: string
+                description: 卡券ID。
+              is_open:
+                type: boolean
+                description: 是否开启买单功能，填true/false
+      responses:
+        '200':
+          description: ''
+  /card/qrcode/create:
+    post:
+      summary: 创建卡券二维码
+      operationId: card/qrcode/create
+      security:
+        - accessToken: []
+      tags:
+        - 卡券
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              action_name:
+                type: string
+                description: 卡券ID。
+                enum:
+                  - QR_CARD
+                  - QR_MULTIPLE_CARD
+              expire_seconds:
+                type: integer
+                format: int32
+                description: 指定二维码的有效时间，范围是60 ~ 1800秒。不填默认为365天有效
+              action_info:
+                type: object
+                properties:
+                  card:
+                    type: object
+                    properties: {}
+                  multiple_card:
+                    type: object
+                    properties: {}
+      responses:
+        '200':
+          description: ''
+  /card/selfconsumecell/set:
+    post:
+      summary: 设置自助核销
+      operationId: card/selfconsumecell/set
+      security:
+        - accessToken: []
+      tags:
+        - 卡券
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              card_id:
+                type: string
+                description: 卡券ID。
+              is_open:
+                type: boolean
+                default: false
+                description: 是否开启自助核销功能，填true/false，默认为false
+              need_verify_cod:
+                type: boolean
+                default: false
+                description: 用户核销时是否需要输入验证码， 填true/false， 默认为false
+              need_remark_amount:
+                type: boolean
+                default: false
+                description: 用户核销时是否需要备注核销金额， 填true/false， 默认为false
+      responses:
+        '200':
+          description: ''
+  /card/storewxa/get:
+    post:
+      summary: 获取门店小程序配置的卡券
+      operationId: card/storewxa/get
+      security:
+        - accessToken: []
+      tags:
+        - 卡券
+        - 门店/小程序
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /card/storewxa/set:
+    post:
+      summary: 设置门店小程序配置的卡券
+      operationId: card/storewxa/set
+      security:
+        - accessToken: []
+      tags:
+        - 门店/小程序
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /card/testwhitelist/set:
+    post:
+      summary: 设置测试白名单
+      operationId: card/testwhitelist/set
+      security:
+        - accessToken: []
+      tags:
+        - 卡券
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              openid:
+                type: array
+                items:
+                  type: string
+              username:
+                type: array
+                items:
+                  type: string
+      responses:
+        '200':
+          description: ''
+  /card/update:
+    post:
+      summary: ''
+      operationId: card/update
+      security:
+        - accessToken: []
+      tags:
+        - 卡券
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /cgi-bin/customservice/getkflist:
+    get:
+      summary: 获取所有客服账号
+      operationId: cgi-bin/customservice/getkflist
+      security:
+        - accessToken: []
+      tags:
+        - 多客服/客服管理
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /cgi-bin/customservice/getonlinekflist:
+    get:
+      summary: 获取在线客服列表
+      operationId: cgi-bin/customservice/getonlinekflist
+      security:
+        - accessToken: []
+      tags:
+        - 多客服/客服管理
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /cgi-bin/getcallbackip:
+    get:
+      summary: 获取微信服务器IP地址
+      operationId: cgi-bin/getcallbackip
+      security:
+        - accessToken: []
+      tags:
+        - 基础支持
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /cgi-bin/media/get:
+    get:
+      summary: 下载多媒体文件接口
+      operationId: cgi-bin/media/get
+      security:
+        - accessToken: []
+      tags:
+        - 基础支持
+      parameters:
+        - in: query
+          name: media_id
+          type: string
+          description: 媒体文件id
+          required: true
+      responses:
+        '200':
+          description: ''
+  /cgi-bin/media/get/jssdk:
+    get:
+      summary: 高清语音素材获取接口
+      operationId: cgi-bin/media/get/jssdk
+      security:
+        - accessToken: []
+      tags:
+        - 基础支持
+      parameters:
+        - in: query
+          name: media_id
+          type: string
+          description: 媒体文件id
+          required: true
+      responses:
+        '200':
+          description: ''
+  /cgi-bin/media/upload:
+    post:
+      summary: 多媒体文件上传接口
+      operationId: cgi-bin/media/upload
+      security:
+        - accessToken: []
+      tags:
+        - 基础支持
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: formData
+          name: type
+          type: string
+          description: |
+            媒体文件类型，分别有: 图片（image:2M，支持PNG\JPEG\JPG\GIF格式） 语音（voice:2M，播放长度不超过60s，支持AMR\MP3格式） 视频（video:10MB，支持MP4格式） 缩略图（thumb:64KB，支持JPG格式）
+          required: true
+          enum:
+            - image
+            - voice
+            - video
+            - thumb
+        - in: formData
+          name: media
+          type: file
+          description: form-data中媒体文件标识，有filename、filelength、content-type等信息
+          required: true
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+                description: 媒体文件类型
+              media_id:
+                type: string
+                description: 媒体文件上传后，获取标识
+              created_at:
+                type: integer
+                format: int32
+                description: 媒体文件上传时间戳
+  /cgi-bin/media/uploadimg:
+    post:
+      summary: 上传logo接口
+      operationId: cgi-bin/media/uploadimg
+      security:
+        - accessToken: []
+      tags:
+        - 基础支持
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: formData
+          name: type
+          type: string
+          description: 图片（image）
+          required: true
+          enum:
+            - image
+        - in: formData
+          name: buffer
+          type: file
+          description: 大小限制1MB，推荐像素为300*300，支持JPG格式
+          required: true
+      responses:
+        '200':
+          description: ''
+  /cgi-bin/media/voice/addvoicetorecofortext:
+    post:
+      summary: 提交语音
+      operationId: cgi-bin/media/voice/addvoicetorecofortext
+      security:
+        - accessToken: []
+      tags:
+        - 智能接口/AI开放接口
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /cgi-bin/media/voice/queryrecoresultfortext:
+    post:
+      summary: 获取语音识别结果
+      operationId: cgi-bin/media/voice/queryrecoresultfortext
+      security:
+        - accessToken: []
+      tags:
+        - 智能接口/AI开放接口
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /cgi-bin/media/voice/translatecontent:
+    post:
+      summary: 微信翻译
+      operationId: cgi-bin/media/voice/translatecontent
+      security:
+        - accessToken: []
+      tags:
+        - 智能接口/AI开放接口
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /cgi-bin/message/custom/send:
+    post:
+      summary: 客服接口-发消息
+      operationId: cgi-bin/message/custom/send
+      security:
+        - accessToken: []
+      tags:
+        - 多客服/客服消息
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              touser:
+                type: string
+                description: 普通用户openid
+              msgtype:
+                type: string
+                description: 消息类型，文本为text，图片为image，语音为voice，视频消息为video，音乐消息为music，图文消息（点击跳转到外链）为news，图文消息（点击跳转到图文消息页面）为mpnews，卡券为wxcard，小程序为miniprogrampage
+                enum:
+                  - text
+                  - image
+                  - voice
+                  - video
+                  - music
+                  - news
+                  - mpnews
+                  - wxcard
+                  - miniprogrampage
+              text:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: 文本消息内容
+              image:
+                type: object
+                properties:
+                  media_id:
+                    type: string
+                    description: 发送的图片/语音/视频/图文消息（点击跳转到图文消息页）的媒体ID
+              voice:
+                type: object
+                properties:
+                  media_id:
+                    type: string
+                    description: 发送的图片/语音/视频/图文消息（点击跳转到图文消息页）的媒体ID
+              video:
+                type: object
+                properties:
+                  media_id:
+                    type: string
+                    description: 发送的图片/语音/视频/图文消息（点击跳转到图文消息页）的媒体ID
+                  thumb_media_id:
+                    type: string
+                    description: 缩略图/小程序卡片图片的媒体ID，小程序卡片图片建议大小为520*416
+                  title:
+                    type: string
+                  description:
+                    type: string
+              music:
+                type: object
+                properties:
+                  musicurl:
+                    type: string
+                  hqmusicurl:
+                    type: string
+                  thumb_media_id:
+                    type: string
+                    description: 缩略图/小程序卡片图片的媒体ID，小程序卡片图片建议大小为520*416
+                  title:
+                    type: string
+                  description:
+                    type: string
+              news:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    articles:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          title:
+                            type: string
+                          description:
+                            type: string
+                          url:
+                            type: string
+                          picurl:
+                            type: string
+              mpnews:
+                type: object
+                properties:
+                  media_id:
+                    type: string
+                    description: 发送的图片/语音/视频/图文消息（点击跳转到图文消息页）的媒体ID
+              wxcard:
+                type: object
+                properties:
+                  card_id:
+                    type: string
+              miniprogrampage:
+                type: object
+                properties:
+                  title:
+                    type: string
+                  appid:
+                    type: string
+                  pagepath:
+                    type: string
+                  thumb_media_id:
+                    type: string
+                    description: 缩略图/小程序卡片图片的媒体ID，小程序卡片图片建议大小为520*416
+      responses:
+        '200':
+          description: ''
+  /cgi-bin/message/custom/typing:
+    post:
+      summary: 客服输入状态
+      operationId: cgi-bin/message/custom/typing
+      security:
+        - accessToken: []
+      tags:
+        - 多客服/客服消息
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              touser:
+                type: string
+                description: 普通用户openid
+              command:
+                type: string
+                description: Typing-对用户下发“正在输入"状态 CancelTyping-取消对用户的”正在输入"状态
+                enum:
+                  - Typing
+                  - CancelTyping
+      responses:
+        '200':
+          description: ''
+  /cgi-bin/poi/addpoi:
+    post:
+      summary: 增加门店
+      operationId: cgi-bin/poi/addpoi
+      security:
+        - accessToken: []
+      tags:
+        - 门店
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /cgi-bin/poi/delpoi:
+    post:
+      summary: 删除门店
+      operationId: cgi-bin/poi/delpoi
+      security:
+        - accessToken: []
+      tags:
+        - 门店
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /cgi-bin/poi/getpoi:
+    post:
+      summary: 查询门店信息
+      operationId: cgi-bin/poi/getpoi
+      security:
+        - accessToken: []
+      tags:
+        - 门店
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /cgi-bin/poi/getpoilist:
+    post:
+      summary: 查询门店列表
+      operationId: cgi-bin/poi/getpoilist
+      security:
+        - accessToken: []
+      tags:
+        - 门店
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /cgi-bin/poi/getwxcategory:
+    get:
+      summary: 门店类目表
+      operationId: cgi-bin/poi/getwxcategory
+      security:
+        - accessToken: []
+      tags:
+        - 门店
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /cgi-bin/poi/updatepoi:
+    post:
+      summary: 修改门店服务信息
+      operationId: cgi-bin/poi/updatepoi
+      security:
+        - accessToken: []
+      tags:
+        - 门店
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /cgi-bin/ticket/getticket:
+    get:
+      summary: 获取卡券api_ticket/jsapi_ticket
+      operationId: cgi-bin/ticket/getticket
+      security:
+        - accessToken: []
+      tags:
+        - 网页开发
+      parameters:
+        - in: query
+          name: type
+          type: string
+          required: true
+          description: wx_card-微信卡券;jsapi-jsSDK
+          enum:
+            - wx_card
+            - jsapi
+      responses:
+        '200':
+          description: ''
+  /cgi-bin/token:
+    get:
+      summary: 获取access_token
+      operationId: cgi-bin/token
+      tags:
+        - 基础支持
+      parameters:
+        - in: query
+          name: grant_type
+          type: string
+          description: 获取access_token填写client_credential
+          required: true
+          enum:
+            - client_credential
+        - in: query
+          name: appid
+          type: string
+          description: 第三方用户唯一凭证
+          required: true
+        - in: query
+          name: secret
+          type: string
+          description: 第三方用户唯一凭证密钥，即appsecret
+          required: true
+      responses:
+        '200':
+          description: ''
+  /customservice/kfaccount/add:
+    post:
+      summary: 添加客服帐号
+      operationId: customservice/kfaccount/add
+      security:
+        - accessToken: []
+      tags:
+        - 多客服/客服管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /customservice/kfaccount/del:
+    get:
+      summary: 删除客服帐号
+      operationId: customservice/kfaccount/del
+      security:
+        - accessToken: []
+      tags:
+        - 多客服/客服管理
+      parameters:
+        - in: query
+          name: kf_account
+          type: string
+          description: 完整客服帐号，格式为：帐号前缀@公众号微信号
+          required: true
+      responses:
+        '200':
+          description: ''
+  /customservice/kfaccount/inviteworker:
+    post:
+      summary: 邀请绑定客服帐号
+      operationId: customservice/kfaccount/inviteworker
+      security:
+        - accessToken: []
+      tags:
+        - 多客服/客服管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /customservice/kfaccount/update:
+    post:
+      summary: 设置客服信息
+      operationId: customservice/kfaccount/update
+      security:
+        - accessToken: []
+      tags:
+        - 多客服/客服管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /customservice/kfaccount/uploadheadimg:
+    post:
+      summary: 上传客服头像
+      operationId: customservice/kfaccount/uploadheadimg
+      security:
+        - accessToken: []
+      tags:
+        - 多客服/客服管理
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: query
+          name: kf_account
+          type: string
+          description: 完整客服帐号，格式为：帐号前缀@公众号微信号
+          required: true
+        - in: formData
+          name: media
+          type: file
+          description: '文件大小为5M以内,头像图片文件必须是jpg格式,推荐使用640*640大小的图片以达到最佳效果'
+          required: true
+      responses:
+        '200':
+          description: ''
+  /customservice/kfsession/close:
+    post:
+      summary: 关闭会话
+      operationId: customservice/kfsession/close
+      security:
+        - accessToken: []
+      tags:
+        - 多客服/会话控制
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /customservice/kfsession/create:
+    post:
+      summary: 创建会话
+      operationId: customservice/kfsession/create
+      security:
+        - accessToken: []
+      tags:
+        - 多客服/会话控制
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /customservice/kfsession/getsession:
+    get:
+      summary: 获取客户会话状态
+      operationId: customservice/kfsession/getsession
+      security:
+        - accessToken: []
+      tags:
+        - 多客服/会话控制
+      parameters:
+        - in: query
+          name: openid
+          type: string
+          description: 粉丝的openid
+      responses:
+        '200':
+          description: ''
+  /customservice/kfsession/getsessionlist:
+    get:
+      summary: 获取客服会话列表
+      operationId: customservice/kfsession/getsessionlist
+      security:
+        - accessToken: []
+      tags:
+        - 多客服/会话控制
+      parameters:
+        - in: query
+          name: kf_account
+          type: string
+          description: 完整客服帐号，格式为：帐号前缀@公众号微信号
+      responses:
+        '200':
+          description: ''
+  /customservice/kfsession/getwaitcase:
+    get:
+      summary: 获取未接入会话列表
+      operationId: customservice/kfsession/getwaitcase
+      security:
+        - accessToken: []
+      tags:
+        - 多客服/会话控制
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /customservice/msgrecord/getmsglist:
+    post:
+      summary: 获取聊天记录
+      operationId: customservice/msgrecord/getmsglist
+      security:
+        - accessToken: []
+      tags:
+        - 多客服/聊天记录
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getarticlesummary:
+    post:
+      summary: 获取图文群发每日数据
+      operationId: datacube/getarticlesummary
+      security:
+        - accessToken: []
+      tags:
+        - 数据统计/图文分析
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getarticletotal:
+    post:
+      summary: 获取图文群发总数据
+      operationId: datacube/getarticletotal
+      security:
+        - accessToken: []
+      tags:
+        - 数据统计/图文分析
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getinterfacesummary:
+    post:
+      summary: 获取接口分析数据
+      operationId: datacube/getinterfacesummary
+      security:
+        - accessToken: []
+      tags:
+        - 数据统计/接口分析
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getinterfacesummaryhour:
+    post:
+      summary: 获取接口分析分时数据
+      operationId: datacube/getinterfacesummaryhour
+      security:
+        - accessToken: []
+      tags:
+        - 数据统计/接口分析
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getupstreammsg:
+    post:
+      summary: 获取消息发送概况数据
+      operationId: datacube/getupstreammsg
+      security:
+        - accessToken: []
+      tags:
+        - 数据统计/消息分析
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getupstreammsgdist:
+    post:
+      summary: 获取消息发送分布数据
+      operationId: datacube/getupstreammsgdist
+      security:
+        - accessToken: []
+      tags:
+        - 数据统计/消息分析
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getupstreammsgdistmonth:
+    post:
+      summary: 获取消息发送分布月数据
+      operationId: datacube/getupstreammsgdistmonth
+      security:
+        - accessToken: []
+      tags:
+        - 数据统计/消息分析
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getupstreammsgdistweek:
+    post:
+      summary: 获取消息发送分布周数据
+      operationId: datacube/getupstreammsgdistweek
+      security:
+        - accessToken: []
+      tags:
+        - 数据统计/消息分析
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getupstreammsghour:
+    post:
+      summary: 获取消息分送分时数据
+      operationId: datacube/getupstreammsghour
+      security:
+        - accessToken: []
+      tags:
+        - 数据统计/消息分析
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getupstreammsgmonth:
+    post:
+      summary: 获取消息发送月数据
+      operationId: datacube/getupstreammsgmonth
+      security:
+        - accessToken: []
+      tags:
+        - 数据统计/消息分析
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getupstreammsgweek:
+    post:
+      summary: 获取消息发送周数据
+      operationId: datacube/getupstreammsgweek
+      security:
+        - accessToken: []
+      tags:
+        - 数据统计/消息分析
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getusercumulate:
+    post:
+      summary: 获取累计用户数据
+      operationId: datacube/getusercumulate
+      security:
+        - accessToken: []
+      tags:
+        - 数据统计/用户分析
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getuserread:
+    post:
+      summary: 获取图文统计数据
+      operationId: datacube/getuserread
+      security:
+        - accessToken: []
+      tags:
+        - 数据统计/图文分析
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getuserreadhour:
+    post:
+      summary: 获取图文统计分时数据
+      operationId: datacube/getuserreadhour
+      security:
+        - accessToken: []
+      tags:
+        - 数据统计/图文分析
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getusershare:
+    post:
+      summary: 获取图文分享转发数据
+      operationId: datacube/getusershare
+      security:
+        - accessToken: []
+      tags:
+        - 数据统计/图文分析
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getusersharehour:
+    post:
+      summary: 获取图文分享转发分时数据
+      operationId: datacube/getusersharehour
+      security:
+        - accessToken: []
+      tags:
+        - 数据统计/图文分析
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getusersummary:
+    post:
+      summary: 获取用户增减数据
+      operationId: datacube/getusersummary
+      security:
+        - accessToken: []
+      tags:
+        - 数据统计/用户分析
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getweanalysisappiddailyretaininfo:
+    post:
+      summary: 日留存
+      operationId: datacube/getweanalysisappiddailyretaininfo
+      security:
+        - accessToken: []
+      tags:
+        - 小程序/数据/访问分析/访问留存
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getweanalysisappiddailysummarytrend:
+    post:
+      summary: 获取用户增减数据
+      operationId: datacube/getweanalysisappiddailysummarytrend
+      security:
+        - accessToken: []
+      tags:
+        - 小程序/数据/常规分析
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getweanalysisappiddailyvisittrend:
+    post:
+      summary: 日趋势
+      operationId: datacube/getweanalysisappiddailyvisittrend
+      security:
+        - accessToken: []
+      tags:
+        - 小程序/数据/访问分析/访问趋势
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getweanalysisappidmonthlyretaininfo:
+    post:
+      summary: 月留存
+      operationId: datacube/getweanalysisappidmonthlyretaininfo
+      security:
+        - accessToken: []
+      tags:
+        - 小程序/数据/访问分析/访问留存
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getweanalysisappidmonthlyvisittrend:
+    post:
+      summary: 月趋势
+      operationId: datacube/getweanalysisappidmonthlyvisittrend
+      security:
+        - accessToken: []
+      tags:
+        - 小程序/数据/访问分析/访问趋势
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getweanalysisappiduserportrait:
+    post:
+      summary: 用户画像
+      operationId: datacube/getweanalysisappiduserportrait
+      security:
+        - accessToken: []
+      tags:
+        - 小程序/数据/用户画像
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getweanalysisappidvisitdistribution:
+    post:
+      summary: 访问分布
+      operationId: datacube/getweanalysisappidvisitdistribution
+      security:
+        - accessToken: []
+      tags:
+        - 小程序/数据/访问分析/访问分布
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getweanalysisappidvisitpage:
+    post:
+      summary: 访问页面
+      operationId: datacube/getweanalysisappidvisitpage
+      security:
+        - accessToken: []
+      tags:
+        - 小程序/数据/访问分析/访问页面
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getweanalysisappidweeklyretaininfo:
+    post:
+      summary: 周留存
+      operationId: datacube/getweanalysisappidweeklyretaininfo
+      security:
+        - accessToken: []
+      tags:
+        - 小程序/数据/访问分析/访问留存
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getweanalysisappidweeklyvisittrend:
+    post:
+      summary: 周趋势
+      operationId: datacube/getweanalysisappidweeklyvisittrend
+      security:
+        - accessToken: []
+      tags:
+        - 小程序/数据/访问分析/访问趋势
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /mall/addbranditem:
+    post:
+      summary: 新增商品
+      operationId: mall/addbranditem
+      security:
+        - accessToken: []
+      tags:
+        - 精品店/商品管理
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/mall.BrandItemBo'
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  item_code:
+                    type: string
+                    description: 新增商品后返回的商品编码
+  /mall/addgroup:
+    post:
+      summary: 新增分组
+      operationId: mall/addgroup
+      security:
+        - accessToken: []
+      tags:
+        - 精品店/分组管理
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              group_name:
+                description: 分组名称
+                type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                description: 新增分组信息
+                properties:
+                  group:
+                    $ref: '#/definitions/mall.GroupBaseBo'
+  /mall/additemgrouprelation:
+    post:
+      summary: 商品批量加入分组
+      operationId: mall/additemgrouprelation
+      security:
+        - accessToken: []
+      tags:
+        - 精品店/分组管理
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              relation_list:
+                description: 需要建立的商品和分组之间的关系
+                type: array
+                items:
+                  type: object
+                  properties:
+                    group_id:
+                      description: 分组ID
+                      type: integer
+                      format: int32
+                    item_code:
+                      description: 商品编码，最大32个字符
+                      type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+  /mall/addpropertyandpropertyvalue:
+    post:
+      summary: 类目下新增商户自定义属性和属性值
+      operationId: mall/addpropertyandpropertyvalue
+      security:
+        - accessToken: []
+      tags:
+        - 精品店/类目属性管理
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              category_id:
+                type: integer
+                format: int32
+                description: 类目 id
+              property_name:
+                type: string
+                description: 新增的属性名称
+              property_type:
+                type: integer
+                format: int32
+                description: 属性类型 1：展示属性 2：库存属性
+                enum:
+                  - 1
+                  - 2
+              property_value_name_list:
+                type: array
+                items:
+                  $ref: '#/definitions/mall.CategoryPropertyValueBo'
+            required:
+              - category_id
+              - property_name
+              - property_type
+              - property_value_name_list
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  property_id:
+                    type: integer
+                    format: int32
+                    description: 新增属性对应的属性 id
+                  property_value_name_list:
+                    type: array
+                    items:
+                      $ref: '#/definitions/mall.CategoryPropertyValueBo'
+  /mall/addpropertyvalue:
+    post:
+      summary: 类目下已有属性新增商户自定义属性值
+      operationId: mall/addpropertyvalue
+      security:
+        - accessToken: []
+      tags:
+        - 精品店/类目属性管理
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              category_id:
+                type: integer
+                format: int32
+                description: 类目 id
+              property_id:
+                type: integer
+                format: int32
+                description: 属性 id
+              property_value_name:
+                type: string
+                description: 新增属性值名称
+            required:
+              - category_id
+              - property_id
+              - property_value_name
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  property_value_id:
+                    type: integer
+                    format: int32
+                    description: 新增属性值对应的属性值 id
+  /mall/addstockinfobyitemcode:
+    post:
+      summary: 增加商品库存信息（暂不支持）
+      operationId: mall/addstockinfobyitemcode
+      deprecated: true
+      security:
+        - accessToken: []
+      tags:
+        - 精品店/商品管理
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              item_code:
+                type: string
+                description: 商品编码
+              stock_info:
+                $ref: '#/definitions/mall.BrandItemStockBo'
+            example:
+              item_code: 00003554543900_00000000000381
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  stock_info:
+                    description: 返回当前的商品库存列表
+                    type: array
+                    items:
+                      $ref: '#/definitions/mall.BrandItemStockBo'
+  /mall/changebranditemstatus:
+    post:
+      summary: 商品的上架和下架操作
+      operationId: mall/changebranditemstatus
+      security:
+        - accessToken: []
+      tags:
+        - 精品店/商品管理
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              item_codes:
+                type: array
+                description: 商品编码集合
+                items:
+                  type: string
+                  description: 商品编码
+              status:
+                type: integer
+                format: int32
+                description: 商品的状态：1=上架；2=下架
+            required:
+              - item_codes
+              - status
+            example:
+              item_codes:
+                - 00003554543900_00000000000381
+              status: 2
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /mall/deletegroup:
+    post:
+      summary: 删除分组
+      security:
+        - accessToken: []
+      tags:
+        - 精品店/分组管理
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              group_id:
+                description: 分组ID
+                type: integer
+                format: int32
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+  /mall/deleteitemgrouprelation:
+    post:
+      summary: 商品批量移出分组
+      operationId: mall/deleteitemgrouprelation
+      security:
+        - accessToken: []
+      tags:
+        - 精品店/分组管理
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              relation_list:
+                description: 需要建立的商品和分组之间的关系
+                type: array
+                items:
+                  type: object
+                  properties:
+                    group_id:
+                      description: 分组ID
+                      type: integer
+                      format: int32
+                    item_code:
+                      description: 商品编码，最大32个字符
+                      type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+  /mall/delproperty:
+    post:
+      summary: 删除类目下的属性
+      operationId: mall/delproperty
+      security:
+        - accessToken: []
+      tags:
+        - 精品店/类目属性管理
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              property_id:
+                type: integer
+                format: int32
+                description: 属性 id
+            required:
+              - property_id
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /mall/delpropertyvalue:
+    post:
+      summary: 删除属性值
+      operationId: mall/delpropertyvalue
+      security:
+        - accessToken: []
+      tags:
+        - 精品店/类目属性管理
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              property_value_id:
+                type: integer
+                format: int32
+                description: 属性值 id
+            required:
+              - property_value_id
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /mall/detelebranditem:
+    post:
+      summary: 删除未上架过的商品（暂不支持）
+      operationId: mall/detelebranditem
+      deprecated: true
+      security:
+        - accessToken: []
+      tags:
+        - 精品店/商品管理
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              item_codes:
+                type: array
+                items:
+                  type: string
+                  description: 商品编码
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /mall/getbranditemdetail:
+    post:
+      summary: 拉取商品详情
+      operationId: mall/getbranditemdetail
+      security:
+        - accessToken: []
+      tags:
+        - 精品店/商品管理
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              item_code:
+                type: string
+                description: 商品编码
+              parse_attr:
+                type: integer
+                format: int32
+                description: 是否需要解析属性的字符串为pb结构，0=不需要；1=需要
+              parse_stock_attr:
+                type: integer
+                format: int32
+                description: 是否需要解析库存属性的字符串为pb结构，0=不需要；1=需要
+              parse_stock:
+                type: integer
+                format: int32
+                description: 是否需要解析库存，0=不需要；1=需要
+            required:
+              - item_code
+            example:
+              item_code: 00000983800300_00000000000118
+              parse_attr: 0
+              parse_stock_attr: 0
+              parse_stock: 0
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  item:
+                    $ref: '#/definitions/mall.BrandItemBo'
+  /mall/getcategorylistbyid:
+    post:
+      summary: 获取类目信息
+      operationId: mall/getcategorylistbyid
+      security:
+        - accessToken: []
+      tags:
+        - 精品店/类目属性管理
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              category_id:
+                type: integer
+                format: int32
+                description: 类目 id
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  parent_info:
+                    $ref: '#/definitions/mall.CategoryBaseBo'
+                  child_info_list:
+                    type: array
+                    items:
+                      $ref: '#/definitions/mall.CategoryBaseBo'
+  /mall/getgroups:
+    post:
+      summary: 查询分组
+      operationId: mall/getgroups
+      security:
+        - accessToken: []
+      tags:
+        - 精品店/分组管理
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  group_list:
+                    type: array
+                    items:
+                      $ref: '#/definitions/mall.GroupBaseBo'
+  /mall/getorderbyid:
+    post:
+      summary: 拉取单个订单
+      operationId: mall/getorderbyid
+      security:
+        - accessToken: []
+      tags:
+        - 精品店/订单管理
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              order_id:
+                type: string
+                description: 订单id
+            required:
+              - order_id
+            example:
+              order_id: AQCAjcgBgrAaiZsKEs7DE9FeVQIA
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  order:
+                    $ref: '#/definitions/mall.OrderBo'
+  /mall/getorderbypage:
+    post:
+      summary: 拉取订单列表
+      operationId: mall/getorderbypage
+      security:
+        - accessToken: []
+      tags:
+        - 精品店/订单管理
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              offset:
+                description: '分页起始位置, 取值范围为[1, 100]'
+                type: integer
+                format: int32
+              count:
+                description: '拉取条数, 取值范围为[0, 20]，默认10'
+                type: integer
+                format: int32
+                default: 10
+              begin_time:
+                description: '筛选订单开始时间, unix秒级时间戳，默认为0'
+                type: integer
+                format: int32
+                default: 0
+              end_time:
+                type: integer
+                format: int32
+                description: '筛选订单结束时间, unix秒级时间戳，默认为最大时间'
+              status:
+                type: integer
+                format: int32
+                description: '筛选订单状态，支持取值有 3：已下单，4：已发货，不填默认拉所有订单，5: 已退款'
+            required:
+              - offset
+            example:
+              offset: 0
+              count: 10
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  total_count:
+                    description: 订单总数，业务方可以据此算出总页数
+                    type: integer
+                    format: int32
+                  order_list:
+                    type: array
+                    items:
+                      $ref: '#/definitions/mall.OrderBo'
+  /mall/getpropertybycategoryid:
+    post:
+      summary: 使用类目 ID 查询属性信息
+      operationId: mall/getpropertybycategoryid
+      security:
+        - accessToken: []
+      tags:
+        - 精品店/类目属性管理
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              category_id:
+                type: integer
+                format: int32
+                description: 类目 id
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  property_list:
+                    type: array
+                    items:
+                      $ref: '#/definitions/mall.CategoryPropertyBo'
+  /mall/getstockinfobyitemcode:
+    post:
+      summary: 获取单个商品下的所有库存信息
+      operationId: mall/getstockinfobyitemcode
+      security:
+        - accessToken: []
+      tags:
+        - 精品店/商品管理
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              item_code:
+                type: string
+                description: 商品编码
+            example:
+              item_code: 00003554543900_00000000000381
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  stock_info:
+                    description: 商品库存列表
+                    type: array
+                    items:
+                      $ref: '#/definitions/mall.BrandItemStockBo'
+  /mall/selectbranditemlistbyuin:
+    post:
+      summary: 拉取商品列表
+      operationId: mall/selectbranditemlistbyuin
+      security:
+        - accessToken: []
+      tags:
+        - 精品店/商品管理
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              page_index:
+                description: '分页起始位置, 取值范围为[1, 100]'
+                type: integer
+                format: int32
+              page_size:
+                description: '拉取条数, 取值范围为[1, 20]，默认20'
+                type: integer
+                format: int32
+              status:
+                description: 筛选商品的状态： 0=初始状态；1=已上架；2=已下架；
+                type: array
+                items:
+                  type: integer
+                  format: int32
+              group_id:
+                type: integer
+                format: int32
+                description: 筛选商品的分组ID
+              category_id:
+                type: integer
+                format: int32
+                description: 筛选商品的类目ID
+            required:
+              - page_index
+            example:
+              page_index: 1
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  all_count:
+                    type: integer
+                    format: int32
+                    description: 商品总数，业务方可以据此算出总页数
+                  item_list:
+                    type: array
+                    items:
+                      $ref: '#/definitions/mall.BrandItemBo'
+  /mall/shipgoods:
+    post:
+      summary: 发货
+      operationId: mall/shipgoods
+      security:
+        - accessToken: []
+      tags:
+        - 精品店/订单管理
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              order_id:
+                type: string
+                description: 订单id
+              express_company_id:
+                type: integer
+                format: int32
+                description: 快递商编号，通过选择快递商时拿到
+                enum:
+                  - 2000
+                  - 2001
+                  - 2002
+                  - 2004
+                  - 2005
+                  - 2006
+                  - 2008
+                  - 2009
+                  - 2010
+                  - 2011
+                  - 2012
+                  - 2014
+                  - 2015
+              express_company_name:
+                type: string
+                description: 快速商名字
+                enum:
+                  - EMS
+                  - 圆通
+                  - DHL
+                  - 中通
+                  - 韵达
+                  - 畅灵
+                  - 百事汇通
+                  - 德邦
+                  - 申通
+                  - 顺丰速运
+                  - 顺兴
+                  - 如风达
+                  - 优速
+              express_code:
+                type: string
+                description: 快递单号
+            required:
+              - order_id
+              - express_company_id
+              - express_company_name
+              - express_code
+            example:
+              order_id: AQCAjcgBgrAaiZsKEs7DE9FeVQIA
+              express_company_id: 2001
+              express_company_name: 圆通
+              express_code: 886273373873178200
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /mall/updatebranditem:
+    post:
+      summary: 更新下架中的商品信息（暂不支持）
+      operationId: mall/updatebranditem
+      deprecated: true
+      security:
+        - accessToken: []
+      tags:
+        - 精品店/商品管理
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/mall.BrandItemBo'
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  item_code:
+                    type: string
+                    description: 更新后的商品后返回的商品编码
+  /mall/updategroup:
+    post:
+      summary: 修改分组
+      operationId: mall/updategroup
+      security:
+        - accessToken: []
+      tags:
+        - 精品店/分组管理
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              group:
+                $ref: '#/definitions/mall.GroupBaseBo'
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                description: 新增分组信息
+                properties:
+                  group:
+                    $ref: '#/definitions/mall.GroupBaseBo'
+  /mall/updateitempicture:
+    post:
+      summary: 批量修改商品主图片
+      operationId: mall/updateitempicture
+      security:
+        - accessToken: []
+      tags:
+        - 精品店/商品管理
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              item_code:
+                type: string
+                description: 商品编码
+              pics:
+                description: 该商品对应的所有主图片信息
+                type: array
+                items:
+                  $ref: '#/definitions/mall.ItemPictureBo'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /mall/updatestockinfo:
+    post:
+      summary: 更新商品库存或价格
+      operationId: mall/updatestockinfo
+      security:
+        - accessToken: []
+      tags:
+        - 精品店/商品管理
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              item_code:
+                type: string
+                description: 商品编码
+              stock_info:
+                description: 商品库存修改
+                type: array
+                items:
+                  $ref: '#/definitions/mall.BrandItemModifyStockBo'
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  sku_code:
+                    type: array
+                    items:
+                      type: string
+                      description: 库存编码
+                  stock_info:
+                    description: 返回当前的商品库存列表
+                    type: array
+                    items:
+                      $ref: '#/definitions/mall.BrandItemStockBo'
+  /mall/updatestockpicture:
+    post:
+      summary: 批量修改商品库存图片
+      operationId: mall/updatestockpicture
+      security:
+        - accessToken: []
+      tags:
+        - 精品店/商品管理
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              item_code:
+                type: string
+                description: 商品编码
+              stock_pics:
+                description: 该商品对应的所有库存图片信息
+                type: array
+                items:
+                  $ref: '#/definitions/mall.StockPicturesBo'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /mall/uploaditemimage:
+    post:
+      summary: 上传商品图片到商品管理后台
+      operationId: mall/uploaditemimage
+      consumes:
+        - multipart/form-data
+      security:
+        - accessToken: []
+      tags:
+        - 精品店/商品管理
+      parameters:
+        - in: formData
+          name: item_codes
+          type: string
+          required: true
+        - in: formData
+          name: filePath
+          type: file
+          required: true
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  image_url:
+                    type: string
+                    description: 上传后的图片URL
+  /merchant/category/getproperty:
+    post:
+      summary: 获取指定分类的所有属性
+      operationId: merchant/category/getproperty
+      security:
+        - accessToken: []
+      tags:
+        - 小店/商品管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              cate_id:
+                type: integer
+                format: int32
+                description: 大分类ID(根节点分类id为1)
+            example:
+              cate_id: 1
+      responses:
+        '200':
+          description: ''
+  /merchant/category/getsku:
+    post:
+      summary: 获取指定子分类的所有SKU
+      operationId: merchant/category/getsku
+      security:
+        - accessToken: []
+      tags:
+        - 小店/商品管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              cate_id:
+                type: integer
+                format: int32
+                description: 大分类ID(根节点分类id为1)
+            example:
+              cate_id: 1
+      responses:
+        '200':
+          description: ''
+  /merchant/category/getsub:
+    post:
+      summary: 获取指定分类的所有子分类
+      operationId: merchant/category/getsub
+      security:
+        - accessToken: []
+      tags:
+        - 小店/商品管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              cate_id:
+                type: integer
+                format: int32
+                description: 大分类ID(根节点分类id为1)
+            example:
+              cate_id: 1
+      responses:
+        '200':
+          description: ''
+  /merchant/common/upload_img:
+    post:
+      summary: 上传图片
+      operationId: merchant/common/upload_img
+      security:
+        - accessToken: []
+      consumes:
+        - multipart/form-data
+      tags:
+        - 小店/功能接口
+      parameters:
+        - in: query
+          name: filename
+          type: string
+          description: 图片文件名(带文件类型后缀)
+        - in: formData
+          name: buffer
+          type: file
+          description: 图片数据
+      responses:
+        '200':
+          description: ''
+  /merchant/create:
+    post:
+      summary: 增加商品
+      operationId: merchant/create
+      security:
+        - accessToken: []
+      tags:
+        - 小店/商品管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/merchant.ProductBo'
+      responses:
+        '200':
+          description: ''
+  /merchant/del:
+    post:
+      summary: 删除商品
+      operationId: merchant/del
+      security:
+        - accessToken: []
+      tags:
+        - 小店/商品管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              product_id:
+                type: string
+                description: 商品 ID
+            example:
+              product_id: pDF3iYwktviE3BzU3BKiSWWi9Nkw
+      responses:
+        '200':
+          description: ''
+  /merchant/express/add:
+    post:
+      summary: 增加邮费模板
+      operationId: merchant/express/add
+      security:
+        - accessToken: []
+      tags:
+        - 小店/邮费模板管理
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /merchant/express/del:
+    post:
+      summary: 删除邮费模板
+      operationId: merchant/express/del
+      security:
+        - accessToken: []
+      tags:
+        - 小店/邮费模板管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              template_id:
+                type: string
+                description: 邮费模板ID
+      responses:
+        '200':
+          description: ''
+  /merchant/express/getall:
+    get:
+      summary: 获取所有邮费模板
+      operationId: merchant/express/getall
+      security:
+        - accessToken: []
+      tags:
+        - 小店/邮费模板管理
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /merchant/express/getbyid:
+    post:
+      summary: 获取指定ID的邮费模板
+      operationId: merchant/express/getbyid
+      security:
+        - accessToken: []
+      tags:
+        - 小店/邮费模板管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              template_id:
+                type: string
+                description: 邮费模板ID
+      responses:
+        '200':
+          description: ''
+  /merchant/express/update:
+    post:
+      summary: 修改邮费模板
+      operationId: merchant/express/update
+      security:
+        - accessToken: []
+      tags:
+        - 小店/邮费模板管理
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /merchant/get:
+    post:
+      summary: 查询商品
+      operationId: merchant/get
+      security:
+        - accessToken: []
+      tags:
+        - 小店/商品管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              product_id:
+                type: string
+                description: 商品 ID
+            example:
+              product_id: pDF3iYwktviE3BzU3BKiSWWi9Nkw
+      responses:
+        '200':
+          description: ''
+  /merchant/getbystatus:
+    post:
+      summary: 获取指定状态的所有商品
+      operationId: merchant/getbystatus
+      security:
+        - accessToken: []
+      tags:
+        - 小店/商品管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                format: int32
+                description: '商品状态(0-全部, 1-上架, 2-下架)'
+            example:
+              status: 0
+      responses:
+        '200':
+          description: ''
+  /merchant/group/add:
+    post:
+      summary: 增加分组
+      operationId: merchant/group/add
+      security:
+        - accessToken: []
+      tags:
+        - 小店/分组管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              group_detail:
+                type: object
+                properties:
+                  group_name:
+                    type: string
+                    description: 分组名称
+                  product_list:
+                    type: array
+                    items:
+                      type: string
+                      description: 商品ID
+      responses:
+        '200':
+          description: ''
+  /merchant/group/del:
+    post:
+      summary: 删除分组
+      operationId: merchant/group/del
+      security:
+        - accessToken: []
+      tags:
+        - 小店/分组管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              group_id:
+                type: string
+                description: 分组ID
+      responses:
+        '200':
+          description: ''
+  /merchant/group/getall:
+    get:
+      summary: 获取所有分组
+      operationId: merchant/group/getall
+      security:
+        - accessToken: []
+      tags:
+        - 小店/分组管理
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /merchant/group/getbyid:
+    post:
+      summary: 根据分组ID获取分组信息
+      operationId: merchant/group/getbyid
+      security:
+        - accessToken: []
+      tags:
+        - 小店/分组管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              group_id:
+                type: string
+                description: 分组ID
+      responses:
+        '200':
+          description: ''
+  /merchant/group/productmod:
+    post:
+      summary: 修改分组商品
+      operationId: merchant/group/productmod
+      security:
+        - accessToken: []
+      tags:
+        - 小店/分组管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              group_id:
+                type: string
+                description: 分组ID
+              product:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    product_id:
+                      type: string
+                      description: 商品ID
+                    mod_action:
+                      type: integer
+                      format: int32
+                      description: '修改操作(0-删除, 1-增加)'
+                      enum:
+                        - 0
+                        - 1
+      responses:
+        '200':
+          description: ''
+  /merchant/group/propertymod:
+    post:
+      summary: 修改分组属性
+      operationId: merchant/group/propertymod
+      security:
+        - accessToken: []
+      tags:
+        - 小店/分组管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              group_id:
+                type: string
+                description: 分组ID
+              group_name:
+                type: string
+                description: 分组名称
+      responses:
+        '200':
+          description: ''
+  /merchant/modproductstatus:
+    post:
+      summary: 商品上下架
+      operationId: merchant/modproductstatus
+      security:
+        - accessToken: []
+      tags:
+        - 小店/商品管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              product_id:
+                type: string
+                description: 商品 ID
+              status:
+                type: integer
+                format: int32
+                description: '商品上下架标识(0-下架, 1-上架)'
+            example:
+              product_id: pDF3iYwktviE3BzU3BKiSWWi9Nkw
+              status: 0
+      responses:
+        '200':
+          description: ''
+  /merchant/order/close:
+    post:
+      summary: 关闭订单
+      operationId: merchant/order/close
+      security:
+        - accessToken: []
+      tags:
+        - 小店/订单管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              order_id:
+                type: string
+                description: 订单ID
+      responses:
+        '200':
+          description: ''
+  /merchant/order/getbyfilter:
+    post:
+      summary: 根据订单状态/创建时间获取订单详情
+      operationId: merchant/order/getbyfilter
+      security:
+        - accessToken: []
+      tags:
+        - 小店/订单管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                format: int32
+                description: '订单状态(不带该字段-全部状态, 2-待发货, 3-已发货, 5-已完成, 8-维权中)'
+              begintime:
+                type: integer
+                format: int32
+                description: 订单创建时间起始时间(不带该字段则不按 照时间做筛选)
+              endtime:
+                type: integer
+                format: int32
+                description: 订单创建时间终止时间(不带该字段则不按 照时间做筛选)
+            example: {}
+      responses:
+        '200':
+          description: ''
+  /merchant/order/getbyid:
+    post:
+      summary: 根据订单 ID 获取订单详情
+      operationId: merchant/order/getbyid
+      security:
+        - accessToken: []
+      tags:
+        - 小店/订单管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              order_id:
+                type: string
+                description: 订单ID
+      responses:
+        '200':
+          description: ''
+  /merchant/order/setdelivery:
+    post:
+      summary: 设置订单发货信息
+      operationId: merchant/order/setdelivery
+      security:
+        - accessToken: []
+      tags:
+        - 小店/订单管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              order_id:
+                type: string
+                description: 订单 ID
+              delivery_company:
+                type: string
+                description: |
+                  物流公司 ID(参考《物流公司 ID》; 当 need_delivery 为 0 时，可不填本字段; 当 need_delivery 为 1 时，该字段不能为空; 当 need_delivery 为 1 且 is_others 为 1 时，本 字段填写其它物流公司名称)
+                enum:
+                  - Fsearch_code
+                  - 002shentong
+                  - 066zhongtong
+                  - 056yuantong
+                  - 042tiantian
+                  - 003shunfeng
+                  - 059Yunda
+                  - 064zhaijisong
+                  - 020huitong
+                  - zj001yixun
+              delivery_track_no:
+                type: string
+                description: |
+                  运单 ID( 当 need_delivery 为 0 时，可不填本字段; 当 need_delivery 为 1 时，该字段不能为空;)
+              need_delivery:
+                type: integer
+                format: int32
+                default: 1
+                description: 商品是否需要物流(0-不需要，1-需要，无该字 段默认为需要物流)
+                enum:
+                  - 0
+                  - 1
+              is_others:
+                type: integer
+                format: int32
+                default: 0
+                description: 是否为6.4.5表之外的其它物流公司(0-否，1- 是，无该字段默认为不是其它物流公司)
+                enum:
+                  - 0
+                  - 1
+      responses:
+        '200':
+          description: ''
+  /merchant/shelf/add:
+    post:
+      summary: 增加货架
+      operationId: merchant/shelf/add
+      security:
+        - accessToken: []
+      tags:
+        - 小店/货架管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /merchant/shelf/del:
+    post:
+      summary: 删除货架
+      operationId: merchant/shelf/del
+      security:
+        - accessToken: []
+      tags:
+        - 小店/货架管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /merchant/shelf/getall:
+    get:
+      summary: 获取所有货架
+      operationId: merchant/shelf/getall
+      security:
+        - accessToken: []
+      tags:
+        - 小店/货架管理
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /merchant/shelf/getbyid:
+    post:
+      summary: 根据货架ID获取货架信息
+      operationId: merchant/shelf/getbyid
+      security:
+        - accessToken: []
+      tags:
+        - 小店/货架管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /merchant/shelf/mod:
+    post:
+      summary: 修改货架
+      operationId: merchant/shelf/mod
+      security:
+        - accessToken: []
+      tags:
+        - 小店/货架管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /merchant/stock/add:
+    post:
+      summary: 增加库存
+      operationId: merchant/stock/add
+      security:
+        - accessToken: []
+      tags:
+        - 小店/库存管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              product_id:
+                type: string
+                description: 商品 ID
+              sku_info:
+                type: string
+                description: 'sku 信息,格式"id1:vid1;id2:vid2",如商品为统 一规格，则此处赋值为空字符串即可'
+              quantity:
+                type: integer
+                format: int64
+                description: 增加的库存数量
+      responses:
+        '200':
+          description: ''
+  /merchant/stock/reduce:
+    post:
+      summary: 减少库存
+      operationId: merchant/stock/reduce
+      security:
+        - accessToken: []
+      tags:
+        - 小店/库存管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              product_id:
+                type: string
+                description: 商品 ID
+              sku_info:
+                type: string
+                description: 'sku 信息,格式"id1:vid1;id2:vid2",如商品为统 一规格，则此处赋值为空字符串即可'
+              quantity:
+                type: integer
+                format: int64
+                description: 减少的库存数量
+      responses:
+        '200':
+          description: ''
+  /merchant/update:
+    post:
+      summary: 修改商品
+      operationId: merchant/update
+      security:
+        - accessToken: []
+      tags:
+        - 小店/商品管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            allOf:
+              - type: object
+                description: 从未上架的商品所有信息均可修改，否则商品的名称(name)、商品分类(category)、商品属性(property)这三个字段不可修改。
+                properties:
+                  product_id:
+                    type: string
+                    description: 要更新的商品的ID
+              - $ref: '#/definitions/merchant.ProductBo'
+      responses:
+        '200':
+          description: ''
+  /scan/merchantinfo/get:
+    get:
+      summary: 获取商户信息
+      operationId: scan/merchantinfo/get
+      security:
+        - accessToken: []
+      tags:
+        - 扫一扫
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /scan/product/clear:
+    post:
+      summary: 清除商品信息
+      operationId: scan/product/clear
+      security:
+        - accessToken: []
+      tags:
+        - 扫一扫
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /scan/product/create:
+    post:
+      summary: 创建商品
+      operationId: scan/product/create
+      security:
+        - accessToken: []
+      tags:
+        - 扫一扫
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /scan/product/get:
+    post:
+      summary: 查询商品信息
+      operationId: scan/product/get
+      security:
+        - accessToken: []
+      tags:
+        - 扫一扫
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /scan/product/getlist:
+    post:
+      summary: 批量查询商品信息
+      operationId: scan/product/getlist
+      security:
+        - accessToken: []
+      tags:
+        - 扫一扫
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /scan/product/getqrcode:
+    post:
+      summary: 获取商品二维码
+      operationId: scan/product/getqrcode
+      security:
+        - accessToken: []
+      tags:
+        - 扫一扫
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /scan/product/modstatus:
+    post:
+      summary: 商品发布
+      operationId: scan/product/modstatus
+      security:
+        - accessToken: []
+      tags:
+        - 扫一扫
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /scan/product/update:
+    post:
+      summary: 更新商品信息
+      operationId: scan/product/update
+      security:
+        - accessToken: []
+      tags:
+        - 扫一扫
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /scan/scanticket/check:
+    post:
+      summary: 检查wxticket参数/清除扫码记录
+      operationId: scan/scanticket/check
+      security:
+        - accessToken: []
+      tags:
+        - 扫一扫
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /scan/testwhitelist/set:
+    post:
+      summary: 设置测试人员白名单
+      operationId: scan/testwhitelist/set
+      security:
+        - accessToken: []
+      tags:
+        - 扫一扫
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /semantic/semproxy/search:
+    post:
+      summary: 客服输入状态
+      operationId: semantic/semproxy/search
+      security:
+        - accessToken: []
+      tags:
+        - 智能接口/语义理解
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /sns/auth:
+    get:
+      summary: 检验授权凭证（access_token）是否有效
+      operationId: sns/auth
+      tags:
+        - 网页授权
+      security:
+        - accessToken: []
+      parameters:
+        - in: query
+          name: openid
+          type: string
+          description: 用户的唯一标识
+          required: true
+      responses:
+        '200':
+          description: ''
+  /sns/jscode2session:
+    get:
+      summary: 登录凭证校验
+      operationId: sns/jscode2session
+      tags:
+        - 网页授权
+      parameters:
+        - in: query
+          name: appid
+          type: string
+          description: 第三方用户唯一凭证
+          required: true
+        - in: query
+          name: secret
+          type: string
+          description: 第三方用户唯一凭证密钥，即appsecret
+          required: true
+        - in: query
+          name: js_code
+          type: string
+          description: 登录时获取的 code
+          required: true
+        - in: query
+          name: grant_type
+          type: string
+          required: true
+          enum:
+            - authorization_code
+      responses:
+        '200':
+          description: ''
+  /sns/oauth2/access_token:
+    get:
+      summary: 通过code换取网页授权access_token
+      operationId: sns/oauth2/access_token
+      tags:
+        - 网页授权
+      parameters:
+        - in: query
+          name: grant_type
+          type: string
+          required: true
+          enum:
+            - authorization_code
+        - in: query
+          name: appid
+          type: string
+          description: 第三方用户唯一凭证
+          required: true
+        - in: query
+          name: secret
+          type: string
+          description: 第三方用户唯一凭证密钥，即appsecret
+          required: true
+        - in: query
+          name: code
+          type: string
+          description: 登录时获取的 code
+          required: true
+      responses:
+        '200':
+          description: ''
+  /sns/oauth2/refresh_token:
+    get:
+      summary: 刷新access_token（如果需要）
+      operationId: sns/oauth2/refresh_token
+      tags:
+        - 网页授权
+      security:
+        - accessToken: []
+      parameters:
+        - in: query
+          name: appid
+          type: string
+          description: 公众号的唯一标识
+          required: true
+        - in: query
+          name: refresh_token
+          type: string
+          description: 填写通过access_token获取到的refresh_token参数
+          required: true
+        - in: query
+          name: grant_type
+          type: string
+          required: true
+          enum:
+            - refresh_token
+      responses:
+        '200':
+          description: ''
+  /sns/userinfo:
+    get:
+      summary: 拉取用户信息
+      operationId: sns/userinfo
+      tags:
+        - 网页授权
+      parameters:
+        - in: query
+          name: openid
+          type: string
+          description: 用户的唯一标识
+          required: true
+        - in: query
+          name: lang
+          type: string
+          description: 返回国家地区语言版本，zh_CN 简体，zh_TW 繁体，en 英语
+          required: true
+      responses:
+        '200':
+          description: ''
+  /wxa/add_store:
+    post:
+      summary: 添加门店
+      operationId: wxa/add_store
+      security:
+        - accessToken: []
+      tags:
+        - 门店/小程序
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /wxa/apply_merchant:
+    post:
+      summary: 创建门店小程序
+      operationId: wxa/apply_merchant
+      security:
+        - accessToken: []
+      tags:
+        - 门店/小程序
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /wxa/create_map_poi:
+    post:
+      summary: 在腾讯地图中创建门店
+      operationId: wxa/create_map_poi
+      security:
+        - accessToken: []
+      tags:
+        - 门店/小程序
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /wxa/del_store:
+    post:
+      summary: 删除门店
+      operationId: wxa/del_store
+      security:
+        - accessToken: []
+      tags:
+        - 门店/小程序
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /wxa/get_district:
+    get:
+      summary: 从腾讯地图拉取省市区信息
+      operationId: wxa/get_district
+      security:
+        - accessToken: []
+      tags:
+        - 门店/小程序
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /wxa/get_merchant_audit_info:
+    get:
+      summary: 查询门店小程序审核结果
+      operationId: wxa/get_merchant_audit_info
+      security:
+        - accessToken: []
+      tags:
+        - 门店/小程序
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /wxa/get_merchant_category:
+    get:
+      summary: 拉取门店小程序类目
+      operationId: wxa/get_merchant_category
+      security:
+        - accessToken: []
+      tags:
+        - 门店/小程序
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /wxa/get_store_info:
+    post:
+      summary: 获取单个门店信息
+      operationId: wxa/get_store_info
+      security:
+        - accessToken: []
+      tags:
+        - 门店/小程序
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /wxa/get_store_list:
+    post:
+      summary: 获取门店信息列表
+      operationId: wxa/get_store_list
+      security:
+        - accessToken: []
+      tags:
+        - 门店/小程序
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /wxa/img_sec_check:
+    post:
+      summary: 校验一张图片是否含有违法违规内容
+      operationId: wxa/img_sec_check
+      security:
+        - accessToken: []
+      tags:
+        - 小程序/文件/内容安全
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: formData
+          name: media
+          type: file
+          description: 要检测的图片文件，格式支持PNG、JPEG、JPG、GIF，图片尺寸不超过 750px * 1334px
+          required: true
+      responses:
+        '200':
+          description: ''
+  /wxa/modify_merchant:
+    post:
+      summary: 修改门店小程序信息
+      operationId: wxa/modify_merchant
+      security:
+        - accessToken: []
+      tags:
+        - 门店/小程序
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /wxa/msg_sec_check:
+    post:
+      summary: 检查一段文本是否含有违法违规内容
+      operationId: wxa/msg_sec_check
+      security:
+        - accessToken: []
+      tags:
+        - 小程序/文件/内容安全
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              content:
+                type: string
+                description: 要检测的文本内容，长度不超过 500KB，编码格式为utf-8
+      responses:
+        '200':
+          description: ''
+  /wxa/search_map_poi:
+    post:
+      summary: 在腾讯地图中搜索门店
+      operationId: wxa/search_map_poi
+      security:
+        - accessToken: []
+      tags:
+        - 门店/小程序
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /wxa/update_store:
+    post:
+      summary: 更新门店信息
+      operationId: wxa/update_store
+      security:
+        - accessToken: []
+      tags:
+        - 门店/小程序
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+definitions:
+  mall.BrandItemBaseBo:
+    type: object
+    description: 商品的基础属性
+    properties:
+      item_code:
+        description: 商品编码，固定长度32个字符串
+        type: string
+      item_name:
+        description: 商品名称，最大256个字符
+        type: string
+      category_id:
+        description: 商品所属的分类编码
+        type: integer
+        format: int64
+      attribute:
+        description: '商品属性值，最大512个字符，不同类目会有不同的属性值，格式为 属性ID:属性值ID|属性ID:属性值ID|。。。'
+        type: string
+      multi_stock:
+        description: 是否多库存商品：0=否；1=是
+        type: integer
+        format: int64
+      status:
+        description: '-1=已删除； 0=初始状态；1=已上架；2=已下架；'
+        type: integer
+        format: int32
+      create_time:
+        description: 创建时间 时间戳(只用作返回字段)
+        type: integer
+        format: int64
+      update_time:
+        description: 修改时间 时间戳(只用作返回字段)
+        type: integer
+        format: int64
+      is_repair:
+        description: 是否保修：0=否；1=是
+        type: integer
+        format: int32
+      merchant_code:
+        description: 商家自己的商品编码，最长支持64个字符
+        type: string
+      return_goods:
+        description: '支持无理由退货的天数，0表示不支持退货: 7, 15, 30'
+        type: integer
+        format: int32
+      bar_code:
+        description: 条形码，必填字段，最大64个字符
+        type: string
+      shipping_id:
+        description: 运费模板id
+        type: integer
+        format: int32
+      after_market:
+        description: 售后服务模板id列表，格式使用下划线分隔
+        type: string
+    example:
+      item_code: 00000983800300_00000000000389
+      item_name: 测试商品Update5
+      category_id: 1436
+      attribute: '2000049: 6000531'
+      multi_stock: 0
+      status: 1
+      create_time: 1517395400
+      update_time: 1517402894
+      is_repair: 0
+      merchant_code: MerchantCode1
+      return_goods: 15
+      bar_code: barCode123
+  mall.BrandItemBo:
+    type: object
+    description: 商品信息结构体
+    properties:
+      base:
+        $ref: '#/definitions/mall.BrandItemBaseBo'
+      stocks:
+        type: array
+        items:
+          $ref: '#/definitions/mall.BrandItemStockBo'
+      pics:
+        type: array
+        items:
+          $ref: '#/definitions/mall.ItemPictureBo'
+      descs:
+        type: array
+        items:
+          $ref: '#/definitions/mall.ItemDescriptionBo'
+      stock_pics:
+        type: array
+        items:
+          $ref: '#/definitions/mall.StockPicturesBo'
+      groups:
+        type: array
+        items:
+          $ref: '#/definitions/mall.BrandItemGroupBo'
+  mall.BrandItemGroupBo:
+    allOf:
+      - type: object
+        description: 商品对应的分组结构
+        properties:
+          item_code:
+            description: 商品编码，最大32个字符
+            type: string
+      - $ref: '#/definitions/mall.GroupBaseBo'
+  mall.BrandItemModifyStockBo:
+    type: object
+    description: 商品库存价格修改结构
+    properties:
+      sku_code:
+        description: 库存编码，最大32个字符
+        type: string
+      stock_number:
+        description: 最终库存数量，结合ori_stock_number字段来实现加库存和扣减库存
+        type: integer
+        format: int32
+      ori_stock_number:
+        description: 修改时库存数量，结合stock_number字段来实现加库存和扣减库存
+        type: integer
+        format: int32
+      stock_price:
+        description: 库存价格 (价格单位：分)
+        type: integer
+        format: int64
+  mall.BrandItemStockBo:
+    type: object
+    description: 商品的库存结构
+    properties:
+      item_code:
+        description: 商品编码，最大32个字符
+        type: string
+      sku_code:
+        description: 库存编码，最大32个字符
+        type: string
+      merchant_sku_code:
+        description: 商家自己的库存编码，最大32个字符
+        type: string
+      bar_code:
+        description: 商家库存的条形码，最大128个字符
+        type: string
+      stock_attr:
+        description: 库存属性，最大256个字符
+        type: string
+      stock_number:
+        description: 库存数量
+        type: integer
+        format: int32
+      stock_price:
+        description: 库存价格 (价格单位：分)
+        type: integer
+        format: int64
+      market_price:
+        description: 市场价格 (价格单位：分)
+        type: integer
+        format: int64
+      update_time:
+        description: 最后更新时间或创建时间，以秒为单位的时间戳
+        type: integer
+        format: int64
+    example:
+      item_code: 00000983800300_00000000000389
+      sku_code: 00000983800300_10000000000390
+      merchant_sku_code: merchant_codeUpdateOld
+      stock_attr: '2000049: 6000531'
+      stock_number: 100
+      stock_price: 123456
+      market_price: 234567
+      update_time: 0
+  mall.CategoryBaseBo:
+    type: object
+    description: 类目基本结构
+    properties:
+      id:
+        type: integer
+        format: int64
+        description: 类目 id
+      category_name:
+        type: string
+        description: 类目名称
+      parent_id:
+        type: integer
+        format: int64
+        description: 节点上级父 id
+      has_sub:
+        type: integer
+        format: int32
+        description: 是否有下级节点
+  mall.CategoryPropertyBo:
+    type: object
+    description: 类目属性基本结构
+    properties:
+      category_id:
+        type: integer
+        format: int32
+        description: 类目 id
+      property_id:
+        type: integer
+        format: int32
+        description: 属性 id
+      is_custom:
+        type: integer
+        format: int32
+        description: 是否为商户自定义属性 0：否 1：是
+      property_name:
+        type: string
+        description: 属性名称
+      property_type:
+        type: integer
+        format: int32
+        description: 属性类型 1：展示属性 2：库存属性
+      is_need_img:
+        type: integer
+        format: int32
+        description: 是否需要上传图片 0：否 1：是
+      property_value_list:
+        type: array
+        items:
+          $ref: '#/definitions/mall.CategoryPropertyValueBo'
+  mall.CategoryPropertyValueBo:
+    type: object
+    description: 类目属性值基本结构
+    properties:
+      value_id:
+        description: 属性值 id
+        type: integer
+        format: int32
+      value_name:
+        description: 属性值名称
+        type: string
+  mall.GroupBaseBo:
+    type: object
+    description: 分组基本结构
+    properties:
+      group_id:
+        description: 商品分组ID
+        type: integer
+        format: int32
+      group_name:
+        description: 分组名称，最大64个字符
+        type: string
+  mall.ItemDescriptionBo:
+    type: object
+    description: 商品的详情描述结构
+    properties:
+      type:
+        description: 1=文本描述；0=图片
+        type: integer
+        format: int32
+      info:
+        description: 文本内容，最大2048个字符
+        type: string
+      pic:
+        description: 图片的链接，最大256个字符
+        type: string
+  mall.ItemPictureBo:
+    type: object
+    description: 商品的主图结构
+    properties:
+      type:
+        description: 1=商品主图；0=其他图片
+        type: integer
+        format: int32
+      pic_url:
+        description: 图片的链接，最大256个字符
+        type: string
+      index:
+        description: 图片顺序
+        type: integer
+        format: int32
+      width:
+        description: 图片的宽度
+        type: integer
+        format: int32
+      height:
+        description: 图片的高度
+        type: integer
+        format: int32
+  mall.OrderBo:
+    type: object
+    description: 分组基本结构
+    properties:
+      order_id:
+        description: 订单id
+        type: string
+      pay_finish_time:
+        description: 用户支付下单时间
+        type: integer
+        format: int32
+      desc:
+        description: 用户下单时填的备注信息
+        type: string
+      fee:
+        description: 订单支付金额，分为单位
+        type: integer
+        format: int32
+      trans_id:
+        description: 微信支付订单号，可以在微信支付商户平台上查询
+        type: string
+      status:
+        description: 订单状态：3：已下单，4：已发货
+        type: integer
+        format: int32
+      ext_info:
+        description: 包括product_info：商品信息，express_info：物流信息，invoice_info：发票信息
+        type: object
+        properties:
+          product_info:
+            type: array
+            items:
+              type: object
+              properties:
+                item_code:
+                  type: string
+                  description: 商品id
+                sku_id:
+                  type: string
+                  description: sku id
+                amount:
+                  type: integer
+                  format: int32
+                  description: 下单数量
+                total_fee:
+                  type: integer
+                  format: int32
+                  description: 总价，分为单位
+                unit_price:
+                  type: integer
+                  format: int32
+                  description: 商品单价，分为单位
+                title:
+                  type: string
+                  description: 商品标题
+                desc:
+                  type: string
+                  description: 商品描述
+          express_info:
+            type: object
+            properties:
+              name:
+                type: string
+                description: 收件人名字
+              phone:
+                type: string
+                description: 收件人手机号
+              address:
+                type: string
+                description: 收件人地址
+              price:
+                type: integer
+                format: int32
+                description: 运费
+              express_company_id:
+                type: integer
+                format: int32
+                description: 快递公司id，发货后有，参考发货接口
+              express_company_name:
+                type: string
+                description: 快递公司名称，发货后有，参考发货接口
+              express_code:
+                type: string
+                description: 快递单号
+              ship_time:
+                type: integer
+                format: int32
+                description: 订单发货时间
+          invoice_info:
+            type: object
+            properties:
+              type:
+                type: integer
+                format: int32
+                description: 发票类型，0：单位，1：个人
+              title:
+                type: string
+                description: 发票抬头
+      refund_pay_coin_count:
+        description: 退款金额，分为单位
+        type: integer
+        format: int32
+      refund_finish_time:
+        description: 退款完成时间，unix秒级时间戳，默认为0
+        type: integer
+        format: int32
+  mall.ResponseBaseBo:
+    type: object
+    description: 返回结果基础属性
+    properties:
+      errcode:
+        type: integer
+        format: int32
+        description: '错误码, 0为正常'
+      errmsg:
+        type: string
+        description: 错误信息，为空正常
+  mall.StockPicturesBo:
+    type: object
+    description: 商品的库存图片
+    properties:
+      attr_key_id:
+        description: 属性ID
+        type: integer
+        format: int32
+      attr_val_id:
+        description: 属性值ID
+        type: integer
+        format: int32
+      stock_pic_info:
+        type: array
+        items:
+          $ref: '#/definitions/mall.ItemPictureBo'
+  merchant.ProductBo:
+    type: object
+    description: 小店商品基本结构
+    properties:
+      product_base:
+        type: object
+        properties:
+          name:
+            type: string
+            description: 商品名称
+          category_id:
+            type: array
+            items:
+              type: integer
+              format: int32
+              description: 商品分类id，商品分类列表请通过《获取指定分类的所有子分类》获取
+          main_img:
+            type: string
+            description: 商品主图(图片需调用图片上传接口获得图片Url填写至此，否则无法添加商品。图片分辨率推荐尺寸为640×600)
+          img:
+            type: array
+            description: 商品图片列表(图片需调用图片上传接口获得图片Url填写至此，否则无法添加商品。图片分辨率推荐尺寸为640×600)
+            items:
+              type: string
+          detail:
+            type: array
+            description: 商品图片列表(图片需调用图片上传接口获得图片Url填写至此，否则无法添加商品。图片分辨率推荐尺寸为640×600)
+            items:
+              type: object
+              properties:
+                img:
+                  type: string
+                  description: 图片(图片需调用图片上传接口获得图片Url填写至此，否则无法添加商品)
+                text:
+                  type: string
+                  description: 文字描述
+          property:
+            type: array
+            description: 商品属性列表，属性列表请通过《获取指定分类的所有属性》获取
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: 属性id
+                vid:
+                  type: string
+                  description: 属性值id
+          sku_info:
+            type: array
+            description: 商品sku定义，SKU列表请通过《获取指定子分类的所有SKU》获取
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: 'sku属性(SKU列表中id, 支持自定义SKU，格式为"$xxx"，xxx即为显示在客户端中的字符串)'
+                vid:
+                  type: string
+                  description: 'sku值(SKU列表中vid, 如需自定义SKU，格式为"$xxx"，xxx即为显示在客户端中的字符串)'
+          buy_limit:
+            type: integer
+            format: int32
+            description: 用户商品限购数量
+        required:
+          - name
+          - category_id
+          - main_img
+          - img
+      sku_list:
+        type: array
+        description: sku信息列表(可为多个)，每个sku信息串即为一个确定的商品，比如白色的37码的鞋子
+        items:
+          type: object
+          properties:
+            sku_id:
+              type: string
+              description: |
+                sku信息, 参照上述sku_table的定义; 格式 : "id1:vid1;id2:vid2" 规则 : id_info的组合个数必须与sku_table个数一致 (若商品无sku信息, 即商品为统一规格，则此处赋值为空字符串即可)
+            ori_price:
+              type: integer
+              format: int32
+              description: 'sku原价(单位:分)'
+            price:
+              type: integer
+              format: int32
+              description: 'sku微信价(单位:分, 微信价必须比原价小, 否则添加商品失败)'
+            icon_url:
+              type: string
+              description: sku iconurl(图片需调用图片上传接口获得图片Url)
+            quantity:
+              type: integer
+              format: int32
+              description: sku库存
+            product_code:
+              type: string
+              description: 商家商品编码
+      attrext:
+        type: object
+        description: 商品其他属性
+        properties:
+          isPostFree:
+            type: integer
+            format: int32
+            description: '是否包邮(0-否, 1-是), 如果包邮delivery_info字段可省略'
+            enum:
+              - 0
+              - 1
+          isHasReceipt:
+            type: integer
+            format: int32
+            description: '是否提供发票(0-否, 1-是)'
+            enum:
+              - 0
+              - 1
+          isUnderGuaranty:
+            type: integer
+            format: int32
+            description: '是否保修(0-否, 1-是)'
+            enum:
+              - 0
+              - 1
+          isSupportReplace:
+            type: integer
+            format: int32
+            description: '是否支持退换货(0-否, 1-是)'
+            enum:
+              - 0
+              - 1
+          location:
+            type: object
+            description: 商品所在地地址
+            properties:
+              country:
+                type: string
+                description: 国家(详见《地区列表》说明)
+              province:
+                type: string
+                description: 省份(详见《地区列表》说明)
+              city:
+                type: string
+                description: 城市(详见《地区列表》说明)
+              address:
+                type: string
+                description: 地址
+      delivery_info:
+        type: object
+        properties:
+          delivery_type:
+            type: integer
+            format: int32
+            description: '运费类型(0-使用下面express字段的默认模板, 1-使用template_id代表的邮费模板, 详见邮费模板相关API)'
+            enum:
+              - 0
+              - 1
+          template_id:
+            type: string
+            description: 邮费模板ID
+          weight:
+            type: string
+          express:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  format: int32
+                  description: '快递ID,10000027=平邮,10000028=快递,10000029=EMS'
+                  enum:
+                    - 10000027
+                    - 10000028
+                    - 10000029
+                price:
+                  type: integer
+                  format: int32
+                  description: '运费(单位:分)'

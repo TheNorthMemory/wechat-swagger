@@ -1,0 +1,25 @@
+post:
+  summary: 上传logo接口
+  operationId: cgi-bin/media/uploadimg
+  security:
+    - accessToken: []
+  tags:
+    - 基础支持
+  consumes:
+    - multipart/form-data
+  parameters:
+    - in: formData
+      name: type
+      type: string
+      description: 图片（image）
+      required: true
+      enum:
+        - image
+    - in: formData
+      name: buffer
+      type: file
+      description: 大小限制1MB，推荐像素为300*300，支持JPG格式
+      required: true
+  responses:
+    '200':
+      description: ''

@@ -1,0 +1,27 @@
+post:
+  summary: 增加分组
+  operationId: merchant/group/add
+  security:
+    - accessToken: []
+  tags:
+    - 小店/分组管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          group_detail:
+            type: object
+            properties:
+              group_name:
+                type: string
+                description: 分组名称
+              product_list:
+                type: array
+                items:
+                  type: string
+                  description: 商品ID
+  responses:
+    '200':
+      description: ''

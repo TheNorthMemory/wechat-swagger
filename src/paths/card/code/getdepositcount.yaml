@@ -1,0 +1,18 @@
+post:
+  summary: 查询导入code数目接口
+  operationId: card/code/getdepositcount
+  security:
+    - accessToken: []
+  tags:
+    - 卡券
+  parameters:
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties:
+          card_id:
+            type: string
+  responses:
+    '200':
+      description: ''

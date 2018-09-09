@@ -1,0 +1,16 @@
+post:
+  summary: 更新飞机票信息接口
+  operationId: card/boardingpass/checkin
+  security:
+    - accessToken: []
+  tags:
+    - 卡券/飞机票
+  parameters:
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

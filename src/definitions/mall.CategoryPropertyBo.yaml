@@ -1,0 +1,30 @@
+type: object
+description: 类目属性基本结构
+properties:
+  category_id:
+    type: integer
+    format: int32
+    description: 类目 id
+  property_id:
+    type: integer
+    format: int32
+    description: 属性 id
+  is_custom:
+    type: integer
+    format: int32
+    description: 是否为商户自定义属性 0：否 1：是
+  property_name:
+    type: string
+    description: 属性名称
+  property_type:
+    type: integer
+    format: int32
+    description: 属性类型 1：展示属性 2：库存属性
+  is_need_img:
+    type: integer
+    format: int32
+    description: 是否需要上传图片 0：否 1：是
+  property_value_list:
+    type: array
+    items:
+      $ref: '#/definitions/mall.CategoryPropertyValueBo'

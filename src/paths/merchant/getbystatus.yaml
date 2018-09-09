@@ -1,0 +1,22 @@
+post:
+  summary: 获取指定状态的所有商品
+  operationId: merchant/getbystatus
+  security:
+    - accessToken: []
+  tags:
+    - 小店/商品管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          status:
+            type: integer
+            format: int32
+            description: '商品状态(0-全部, 1-上架, 2-下架)'
+        example:
+          status: 0
+  responses:
+    '200':
+      description: ''

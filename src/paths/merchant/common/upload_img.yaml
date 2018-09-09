@@ -1,0 +1,21 @@
+post:
+  summary: 上传图片
+  operationId: merchant/common/upload_img
+  security:
+    - accessToken: []
+  consumes:
+    - multipart/form-data
+  tags:
+    - 小店/功能接口
+  parameters:
+    - in: query
+      name: filename
+      type: string
+      description: 图片文件名(带文件类型后缀)
+    - in: formData
+      name: buffer
+      type: file
+      description: 图片数据
+  responses:
+    '200':
+      description: ''

@@ -1,0 +1,16 @@
+get:
+  summary: 下载多媒体文件接口
+  operationId: cgi-bin/media/get
+  security:
+    - accessToken: []
+  tags:
+    - 基础支持
+  parameters:
+    - in: query
+      name: media_id
+      type: string
+      description: 媒体文件id
+      required: true
+  responses:
+    '200':
+      description: ''

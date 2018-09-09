@@ -1,0 +1,16 @@
+post:
+  summary: 下架-礼品卡货架接口
+  operationId: card/giftcard/maintain/set
+  security:
+    - accessToken: []
+  tags:
+    - 卡券/礼品卡/货架
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

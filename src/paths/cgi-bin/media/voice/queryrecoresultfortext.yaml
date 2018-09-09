@@ -1,0 +1,16 @@
+post:
+  summary: 获取语音识别结果
+  operationId: cgi-bin/media/voice/queryrecoresultfortext
+  security:
+    - accessToken: []
+  tags:
+    - 智能接口/AI开放接口
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

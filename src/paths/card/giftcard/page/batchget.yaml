@@ -1,0 +1,16 @@
+post:
+  summary: 查询-礼品卡货架列表接口
+  operationId: card/giftcard/page/batchget
+  security:
+    - accessToken: []
+  tags:
+    - 卡券/礼品卡/货架
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

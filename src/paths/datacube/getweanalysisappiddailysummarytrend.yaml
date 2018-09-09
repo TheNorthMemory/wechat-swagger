@@ -1,0 +1,16 @@
+post:
+  summary: 获取用户增减数据
+  operationId: datacube/getweanalysisappiddailysummarytrend
+  security:
+    - accessToken: []
+  tags:
+    - 小程序/数据/常规分析
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

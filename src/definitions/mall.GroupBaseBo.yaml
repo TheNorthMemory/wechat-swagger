@@ -1,0 +1,10 @@
+type: object
+description: 分组基本结构
+properties:
+  group_id:
+    description: 商品分组ID
+    type: integer
+    format: int32
+  group_name:
+    description: 分组名称，最大64个字符
+    type: string

@@ -1,0 +1,19 @@
+post:
+  summary: 删除邮费模板
+  operationId: merchant/express/del
+  security:
+    - accessToken: []
+  tags:
+    - 小店/邮费模板管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          template_id:
+            type: string
+            description: 邮费模板ID
+  responses:
+    '200':
+      description: ''

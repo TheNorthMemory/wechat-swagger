@@ -1,0 +1,11 @@
+get:
+  summary: 获取所有邮费模板
+  operationId: merchant/express/getall
+  security:
+    - accessToken: []
+  tags:
+    - 小店/邮费模板管理
+  parameters: []
+  responses:
+    '200':
+      description: ''

@@ -1,0 +1,15 @@
+type: object
+description: 商品的库存图片
+properties:
+  attr_key_id:
+    description: 属性ID
+    type: integer
+    format: int32
+  attr_val_id:
+    description: 属性值ID
+    type: integer
+    format: int32
+  stock_pic_info:
+    type: array
+    items:
+      $ref: '#/definitions/mall.ItemPictureBo'

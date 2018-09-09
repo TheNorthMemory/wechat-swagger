@@ -1,0 +1,16 @@
+post:
+  summary: 查询门店列表
+  operationId: cgi-bin/poi/getpoilist
+  security:
+    - accessToken: []
+  tags:
+    - 门店
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

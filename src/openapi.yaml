@@ -1,0 +1,62 @@
+swagger: '2.0'
+host: 127.0.0.1:7788
+basePath: /gateway
+info:
+  title: 微信接口工具
+  description: 整理自[微信官方文档](https://mp.weixin.qq.com)及社区贡献
+  version: 2.0.0
+schemes:
+  - http
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  accessToken:
+    in: query
+    type: apiKey
+    name: access_token
+tags:
+  - name: 基础支持
+  - name: 卡券
+  - name: 卡券/会员卡
+  - name: 卡券/会议门票
+  - name: 卡券/电影票
+  - name: 卡券/飞机票
+  - name: 卡券/礼品卡
+  - name: 卡券/礼品卡/货架
+  - name: 卡券/礼品卡/小程序
+  - name: 卡券/礼品卡/订单
+  - name: 卡券/礼品卡/财务
+  - name: 多客服/客服消息
+  - name: 多客服/客服管理
+  - name: 多客服/会话控制
+  - name: 多客服/聊天记录
+  - name: 小店/商品管理
+  - name: 小店/库存管理
+  - name: 小店/邮费模板管理
+  - name: 小店/分组管理
+  - name: 小店/货架管理
+  - name: 小店/订单管理
+  - name: 小店/功能接口
+  - name: 精品店/商品管理
+  - name: 精品店/类目属性管理
+  - name: 精品店/分组管理
+  - name: 精品店/订单管理
+  - name: 门店
+  - name: 门店/小程序
+  - name: 智能接口/语义理解
+  - name: 智能接口/AI开放接口
+  - name: 数据统计/用户分析
+  - name: 数据统计/图文分析
+  - name: 数据统计/消息分析
+  - name: 数据统计/接口分析
+  - name: 小程序/数据/常规分析
+  - name: 小程序/数据/访问分析/访问趋势
+  - name: 小程序/数据/访问分析/访问分布
+  - name: 小程序/数据/访问分析/访问留存
+  - name: 小程序/数据/访问分析/访问页面
+  - name: 小程序/数据/用户画像
+  - name: 小程序/文件/内容安全
+paths: {}

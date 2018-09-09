@@ -1,0 +1,16 @@
+post:
+  summary: 检查wxticket参数/清除扫码记录
+  operationId: scan/scanticket/check
+  security:
+    - accessToken: []
+  tags:
+    - 扫一扫
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

@@ -1,0 +1,16 @@
+post:
+  summary: 获取图文群发总数据
+  operationId: datacube/getarticletotal
+  security:
+    - accessToken: []
+  tags:
+    - 数据统计/图文分析
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

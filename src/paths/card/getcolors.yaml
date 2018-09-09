@@ -1,0 +1,11 @@
+post:
+  summary: ''
+  operationId: card/getcolors
+  security:
+    - accessToken: []
+  tags:
+    - 卡券
+  parameters: []
+  responses:
+    '200':
+      description: ''

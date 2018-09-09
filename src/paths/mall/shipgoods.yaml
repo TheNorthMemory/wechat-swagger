@@ -1,0 +1,70 @@
+post:
+  summary: 发货
+  operationId: mall/shipgoods
+  security:
+    - accessToken: []
+  tags:
+    - 精品店/订单管理
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          order_id:
+            type: string
+            description: 订单id
+          express_company_id:
+            type: integer
+            format: int32
+            description: 快递商编号，通过选择快递商时拿到
+            enum:
+              - 2000
+              - 2001
+              - 2002
+              - 2004
+              - 2005
+              - 2006
+              - 2008
+              - 2009
+              - 2010
+              - 2011
+              - 2012
+              - 2014
+              - 2015
+          express_company_name:
+            type: string
+            description: 快速商名字
+            enum:
+              - EMS
+              - 圆通
+              - DHL
+              - 中通
+              - 韵达
+              - 畅灵
+              - 百事汇通
+              - 德邦
+              - 申通
+              - 顺丰速运
+              - 顺兴
+              - 如风达
+              - 优速
+          express_code:
+            type: string
+            description: 快递单号
+        required:
+          - order_id
+          - express_company_id
+          - express_company_name
+          - express_code
+        example:
+          order_id: AQCAjcgBgrAaiZsKEs7DE9FeVQIA
+          express_company_id: 2001
+          express_company_name: 圆通
+          express_code: 886273373873178200
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'

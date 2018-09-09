@@ -1,0 +1,16 @@
+post:
+  summary: 设置门店小程序配置的卡券
+  operationId: card/storewxa/set
+  security:
+    - accessToken: []
+  tags:
+    - 门店/小程序
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

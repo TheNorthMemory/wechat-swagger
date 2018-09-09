@@ -1,0 +1,27 @@
+post:
+  summary: 批量修改商品库存图片
+  operationId: mall/updatestockpicture
+  security:
+    - accessToken: []
+  tags:
+    - 精品店/商品管理
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          item_code:
+            type: string
+            description: 商品编码
+          stock_pics:
+            description: 该商品对应的所有库存图片信息
+            type: array
+            items:
+              $ref: '#/definitions/mall.StockPicturesBo'
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'

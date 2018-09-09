@@ -1,0 +1,22 @@
+post:
+  summary: 查询Code
+  operationId: card/code/get
+  security:
+    - accessToken: []
+  tags:
+    - 卡券
+  parameters:
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties:
+          card_id:
+            type: string
+          code:
+            type: string
+          check_consume:
+            type: boolean
+  responses:
+    '200':
+      description: ''

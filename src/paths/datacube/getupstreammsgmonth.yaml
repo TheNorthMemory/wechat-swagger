@@ -1,0 +1,16 @@
+post:
+  summary: 获取消息发送月数据
+  operationId: datacube/getupstreammsgmonth
+  security:
+    - accessToken: []
+  tags:
+    - 数据统计/消息分析
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

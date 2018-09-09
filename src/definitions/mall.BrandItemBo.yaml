@@ -1,0 +1,25 @@
+type: object
+description: 商品信息结构体
+properties:
+  base:
+    $ref: '#/definitions/mall.BrandItemBaseBo'
+  stocks:
+    type: array
+    items:
+      $ref: '#/definitions/mall.BrandItemStockBo'
+  pics:
+    type: array
+    items:
+      $ref: '#/definitions/mall.ItemPictureBo'
+  descs:
+    type: array
+    items:
+      $ref: '#/definitions/mall.ItemDescriptionBo'
+  stock_pics:
+    type: array
+    items:
+      $ref: '#/definitions/mall.StockPicturesBo'
+  groups:
+    type: array
+    items:
+      $ref: '#/definitions/mall.BrandItemGroupBo'

@@ -1,0 +1,11 @@
+get:
+  summary: 获取微信服务器IP地址
+  operationId: cgi-bin/getcallbackip
+  security:
+    - accessToken: []
+  tags:
+    - 基础支持
+  parameters: []
+  responses:
+    '200':
+      description: ''

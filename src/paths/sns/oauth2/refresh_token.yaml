@@ -1,0 +1,27 @@
+get:
+  summary: 刷新access_token（如果需要）
+  operationId: sns/oauth2/refresh_token
+  tags:
+    - 网页授权
+  security:
+    - accessToken: []
+  parameters:
+    - in: query
+      name: appid
+      type: string
+      description: 公众号的唯一标识
+      required: true
+    - in: query
+      name: refresh_token
+      type: string
+      description: 填写通过access_token获取到的refresh_token参数
+      required: true
+    - in: query
+      name: grant_type
+      type: string
+      required: true
+      enum:
+        - refresh_token
+  responses:
+    '200':
+      description: ''

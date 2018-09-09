@@ -1,0 +1,22 @@
+type: object
+description: 商品的主图结构
+properties:
+  type:
+    description: 1=商品主图；0=其他图片
+    type: integer
+    format: int32
+  pic_url:
+    description: 图片的链接，最大256个字符
+    type: string
+  index:
+    description: 图片顺序
+    type: integer
+    format: int32
+  width:
+    description: 图片的宽度
+    type: integer
+    format: int32
+  height:
+    description: 图片的高度
+    type: integer
+    format: int32

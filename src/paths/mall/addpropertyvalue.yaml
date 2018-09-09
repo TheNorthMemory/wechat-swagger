@@ -1,0 +1,41 @@
+post:
+  summary: 类目下已有属性新增商户自定义属性值
+  operationId: mall/addpropertyvalue
+  security:
+    - accessToken: []
+  tags:
+    - 精品店/类目属性管理
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          category_id:
+            type: integer
+            format: int32
+            description: 类目 id
+          property_id:
+            type: integer
+            format: int32
+            description: 属性 id
+          property_value_name:
+            type: string
+            description: 新增属性值名称
+        required:
+          - category_id
+          - property_id
+          - property_value_name
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              property_value_id:
+                type: integer
+                format: int32
+                description: 新增属性值对应的属性值 id

@@ -1,0 +1,21 @@
+post:
+  summary: 查询商品
+  operationId: merchant/get
+  security:
+    - accessToken: []
+  tags:
+    - 小店/商品管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          product_id:
+            type: string
+            description: 商品 ID
+        example:
+          product_id: pDF3iYwktviE3BzU3BKiSWWi9Nkw
+  responses:
+    '200':
+      description: ''

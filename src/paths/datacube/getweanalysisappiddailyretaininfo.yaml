@@ -1,0 +1,16 @@
+post:
+  summary: 日留存
+  operationId: datacube/getweanalysisappiddailyretaininfo
+  security:
+    - accessToken: []
+  tags:
+    - 小程序/数据/访问分析/访问留存
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

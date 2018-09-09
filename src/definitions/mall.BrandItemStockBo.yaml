@@ -1,0 +1,43 @@
+type: object
+description: 商品的库存结构
+properties:
+  item_code:
+    description: 商品编码，最大32个字符
+    type: string
+  sku_code:
+    description: 库存编码，最大32个字符
+    type: string
+  merchant_sku_code:
+    description: 商家自己的库存编码，最大32个字符
+    type: string
+  bar_code:
+    description: 商家库存的条形码，最大128个字符
+    type: string
+  stock_attr:
+    description: 库存属性，最大256个字符
+    type: string
+  stock_number:
+    description: 库存数量
+    type: integer
+    format: int32
+  stock_price:
+    description: 库存价格 (价格单位：分)
+    type: integer
+    format: int64
+  market_price:
+    description: 市场价格 (价格单位：分)
+    type: integer
+    format: int64
+  update_time:
+    description: 最后更新时间或创建时间，以秒为单位的时间戳
+    type: integer
+    format: int64
+example:
+  item_code: 00000983800300_00000000000389
+  sku_code: 00000983800300_10000000000390
+  merchant_sku_code: merchant_codeUpdateOld
+  stock_attr: '2000049: 6000531'
+  stock_number: 100
+  stock_price: 123456
+  market_price: 234567
+  update_time: 0

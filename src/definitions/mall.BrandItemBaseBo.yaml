@@ -1,0 +1,66 @@
+type: object
+description: 商品的基础属性
+properties:
+  item_code:
+    description: 商品编码，固定长度32个字符串
+    type: string
+  item_name:
+    description: 商品名称，最大256个字符
+    type: string
+  category_id:
+    description: 商品所属的分类编码
+    type: integer
+    format: int64
+  attribute:
+    description: '商品属性值，最大512个字符，不同类目会有不同的属性值，格式为 属性ID:属性值ID|属性ID:属性值ID|。。。'
+    type: string
+  multi_stock:
+    description: 是否多库存商品：0=否；1=是
+    type: integer
+    format: int64
+  status:
+    description: '-1=已删除； 0=初始状态；1=已上架；2=已下架；'
+    type: integer
+    format: int32
+  create_time:
+    description: 创建时间 时间戳(只用作返回字段)
+    type: integer
+    format: int64
+  update_time:
+    description: 修改时间 时间戳(只用作返回字段)
+    type: integer
+    format: int64
+  is_repair:
+    description: 是否保修：0=否；1=是
+    type: integer
+    format: int32
+  merchant_code:
+    description: 商家自己的商品编码，最长支持64个字符
+    type: string
+  return_goods:
+    description: '支持无理由退货的天数，0表示不支持退货: 7, 15, 30'
+    type: integer
+    format: int32
+  bar_code:
+    description: 条形码，必填字段，最大64个字符
+    type: string
+  shipping_id:
+    description: 运费模板id
+    type: integer
+    format: int32
+  after_market:
+    description: 售后服务模板id列表，格式使用下划线分隔
+    type: string
+example:
+  item_code: 00000983800300_00000000000389
+  item_name: 测试商品Update5
+  category_id: 1436
+  attribute: '2000049: 6000531'
+  multi_stock: 0
+  status: 1
+  create_time: 1517395400
+  update_time: 1517402894
+  is_repair: 0
+  merchant_code: MerchantCode1
+  return_goods: 15
+  bar_code: barCode123

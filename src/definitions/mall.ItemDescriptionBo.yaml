@@ -1,0 +1,13 @@
+type: object
+description: 商品的详情描述结构
+properties:
+  type:
+    description: 1=文本描述；0=图片
+    type: integer
+    format: int32
+  info:
+    description: 文本内容，最大2048个字符
+    type: string
+  pic:
+    description: 图片的链接，最大256个字符
+    type: string

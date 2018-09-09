@@ -1,0 +1,22 @@
+post:
+  summary: 修改分组属性
+  operationId: merchant/group/propertymod
+  security:
+    - accessToken: []
+  tags:
+    - 小店/分组管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          group_id:
+            type: string
+            description: 分组ID
+          group_name:
+            type: string
+            description: 分组名称
+  responses:
+    '200':
+      description: ''

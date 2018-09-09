@@ -1,0 +1,11 @@
+post:
+  summary: 修改邮费模板
+  operationId: merchant/express/update
+  security:
+    - accessToken: []
+  tags:
+    - 小店/邮费模板管理
+  parameters: []
+  responses:
+    '200':
+      description: ''

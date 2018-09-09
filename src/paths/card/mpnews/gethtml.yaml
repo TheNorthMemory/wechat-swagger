@@ -1,0 +1,18 @@
+post:
+  summary: 获取卡券嵌入图文消息文本
+  operationId: card/mpnews/gethtml
+  security:
+    - accessToken: []
+  tags:
+    - 卡券
+  parameters:
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties:
+          card_id:
+            type: string
+  responses:
+    '200':
+      description: ''

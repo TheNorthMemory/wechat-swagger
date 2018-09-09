@@ -1,0 +1,18 @@
+post:
+  summary: Code解码
+  operationId: card/code/decrypt
+  security:
+    - accessToken: []
+  tags:
+    - 卡券
+  parameters:
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties:
+          encrypt_code:
+            type: string
+  responses:
+    '200':
+      description: ''

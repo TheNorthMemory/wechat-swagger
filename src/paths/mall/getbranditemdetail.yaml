@@ -1,0 +1,46 @@
+post:
+  summary: 拉取商品详情
+  operationId: mall/getbranditemdetail
+  security:
+    - accessToken: []
+  tags:
+    - 精品店/商品管理
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          item_code:
+            type: string
+            description: 商品编码
+          parse_attr:
+            type: integer
+            format: int32
+            description: 是否需要解析属性的字符串为pb结构，0=不需要；1=需要
+          parse_stock_attr:
+            type: integer
+            format: int32
+            description: 是否需要解析库存属性的字符串为pb结构，0=不需要；1=需要
+          parse_stock:
+            type: integer
+            format: int32
+            description: 是否需要解析库存，0=不需要；1=需要
+        required:
+          - item_code
+        example:
+          item_code: 00000983800300_00000000000118
+          parse_attr: 0
+          parse_stock_attr: 0
+          parse_stock: 0
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              item:
+                $ref: '#/definitions/mall.BrandItemBo'

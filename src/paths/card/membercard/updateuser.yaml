@@ -1,0 +1,16 @@
+post:
+  summary: 更新会员信息
+  operationId: card/membercard/updateuser
+  security:
+    - accessToken: []
+  tags:
+    - 卡券/会员卡
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

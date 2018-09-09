@@ -1,0 +1,10 @@
+type: object
+description: 返回结果基础属性
+properties:
+  errcode:
+    type: integer
+    format: int32
+    description: '错误码, 0为正常'
+  errmsg:
+    type: string
+    description: 错误信息，为空正常

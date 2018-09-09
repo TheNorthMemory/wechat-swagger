@@ -1,0 +1,8 @@
+allOf:
+  - type: object
+    description: 商品对应的分组结构
+    properties:
+      item_code:
+        description: 商品编码，最大32个字符
+        type: string
+  - $ref: '#/definitions/mall.GroupBaseBo'

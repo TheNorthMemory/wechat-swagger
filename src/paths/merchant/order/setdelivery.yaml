@@ -1,0 +1,54 @@
+post:
+  summary: 设置订单发货信息
+  operationId: merchant/order/setdelivery
+  security:
+    - accessToken: []
+  tags:
+    - 小店/订单管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          order_id:
+            type: string
+            description: 订单 ID
+          delivery_company:
+            type: string
+            description: |
+              物流公司 ID(参考《物流公司 ID》; 当 need_delivery 为 0 时，可不填本字段; 当 need_delivery 为 1 时，该字段不能为空; 当 need_delivery 为 1 且 is_others 为 1 时，本 字段填写其它物流公司名称)
+            enum:
+              - Fsearch_code
+              - 002shentong
+              - 066zhongtong
+              - 056yuantong
+              - 042tiantian
+              - 003shunfeng
+              - 059Yunda
+              - 064zhaijisong
+              - 020huitong
+              - zj001yixun
+          delivery_track_no:
+            type: string
+            description: |
+              运单 ID( 当 need_delivery 为 0 时，可不填本字段; 当 need_delivery 为 1 时，该字段不能为空;)
+          need_delivery:
+            type: integer
+            format: int32
+            default: 1
+            description: 商品是否需要物流(0-不需要，1-需要，无该字 段默认为需要物流)
+            enum:
+              - 0
+              - 1
+          is_others:
+            type: integer
+            format: int32
+            default: 0
+            description: 是否为6.4.5表之外的其它物流公司(0-否，1- 是，无该字段默认为不是其它物流公司)
+            enum:
+              - 0
+              - 1
+  responses:
+    '200':
+      description: ''

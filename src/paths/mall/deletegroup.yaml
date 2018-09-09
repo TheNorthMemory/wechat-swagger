@@ -1,0 +1,23 @@
+post:
+  summary: 删除分组
+  security:
+    - accessToken: []
+  tags:
+    - 精品店/分组管理
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          group_id:
+            description: 分组ID
+            type: integer
+            format: int32
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'

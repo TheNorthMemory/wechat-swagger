@@ -1,0 +1,16 @@
+post:
+  summary: 获取消息发送分布周数据
+  operationId: datacube/getupstreammsgdistweek
+  security:
+    - accessToken: []
+  tags:
+    - 数据统计/消息分析
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

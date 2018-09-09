@@ -1,0 +1,34 @@
+post:
+  summary: 修改分组商品
+  operationId: merchant/group/productmod
+  security:
+    - accessToken: []
+  tags:
+    - 小店/分组管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          group_id:
+            type: string
+            description: 分组ID
+          product:
+            type: array
+            items:
+              type: object
+              properties:
+                product_id:
+                  type: string
+                  description: 商品ID
+                mod_action:
+                  type: integer
+                  format: int32
+                  description: '修改操作(0-删除, 1-增加)'
+                  enum:
+                    - 0
+                    - 1
+  responses:
+    '200':
+      description: ''

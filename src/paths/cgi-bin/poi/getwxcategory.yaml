@@ -1,0 +1,11 @@
+get:
+  summary: 门店类目表
+  operationId: cgi-bin/poi/getwxcategory
+  security:
+    - accessToken: []
+  tags:
+    - 门店
+  parameters: []
+  responses:
+    '200':
+      description: ''

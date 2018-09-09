@@ -1,0 +1,11 @@
+post:
+  summary: 查询开票信息
+  operationId: card/invoice/getauthdata
+  security:
+    - accessToken: []
+  tags:
+    - 卡券/礼品卡/财务
+  parameters: []
+  responses:
+    '200':
+      description: ''

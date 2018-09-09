@@ -1,0 +1,35 @@
+post:
+  summary: 创建卡券二维码
+  operationId: card/qrcode/create
+  security:
+    - accessToken: []
+  tags:
+    - 卡券
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          action_name:
+            type: string
+            description: 卡券ID。
+            enum:
+              - QR_CARD
+              - QR_MULTIPLE_CARD
+          expire_seconds:
+            type: integer
+            format: int32
+            description: 指定二维码的有效时间，范围是60 ~ 1800秒。不填默认为365天有效
+          action_info:
+            type: object
+            properties:
+              card:
+                type: object
+                properties: {}
+              multiple_card:
+                type: object
+                properties: {}
+  responses:
+    '200':
+      description: ''

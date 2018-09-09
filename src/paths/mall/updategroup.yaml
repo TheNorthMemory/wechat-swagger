@@ -1,0 +1,27 @@
+post:
+  summary: 修改分组
+  operationId: mall/updategroup
+  security:
+    - accessToken: []
+  tags:
+    - 精品店/分组管理
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          group:
+            $ref: '#/definitions/mall.GroupBaseBo'
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            description: 新增分组信息
+            properties:
+              group:
+                $ref: '#/definitions/mall.GroupBaseBo'

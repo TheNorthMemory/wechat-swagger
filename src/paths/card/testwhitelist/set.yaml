@@ -1,0 +1,24 @@
+post:
+  summary: 设置测试白名单
+  operationId: card/testwhitelist/set
+  security:
+    - accessToken: []
+  tags:
+    - 卡券
+  parameters:
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties:
+          openid:
+            type: array
+            items:
+              type: string
+          username:
+            type: array
+            items:
+              type: string
+  responses:
+    '200':
+      description: ''

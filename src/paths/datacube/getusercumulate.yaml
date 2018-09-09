@@ -1,0 +1,16 @@
+post:
+  summary: 获取累计用户数据
+  operationId: datacube/getusercumulate
+  security:
+    - accessToken: []
+  tags:
+    - 数据统计/用户分析
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

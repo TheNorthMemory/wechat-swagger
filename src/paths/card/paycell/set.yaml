@@ -1,0 +1,22 @@
+post:
+  summary: 设置买单
+  operationId: card/paycell/set
+  security:
+    - accessToken: []
+  tags:
+    - 卡券
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          card_id:
+            type: string
+            description: 卡券ID。
+          is_open:
+            type: boolean
+            description: 是否开启买单功能，填true/false
+  responses:
+    '200':
+      description: ''

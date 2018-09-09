@@ -1,0 +1,16 @@
+post:
+  summary: 访问分布
+  operationId: datacube/getweanalysisappidvisitdistribution
+  security:
+    - accessToken: []
+  tags:
+    - 小程序/数据/访问分析/访问分布
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

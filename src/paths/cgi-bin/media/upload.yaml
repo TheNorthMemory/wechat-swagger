@@ -1,0 +1,42 @@
+post:
+  summary: 多媒体文件上传接口
+  operationId: cgi-bin/media/upload
+  security:
+    - accessToken: []
+  tags:
+    - 基础支持
+  consumes:
+    - multipart/form-data
+  parameters:
+    - in: formData
+      name: type
+      type: string
+      description: |
+        媒体文件类型，分别有: 图片（image:2M，支持PNG\JPEG\JPG\GIF格式） 语音（voice:2M，播放长度不超过60s，支持AMR\MP3格式） 视频（video:10MB，支持MP4格式） 缩略图（thumb:64KB，支持JPG格式）
+      required: true
+      enum:
+        - image
+        - voice
+        - video
+        - thumb
+    - in: formData
+      name: media
+      type: file
+      description: form-data中媒体文件标识，有filename、filelength、content-type等信息
+      required: true
+  responses:
+    '200':
+      description: ''
+      schema:
+        type: object
+        properties:
+          type:
+            type: string
+            description: 媒体文件类型
+          media_id:
+            type: string
+            description: 媒体文件上传后，获取标识
+          created_at:
+            type: integer
+            format: int32
+            description: 媒体文件上传时间戳

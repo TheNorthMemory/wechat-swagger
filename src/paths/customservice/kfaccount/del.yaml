@@ -1,0 +1,16 @@
+get:
+  summary: 删除客服帐号
+  operationId: customservice/kfaccount/del
+  security:
+    - accessToken: []
+  tags:
+    - 多客服/客服管理
+  parameters:
+    - in: query
+      name: kf_account
+      type: string
+      description: 完整客服帐号，格式为：帐号前缀@公众号微信号
+      required: true
+  responses:
+    '200':
+      description: ''

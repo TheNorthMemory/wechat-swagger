@@ -1,0 +1,26 @@
+get:
+  summary: 获取access_token
+  operationId: cgi-bin/token
+  tags:
+    - 基础支持
+  parameters:
+    - in: query
+      name: grant_type
+      type: string
+      description: 获取access_token填写client_credential
+      required: true
+      enum:
+        - client_credential
+    - in: query
+      name: appid
+      type: string
+      description: 第三方用户唯一凭证
+      required: true
+    - in: query
+      name: secret
+      type: string
+      description: 第三方用户唯一凭证密钥，即appsecret
+      required: true
+  responses:
+    '200':
+      description: ''

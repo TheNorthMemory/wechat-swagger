@@ -1,0 +1,26 @@
+post:
+  summary: 减少库存
+  operationId: merchant/stock/reduce
+  security:
+    - accessToken: []
+  tags:
+    - 小店/库存管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          product_id:
+            type: string
+            description: 商品 ID
+          sku_info:
+            type: string
+            description: 'sku 信息,格式"id1:vid1;id2:vid2",如商品为统 一规格，则此处赋值为空字符串即可'
+          quantity:
+            type: integer
+            format: int64
+            description: 减少的库存数量
+  responses:
+    '200':
+      description: ''

@@ -1,0 +1,16 @@
+post:
+  summary: 获取商品二维码
+  operationId: scan/product/getqrcode
+  security:
+    - accessToken: []
+  tags:
+    - 扫一扫
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

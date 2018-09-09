@@ -1,0 +1,15 @@
+get:
+  summary: 获取客服会话列表
+  operationId: customservice/kfsession/getsessionlist
+  security:
+    - accessToken: []
+  tags:
+    - 多客服/会话控制
+  parameters:
+    - in: query
+      name: kf_account
+      type: string
+      description: 完整客服帐号，格式为：帐号前缀@公众号微信号
+  responses:
+    '200':
+      description: ''

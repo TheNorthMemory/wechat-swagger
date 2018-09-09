@@ -1,0 +1,16 @@
+post:
+  summary: 邀请绑定客服帐号
+  operationId: customservice/kfaccount/inviteworker
+  security:
+    - accessToken: []
+  tags:
+    - 多客服/客服管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

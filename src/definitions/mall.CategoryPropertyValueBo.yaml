@@ -1,0 +1,10 @@
+type: object
+description: 类目属性值基本结构
+properties:
+  value_id:
+    description: 属性值 id
+    type: integer
+    format: int32
+  value_name:
+    description: 属性值名称
+    type: string

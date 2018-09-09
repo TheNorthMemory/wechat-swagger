@@ -1,0 +1,15 @@
+post:
+  summary: 增加商品
+  operationId: merchant/create
+  security:
+    - accessToken: []
+  tags:
+    - 小店/商品管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        $ref: '#/definitions/merchant.ProductBo'
+  responses:
+    '200':
+      description: ''

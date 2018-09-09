@@ -1,0 +1,26 @@
+post:
+  summary: 查询分组
+  operationId: mall/getgroups
+  security:
+    - accessToken: []
+  tags:
+    - 精品店/分组管理
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              group_list:
+                type: array
+                items:
+                  $ref: '#/definitions/mall.GroupBaseBo'

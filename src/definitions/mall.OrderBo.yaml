@@ -1,0 +1,105 @@
+type: object
+description: 分组基本结构
+properties:
+  order_id:
+    description: 订单id
+    type: string
+  pay_finish_time:
+    description: 用户支付下单时间
+    type: integer
+    format: int32
+  desc:
+    description: 用户下单时填的备注信息
+    type: string
+  fee:
+    description: 订单支付金额，分为单位
+    type: integer
+    format: int32
+  trans_id:
+    description: 微信支付订单号，可以在微信支付商户平台上查询
+    type: string
+  status:
+    description: 订单状态：3：已下单，4：已发货
+    type: integer
+    format: int32
+  ext_info:
+    description: 包括product_info：商品信息，express_info：物流信息，invoice_info：发票信息
+    type: object
+    properties:
+      product_info:
+        type: array
+        items:
+          type: object
+          properties:
+            item_code:
+              type: string
+              description: 商品id
+            sku_id:
+              type: string
+              description: sku id
+            amount:
+              type: integer
+              format: int32
+              description: 下单数量
+            total_fee:
+              type: integer
+              format: int32
+              description: 总价，分为单位
+            unit_price:
+              type: integer
+              format: int32
+              description: 商品单价，分为单位
+            title:
+              type: string
+              description: 商品标题
+            desc:
+              type: string
+              description: 商品描述
+      express_info:
+        type: object
+        properties:
+          name:
+            type: string
+            description: 收件人名字
+          phone:
+            type: string
+            description: 收件人手机号
+          address:
+            type: string
+            description: 收件人地址
+          price:
+            type: integer
+            format: int32
+            description: 运费
+          express_company_id:
+            type: integer
+            format: int32
+            description: 快递公司id，发货后有，参考发货接口
+          express_company_name:
+            type: string
+            description: 快递公司名称，发货后有，参考发货接口
+          express_code:
+            type: string
+            description: 快递单号
+          ship_time:
+            type: integer
+            format: int32
+            description: 订单发货时间
+      invoice_info:
+        type: object
+        properties:
+          type:
+            type: integer
+            format: int32
+            description: 发票类型，0：单位，1：个人
+          title:
+            type: string
+            description: 发票抬头
+  refund_pay_coin_count:
+    description: 退款金额，分为单位
+    type: integer
+    format: int32
+  refund_finish_time:
+    description: 退款完成时间，unix秒级时间戳，默认为0
+    type: integer
+    format: int32

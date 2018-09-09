@@ -1,0 +1,56 @@
+post:
+  summary: 拉取商品列表
+  operationId: mall/selectbranditemlistbyuin
+  security:
+    - accessToken: []
+  tags:
+    - 精品店/商品管理
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          page_index:
+            description: '分页起始位置, 取值范围为[1, 100]'
+            type: integer
+            format: int32
+          page_size:
+            description: '拉取条数, 取值范围为[1, 20]，默认20'
+            type: integer
+            format: int32
+          status:
+            description: 筛选商品的状态： 0=初始状态；1=已上架；2=已下架；
+            type: array
+            items:
+              type: integer
+              format: int32
+          group_id:
+            type: integer
+            format: int32
+            description: 筛选商品的分组ID
+          category_id:
+            type: integer
+            format: int32
+            description: 筛选商品的类目ID
+        required:
+          - page_index
+        example:
+          page_index: 1
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              all_count:
+                type: integer
+                format: int32
+                description: 商品总数，业务方可以据此算出总页数
+              item_list:
+                type: array
+                items:
+                  $ref: '#/definitions/mall.BrandItemBo'

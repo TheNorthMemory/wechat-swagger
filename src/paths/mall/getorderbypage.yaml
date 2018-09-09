@@ -1,0 +1,57 @@
+post:
+  summary: 拉取订单列表
+  operationId: mall/getorderbypage
+  security:
+    - accessToken: []
+  tags:
+    - 精品店/订单管理
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          offset:
+            description: '分页起始位置, 取值范围为[1, 100]'
+            type: integer
+            format: int32
+          count:
+            description: '拉取条数, 取值范围为[0, 20]，默认10'
+            type: integer
+            format: int32
+            default: 10
+          begin_time:
+            description: '筛选订单开始时间, unix秒级时间戳，默认为0'
+            type: integer
+            format: int32
+            default: 0
+          end_time:
+            type: integer
+            format: int32
+            description: '筛选订单结束时间, unix秒级时间戳，默认为最大时间'
+          status:
+            type: integer
+            format: int32
+            description: '筛选订单状态，支持取值有 3：已下单，4：已发货，不填默认拉所有订单，5: 已退款'
+        required:
+          - offset
+        example:
+          offset: 0
+          count: 10
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              total_count:
+                description: 订单总数，业务方可以据此算出总页数
+                type: integer
+                format: int32
+              order_list:
+                type: array
+                items:
+                  $ref: '#/definitions/mall.OrderBo'

@@ -1,0 +1,30 @@
+post:
+  summary: 使用类目 ID 查询属性信息
+  operationId: mall/getpropertybycategoryid
+  security:
+    - accessToken: []
+  tags:
+    - 精品店/类目属性管理
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          category_id:
+            type: integer
+            format: int32
+            description: 类目 id
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              property_list:
+                type: array
+                items:
+                  $ref: '#/definitions/mall.CategoryPropertyBo'

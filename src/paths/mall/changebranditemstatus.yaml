@@ -1,0 +1,36 @@
+post:
+  summary: 商品的上架和下架操作
+  operationId: mall/changebranditemstatus
+  security:
+    - accessToken: []
+  tags:
+    - 精品店/商品管理
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          item_codes:
+            type: array
+            description: 商品编码集合
+            items:
+              type: string
+              description: 商品编码
+          status:
+            type: integer
+            format: int32
+            description: 商品的状态：1=上架；2=下架
+        required:
+          - item_codes
+          - status
+        example:
+          item_codes:
+            - 00003554543900_00000000000381
+          status: 2
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'

@@ -1,0 +1,20 @@
+post:
+  summary: 设置卡券失效
+  operationId: card/code/unavailable
+  security:
+    - accessToken: []
+  tags:
+    - 卡券
+  parameters:
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties:
+          card_id:
+            type: string
+          code:
+            type: string
+  responses:
+    '200':
+      description: ''

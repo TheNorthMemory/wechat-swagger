@@ -1,0 +1,176 @@
+type: object
+description: 小店商品基本结构
+properties:
+  product_base:
+    type: object
+    properties:
+      name:
+        type: string
+        description: 商品名称
+      category_id:
+        type: array
+        items:
+          type: integer
+          format: int32
+          description: 商品分类id，商品分类列表请通过《获取指定分类的所有子分类》获取
+      main_img:
+        type: string
+        description: 商品主图(图片需调用图片上传接口获得图片Url填写至此，否则无法添加商品。图片分辨率推荐尺寸为640×600)
+      img:
+        type: array
+        description: 商品图片列表(图片需调用图片上传接口获得图片Url填写至此，否则无法添加商品。图片分辨率推荐尺寸为640×600)
+        items:
+          type: string
+      detail:
+        type: array
+        description: 商品图片列表(图片需调用图片上传接口获得图片Url填写至此，否则无法添加商品。图片分辨率推荐尺寸为640×600)
+        items:
+          type: object
+          properties:
+            img:
+              type: string
+              description: 图片(图片需调用图片上传接口获得图片Url填写至此，否则无法添加商品)
+            text:
+              type: string
+              description: 文字描述
+      property:
+        type: array
+        description: 商品属性列表，属性列表请通过《获取指定分类的所有属性》获取
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              description: 属性id
+            vid:
+              type: string
+              description: 属性值id
+      sku_info:
+        type: array
+        description: 商品sku定义，SKU列表请通过《获取指定子分类的所有SKU》获取
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              description: 'sku属性(SKU列表中id, 支持自定义SKU，格式为"$xxx"，xxx即为显示在客户端中的字符串)'
+            vid:
+              type: string
+              description: 'sku值(SKU列表中vid, 如需自定义SKU，格式为"$xxx"，xxx即为显示在客户端中的字符串)'
+      buy_limit:
+        type: integer
+        format: int32
+        description: 用户商品限购数量
+    required:
+      - name
+      - category_id
+      - main_img
+      - img
+  sku_list:
+    type: array
+    description: sku信息列表(可为多个)，每个sku信息串即为一个确定的商品，比如白色的37码的鞋子
+    items:
+      type: object
+      properties:
+        sku_id:
+          type: string
+          description: |
+            sku信息, 参照上述sku_table的定义; 格式 : "id1:vid1;id2:vid2" 规则 : id_info的组合个数必须与sku_table个数一致 (若商品无sku信息, 即商品为统一规格，则此处赋值为空字符串即可)
+        ori_price:
+          type: integer
+          format: int32
+          description: 'sku原价(单位:分)'
+        price:
+          type: integer
+          format: int32
+          description: 'sku微信价(单位:分, 微信价必须比原价小, 否则添加商品失败)'
+        icon_url:
+          type: string
+          description: sku iconurl(图片需调用图片上传接口获得图片Url)
+        quantity:
+          type: integer
+          format: int32
+          description: sku库存
+        product_code:
+          type: string
+          description: 商家商品编码
+  attrext:
+    type: object
+    description: 商品其他属性
+    properties:
+      isPostFree:
+        type: integer
+        format: int32
+        description: '是否包邮(0-否, 1-是), 如果包邮delivery_info字段可省略'
+        enum:
+          - 0
+          - 1
+      isHasReceipt:
+        type: integer
+        format: int32
+        description: '是否提供发票(0-否, 1-是)'
+        enum:
+          - 0
+          - 1
+      isUnderGuaranty:
+        type: integer
+        format: int32
+        description: '是否保修(0-否, 1-是)'
+        enum:
+          - 0
+          - 1
+      isSupportReplace:
+        type: integer
+        format: int32
+        description: '是否支持退换货(0-否, 1-是)'
+        enum:
+          - 0
+          - 1
+      location:
+        type: object
+        description: 商品所在地地址
+        properties:
+          country:
+            type: string
+            description: 国家(详见《地区列表》说明)
+          province:
+            type: string
+            description: 省份(详见《地区列表》说明)
+          city:
+            type: string
+            description: 城市(详见《地区列表》说明)
+          address:
+            type: string
+            description: 地址
+  delivery_info:
+    type: object
+    properties:
+      delivery_type:
+        type: integer
+        format: int32
+        description: '运费类型(0-使用下面express字段的默认模板, 1-使用template_id代表的邮费模板, 详见邮费模板相关API)'
+        enum:
+          - 0
+          - 1
+      template_id:
+        type: string
+        description: 邮费模板ID
+      weight:
+        type: string
+      express:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int32
+              description: '快递ID,10000027=平邮,10000028=快递,10000029=EMS'
+              enum:
+                - 10000027
+                - 10000028
+                - 10000029
+            price:
+              type: integer
+              format: int32
+              description: '运费(单位:分)'

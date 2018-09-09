@@ -1,0 +1,16 @@
+post:
+  summary: 更新商品信息
+  operationId: scan/product/update
+  security:
+    - accessToken: []
+  tags:
+    - 扫一扫
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

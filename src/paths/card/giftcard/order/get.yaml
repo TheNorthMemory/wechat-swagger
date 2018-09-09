@@ -1,0 +1,16 @@
+post:
+  summary: 查询-单个礼品卡订单信息接口
+  operationId: card/giftcard/order/get
+  security:
+    - accessToken: []
+  tags:
+    - 卡券/礼品卡/订单
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

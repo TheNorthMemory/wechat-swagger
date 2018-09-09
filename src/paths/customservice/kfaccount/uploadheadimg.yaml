@@ -1,0 +1,23 @@
+post:
+  summary: 上传客服头像
+  operationId: customservice/kfaccount/uploadheadimg
+  security:
+    - accessToken: []
+  tags:
+    - 多客服/客服管理
+  consumes:
+    - multipart/form-data
+  parameters:
+    - in: query
+      name: kf_account
+      type: string
+      description: 完整客服帐号，格式为：帐号前缀@公众号微信号
+      required: true
+    - in: formData
+      name: media
+      type: file
+      description: '文件大小为5M以内,头像图片文件必须是jpg格式,推荐使用640*640大小的图片以达到最佳效果'
+      required: true
+  responses:
+    '200':
+      description: ''

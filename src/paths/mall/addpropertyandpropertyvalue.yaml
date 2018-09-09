@@ -1,0 +1,53 @@
+post:
+  summary: 类目下新增商户自定义属性和属性值
+  operationId: mall/addpropertyandpropertyvalue
+  security:
+    - accessToken: []
+  tags:
+    - 精品店/类目属性管理
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          category_id:
+            type: integer
+            format: int32
+            description: 类目 id
+          property_name:
+            type: string
+            description: 新增的属性名称
+          property_type:
+            type: integer
+            format: int32
+            description: 属性类型 1：展示属性 2：库存属性
+            enum:
+              - 1
+              - 2
+          property_value_name_list:
+            type: array
+            items:
+              $ref: '#/definitions/mall.CategoryPropertyValueBo'
+        required:
+          - category_id
+          - property_name
+          - property_type
+          - property_value_name_list
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              property_id:
+                type: integer
+                format: int32
+                description: 新增属性对应的属性 id
+              property_value_name_list:
+                type: array
+                items:
+                  $ref: '#/definitions/mall.CategoryPropertyValueBo'

@@ -1,0 +1,19 @@
+post:
+  summary: 检查一段文本是否含有违法违规内容
+  operationId: wxa/msg_sec_check
+  security:
+    - accessToken: []
+  tags:
+    - 小程序/文件/内容安全
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          content:
+            type: string
+            description: 要检测的文本内容，长度不超过 500KB，编码格式为utf-8
+  responses:
+    '200':
+      description: ''

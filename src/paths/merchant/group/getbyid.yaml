@@ -1,0 +1,19 @@
+post:
+  summary: 根据分组ID获取分组信息
+  operationId: merchant/group/getbyid
+  security:
+    - accessToken: []
+  tags:
+    - 小店/分组管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          group_id:
+            type: string
+            description: 分组ID
+  responses:
+    '200':
+      description: ''

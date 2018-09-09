@@ -3,7 +3,7 @@
 src=$(dirname $0)"/../src"
 paths="${src}/paths"
 definitions="${src}/definitions"
-targetYaml="${src}/../dist/openapi.yaml"
+targetYaml="${src}/../docs/openapi.yaml"
 cat "${src}/openapi.yaml" | sed '/^paths/d' > "${targetYaml}"
 echo 'paths:' >> "${targetYaml}"
 for yaml in $(find $paths -type f -name '*.yaml'|sort -u); do

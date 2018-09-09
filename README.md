@@ -10,7 +10,7 @@ An easy way to document/play/debug the wechat api using the swagger-ui.
 ## quickly run in docker
 
 1. `docker pull nginx`
-2. `docker run --rm --name wechat-swagger -d -v $PWD/dist:/app -v $PWD/src/nginx.conf:/etc/nginx/nginx.conf -p7788:7788 nginx nginx`
+2. `docker run --rm --name wechat-swagger -d -v $PWD/docs:/app -v $PWD/src/nginx.conf:/etc/nginx/nginx.conf -p7788:7788 nginx nginx`
 3. open a browser, visit the `http://127.0.0.1:7788`
 
 Enjoy!

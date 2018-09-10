@@ -1,0 +1,35 @@
+type: object
+description: 自定义菜单项基本结构
+properties:
+  type:
+    type: string
+    description: 3到8的所有事件，仅支持微信iPhone5.4.1以上版本，和Android5.4以上版本的微信用户；9和10，是专门给第三方平台旗下未微信认证（具体而言，是资质认证未通过）的订阅号准备的事件类型
+    enum:
+      - click
+      - view
+      - scancode_push
+      - scancode_waitmsg
+      - pic_sysphoto
+      - pic_photo_or_album
+      - pic_weixin
+      - location_select
+      - media_id
+      - view_limited
+  name:
+    type: string
+    description: 菜单标题，不超过16个字节，子菜单不超过60个字节
+  key:
+    type: string
+    description: 菜单KEY值，用于消息接口推送，不超过128字节(click等点击类型必须)
+  url:
+    type: string
+    description: 网页 链接，用户点击菜单可打开链接，不超过1024字节。 type为miniprogram时，不支持小程序的老版本客户端将打开本url。(view、miniprogram类型必须)
+  media_id:
+    type: string
+    description: 调用新增永久素材接口返回的合法media_id(media_id类型和view_limited类型必须)
+  appid:
+    type: string
+    description: 小程序的appid（仅认证公众号可配置）(miniprogram类型必须)
+  pagepath:
+    type: string
+    description: 小程序的页面路径(miniprogram类型必须)

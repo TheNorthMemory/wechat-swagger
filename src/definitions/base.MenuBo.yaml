@@ -1,0 +1,14 @@
+type: object
+properties:
+  button:
+    type: array
+    items:
+      allOf:
+        - $ref: '#/definitions/base.MenuItemBo'
+        - type: object
+          properties:
+            sub_button:
+              description: 子菜单，可以为空，每组最多5个
+              type: array
+              items:
+                $ref: '#/definitions/base.MenuItemBo'

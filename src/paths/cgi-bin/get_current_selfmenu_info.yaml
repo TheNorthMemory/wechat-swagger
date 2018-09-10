@@ -1,0 +1,27 @@
+get:
+  summary: 获取自定义配置
+  description: 返回API开发配置或者MP运营后台配置。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1434698695)
+  operationId: cgi-bin/get_current_selfmenu_info
+  security:
+    - accessToken: []
+  tags:
+    - 自定义菜单
+  parameters: []
+  responses:
+    '200':
+      description: ''
+      schema:
+        type: object
+        properties:
+          menu:
+            type: array
+            items:
+              allOf:
+                - $ref: '#/definitions/base.MenuBo'
+                - $ref: '#/definitions/base.MenuConditionsBo'
+                - type: object
+                  properties:
+                    menuid:
+                      type: integer
+                      format: int32
+                      description: 个性化菜单ID

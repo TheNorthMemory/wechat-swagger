@@ -1,0 +1,39 @@
+post:
+  summary: 获取用户列表
+  description: 一次拉取调用最多拉取10000个关注者的OpenID。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140840)
+  operationId: cgi-bin/user/get
+  security:
+    - accessToken: []
+  tags:
+    - 用户管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          next_openid:
+            type: string
+            description: 第一个拉取的OPENID，不填默认从头开始拉取
+  responses:
+    '200':
+      description: ''
+      schema:
+        type: object
+        properties:
+          total:
+            type: integer
+            format: int32
+            description: 关注该公众账号的总用户数
+          count:
+            type: integer
+            format: int32
+            description: 拉取的OPENID个数，最大值为10000
+          next_openid:
+            type: string
+            description: 拉取列表的最后一个用户的OPENID
+          data:
+            type: array
+            description: 列表数据，OPENID的列表
+            items:
+              type: string

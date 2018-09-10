@@ -1,0 +1,40 @@
+post:
+  summary: 编辑
+  description: 单个编辑。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140837)
+  operationId: cgi-bin/tags/update
+  security:
+    - accessToken: []
+  tags:
+    - 用户管理/标签
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          tag:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+                description: 标签id
+              name:
+                type: string
+                description: 标签名（30个字符以内）
+  responses:
+    '200':
+      description: ''
+      schema:
+        type: object
+        properties:
+          tag:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+                description: 标签id，由微信分配
+              name:
+                type: string
+                description: 标签名，UTF8编码

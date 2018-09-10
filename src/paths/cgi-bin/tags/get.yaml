@@ -1,0 +1,27 @@
+get:
+  summary: 获取
+  description: 获取公众号已创建的标签。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140837)
+  operationId: cgi-bin/tags/get
+  security:
+    - accessToken: []
+  tags:
+    - 用户管理/标签
+  parameters: []
+  responses:
+    '200':
+      description: ''
+      schema:
+        type: object
+        properties:
+          tags:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  format: int32
+                  description: 标签id，由微信分配
+                name:
+                  type: string
+                  description: 标签名，UTF8编码

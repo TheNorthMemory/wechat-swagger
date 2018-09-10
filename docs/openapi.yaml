@@ -20,6 +20,8 @@ securityDefinitions:
 tags:
   - name: 基础支持
   - name: 自定义菜单
+  - name: 用户管理
+  - name: 用户管理/标签
   - name: 卡券
   - name: 卡券/立减金活动
   - name: 卡券/会员卡
@@ -1749,6 +1751,328 @@ paths:
       responses:
         '200':
           description: ''
+  /cgi-bin/tags/create:
+    post:
+      summary: 创建
+      description: 一个公众号，最多可以创建100个标签。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140837)
+      operationId: cgi-bin/tags/create
+      security:
+        - accessToken: []
+      tags:
+        - 用户管理/标签
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              tag:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: 标签名（30个字符以内）
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              tag:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+                    description: 标签id，由微信分配
+                  name:
+                    type: string
+                    description: 标签名，UTF8编码
+  /cgi-bin/tags/delete:
+    post:
+      summary: 删除
+      description: 请注意，当某个标签下的粉丝超过10w时，后台不可直接删除标签。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140837)
+      operationId: cgi-bin/tags/delete
+      security:
+        - accessToken: []
+      tags:
+        - 用户管理/标签
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              tag:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+                    description: 标签id
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /cgi-bin/tags/get:
+    get:
+      summary: 获取
+      description: 获取公众号已创建的标签。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140837)
+      operationId: cgi-bin/tags/get
+      security:
+        - accessToken: []
+      tags:
+        - 用户管理/标签
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              tags:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      format: int32
+                      description: 标签id，由微信分配
+                    name:
+                      type: string
+                      description: 标签名，UTF8编码
+  /cgi-bin/tags/getidlist:
+    post:
+      summary: 获取用户身上的标签列表
+      operationId: cgi-bin/tags/getidlist
+      security:
+        - accessToken: []
+      tags:
+        - 用户管理/标签
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              openid:
+                type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              tagid_list:
+                type: array
+                items:
+                  type: integer
+                  format: int32
+                  description: 标签id
+            example:
+              tagid_list:
+                - 134
+                - 2
+  /cgi-bin/tags/members/batchblacklist:
+    post:
+      summary: 拉黑用户
+      description: 一次拉黑最多允许20个。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1471422259_pJMWA)
+      operationId: cgi-bin/tags/members/batchblacklist
+      security:
+        - accessToken: []
+      tags:
+        - 用户管理/标签
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              openid_list:
+                type: array
+                items:
+                  type: string
+            example:
+              openid_list:
+                - OPENID1
+                - OPENID2
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /cgi-bin/tags/members/batchtagging:
+    post:
+      summary: 批量为用户打标签
+      operationId: cgi-bin/tags/members/batchtagging
+      security:
+        - accessToken: []
+      tags:
+        - 用户管理/标签
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              tagid:
+                type: integer
+                format: int32
+              openid_list:
+                type: array
+                items:
+                  type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /cgi-bin/tags/members/batchunblacklist:
+    post:
+      summary: 取消拉黑用户
+      description: 一次最多允许20个。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1471422259_pJMWA)
+      operationId: cgi-bin/tags/members/batchunblacklist
+      security:
+        - accessToken: []
+      tags:
+        - 用户管理/标签
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              openid_list:
+                type: array
+                items:
+                  type: string
+            example:
+              openid_list:
+                - OPENID1
+                - OPENID2
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /cgi-bin/tags/members/batchuntagging:
+    post:
+      summary: 批量为用户取消标签
+      operationId: cgi-bin/tags/members/batchuntagging
+      security:
+        - accessToken: []
+      tags:
+        - 用户管理/标签
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              tagid:
+                type: integer
+                format: int32
+              openid_list:
+                type: array
+                items:
+                  type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /cgi-bin/tags/members/getblacklist:
+    post:
+      summary: 获取公众号的黑名单列表
+      description: 每次调用最多可拉取 10000 个OpenID。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1471422259_pJMWA)
+      operationId: cgi-bin/tags/members/getblacklist
+      security:
+        - accessToken: []
+      tags:
+        - 用户管理/标签
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              begin_openid:
+                type: string
+            example:
+              begin_openid: ''
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              total:
+                type: integer
+                format: int32
+                description: 关注该公众账号的总用户数
+              count:
+                type: integer
+                format: int32
+                description: 拉取的OPENID个数，最大值为10000
+              next_openid:
+                type: string
+                description: 拉取列表的最后一个用户的OPENID
+              data:
+                type: array
+                description: 列表数据，OPENID的列表
+                items:
+                  type: string
+            example:
+              total: 23000
+              count: 10000
+              data:
+                openid:
+                  - OPENID1
+                  - OPENID100000
+              next_openid: OPENID10000
+  /cgi-bin/tags/update:
+    post:
+      summary: 编辑
+      description: 单个编辑。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140837)
+      operationId: cgi-bin/tags/update
+      security:
+        - accessToken: []
+      tags:
+        - 用户管理/标签
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              tag:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+                    description: 标签id
+                  name:
+                    type: string
+                    description: 标签名（30个字符以内）
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              tag:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+                    description: 标签id，由微信分配
+                  name:
+                    type: string
+                    description: 标签名，UTF8编码
   /cgi-bin/ticket/getticket:
     get:
       summary: 获取卡券api_ticket/jsapi_ticket
@@ -1796,6 +2120,220 @@ paths:
       responses:
         '200':
           description: ''
+  /cgi-bin/user/get:
+    post:
+      summary: 获取用户列表
+      description: 一次拉取调用最多拉取10000个关注者的OpenID。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140840)
+      operationId: cgi-bin/user/get
+      security:
+        - accessToken: []
+      tags:
+        - 用户管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              next_openid:
+                type: string
+                description: 第一个拉取的OPENID，不填默认从头开始拉取
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              total:
+                type: integer
+                format: int32
+                description: 关注该公众账号的总用户数
+              count:
+                type: integer
+                format: int32
+                description: 拉取的OPENID个数，最大值为10000
+              next_openid:
+                type: string
+                description: 拉取列表的最后一个用户的OPENID
+              data:
+                type: array
+                description: 列表数据，OPENID的列表
+                items:
+                  type: string
+  /cgi-bin/user/info:
+    post:
+      summary: 获取用户基本信息
+      description: 获取用户基本信息，包括昵称、头像、性别、所在城市、语言和关注时间。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140839)
+      operationId: cgi-bin/user/info
+      security:
+        - accessToken: []
+      tags:
+        - 用户管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              openid:
+                type: string
+                description: 普通用户的标识，对当前公众号唯一
+              lang:
+                type: string
+                description: 返回国家地区语言版本，zh_CN 简体，zh_TW 繁体，en 英语
+                enum:
+                  - zh_CN
+                  - zh_TW
+                  - zh_HK
+                  - en
+                  - id
+                  - ms
+                  - es
+                  - ko
+                  - it
+                  - ja
+                  - pl
+                  - pt
+                  - ru
+                  - th
+                  - vi
+                  - ar
+                  - hi
+                  - he
+                  - tr
+                  - de
+                  - fr
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/base.UserInfoBo'
+  /cgi-bin/user/info/batchget:
+    post:
+      summary: 批量获取用户基本信息
+      description: 批量获取用户基本信息。最多支持一次拉取100条。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140839)
+      operationId: cgi-bin/user/info/batchget
+      security:
+        - accessToken: []
+      tags:
+        - 用户管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              user_list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    openid:
+                      type: string
+                      description: 普通用户的标识，对当前公众号唯一
+                    lang:
+                      type: string
+                      description: 返回国家地区语言版本，zh_CN 简体，zh_TW 繁体，en 英语
+                      enum:
+                        - zh_CN
+                        - zh_TW
+                        - zh_HK
+                        - en
+                        - id
+                        - ms
+                        - es
+                        - ko
+                        - it
+                        - ja
+                        - pl
+                        - pt
+                        - ru
+                        - th
+                        - vi
+                        - ar
+                        - hi
+                        - he
+                        - tr
+                        - de
+                        - fr
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              user_info_list:
+                type: array
+                items:
+                  $ref: '#/definitions/base.UserInfoBo'
+  /cgi-bin/user/info/updateremark:
+    post:
+      summary: 设置用户备注名
+      description: 对指定用户设置备注名，该接口暂时开放给微信认证的服务号。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140838)
+      operationId: cgi-bin/user/info/updateremark
+      security:
+        - accessToken: []
+      tags:
+        - 用户管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              openid:
+                type: string
+                description: 用户标识
+              remark:
+                type: string
+                description: 新的备注名，长度必须小于30字符
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /cgi-bin/user/tag/get:
+    post:
+      summary: 获取标签下粉丝列表
+      operationId: cgi-bin/user/tag/get
+      security:
+        - accessToken: []
+      tags:
+        - 用户管理/标签
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              tag:
+                type: object
+                properties:
+                  tagid:
+                    type: integer
+                    format: int32
+                    description: 标签id，由微信分配
+                  next_openid:
+                    type: string
+                    description: 第一个拉取的OPENID，不填默认从头开始拉取
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer
+                format: int32
+              next_openid:
+                type: string
+              data:
+                type: object
+                properties:
+                  openid:
+                    type: array
+                    items:
+                      type: string
   /customservice/kfaccount/add:
     post:
       summary: 添加客服帐号
@@ -4750,6 +5288,67 @@ definitions:
       pagepath:
         type: string
         description: 小程序的页面路径(miniprogram类型必须)
+  base.UserInfoBo:
+    type: object
+    properties:
+      subscribe:
+        type: integer
+        format: int32
+        description: 用户是否订阅该公众号标识，值为0时，代表此用户没有关注该公众号，拉取不到其余信息。
+      openid:
+        type: string
+        description: 用户的标识，对当前公众号唯一
+      nickname:
+        type: string
+        description: 用户的昵称
+      sex:
+        type: integer
+        format: int32
+        description: 用户的性别，值为1时是男性，值为2时是女性，值为0时是未知
+      city:
+        type: string
+        description: 用户所在城市
+      country:
+        type: string
+        description: 用户所在国家
+      province:
+        type: string
+        description: 用户所在省份
+      language:
+        type: string
+        description: 用户的语言，简体中文为zh_CN
+      headimgurl:
+        type: string
+        description: 用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），用户没有头像时该项为空。若用户更换头像，原有头像URL将失效。
+      subscribe_time:
+        type: integer
+        format: int32
+        description: 用户关注时间，为时间戳。如果用户曾多次关注，则取最后关注时间
+      unionid:
+        type: string
+        description: 只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段。
+      remark:
+        type: string
+        description: 公众号运营者对粉丝的备注，公众号运营者可在微信公众平台用户管理界面对粉丝添加备注
+      groupid:
+        type: integer
+        format: int32
+        description: 用户所在的分组ID（兼容旧的用户分组接口）
+      tagid_list:
+        type: array
+        items:
+          type: integer
+          format: int32
+          description: 用户被打上的标签ID列表
+      subscribe_scene:
+        type: string
+        description: 返回用户关注的渠道来源，ADD_SCENE_SEARCH 公众号搜索，ADD_SCENE_ACCOUNT_MIGRATION 公众号迁移，ADD_SCENE_PROFILE_CARD 名片分享，ADD_SCENE_QR_CODE 扫描二维码，ADD_SCENEPROFILE LINK 图文页内名称点击，ADD_SCENE_PROFILE_ITEM 图文页右上角菜单，ADD_SCENE_PAID 支付后关注，ADD_SCENE_OTHERS 其他
+      qr_scene:
+        type: string
+        description: 二维码扫码场景（开发者自定义）
+      qr_scene_str:
+        type: string
+        description: 二维码扫码场景描述（开发者自定义）
   mall.BrandItemBaseBo:
     type: object
     description: 商品的基础属性

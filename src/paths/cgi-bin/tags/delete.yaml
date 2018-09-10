@@ -1,0 +1,26 @@
+post:
+  summary: 删除
+  description: 请注意，当某个标签下的粉丝超过10w时，后台不可直接删除标签。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140837)
+  operationId: cgi-bin/tags/delete
+  security:
+    - accessToken: []
+  tags:
+    - 用户管理/标签
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          tag:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+                description: 标签id
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'

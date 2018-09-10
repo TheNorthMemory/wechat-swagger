@@ -1,0 +1,27 @@
+post:
+  summary: 拉黑用户
+  description: 一次拉黑最多允许20个。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1471422259_pJMWA)
+  operationId: cgi-bin/tags/members/batchblacklist
+  security:
+    - accessToken: []
+  tags:
+    - 用户管理/标签
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          openid_list:
+            type: array
+            items:
+              type: string
+        example:
+          openid_list:
+            - OPENID1
+            - OPENID2
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'

@@ -1,0 +1,48 @@
+post:
+  summary: 获取公众号的黑名单列表
+  description: 每次调用最多可拉取 10000 个OpenID。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1471422259_pJMWA)
+  operationId: cgi-bin/tags/members/getblacklist
+  security:
+    - accessToken: []
+  tags:
+    - 用户管理/标签
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          begin_openid:
+            type: string
+        example:
+          begin_openid: ''
+  responses:
+    '200':
+      description: ''
+      schema:
+        type: object
+        properties:
+          total:
+            type: integer
+            format: int32
+            description: 关注该公众账号的总用户数
+          count:
+            type: integer
+            format: int32
+            description: 拉取的OPENID个数，最大值为10000
+          next_openid:
+            type: string
+            description: 拉取列表的最后一个用户的OPENID
+          data:
+            type: array
+            description: 列表数据，OPENID的列表
+            items:
+              type: string
+        example:
+          total: 23000
+          count: 10000
+          data:
+            openid:
+              - OPENID1
+              - OPENID100000
+          next_openid: OPENID10000

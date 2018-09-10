@@ -1,0 +1,25 @@
+post:
+  summary: 批量为用户取消标签
+  operationId: cgi-bin/tags/members/batchuntagging
+  security:
+    - accessToken: []
+  tags:
+    - 用户管理/标签
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          tagid:
+            type: integer
+            format: int32
+          openid_list:
+            type: array
+            items:
+              type: string
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'

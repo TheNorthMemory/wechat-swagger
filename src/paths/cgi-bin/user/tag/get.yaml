@@ -1,0 +1,41 @@
+post:
+  summary: 获取标签下粉丝列表
+  operationId: cgi-bin/user/tag/get
+  security:
+    - accessToken: []
+  tags:
+    - 用户管理/标签
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          tag:
+            type: object
+            properties:
+              tagid:
+                type: integer
+                format: int32
+                description: 标签id，由微信分配
+              next_openid:
+                type: string
+                description: 第一个拉取的OPENID，不填默认从头开始拉取
+  responses:
+    '200':
+      description: ''
+      schema:
+        type: object
+        properties:
+          count:
+            type: integer
+            format: int32
+          next_openid:
+            type: string
+          data:
+            type: object
+            properties:
+              openid:
+                type: array
+                items:
+                  type: string

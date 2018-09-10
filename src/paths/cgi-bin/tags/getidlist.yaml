@@ -1,0 +1,31 @@
+post:
+  summary: 获取用户身上的标签列表
+  operationId: cgi-bin/tags/getidlist
+  security:
+    - accessToken: []
+  tags:
+    - 用户管理/标签
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          openid:
+            type: string
+  responses:
+    '200':
+      description: ''
+      schema:
+        type: object
+        properties:
+          tagid_list:
+            type: array
+            items:
+              type: integer
+              format: int32
+              description: 标签id
+        example:
+          tagid_list:
+            - 134
+            - 2

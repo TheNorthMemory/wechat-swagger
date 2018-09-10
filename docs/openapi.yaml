@@ -20,6 +20,7 @@ securityDefinitions:
 tags:
   - name: 基础支持
   - name: 卡券
+  - name: 卡券/立减金活动
   - name: 卡券/会员卡
   - name: 卡券/会议门票
   - name: 卡券/电影票
@@ -855,6 +856,97 @@ paths:
       responses:
         '200':
           description: ''
+  /card/mkt/activity/create:
+    post:
+      summary: 创建支付后领取立减金活动
+      description: 将已创建的代金券cardid、跳转小程序appid、发起支付的商户号等信息通过此接口创建立减金活动，成功返回活动id即为创建成功。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21515658940X5pIn)
+      operationId: card/mkt/activity/create
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/立减金活动
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              card:
+                type: object
+                properties:
+                  base_info:
+                    type: object
+                    properties:
+                      activity_bg_color:
+                        type: string
+                        description: 活动封面的背景颜色，可参考：选取卡券背景颜色
+                      activity_tinyappid:
+                        type: string
+                        description: 用户点击链接后可静默添加到列表的小程序appid；
+                      begin_time:
+                        type: integer
+                        format: int32
+                        description: 活动开始时间，精确到秒（unix时间戳）
+                      end_time:
+                        type: integer
+                        format: int32
+                        description: 活动结束时间，精确到秒（unix时间戳）
+                      gift_num:
+                        type: integer
+                        format: int32
+                        description: 单个礼包社交立减金数量（3-15个）
+                      max_partic_times_act:
+                        type: integer
+                        format: int32
+                        description: 每个用户活动期间最大领取次数,最大为50，不填默认为1
+                      max_partic_times_one_day:
+                        type: integer
+                        format: int32
+                        description: 每个用户活动期间单日最大领取次数,最大为50，不填默认为1
+                      mch_code:
+                        type: string
+                        description: 支付商户号
+                  card_info_list:
+                    type: array
+                    description: 可以配置两种发放规则：小程序新老用户、新老会员
+                    items:
+                      type: object
+                      properties:
+                        card_id:
+                          type: string
+                          description: 卡券ID
+                        min_amt:
+                          type: integer
+                          format: int32
+                          description: 最少支付金额，单位是分
+                        membership_appid:
+                          type: string
+                          description: 奖品指定的会员卡appid。如用户标签有选择商户会员，则需要填写会员卡appid，该appid需要跟所有发放商户号有绑定关系。(3选1，未选择请勿填，不必故意填写false)
+                        new_tinyapp_user:
+                          type: string
+                          description: 可以指定为是否小程序新用户(3选1，未选择请勿填，不必故意填写false)
+                        total_user:
+                          type: string
+                          description: 可以指定为所有用户(3选1，未选择请勿填，不必故意填写false)
+                  custom_info:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        required: true
+                        enum:
+                          - AFTER_PAY_PACKAGE
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              activity_id:
+                type: string
+                description: 立减金活动id
+            example:
+              activity_id: 123456
   /card/modifystock:
     post:
       summary: ''

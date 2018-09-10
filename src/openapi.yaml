@@ -20,6 +20,7 @@ securityDefinitions:
 tags:
   - name: 基础支持
   - name: 卡券
+  - name: 卡券/立减金活动
   - name: 卡券/会员卡
   - name: 卡券/会议门票
   - name: 卡券/电影票

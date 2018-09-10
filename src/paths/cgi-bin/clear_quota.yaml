@@ -1,0 +1,20 @@
+post:
+  summary: 对公众号的所有API调用次数进行清零
+  description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419318587&token=&lang=zh_CN)'
+  operationId: cgi-bin/clear_quota
+  tags:
+    - 基础支持
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          appid:
+            type: string
+            description: 第三方用户唯一凭证
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'

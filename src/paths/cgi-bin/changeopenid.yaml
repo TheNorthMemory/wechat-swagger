@@ -1,0 +1,55 @@
+post:
+  summary: 公众号粉丝迁移
+  operationId: cgi-bin/changeopenid
+  tags:
+    - 用户管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          appid:
+            type: string
+            description: 迁移前的公众号APPID
+          openid_list:
+            type: array
+            description: 迁移前的公众号粉丝OPENID
+            items:
+              type: string
+        example:
+          appid: test
+          openid_list:
+            - OPENID1
+            - OPENID2
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              result_list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    ori_openid:
+                      type: string
+                      description: 原OPENID
+                    new_openid:
+                      type: string
+                      description: 新OPENID
+                    err_msg:
+                      type: string
+                      description: 正常转换为ok
+        example:
+          errcode: 0
+          errmsg: ok
+          result_list:
+            - ori_openid: oEmYbwN-n24jxvk4Sox81qedINkQ
+              new_openid: o2FwqwI9xCsVadFah_HtpPfaR-X4
+              err_msg: ok
+            - ori_openid: oEmYbwH9uVd4RKJk7ZZg6SzL6tTo
+              err_msg: ori_openid error

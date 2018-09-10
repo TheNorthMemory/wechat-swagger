@@ -1,0 +1,27 @@
+get:
+  summary: 查询
+  description: 查询自定义菜单。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141014)
+  operationId: cgi-bin/menu/get
+  security:
+    - accessToken: []
+  tags:
+    - 自定义菜单
+  parameters: []
+  responses:
+    '200':
+      description: ''
+      schema:
+        type: object
+        properties:
+          menu:
+            type: array
+            items:
+              allOf:
+                - $ref: '#/definitions/base.MenuBo'
+                - $ref: '#/definitions/base.MenuConditionsBo'
+                - type: object
+                  properties:
+                    menuid:
+                      type: integer
+                      format: int32
+                      description: 个性化菜单ID

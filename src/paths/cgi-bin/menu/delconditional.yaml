@@ -1,0 +1,23 @@
+post:
+  summary: 删除个性化
+  description: menuid为菜单id，可以通过自定义菜单查询接口获取。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455782296)
+  operationId: cgi-bin/menu/delconditional
+  security:
+    - accessToken: []
+  tags:
+    - 自定义菜单
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          menuid:
+            type: integer
+            format: int32
+            description: 个性化菜单ID
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'

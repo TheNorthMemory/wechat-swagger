@@ -1,0 +1,14 @@
+get:
+  summary: 删除
+  description: 删除当前使用的自定义菜单。另请注意，在个性化菜单时，调用此接口会删除默认菜单及全部个性化菜单。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141015)
+  operationId: cgi-bin/menu/delete
+  security:
+    - accessToken: []
+  tags:
+    - 自定义菜单
+  parameters: []
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'

@@ -19,6 +19,7 @@ securityDefinitions:
     name: access_token
 tags:
   - name: 基础支持
+  - name: 自定义菜单
   - name: 卡券
   - name: 卡券/立减金活动
   - name: 卡券/会员卡

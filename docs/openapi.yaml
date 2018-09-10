@@ -19,6 +19,7 @@ securityDefinitions:
     name: access_token
 tags:
   - name: 基础支持
+  - name: 自定义菜单
   - name: 卡券
   - name: 卡券/立减金活动
   - name: 卡券/会员卡
@@ -1182,6 +1183,34 @@ paths:
       responses:
         '200':
           description: ''
+  /cgi-bin/get_current_selfmenu_info:
+    get:
+      summary: 获取自定义配置
+      description: 返回API开发配置或者MP运营后台配置。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1434698695)
+      operationId: cgi-bin/get_current_selfmenu_info
+      security:
+        - accessToken: []
+      tags:
+        - 自定义菜单
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              menu:
+                type: array
+                items:
+                  allOf:
+                    - $ref: '#/definitions/base.MenuBo'
+                    - $ref: '#/definitions/base.MenuConditionsBo'
+                    - type: object
+                      properties:
+                        menuid:
+                          type: integer
+                          format: int32
+                          description: 个性化菜单ID
   /cgi-bin/getcallbackip:
     get:
       summary: 获取微信服务器IP地址
@@ -1348,6 +1377,136 @@ paths:
       responses:
         '200':
           description: ''
+  /cgi-bin/menu/addconditional:
+    post:
+      summary: 创建个性化
+      description: 自定义菜单最多包括3个一级菜单，每个一级菜单最多包含5个二级菜单。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455782296)
+      operationId: cgi-bin/menu/addconditional
+      security:
+        - accessToken: []
+      tags:
+        - 自定义菜单
+      parameters:
+        - in: body
+          name: body
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.MenuBo'
+              - $ref: '#/definitions/base.MenuConditionsBo'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /cgi-bin/menu/create:
+    post:
+      summary: 创建
+      description: 自定义菜单最多包括3个一级菜单，每个一级菜单最多包含5个二级菜单。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141013)
+      operationId: cgi-bin/menu/create
+      security:
+        - accessToken: []
+      tags:
+        - 自定义菜单
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/base.MenuBo'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /cgi-bin/menu/delconditional:
+    post:
+      summary: 删除个性化
+      description: menuid为菜单id，可以通过自定义菜单查询接口获取。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455782296)
+      operationId: cgi-bin/menu/delconditional
+      security:
+        - accessToken: []
+      tags:
+        - 自定义菜单
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              menuid:
+                type: integer
+                format: int32
+                description: 个性化菜单ID
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /cgi-bin/menu/delete:
+    get:
+      summary: 删除
+      description: 删除当前使用的自定义菜单。另请注意，在个性化菜单时，调用此接口会删除默认菜单及全部个性化菜单。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141015)
+      operationId: cgi-bin/menu/delete
+      security:
+        - accessToken: []
+      tags:
+        - 自定义菜单
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /cgi-bin/menu/get:
+    get:
+      summary: 查询
+      description: 查询自定义菜单。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141014)
+      operationId: cgi-bin/menu/get
+      security:
+        - accessToken: []
+      tags:
+        - 自定义菜单
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              menu:
+                type: array
+                items:
+                  allOf:
+                    - $ref: '#/definitions/base.MenuBo'
+                    - $ref: '#/definitions/base.MenuConditionsBo'
+                    - type: object
+                      properties:
+                        menuid:
+                          type: integer
+                          format: int32
+                          description: 个性化菜单ID
+  /cgi-bin/menu/trymatch:
+    post:
+      summary: 测试个性化匹配结果
+      description: user_id可以是粉丝的OpenID，也可以是粉丝的微信号。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455782296)
+      operationId: cgi-bin/menu/trymatch
+      security:
+        - accessToken: []
+      tags:
+        - 自定义菜单
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              user_id:
+                type: string
+                description: 粉丝的OpenID或者微信号
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/base.MenuBo'
   /cgi-bin/message/custom/send:
     post:
       summary: 客服接口-发消息
@@ -4481,6 +4640,116 @@ paths:
         '200':
           description: ''
 definitions:
+  base.MenuBo:
+    type: object
+    properties:
+      button:
+        type: array
+        items:
+          allOf:
+            - $ref: '#/definitions/base.MenuItemBo'
+            - type: object
+              properties:
+                sub_button:
+                  description: 子菜单，可以为空，每组最多5个
+                  type: array
+                  items:
+                    $ref: '#/definitions/base.MenuItemBo'
+  base.MenuConditionsBo:
+    type: object
+    properties:
+      matchrule:
+        type: object
+        properties:
+          tag_id:
+            type: integer
+            format: int32
+            description: 用户标签的id，可通过用户标签管理接口获取
+          sex:
+            type: integer
+            format: int32
+            description: 性别：男（1）女（2），不填则不做匹配
+            enum:
+              - 1
+              - 2
+          country:
+            type: string
+            description: 国家信息，是用户在微信中设置的地区，具体请参考地区信息表
+          province:
+            type: string
+            description: 省份信息，是用户在微信中设置的地区，具体请参考地区信息表
+          city:
+            type: string
+            description: 城市信息，是用户在微信中设置的地区，具体请参考地区信息表
+          client_platform_type:
+            type: integer
+            format: int32
+            description: 客户端版本，当前只具体到系统型号：IOS(1), Android(2),Others(3)，不填则不做匹配
+            enum:
+              - 1
+              - 2
+              - 3
+          language:
+            type: string
+            description: 语言信息，是用户在微信中设置的语言，具体请参考语言表： 1、简体中文 "zh_CN" 2、繁体中文TW "zh_TW" 3、繁体中文HK "zh_HK" 4、英文 "en" 5、印尼 "id" 6、马来 "ms" 7、西班牙 "es" 8、韩国 "ko" 9、意大利 "it" 10、日本 "ja" 11、波兰 "pl" 12、葡萄牙 "pt" 13、俄国 "ru" 14、泰文 "th" 15、越南 "vi" 16、阿拉伯语 "ar" 17、北印度 "hi" 18、希伯来 "he" 19、土耳其 "tr" 20、德语 "de" 21、法语 "fr"
+            enum:
+              - zh_CN
+              - zh_TW
+              - zh_HK
+              - en
+              - id
+              - ms
+              - es
+              - ko
+              - it
+              - ja
+              - pl
+              - pt
+              - ru
+              - th
+              - vi
+              - ar
+              - hi
+              - he
+              - tr
+              - de
+              - fr
+  base.MenuItemBo:
+    type: object
+    description: 自定义菜单项基本结构
+    properties:
+      type:
+        type: string
+        description: 3到8的所有事件，仅支持微信iPhone5.4.1以上版本，和Android5.4以上版本的微信用户；9和10，是专门给第三方平台旗下未微信认证（具体而言，是资质认证未通过）的订阅号准备的事件类型
+        enum:
+          - click
+          - view
+          - scancode_push
+          - scancode_waitmsg
+          - pic_sysphoto
+          - pic_photo_or_album
+          - pic_weixin
+          - location_select
+          - media_id
+          - view_limited
+      name:
+        type: string
+        description: 菜单标题，不超过16个字节，子菜单不超过60个字节
+      key:
+        type: string
+        description: 菜单KEY值，用于消息接口推送，不超过128字节(click等点击类型必须)
+      url:
+        type: string
+        description: 网页 链接，用户点击菜单可打开链接，不超过1024字节。 type为miniprogram时，不支持小程序的老版本客户端将打开本url。(view、miniprogram类型必须)
+      media_id:
+        type: string
+        description: 调用新增永久素材接口返回的合法media_id(media_id类型和view_limited类型必须)
+      appid:
+        type: string
+        description: 小程序的appid（仅认证公众号可配置）(miniprogram类型必须)
+      pagepath:
+        type: string
+        description: 小程序的页面路径(miniprogram类型必须)
   mall.BrandItemBaseBo:
     type: object
     description: 商品的基础属性

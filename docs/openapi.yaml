@@ -1165,6 +1165,8 @@ paths:
     post:
       summary: 公众号粉丝迁移
       operationId: cgi-bin/changeopenid
+      security:
+        - accessToken: []
       tags:
         - 用户管理
       parameters:
@@ -1222,6 +1224,8 @@ paths:
       summary: 对公众号的所有API调用次数进行清零
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419318587&token=&lang=zh_CN)'
       operationId: cgi-bin/clear_quota
+      security:
+        - accessToken: []
       tags:
         - 基础支持
       parameters:

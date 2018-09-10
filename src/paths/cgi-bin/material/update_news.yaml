@@ -1,0 +1,28 @@
+post:
+  summary: 修改永久图文素材
+  description: 对永久图文素材进行修改。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738729)
+  operationId: cgi-bin/material/update_news
+  security:
+    - accessToken: []
+  tags:
+    - 素材管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          media_id:
+            type: string
+            description: 要修改的图文消息的id
+          index:
+            type: integer
+            format: int32
+            description: 要更新的文章在图文消息中的位置（多图文消息时，此字段才有意义），第一篇为0
+          articles:
+            $ref: '#/definitions/base.ArticleItemBo'
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'

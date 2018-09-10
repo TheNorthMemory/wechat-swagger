@@ -1,0 +1,4 @@
+type: array
+description: 图文素材基本结构
+items:
+  $ref: '#/definitions/base.ArticleItemBo'

@@ -1,10 +1,12 @@
 get:
-  summary: 下载多媒体文件接口
+  summary: 获取临时素材
+  description: 请注意，视频文件不支持https下载，调用该接口需http协议。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738727)
   operationId: cgi-bin/media/get
   security:
     - accessToken: []
   tags:
     - 基础支持
+    - 素材管理
   parameters:
     - in: query
       name: media_id

@@ -1,0 +1,49 @@
+post:
+  summary: 新增其他类型永久素材
+  description: 图片素材将进入公众平台官网素材管理模块中的默认分组。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738729)
+  operationId: cgi-bin/material/add_material
+  security:
+    - accessToken: []
+  tags:
+    - 素材管理
+  consumes:
+    - multipart/form-data
+  parameters:
+    - in: query
+      name: type
+      type: string
+      description: 媒体文件类型 图片（image:2M，支持PNG\JPEG\JPG\GIF格式） 语音（voice:2M，播放长度不超过60s，支持AMR\MP3格式） 视频（video:10MB，支持MP4格式） 缩略图（thumb:64KB，支持JPG格式）
+      required: true
+      enum:
+        - image
+        - voice
+        - video
+        - thumb
+    - in: formData
+      name: media
+      type: file
+      description: form-data中媒体文件标识，有filename、filelength、content-type等信息
+      required: true
+    - in: formData
+      name: description
+      type: object
+      description: 永久视频素材专用
+      properties:
+        title:
+          type: string
+          description: 视频素材的标题
+        introduction:
+          type: string
+          description: 视频素材的描述
+  responses:
+    '200':
+      description: ''
+      schema:
+        type: object
+        properties:
+          media_id:
+            type: string
+            description: 新增的图文消息素材的media_id
+          url:
+            type: string
+            description: 新增的图片素材的图片URL（仅新增图片素材时会返回该字段）

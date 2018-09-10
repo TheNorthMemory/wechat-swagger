@@ -22,6 +22,7 @@ tags:
   - name: 自定义菜单
   - name: 用户管理
   - name: 用户管理/标签
+  - name: 素材管理
   - name: 卡券
   - name: 卡券/立减金活动
   - name: 卡券/会员卡
@@ -1306,14 +1307,289 @@ paths:
       responses:
         '200':
           description: ''
+  /cgi-bin/material/add_material:
+    post:
+      summary: 新增其他类型永久素材
+      description: 图片素材将进入公众平台官网素材管理模块中的默认分组。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738729)
+      operationId: cgi-bin/material/add_material
+      security:
+        - accessToken: []
+      tags:
+        - 素材管理
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: query
+          name: type
+          type: string
+          description: 媒体文件类型 图片（image:2M，支持PNG\JPEG\JPG\GIF格式） 语音（voice:2M，播放长度不超过60s，支持AMR\MP3格式） 视频（video:10MB，支持MP4格式） 缩略图（thumb:64KB，支持JPG格式）
+          required: true
+          enum:
+            - image
+            - voice
+            - video
+            - thumb
+        - in: formData
+          name: media
+          type: file
+          description: form-data中媒体文件标识，有filename、filelength、content-type等信息
+          required: true
+        - in: formData
+          name: description
+          type: object
+          description: 永久视频素材专用
+          properties:
+            title:
+              type: string
+              description: 视频素材的标题
+            introduction:
+              type: string
+              description: 视频素材的描述
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              media_id:
+                type: string
+                description: 新增的图文消息素材的media_id
+              url:
+                type: string
+                description: 新增的图片素材的图片URL（仅新增图片素材时会返回该字段）
+  /cgi-bin/material/add_news:
+    post:
+      summary: 新增永久图文素材
+      description: 素材库保存总数量有上限：图文消息素材、图片素材上限为5000，其他类型为1000。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738729)
+      operationId: cgi-bin/material/add_news
+      security:
+        - accessToken: []
+      tags:
+        - 素材管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              articles:
+                $ref: '#/definitions/base.ArticlesBo'
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              media_id:
+                type: string
+                description: 新增的图文消息素材的media_id
+  /cgi-bin/material/batchget_material:
+        post:
+          summary: 获取素材列表
+          description: 获取永久素材的列表。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738734)
+          operationId: cgi-bin/material/batchget_material
+          security:
+            - accessToken: []
+          tags:
+            - 素材管理
+          parameters:
+            - in: body
+              name: body
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    description: 素材的类型，图片（image）、视频（video）、语音 （voice）、图文（news）
+                    enum:
+                      - image
+                      - video
+                      - voice
+                      - news
+                  offset:
+                    type: integer
+                    format: int32
+                    description: 从全部素材的该偏移位置开始返回，0表示从第一个素材 返回
+                  count:
+                    type: integer
+                    format: int32
+                    description: 返回素材的数量，取值在1到20之间
+          responses:
+            '200':
+              description: ''
+              schema:
+                type: object
+                properties:
+                  total_count:
+                    type: integer
+                    format: int32
+                    description: 该类型的素材的总数
+                  item_count:
+                    type: integer
+                    format: int32
+                    description: 本次调用获取的素材的数量
+                  items:
+                    type: array
+                    items:
+                      allOf:
+                        - type: object
+                          properties:
+                            media_id:
+                              type: string
+                            content:
+                              type: object
+                              properties:
+                                news_item:
+                                  $ref: '#/definitions/base.ArticlesBo'
+                            update_time:
+                              type: integer
+                              format: int32
+                        - type: object
+                          properties:
+                            media_id:
+                              type: string
+                            name:
+                              type: string
+                            url:
+                              type: string
+                            update_time:
+                              type: integer
+                              format: int32
+  /cgi-bin/material/del_material:
+    post:
+      summary: 删除永久素材
+      description: 请谨慎操作，临时素材无法通过本接口删除。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738731)
+      operationId: cgi-bin/material/del_material
+      security:
+        - accessToken: []
+      tags:
+        - 素材管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              media_id:
+                type: string
+                description: 素材的media_id
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /cgi-bin/material/get_material:
+    post:
+      summary: 获取永久素材
+      description: 临时素材无法通过本接口获取。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738730)
+      operationId: cgi-bin/material/get_material
+      security:
+        - accessToken: []
+      tags:
+        - 素材管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              media_id:
+                type: string
+                description: 要获取的素材的media_id
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  news_item:
+                    type: array
+                    description: 图文素材专有
+                    items:
+                      $ref: '#/definitions/base.ArticlesBo'
+              - type: object
+                properties:
+                  title:
+                    type: string
+                    description: 视频素材的标题
+                  introduction:
+                    type: string
+                    description: 视频素材的描述
+                  down_url:
+                    type: string
+                    description: 视频消息素材下载链接
+  /cgi-bin/material/get_materialcount:
+    get:
+      summary: 获取素材总数
+      description: 永久素材的总数，也会计算公众平台官网素材管理中的素材。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738733)
+      operationId: cgi-bin/material/get_materialcount
+      security:
+        - accessToken: []
+      tags:
+        - 素材管理
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              voice_count:
+                type: integer
+                format: int32
+                description: 语音总数量
+              video_count:
+                type: integer
+                format: int32
+                description: 视频总数量
+              image_count:
+                type: integer
+                format: int32
+                description: 图片总数量
+              news_count:
+                type: integer
+                format: int32
+                description: 图文总数量
+  /cgi-bin/material/update_news:
+    post:
+      summary: 修改永久图文素材
+      description: 对永久图文素材进行修改。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738729)
+      operationId: cgi-bin/material/update_news
+      security:
+        - accessToken: []
+      tags:
+        - 素材管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              media_id:
+                type: string
+                description: 要修改的图文消息的id
+              index:
+                type: integer
+                format: int32
+                description: 要更新的文章在图文消息中的位置（多图文消息时，此字段才有意义），第一篇为0
+              articles:
+                $ref: '#/definitions/base.ArticleItemBo'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
   /cgi-bin/media/get:
     get:
-      summary: 下载多媒体文件接口
+      summary: 获取临时素材
+      description: 请注意，视频文件不支持https下载，调用该接口需http协议。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738727)
       operationId: cgi-bin/media/get
       security:
         - accessToken: []
       tags:
         - 基础支持
+        - 素材管理
       parameters:
         - in: query
           name: media_id
@@ -1342,20 +1618,21 @@ paths:
           description: ''
   /cgi-bin/media/upload:
     post:
-      summary: 多媒体文件上传接口
+      summary: 新增临时素材/多媒体文件上传接口
+      description: 临时素材media_id是可复用的，媒体文件在微信后台保存时间为3天，即3天后media_id失效。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738726)
       operationId: cgi-bin/media/upload
       security:
         - accessToken: []
       tags:
         - 基础支持
+        - 素材管理
       consumes:
         - multipart/form-data
       parameters:
         - in: formData
           name: type
           type: string
-          description: |
-            媒体文件类型，分别有: 图片（image:2M，支持PNG\JPEG\JPG\GIF格式） 语音（voice:2M，播放长度不超过60s，支持AMR\MP3格式） 视频（video:10MB，支持MP4格式） 缩略图（thumb:64KB，支持JPG格式）
+          description: 媒体文件类型，图片（image:2M，支持PNG\JPEG\JPG\GIF格式） 语音（voice:2M，播放长度不超过60s，支持AMR\MP3格式） 视频（video:10MB，支持MP4格式） 缩略图（thumb:64KB，支持JPG格式）
           required: true
           enum:
             - image
@@ -1385,12 +1662,15 @@ paths:
                 description: 媒体文件上传时间戳
   /cgi-bin/media/uploadimg:
     post:
-      summary: 上传logo接口
+      summary: 上传logo接口/上传图文消息内的图片
+      description: 官方文档有两处,A->[POI新建门店上传logo](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444378120)，B->[上传图文消息内的图片](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738729)
       operationId: cgi-bin/media/uploadimg
       security:
         - accessToken: []
       tags:
         - 基础支持
+        - 素材管理
+        - 门店
       consumes:
         - multipart/form-data
       parameters:
@@ -1404,8 +1684,11 @@ paths:
         - in: formData
           name: buffer
           type: file
-          description: 大小限制1MB，推荐像素为300*300，支持JPG格式
-          required: true
+          description: 大小限制1MB，推荐像素为300*300，支持JPG格式(buffer/media 二选一)[POI新建门店上传logo](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444378120)
+        - in: formData
+          name: media
+          type: file
+          description: 大小限制1MB，支持jpg/png格式(buffer/media 二选一)[上传图文消息内的图片](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738729)
       responses:
         '200':
           description: ''
@@ -5259,6 +5542,46 @@ paths:
         '200':
           description: ''
 definitions:
+  base.ArticleItemBo:
+    type: object
+    description: 图文素材单项基本结构
+    properties:
+      title:
+        type: string
+        description: 标题
+      thumb_media_id:
+        type: string
+        description: 图文消息的封面图片素材id（必须是永久mediaID）
+      author:
+        type: string
+        description: 作者
+      digest:
+        type: string
+        description: 图文消息的摘要，仅有单图文消息才有摘要，多图文此处为空。如果本字段为没有填写，则默认抓取正文前64个字。
+      show_cover_pic:
+        type: integer
+        format: int32
+        description: 是否显示封面，0为false，即不显示，1为true，即显示
+        enum:
+          - 0
+          - 1
+      content:
+        type: string
+        description: 图文消息的具体内容，支持HTML标签，必须少于2万字符，小于1M，且此处会去除JS,涉及图片url必须来源 "上传图文消息内的图片获取URL"接口获取。外部图片url将被过滤。
+      content_source_url:
+        type: string
+        description: 图文消息的原文地址，即点击“阅读原文”后的URL
+    required:
+      - title
+      - thumb_media_id
+      - show_cover_pic
+      - content
+      - content_source_url
+  base.ArticlesBo:
+    type: array
+    description: 图文素材基本结构
+    items:
+      $ref: '#/definitions/base.ArticleItemBo'
   base.MenuBo:
     type: object
     properties:

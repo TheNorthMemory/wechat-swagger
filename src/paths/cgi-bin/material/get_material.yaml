@@ -1,0 +1,40 @@
+post:
+  summary: 获取永久素材
+  description: 临时素材无法通过本接口获取。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738730)
+  operationId: cgi-bin/material/get_material
+  security:
+    - accessToken: []
+  tags:
+    - 素材管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          media_id:
+            type: string
+            description: 要获取的素材的media_id
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - type: object
+            properties:
+              news_item:
+                type: array
+                description: 图文素材专有
+                items:
+                  $ref: '#/definitions/base.ArticlesBo'
+          - type: object
+            properties:
+              title:
+                type: string
+                description: 视频素材的标题
+              introduction:
+                type: string
+                description: 视频素材的描述
+              down_url:
+                type: string
+                description: 视频消息素材下载链接

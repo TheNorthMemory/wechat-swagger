@@ -1,0 +1,34 @@
+type: object
+description: 图文素材单项基本结构
+properties:
+  title:
+    type: string
+    description: 标题
+  thumb_media_id:
+    type: string
+    description: 图文消息的封面图片素材id（必须是永久mediaID）
+  author:
+    type: string
+    description: 作者
+  digest:
+    type: string
+    description: 图文消息的摘要，仅有单图文消息才有摘要，多图文此处为空。如果本字段为没有填写，则默认抓取正文前64个字。
+  show_cover_pic:
+    type: integer
+    format: int32
+    description: 是否显示封面，0为false，即不显示，1为true，即显示
+    enum:
+      - 0
+      - 1
+  content:
+    type: string
+    description: 图文消息的具体内容，支持HTML标签，必须少于2万字符，小于1M，且此处会去除JS,涉及图片url必须来源 "上传图文消息内的图片获取URL"接口获取。外部图片url将被过滤。
+  content_source_url:
+    type: string
+    description: 图文消息的原文地址，即点击“阅读原文”后的URL
+required:
+  - title
+  - thumb_media_id
+  - show_cover_pic
+  - content
+  - content_source_url

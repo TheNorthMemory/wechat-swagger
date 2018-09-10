@@ -1,10 +1,13 @@
 post:
-  summary: 上传logo接口
+  summary: 上传logo接口/上传图文消息内的图片
+  description: 官方文档有两处,A->[POI新建门店上传logo](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444378120)，B->[上传图文消息内的图片](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738729)
   operationId: cgi-bin/media/uploadimg
   security:
     - accessToken: []
   tags:
     - 基础支持
+    - 素材管理
+    - 门店
   consumes:
     - multipart/form-data
   parameters:
@@ -18,8 +21,11 @@ post:
     - in: formData
       name: buffer
       type: file
-      description: 大小限制1MB，推荐像素为300*300，支持JPG格式
-      required: true
+      description: 大小限制1MB，推荐像素为300*300，支持JPG格式(buffer/media 二选一)[POI新建门店上传logo](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444378120)
+    - in: formData
+      name: media
+      type: file
+      description: 大小限制1MB，支持jpg/png格式(buffer/media 二选一)[上传图文消息内的图片](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738729)
   responses:
     '200':
       description: ''

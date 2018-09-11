@@ -1,5 +1,6 @@
 post:
   summary: 导入code接口
+  description: 须将自定义code按照与发券方的约定数量调用导入code接口导入。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025062)
   operationId: card/code/deposit
   security:
     - accessToken: []
@@ -13,10 +14,40 @@ post:
         properties:
           card_id:
             type: string
+            description: 需要进行导入code的卡券ID。
           code:
             type: array
             items:
               type: string
+              description: 需导入微信卡券后台的自定义code，上限为100个。
+        example:
+          card_id: pDF3iY0_dVjb_Pua96MMewA96qvA
+          code:
+            - 11111
+            - 22222
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              succ_code:
+                type: integer
+                format: int32
+                description: 成功个数
+              duplicate_code:
+                type: integer
+                format: int32
+                description: 重复导入的code会自动被过滤
+              fail_code:
+                type: integer
+                format: int32
+                description: 失败个数
+        example:
+          errcode: 0
+          errmsg: ok
+          succ_code: 2
+          duplicate_code: 0
+          fail_code: 0

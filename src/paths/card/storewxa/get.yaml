@@ -1,5 +1,6 @@
 post:
   summary: 获取门店小程序配置的卡券
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496904104_cfEfT)'
   operationId: card/storewxa/get
   security:
     - accessToken: []
@@ -11,7 +12,23 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          poi_id:
+            type: integer
+            format: int32
+            description: 门店id
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              card_id:
+                type: string
+                description: 卡券id
+        example:
+          errcode: 0
+          errmsg: ok
+          card_id: pbLatjtQrAGz1Iaz08qB_H3NSBrc

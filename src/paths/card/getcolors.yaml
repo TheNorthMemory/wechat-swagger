@@ -1,5 +1,6 @@
-post:
-  summary: ''
+get:
+  summary: 获取卡券背景颜色
+  description: 制卡预制颜色。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025056)
   operationId: card/getcolors
   security:
     - accessToken: []
@@ -9,3 +10,19 @@ post:
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              colors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: 背景颜色名称
+                    value:
+                      type: string
+                      description: 色值

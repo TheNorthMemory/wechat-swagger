@@ -2,7 +2,7 @@ type: object
 description: 飞机票类型数据结构。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025288)
 properties:
   base_info:
-    $ref: '#definitions/card.BaseInfoBo'
+    $ref: '#/definitions/card.BaseInfoBo'
   from:
     type: string
     description: 起点，上限为18个汉字。

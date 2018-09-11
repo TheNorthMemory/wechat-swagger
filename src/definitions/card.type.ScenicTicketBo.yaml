@@ -2,7 +2,7 @@ type: object
 description: 团景区门票数据结构。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025288)
 properties:
   base_info:
-    $ref: '#definitions/card.BaseInfoBo'
+    $ref: '#/definitions/card.BaseInfoBo'
   ticket_class:
     type: string
     description: 票类型，例如平日全票，套票等。

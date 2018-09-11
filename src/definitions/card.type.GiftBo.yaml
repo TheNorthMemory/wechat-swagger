@@ -2,9 +2,9 @@ type: object
 description: 兑换券数据结构
 properties:
   base_info:
-    $ref: '#definitions/card.BaseInfoBo'
+    $ref: '#/definitions/card.BaseInfoBo'
   advanced_info:
-    $ref: '#definitions/card.AdvancedInfoBo'
+    $ref: '#/definitions/card.AdvancedInfoBo'
   gift:
     type: string
     description: 兑换券专用，填写兑换内容的名称。

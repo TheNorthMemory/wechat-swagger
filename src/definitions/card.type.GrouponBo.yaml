@@ -2,9 +2,9 @@ type: object
 description: 团购券数据结构
 properties:
   base_info:
-    $ref: '#definitions/card.BaseInfoBo'
+    $ref: '#/definitions/card.BaseInfoBo'
   advanced_info:
-    $ref: '#definitions/card.AdvancedInfoBo'
+    $ref: '#/definitions/card.AdvancedInfoBo'
   deal_detail:
     type: string
     description: 团购券专用，团购详情。

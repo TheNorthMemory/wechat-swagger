@@ -2,9 +2,9 @@ type: object
 description: 代金券数据结构
 properties:
   base_info:
-    $ref: '#definitions/card.BaseInfoBo'
+    $ref: '#/definitions/card.BaseInfoBo'
   advanced_info:
-    $ref: '#definitions/card.AdvancedInfoBo'
+    $ref: '#/definitions/card.AdvancedInfoBo'
   least_cost:
     type: integer
     format: int32

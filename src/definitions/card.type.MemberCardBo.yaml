@@ -3,7 +3,7 @@ description: 会员卡类型数据结构。[官方文档](https://mp.weixin.qq.c
 properties:
   base_info:
     allOf:
-      - $ref: '#definitions/card.BaseInfoBo'
+      - $ref: '#/definitions/card.BaseInfoBo'
       - type: object
         properties:
           pay_info:
@@ -19,7 +19,7 @@ properties:
                     type: boolean
                     description: 是否设置该会员卡中部的按钮同时支持微信支付刷卡和会员卡二维码
   advanced_info:
-    $ref: '#definitions/card.AdvancedInfoBo'
+    $ref: '#/definitions/card.AdvancedInfoBo'
   background_pic_url:
     type: string
     description: 商家自定义会员卡背景图，须先调用上传图片接口将背景图上传至CDN，否则报错， 卡面设计请遵循微信会员卡自定义背景设计规范,像素大小控制在 1000像素*600像素以下

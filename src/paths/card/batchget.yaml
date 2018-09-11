@@ -1,0 +1,44 @@
+post:
+  summary: 批量查询
+  description: '未传入筛选条件时，该接口默认传回该商户名下所有状态的卡券。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)'
+  operationId: datacube/getcardmembercarddetail
+  security:
+    - accessToken: []
+  tags:
+    - 数据统计/卡券
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          offset:
+            type: integer
+            format: int32
+            description: 查询卡列表的起始偏移量，从0开始，即offset=5是指从从列表里的第六个开始读取。
+          count:
+            type: integer
+            format: int32
+            description: 需要查询的卡片的数量（数量最大50）。
+          status_list:
+            type: array
+            items:
+              type: string
+              description: 支持开发者拉出指定状态的卡券列表 “CARD_STATUS_NOT_VERIFY”, 待审核 ； “CARD_STATUS_VERIFY_FAIL”, 审核失败； “CARD_STATUS_VERIFY_OK”， 通过审核； “CARD_STATUS_DELETE”， 卡券被商户删除； “CARD_STATUS_DISPATCH”， 在公众平台投放过的卡券；
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              total_num:
+                type: integer
+                format: int32
+                description: 该商户名下卡券ID总数。
+              card_id_list:
+                type: array
+                items:
+                  type: string
+                  description: 卡券ID

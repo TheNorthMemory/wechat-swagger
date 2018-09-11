@@ -1,0 +1,11 @@
+type: object
+description: 折扣券数据结构
+properties:
+  base_info:
+    $ref: '#definitions/card.BaseInfoBo'
+  advanced_info:
+    $ref: '#definitions/card.AdvancedInfoBo'
+  discount:
+    type: integer
+    format: int32
+    description: 折扣券专用，表示打折额度（百分比）。填30就是七折。

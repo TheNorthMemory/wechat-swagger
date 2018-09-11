@@ -1,0 +1,15 @@
+type: object
+description: 代金券数据结构
+properties:
+  base_info:
+    $ref: '#definitions/card.BaseInfoBo'
+  advanced_info:
+    $ref: '#definitions/card.AdvancedInfoBo'
+  least_cost:
+    type: integer
+    format: int32
+    description: '代金券专用，表示起用金额（单位为分）,如果无起用门槛则填0。'
+  reduce_cost:
+    type: integer
+    format: int32
+    description: 代金券专用，表示减免金额。（单位为分）

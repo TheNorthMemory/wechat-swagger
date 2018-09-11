@@ -1,0 +1,29 @@
+type: object
+description: 飞机票类型数据结构。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025288)
+properties:
+  base_info:
+    $ref: '#definitions/card.BaseInfoBo'
+  from:
+    type: string
+    description: 起点，上限为18个汉字。
+  to:
+    type: string
+    description: 终点，上限为18个汉字。
+  flight:
+    type: string
+    description: 航班
+  gate:
+    type: string
+    description: 入口，上限为4个汉字。
+  check_in_url:
+    type: string
+    description: 在线值机的链接。
+  air_model:
+    type: string
+    description: 机型，上限为8个汉字。
+  departure_time:
+    type: string
+    description: 起飞时间。Unix时间戳格式。
+  landing_time:
+    type: string
+    description: 降落时间。Unix时间戳格式。

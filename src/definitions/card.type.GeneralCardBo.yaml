@@ -1,0 +1,71 @@
+type: object
+description: 礼品卡数据结构，仅能在supply_balance和custom_field1、custom_field2、custom_field3中选择最多3个填写。
+properties:
+  base_info:
+    $ref: '#definitions/card.BaseInfoBo'
+  advanced_info:
+    $ref: '#definitions/card.AdvancedInfoBo'
+  background_pic_url:
+    type: string
+  auto_activate:
+    type: boolean
+    description: 是否自动激活，若开发者不需要额外激活流程则填写true。
+  sub_card_type:
+    type: string
+    description: 卡类型，目前支持GIFT_CARD=礼品卡 VOUCHER=兑换卡
+    enum:
+      - GIFT_CARD
+      - VOUCHER
+  supply_bonus:
+    type: boolean
+    description: 是否支持积分，填写true或者false。默认为false
+  supply_balance:
+    type: boolean
+    description: 是否支持余额，填写true或者false。默认为false
+  init_balance:
+    type: integer
+    format: int32
+    description: 初始余额，用户购买礼品卡后卡面上显示的初始余额
+  custom_field1:
+    type: object
+    description: 自定义会员信息类目，会员卡激活后显示,包含name和url字段
+    properties:
+      name:
+        type: string
+        description: 自定义信息类目名称
+      url:
+        type: string
+        description: 自定义信息类目跳转url
+      app_brand_user_name:
+        type: string
+      app_brand_pass:
+        type: string
+  custom_field2:
+    type: object
+    properties:
+      name:
+        type: string
+        description: 自定义信息类目名称
+      url:
+        type: string
+        description: 自定义信息类目跳转url
+      app_brand_user_name:
+        type: string
+      app_brand_pass:
+        type: string
+  custom_field3:
+    type: object
+    properties:
+      name:
+        type: string
+        description: 自定义信息类目名称
+      url:
+        type: string
+        description: 自定义信息类目跳转url
+      app_brand_user_name:
+        type: string
+      app_brand_pass:
+        type: string
+  need_push_on_view:
+    type: boolean
+    description: true为用户点击进入礼品卡时是否推送事件。

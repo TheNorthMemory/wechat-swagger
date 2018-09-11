@@ -1,0 +1,123 @@
+type: object
+description: 会员卡类型数据结构。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025283)
+properties:
+  base_info:
+    allOf:
+      - $ref: '#definitions/card.BaseInfoBo'
+      - type: object
+        properties:
+          pay_info:
+            type: object
+            properties:
+              swipe_card:
+                type: object
+                properties:
+                  is_swipe_card:
+                    type: boolean
+                    description: 是否设置该会员卡支持拉出微信支付刷卡界面
+                  is_pay_and_qrcode:
+                    type: boolean
+                    description: 是否设置该会员卡中部的按钮同时支持微信支付刷卡和会员卡二维码
+  advanced_info:
+    $ref: '#definitions/card.AdvancedInfoBo'
+  background_pic_url:
+    type: string
+    description: 商家自定义会员卡背景图，须先调用上传图片接口将背景图上传至CDN，否则报错， 卡面设计请遵循微信会员卡自定义背景设计规范,像素大小控制在 1000像素*600像素以下
+  prerogative:
+    type: string
+    description: 会员卡特权说明,限制1024汉字。
+  auto_activate:
+    type: boolean
+    description: 设置为true时用户领取会员卡后系统自动将其激活，无需调用激活接口，详情见 自动激活 。
+  wx_activate:
+    type: boolean
+    description: 设置为true时会员卡支持一键开卡，不允许同时传入activate_url字段，否则设置wx_activate失效。填入该字段后仍需调用接口设置开卡项方可生效，详情见 一键开卡 。
+  supply_bonus:
+    type: boolean
+    description: 显示积分，填写true或false，如填写true，积分相关字段均为必 填 若设置为true则后续不可以被关闭。
+  bonus_url:
+    type: string
+    description: 设置跳转外链查看积分详情。仅适用于积分无法通过激活接口同步的情况下使用该字段。
+  supply_balance:
+    type: boolean
+    description: 是否支持储值，填写true或false。如填写true，储值相关字段均为必 填 若设置为true则后续不可以被关闭。该字段须开通储值功能后方可使用， 详情见： 获取特殊权限
+  balance_url:
+    type: string
+    description: 设置跳转外链查看余额详情。仅适用于余额无法通过激活接口同步的情况下使用该字段。
+  custom_field1:
+    $ref: '#/definitions/card.type.MemberCardCustomFieldBo'
+  custom_field2:
+    $ref: '#/definitions/card.type.MemberCardCustomFieldBo'
+  custom_field3:
+    $ref: '#/definitions/card.type.MemberCardCustomFieldBo'
+  bonus_cleared:
+    type: string
+    description: 积分清零规则。
+  bonus_rules:
+    type: string
+    description: 积分规则。
+  balance_rules:
+    type: string
+    description: 储值说明。
+  activate_url:
+    type: string
+    description: 激活会员卡的url。
+  activate_app_brand_user_name:
+    type: string
+    description: 激活会原卡url对应的小程序user_name，仅可跳转该公众号绑定的小程序
+  activate_app_brand_pass:
+    type: string
+    description: 激活会原卡url对应的小程序path
+  custom_cell1:
+    type: object
+    description: 自定义会员信息类目，会员卡激活后显示。
+    properties:
+      name:
+        type: string
+        description: 入口名称。
+      tips:
+        type: string
+        description: 入口右侧提示语，6个汉字内。
+      url:
+        type: string
+        description: 入口跳转链接。
+  bonus_rule:
+    type: object
+    description: 积分规则 。
+    properties:
+      cost_money_unit:
+        type: integer
+        format: int32
+        description: 消费金额。以分为单位。
+      increase_bonus:
+        type: integer
+        format: int32
+        description: 对应增加的积分。
+      max_increase_bonus:
+        type: integer
+        format: int32
+        description: 用户单次可获取的积分上限。
+      init_increase_bonus:
+        type: integer
+        format: int32
+        description: 初始设置积分。
+      cost_bonus_unit:
+        type: integer
+        format: int32
+        description: 每使用5积分。
+      reduce_money:
+        type: integer
+        format: int32
+        description: 抵扣xx元，（这里以分为单位）
+      least_moneyto_use_bonus:
+        type: integer
+        format: int32
+        description: 抵扣条件，满xx元（这里以分为单位）可用。
+      max_reduce_bonus:
+        type: integer
+        format: int32
+        description: 抵扣条件，单笔最多使用xx积分。
+      discount:
+        type: integer
+        format: int32
+        description: 折扣，该会员卡享受的折扣优惠,填10就是九折。

@@ -1,0 +1,10 @@
+type: object
+description: 优惠券数据结构
+properties:
+  base_info:
+    $ref: '#definitions/card.BaseInfoBo'
+  advanced_info:
+    $ref: '#definitions/card.AdvancedInfoBo'
+  default_detail:
+    type: string
+    description: 优惠券专用，填写优惠详情。

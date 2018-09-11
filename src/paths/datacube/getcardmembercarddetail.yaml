@@ -1,0 +1,17 @@
+post:
+  summary: 拉取单张会员卡数据
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)'
+  operationId: datacube/getcardmembercarddetail
+  security:
+    - accessToken: []
+  tags:
+    - 数据统计/卡券
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''

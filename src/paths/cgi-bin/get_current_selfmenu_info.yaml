@@ -13,15 +13,20 @@ get:
       schema:
         type: object
         properties:
-          menu:
-            type: array
-            items:
-              allOf:
-                - $ref: '#/definitions/base.MenuBo'
-                - $ref: '#/definitions/base.MenuConditionsBo'
-                - type: object
-                  properties:
-                    menuid:
-                      type: integer
-                      format: int32
-                      description: 个性化菜单ID
+          is_menu_open:
+            type: integer
+            format: int32
+            description: 菜单是否开启，0代表未开启，1代表开启
+            enum:
+              - 0
+              - 1
+          selfmenu_info:
+            allOf:
+              - $ref: '#/definitions/base.MenuBo'
+              - $ref: '#/definitions/base.MenuConditionsBo'
+              - type: object
+                properties:
+                  menuid:
+                    type: integer
+                    format: int32
+                    description: 个性化菜单ID

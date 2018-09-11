@@ -1,11 +1,54 @@
 post:
-  summary: ''
+  summary: 更改卡券信息
+  description: 支持更新所有卡券类型的部分通用字段及特殊卡券（会员卡、飞机票、电影票、会议门票）中特定字段的信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)
   operationId: card/update
   security:
     - accessToken: []
   tags:
     - 卡券
-  parameters: []
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          card_id:
+            type: string
+            description: 卡券ID。
+          groupon:
+            $ref: '#/definitions/card.type.GrouponBo'
+          cash:
+            $ref: '#/definitions/card.type.CashBo'
+          discount:
+            $ref: '#/definitions/card.type.DiscountBo'
+          gift:
+            $ref: '#/definitions/card.type.GiftBo'
+          general_coupon:
+            $ref: '#/definitions/card.type.GeneralCouponBo'
+          general_card:
+            $ref: '#/definitions/card.type.GeneralCardBo'
+          meeting_ticket:
+            $ref: '#/definitions/card.type.MeetingTicketBo'
+          scenic_ticket:
+            $ref: '#/definitions/card.type.ScenicTicketBo'
+          movie_ticket:
+            $ref: '#/definitions/card.type.MovieTicketBo'
+          boarding_pass:
+            $ref: '#/definitions/card.type.BoardingPassBo'
+          member_card:
+            $ref: '#/definitions/card.type.MemberCardBo'
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              send_check:
+                type: boolean
+                description: 是否提交审核，false为修改后不会重新提审，true为修改字段后重新提审，该卡券的状态变为审核中。
+        example:
+          errcode: 0
+          errmsg: ok
+          send_check: false

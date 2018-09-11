@@ -33,7 +33,7 @@ post:
                 type: object
                 properties:
                   card_id:
-                    type: strinig
+                    type: string
                     description: 卡券ID
               openid:
                 type: string

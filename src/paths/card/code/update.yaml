@@ -1,5 +1,6 @@
 post:
   summary: 更改Code
+  description: 为确保转赠后的安全性，微信允许自定义Code的商户对已下发的code进行更改。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)
   operationId: card/code/update
   security:
     - accessToken: []
@@ -13,10 +14,22 @@ post:
         properties:
           card_id:
             type: string
+            description: 卡券ID。自定义Code码卡券为必填。
           code:
             type: string
+            description: 需变更的Code码。
           new_code:
             type: string
+            description: 变更后的有效Code码。
+        example:
+          card_id: pFS7Fjg8kV1IdDz01r4SQwMkuCKc
+          code: 110201201245
+          new_code: 1231231
   responses:
     '200':
       description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'
+        example:
+          errcode: 0
+          errmsg: ok

@@ -138,6 +138,7 @@ paths:
   /card/code/consume:
     post:
       summary: 核销 Code
+      description: 将用户的优惠券进行核销，该过程不可逆。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025239)
       operationId: card/code/consume
       security:
         - accessToken: []
@@ -151,14 +152,40 @@ paths:
             properties:
               card_id:
                 type: string
+                description: 卡券ID。创建卡券时use_custom_code填写true时必填。非自定义Code不必填写。
               code:
                 type: string
+                description: 需核销的Code码。
+            example:
+              card_id: pFS7Fjg8kV1IdDz01r4SQwMkuCKc
+              code: 1231231
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  card:
+                    type: object
+                    properties:
+                      card_id:
+                        type: strinig
+                        description: 卡券ID
+                  openid:
+                    type: string
+                    description: 用户openid
+            example:
+              errcode: 0
+              errmsg: ok
+              card:
+                card_id: pFS7Fjg8kV1IdDz01r4SQwMkuCKc
+              openid: oFS7Fjl0WsZ9AMZqrI80nbIq8xrA
   /card/code/decrypt:
     post:
       summary: Code解码
+      description: 只能解码本公众号卡券获取的加密code。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025239)
       operationId: card/code/decrypt
       security:
         - accessToken: []
@@ -172,9 +199,24 @@ paths:
             properties:
               encrypt_code:
                 type: string
+                description: 经过加密的Code码。
+            example:
+              encrypt_code: XXIzTtMqCxwOaawoE91+VJdsFmv7b8g0VZIZkqf4GWA60Fzpc8ksZ/5ZZ0DVkXdE
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  code:
+                    type: string
+                    description: 解密后获取的真实Code码
+            example:
+              errcode: 0
+              errmsg: ok
+              code: 751234212312
   /card/code/deposit:
     post:
       summary: 导入code接口
@@ -337,6 +379,7 @@ paths:
   /card/code/unavailable:
     post:
       summary: 设置卡券失效
+      description: 为满足改票、退款等异常情况，可调用卡券失效接口将用户的卡券设置为失效状态。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)
       operationId: card/code/unavailable
       security:
         - accessToken: []
@@ -350,14 +393,29 @@ paths:
             properties:
               card_id:
                 type: string
+                description: 卡券ID。
               code:
                 type: string
+                description: 设置失效的Code码。
+              reason:
+                type: string
+                description: 失效理由
+            example:
+              card_id: pFS7Fjg8kV1IdDz01r4SQwMkuCKc
+              code: 1231231
+              reason: 用户发生退款
       responses:
         '200':
           description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+            example:
+              errcode: 0
+              errmsg: ok
   /card/code/update:
     post:
       summary: 更改Code
+      description: 为确保转赠后的安全性，微信允许自定义Code的商户对已下发的code进行更改。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)
       operationId: card/code/update
       security:
         - accessToken: []
@@ -371,13 +429,25 @@ paths:
             properties:
               card_id:
                 type: string
+                description: 卡券ID。自定义Code码卡券为必填。
               code:
                 type: string
+                description: 需变更的Code码。
               new_code:
                 type: string
+                description: 变更后的有效Code码。
+            example:
+              card_id: pFS7Fjg8kV1IdDz01r4SQwMkuCKc
+              code: 110201201245
+              new_code: 1231231
       responses:
         '200':
           description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+            example:
+              errcode: 0
+              errmsg: ok
   /card/create:
     post:
       summary: 创建卡券

@@ -1,0 +1,27 @@
+post:
+  summary: 删除
+  description: 删除卡券不能删除已被用户领取，保存在微信客户端中的卡券。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)
+  operationId: card/delete
+  security:
+    - accessToken: []
+  tags:
+    - 卡券
+  parameters:
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties:
+          card_id:
+            type: string
+            description: 卡券ID。
+        example:
+          card_id: pFS7Fjg8kV1IdDz01r4SQwMkuCKc
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'
+        example:
+          errcode: 0
+          errmsg: ok

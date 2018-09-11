@@ -287,7 +287,7 @@ paths:
                       - MEMBER_CARD
                   groupon:
                     $ref: '#/definitions/card.type.GrouponBo'
-                  cach:
+                  cash:
                     $ref: '#/definitions/card.type.CashBo'
                   discount:
                     $ref: '#/definitions/card.type.DiscountBo'

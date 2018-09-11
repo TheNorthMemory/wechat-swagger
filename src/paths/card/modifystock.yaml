@@ -1,11 +1,37 @@
 post:
-  summary: ''
+  summary: 修改库存
+  description: 增减某张卡券的库存。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)
   operationId: card/modifystock
   security:
     - accessToken: []
   tags:
     - 卡券
-  parameters: []
+  parameters:
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties:
+          card_id:
+            type: string
+            description: 卡券ID。
+          increase_stock_value:
+            type: integer
+            format: int32
+            description: 增加多少库存，支持不填或填0。
+          reduce_stock_value:
+            type: integer
+            format: int32
+            description: 减少多少库存，可以不填或填0。
+        example:
+          card_id: pFS7Fjg8kV1IdDz01r4SQwMkuCKc
+          increase_stock_value: 1231231
+          reduce_stock_value: 1231231
   responses:
     '200':
       description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'
+        example:
+          errcode: 0
+          errmsg: ok

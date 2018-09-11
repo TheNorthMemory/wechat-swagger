@@ -85,6 +85,7 @@ paths:
   /card/code/checkcode:
     post:
       summary: 核查code接口
+      description: 强烈建议开发者在查询完code数目的时候核查code接口校验code导入微信后台的情况。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025062)
       operationId: card/code/checkcode
       security:
         - accessToken: []
@@ -98,13 +99,42 @@ paths:
             properties:
               card_id:
                 type: string
+                description: 需要进行导入code的卡券ID。
               code:
                 type: array
                 items:
                   type: string
+                  description: 需导入微信卡券后台的自定义code，上限为100个。
+            example:
+              card_id: pDF3iY0_dVjb_Pua96MMewA96qvA
+              code:
+                - 11111
+                - 22222
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  exist_code:
+                    type: array
+                    items:
+                      type: string
+                      description: 已经成功存入的code。
+                  not_exist_code:
+                    type: array
+                    items:
+                      type: string
+                      description: 没有存入的code。
+            example:
+              errcode: 0
+              errmsg: ok
+              exist_code:
+                - 11111
+              not_exist_code:
+                - 22222
   /card/code/consume:
     post:
       summary: 核销 Code
@@ -148,6 +178,7 @@ paths:
   /card/code/deposit:
     post:
       summary: 导入code接口
+      description: 须将自定义code按照与发券方的约定数量调用导入code接口导入。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025062)
       operationId: card/code/deposit
       security:
         - accessToken: []
@@ -161,16 +192,47 @@ paths:
             properties:
               card_id:
                 type: string
+                description: 需要进行导入code的卡券ID。
               code:
                 type: array
                 items:
                   type: string
+                  description: 需导入微信卡券后台的自定义code，上限为100个。
+            example:
+              card_id: pDF3iY0_dVjb_Pua96MMewA96qvA
+              code:
+                - 11111
+                - 22222
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  succ_code:
+                    type: integer
+                    format: int32
+                    description: 成功个数
+                  duplicate_code:
+                    type: integer
+                    format: int32
+                    description: 重复导入的code会自动被过滤
+                  fail_code:
+                    type: integer
+                    format: int32
+                    description: 失败个数
+            example:
+              errcode: 0
+              errmsg: ok
+              succ_code: 2
+              duplicate_code: 0
+              fail_code: 0
   /card/code/get:
     post:
       summary: 查询Code
+      description: 建议在调用核销code接口之前调用查询code接口，并在核销之前对非法状态的code(如转赠中、已删除、已核销等)做出处理。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025239)
       operationId: card/code/get
       security:
         - accessToken: []
@@ -184,16 +246,62 @@ paths:
             properties:
               card_id:
                 type: string
+                description: 单张卡券的唯一标准。
               code:
                 type: string
+                description: 卡券ID代表一类卡券。自定义code卡券必填。
               check_consume:
                 type: boolean
+                description: 是否校验code核销状态，填入true和false时的code异常状态返回数据不同。
+            example:
+              card_id: card_id_123+
+              code: 123456789
+              check_consume: true
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  card:
+                    type: object
+                    properties:
+                      card_id:
+                        type: strinig
+                        description: 卡券ID
+                      begin_time:
+                        type: integer
+                        format: int32
+                        description: 起始使用时间
+                      end_time:
+                        type: integer
+                        format: int32
+                        description: 结束时间
+                  openid:
+                    type: string
+                    description: 用户openid
+                  can_consume:
+                    type: boolean
+                    description: 是否可以核销，true为可以核销，false为不可核销
+                  user_card_status:
+                    type: string
+                    description: 当前code对应卡券的状态 NORMAL 正常 CONSUMED 已核销 EXPIRE 已过期 GIFTING 转赠中 GIFT_TIMEOUT 转赠超时 DELETE 已删除 UNAVAILABLE 已失效 code未被添加或被转赠领取的情况则统一报错：invalid serial code
+            example:
+              errcode: 0
+              errmsg: ok
+              card:
+                card_id: pbLatjk4T4Hx-QFQGL4zGQy27_Qg
+                begin_time: 1457452800
+                end_time: 1463155199
+              openid: obLatjm43RA5C6QfMO5szKYnT3dM
+              can_consume: true
+              user_card_status: NORMAL
   /card/code/getdepositcount:
     post:
       summary: 查询导入code数目接口
+      description: 查询code导入微信后台成功的数目。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025062)
       operationId: card/code/getdepositcount
       security:
         - accessToken: []
@@ -207,9 +315,25 @@ paths:
             properties:
               card_id:
                 type: string
+                description: 进行导入code的卡券ID。
+            example:
+              card_id: pDF3iY0_dVjb_Pua96MMewA96qvA
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  count:
+                    type: integer
+                    format: int32
+                    description: 已经成功存入的code数目。
+            example:
+              errcode: 0
+              errmsg: ok
+              count: 122
   /card/code/unavailable:
     post:
       summary: 设置卡券失效
@@ -257,6 +381,7 @@ paths:
   /card/create:
     post:
       summary: 创建卡券
+      description: 编码方式仅支持使用UTF-8，须根据card_type不同传入不同Bo对象。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025056)
       operationId: card/create
       security:
         - accessToken: []
@@ -602,6 +727,7 @@ paths:
   /card/landingpage/create:
     post:
       summary: 创建货架
+      description: 创建货架时需填写投放路径的场景字段。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025062)
       operationId: card/landingpage/create
       security:
         - accessToken: []
@@ -615,10 +741,13 @@ paths:
             properties:
               banner:
                 type: string
+                description: 页面的banner图片链接，须调用，建议尺寸为640*300。
               title:
                 type: string
+                description: 页面的title。
               can_share:
                 type: boolean
+                description: 页面是否可以分享,填入true/false
               scene:
                 type: string
                 description: 投放页面的场景值； SCENE_NEAR_BY 附近 SCENE_MENU 自定义菜单 SCENE_QRCODE 二维码 SCENE_ARTICLE 公众号文章 SCENE_H5 h5页面 SCENE_IVR 自动回复 SCENE_CARD_CUSTOM_CELL 卡券自定义cell
@@ -637,11 +766,30 @@ paths:
                   properties:
                     card_id:
                       type: string
+                      description: 所要在页面投放的card_id
                     thumb_url:
                       type: string
+                      description: 缩略图url
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  url:
+                    type: string
+                    description: 货架链接。
+                  page_id:
+                    type: integer
+                    format: int32
+                    description: 货架ID。货架的唯一标识。
+            example:
+              errcode: 0
+              errmsg: ok
+              expire_seconds: 1
+              url: www.test.url
   /card/location/batchadd:
     post:
       summary: ''
@@ -920,6 +1068,7 @@ paths:
   /card/mpnews/gethtml:
     post:
       summary: 获取卡券嵌入图文消息文本
+      description: 特别注意：目前该接口仅支持填入非自定义code的卡券,自定义code的卡券需先进行code导入后调用。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025062)
       operationId: card/mpnews/gethtml
       security:
         - accessToken: []
@@ -933,12 +1082,26 @@ paths:
             properties:
               card_id:
                 type: string
+                description: 卡券ID
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  content:
+                    type: string
+                    description: 返回一段html代码，可以直接嵌入到图文消息的正文里。即可以把这段代码嵌入到 上传图文消息素材接口 中的content字段里。
+            example:
+              errcode: 0
+              errmsg: ok
+              content: '<iframe class="res_iframecard_iframejs_editor_card" data-src="https://mp.weixin.qq.com/bizmall/appmsgcard"></iframe>'
   /card/paycell/set:
     post:
       summary: 设置买单
+      description: 设置买单的card_id必须已经配置了门店，否则会报错。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025056)
       operationId: card/paycell/set
       security:
         - accessToken: []
@@ -959,9 +1122,15 @@ paths:
       responses:
         '200':
           description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+            example:
+              errcode: 0
+              errmsg: ok
   /card/qrcode/create:
     post:
       summary: 创建卡券二维码
+      description: 可调用该接口生成一张卡券二维码供用户扫码后添加卡券到卡包，领取多张的二维码一次最多填入5个card_id。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025062)
       operationId: card/qrcode/create
       security:
         - accessToken: []
@@ -975,7 +1144,6 @@ paths:
             properties:
               action_name:
                 type: string
-                description: 卡券ID。
                 enum:
                   - QR_CARD
                   - QR_MULTIPLE_CARD
@@ -987,17 +1155,46 @@ paths:
                 type: object
                 properties:
                   card:
-                    type: object
-                    properties: {}
+                    $ref: '#/definitions/card.qrcode.BaseBo'
                   multiple_card:
                     type: object
-                    properties: {}
+                    properties:
+                      card_list:
+                        type: array
+                        items:
+                          $ref: '#/definitions/card.qrcode.BaseBo'
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  ticket:
+                    type: string
+                    description: 获取的二维码ticket，凭借此ticket调用 通过ticket换取二维码接口 可以在有效时间内换取二维码。
+                  expire_seconds:
+                    type: integer
+                    format: int32
+                    description: 二维码的有效时间
+                  url:
+                    type: string
+                    description: 二维码图片解析后的地址，开发者可根据该地址自行生成需要的二维码图片
+                  show_qrcode_url:
+                    type: string
+                    description: 二维码显示地址，点击后跳转二维码页面
+            example:
+              errcode: 0
+              errmsg: ok
+              ticket: gQHB8DoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL0JIV3lhX3psZmlvSDZmWGVMMTZvAAIEsNnKVQMEIAMAAA==
+              expire_seconds: 1800
+              url: http://weixin.qq.com/q/BHWya_zlfioH6fXeL16o
+              show_qrcode_url: https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQH98DoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL0czVzRlSWpsamlyM2plWTNKVktvAAIE6SfgVQMEgDPhAQ%3D%3D
   /card/selfconsumecell/set:
     post:
       summary: 设置自助核销
+      description: 设置自助核销的card_id必须已经配置了门店，否则会报错。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025056)
       operationId: card/selfconsumecell/set
       security:
         - accessToken: []
@@ -1027,6 +1224,11 @@ paths:
       responses:
         '200':
           description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+            example:
+              errcode: 0
+              errmsg: ok
   /card/storewxa/get:
     post:
       summary: 获取门店小程序配置的卡券
@@ -1065,6 +1267,7 @@ paths:
   /card/testwhitelist/set:
     post:
       summary: 设置测试白名单
+      description: 同时支持`openid`、`username`两种字段设置白名单，总数上限为10个。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025062)
       operationId: card/testwhitelist/set
       security:
         - accessToken: []
@@ -1080,13 +1283,20 @@ paths:
                 type: array
                 items:
                   type: string
+                  description: 测试的openid列表。
               username:
                 type: array
                 items:
                   type: string
+                  description: 测试的微信号列表。
       responses:
         '200':
           description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+            example:
+              errcode: 0
+              errmsg: ok
   /card/update:
     post:
       summary: ''
@@ -1220,18 +1430,23 @@ paths:
           schema:
             type: object
             properties:
-              menu:
-                type: array
-                items:
-                  allOf:
-                    - $ref: '#/definitions/base.MenuBo'
-                    - $ref: '#/definitions/base.MenuConditionsBo'
-                    - type: object
-                      properties:
-                        menuid:
-                          type: integer
-                          format: int32
-                          description: 个性化菜单ID
+              is_menu_open:
+                type: integer
+                format: int32
+                description: 菜单是否开启，0代表未开启，1代表开启
+                enum:
+                  - 0
+                  - 1
+              selfmenu_info:
+                allOf:
+                  - $ref: '#/definitions/base.MenuBo'
+                  - $ref: '#/definitions/base.MenuConditionsBo'
+                  - type: object
+                    properties:
+                      menuid:
+                        type: integer
+                        format: int32
+                        description: 个性化菜单ID
   /cgi-bin/getcallbackip:
     get:
       summary: 获取微信服务器IP地址
@@ -5949,6 +6164,32 @@ definitions:
       - sku
       - date_info
       - end_time
+  card.qrcode.BaseBo:
+    type: object
+    properties:
+      code:
+        type: string
+        description: 卡券Code码,use_custom_code字段为true的卡券必须填写，非自定义code和导入code模式的卡券不必填写。
+      card_id:
+        type: string
+        description: 卡券ID。
+      openid:
+        type: string
+        description: 指定领取者的openid，只有该用户能领取。bind_openid字段为true的卡券必须填写，非指定openid不必填写。
+      expire_seconds:
+        type: integer
+        format: int32
+        description: 指定二维码的有效时间，范围是60 ~ 1800秒。不填默认为365天有效
+      is_unique_code:
+        type: boolean
+        description: 指定下发二维码，生成的二维码随机分配一个code，领取后不可再次扫描。填写true或false。默认false，注意填写该字段时，卡券须通过审核且库存不为0。
+      outer_id:
+        type: integer
+        format: int32
+        description: 领取场景值，用于领取渠道的数据统计，默认值为0，字段类型为整型，长度限制为60位数字。用户领取卡券后触发的 事件推送 中会带上此自定义场景值。
+      outer_str:
+        type: string
+        description: outer_id字段升级版本，字符串类型，用户首次领卡时，会通过 领取事件推送 给商户； 对于会员卡的二维码，用户每次扫码打开会员卡后点击任何url，会将该值拼入url中，方便开发者定位扫码来源
   card.type.BoardingPassBo:
     type: object
     description: 飞机票类型数据结构。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025288)

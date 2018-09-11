@@ -1,5 +1,6 @@
 post:
   summary: 获取卡券嵌入图文消息文本
+  description: 特别注意：目前该接口仅支持填入非自定义code的卡券,自定义code的卡券需先进行code导入后调用。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025062)
   operationId: card/mpnews/gethtml
   security:
     - accessToken: []
@@ -13,6 +14,19 @@ post:
         properties:
           card_id:
             type: string
+            description: 卡券ID
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              content:
+                type: string
+                description: 返回一段html代码，可以直接嵌入到图文消息的正文里。即可以把这段代码嵌入到 上传图文消息素材接口 中的content字段里。
+        example:
+          errcode: 0
+          errmsg: ok
+          content: '<iframe class="res_iframecard_iframejs_editor_card" data-src="https://mp.weixin.qq.com/bizmall/appmsgcard"></iframe>'

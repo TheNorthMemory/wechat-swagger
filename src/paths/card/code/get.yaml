@@ -1,5 +1,6 @@
 post:
   summary: 查询Code
+  description: 建议在调用核销code接口之前调用查询code接口，并在核销之前对非法状态的code(如转赠中、已删除、已核销等)做出处理。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025239)
   operationId: card/code/get
   security:
     - accessToken: []
@@ -13,10 +14,55 @@ post:
         properties:
           card_id:
             type: string
+            description: 单张卡券的唯一标准。
           code:
             type: string
+            description: 卡券ID代表一类卡券。自定义code卡券必填。
           check_consume:
             type: boolean
+            description: 是否校验code核销状态，填入true和false时的code异常状态返回数据不同。
+        example:
+          card_id: card_id_123+
+          code: 123456789
+          check_consume: true
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              card:
+                type: object
+                properties:
+                  card_id:
+                    type: strinig
+                    description: 卡券ID
+                  begin_time:
+                    type: integer
+                    format: int32
+                    description: 起始使用时间
+                  end_time:
+                    type: integer
+                    format: int32
+                    description: 结束时间
+              openid:
+                type: string
+                description: 用户openid
+              can_consume:
+                type: boolean
+                description: 是否可以核销，true为可以核销，false为不可核销
+              user_card_status:
+                type: string
+                description: 当前code对应卡券的状态 NORMAL 正常 CONSUMED 已核销 EXPIRE 已过期 GIFTING 转赠中 GIFT_TIMEOUT 转赠超时 DELETE 已删除 UNAVAILABLE 已失效 code未被添加或被转赠领取的情况则统一报错：invalid serial code
+        example:
+          errcode: 0
+          errmsg: ok
+          card:
+            card_id: pbLatjk4T4Hx-QFQGL4zGQy27_Qg
+            begin_time: 1457452800
+            end_time: 1463155199
+          openid: obLatjm43RA5C6QfMO5szKYnT3dM
+          can_consume: true
+          user_card_status: NORMAL

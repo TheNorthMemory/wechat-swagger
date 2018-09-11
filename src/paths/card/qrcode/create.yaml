@@ -1,5 +1,6 @@
 post:
   summary: 创建卡券二维码
+  description: 可调用该接口生成一张卡券二维码供用户扫码后添加卡券到卡包，领取多张的二维码一次最多填入5个card_id。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025062)
   operationId: card/qrcode/create
   security:
     - accessToken: []
@@ -13,7 +14,6 @@ post:
         properties:
           action_name:
             type: string
-            description: 卡券ID。
             enum:
               - QR_CARD
               - QR_MULTIPLE_CARD
@@ -25,11 +25,39 @@ post:
             type: object
             properties:
               card:
-                type: object
-                properties: {}
+                $ref: '#/definitions/card.qrcode.BaseBo'
               multiple_card:
                 type: object
-                properties: {}
+                properties:
+                  card_list:
+                    type: array
+                    items:
+                      $ref: '#/definitions/card.qrcode.BaseBo'
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              ticket:
+                type: string
+                description: 获取的二维码ticket，凭借此ticket调用 通过ticket换取二维码接口 可以在有效时间内换取二维码。
+              expire_seconds:
+                type: integer
+                format: int32
+                description: 二维码的有效时间
+              url:
+                type: string
+                description: 二维码图片解析后的地址，开发者可根据该地址自行生成需要的二维码图片
+              show_qrcode_url:
+                type: string
+                description: 二维码显示地址，点击后跳转二维码页面
+        example:
+          errcode: 0
+          errmsg: ok
+          ticket: gQHB8DoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL0JIV3lhX3psZmlvSDZmWGVMMTZvAAIEsNnKVQMEIAMAAA==
+          expire_seconds: 1800
+          url: http://weixin.qq.com/q/BHWya_zlfioH6fXeL16o
+          show_qrcode_url: https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQH98DoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL0czVzRlSWpsamlyM2plWTNKVktvAAIE6SfgVQMEgDPhAQ%3D%3D

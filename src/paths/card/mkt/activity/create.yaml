@@ -74,7 +74,6 @@ post:
                 properties:
                   type:
                     type: string
-                    required: true
                     enum:
                       - AFTER_PAY_PACKAGE
   responses:

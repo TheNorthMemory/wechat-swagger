@@ -1,11 +1,44 @@
 post:
-  summary: ''
+  summary: 拉取门店列表
   operationId: card/location/batchget
   security:
     - accessToken: []
   tags:
     - 卡券
-  parameters: []
+    - 门店
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          offset:
+            type: integer
+            format: int32
+          count:
+            type: integer
+            format: int32
+        example: {}
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              location_list:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  phone:
+                    type: string
+                  address:
+                    type: string
+                  longitude:
+                    type: string
+                  latitude:
+                    type: string

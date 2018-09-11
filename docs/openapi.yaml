@@ -57,6 +57,7 @@ tags:
   - name: 数据统计/图文分析
   - name: 数据统计/消息分析
   - name: 数据统计/接口分析
+  - name: 数据统计/卡券
   - name: 小程序/数据/常规分析
   - name: 小程序/数据/访问分析/访问趋势
   - name: 小程序/数据/访问分析/访问分布
@@ -65,6 +66,51 @@ tags:
   - name: 小程序/数据/用户画像
   - name: 小程序/文件/内容安全
 paths:
+  /card/batchget:
+    post:
+      summary: 批量查询
+      description: 未传入筛选条件时，该接口默认传回该商户名下所有状态的卡券。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)
+      operationId: card/batchget
+      security:
+        - accessToken: []
+      tags:
+        - 卡券
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              offset:
+                type: integer
+                format: int32
+                description: 查询卡列表的起始偏移量，从0开始，即offset=5是指从从列表里的第六个开始读取。
+              count:
+                type: integer
+                format: int32
+                description: 需要查询的卡片的数量（数量最大50）。
+              status_list:
+                type: array
+                items:
+                  type: string
+                  description: 支持开发者拉出指定状态的卡券列表 “CARD_STATUS_NOT_VERIFY”, 待审核 ； “CARD_STATUS_VERIFY_FAIL”, 审核失败； “CARD_STATUS_VERIFY_OK”， 通过审核； “CARD_STATUS_DELETE”， 卡券被商户删除； “CARD_STATUS_DISPATCH”， 在公众平台投放过的卡券；
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  total_num:
+                    type: integer
+                    format: int32
+                    description: 该商户名下卡券ID总数。
+                  card_id_list:
+                    type: array
+                    items:
+                      type: string
+                      description: 卡券ID
   /card/boardingpass/checkin:
     post:
       summary: 更新飞机票信息接口
@@ -171,7 +217,7 @@ paths:
                     type: object
                     properties:
                       card_id:
-                        type: strinig
+                        type: string
                         description: 卡券ID
                   openid:
                     type: string
@@ -273,13 +319,14 @@ paths:
               fail_code: 0
   /card/code/get:
     post:
-      summary: 查询Code
-      description: 建议在调用核销code接口之前调用查询code接口，并在核销之前对非法状态的code(如转赠中、已删除、已核销等)做出处理。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025239)
+      summary: 查询Code/获取用户开卡时提交的信息（非跳转型开卡组件）
+      description: 建议在调用核销code接口之前调用查询code接口，并在核销之前对非法状态的code(如转赠中、已删除、已核销等)做出处理。A->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025239) B->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1499332673_Unm7V)
       operationId: card/code/get
       security:
         - accessToken: []
       tags:
         - 卡券
+        - 卡券/会员卡
       parameters:
         - in: body
           name: buffer
@@ -311,7 +358,7 @@ paths:
                     type: object
                     properties:
                       card_id:
-                        type: strinig
+                        type: string
                         description: 卡券ID
                       begin_time:
                         type: integer
@@ -517,6 +564,34 @@ paths:
               errcode: 0
               errmsg: ok
               card_id: pbLatjtQrAGz1Iaz08qB_H3NSBrc
+  /card/delete:
+    post:
+      summary: 删除
+      description: 删除卡券不能删除已被用户领取，保存在微信客户端中的卡券。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)
+      operationId: card/delete
+      security:
+        - accessToken: []
+      tags:
+        - 卡券
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              card_id:
+                type: string
+                description: 卡券ID。
+            example:
+              card_id: pFS7Fjg8kV1IdDz01r4SQwMkuCKc
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+            example:
+              errcode: 0
+              errmsg: ok
   /card/generalcard/updateuser:
     post:
       summary: 更新用户礼品卡信息接口
@@ -862,28 +937,92 @@ paths:
               url: www.test.url
   /card/location/batchadd:
     post:
-      summary: ''
+      summary: 上传门店列表
       operationId: card/location/batchadd
       security:
         - accessToken: []
       tags:
         - 卡券
-      parameters: []
+        - 门店
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              location_list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    business_name:
+                      type: string
+                    branch_name:
+                      type: string
+                    province:
+                      type: string
+                    city:
+                      type: string
+                    district:
+                      type: string
+                    address:
+                      type: string
+                    telephone:
+                      type: string
+                    category:
+                      type: string
+                    longitude:
+                      type: string
+                    latitude:
+                      type: string
       responses:
         '200':
           description: ''
   /card/location/batchget:
     post:
-      summary: ''
+      summary: 拉取门店列表
       operationId: card/location/batchget
       security:
         - accessToken: []
       tags:
         - 卡券
-      parameters: []
+        - 门店
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              offset:
+                type: integer
+                format: int32
+              count:
+                type: integer
+                format: int32
+            example: {}
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  location_list:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      phone:
+                        type: string
+                      address:
+                        type: string
+                      longitude:
+                        type: string
+                      latitude:
+                        type: string
   /card/luckymonkey/updateuserbalance:
     post:
       summary: ''
@@ -932,7 +1071,8 @@ paths:
           description: ''
   /card/membercard/activate/geturl:
     post:
-      summary: 获取开卡组件链接接口
+      summary: 获取会员卡开卡组件链接
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1499332673_Unm7V)'
       operationId: card/membercard/activate/geturl
       security:
         - accessToken: []
@@ -943,13 +1083,35 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              card_id:
+                type: string
+                description: 会员卡的card_id
+              outer_str:
+                type: string
+                description: 渠道值，用于统计本次领取的渠道参数
+            example:
+              card_id: pbLatji6o5g7hJh8Otuvux4y1ty0
+              outer_str: 123
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  url:
+                    type: string
+                    description: 返回的url，内含调用开卡插件所需的参数
+            example:
+              errcode: 0
+              errmsg: ok
+              url: https://mp.weixin.qq.com/bizmall/activatemembercard?action=preshow&&enxxxxxxx=MjM5Mzc0OTEwMA%3D%3D#wechat_redirect
   /card/membercard/activatetempinfo/get:
     post:
-      summary: 获取用户提交资料
+      summary: 获取用户开卡时提交的信息（跳转型开卡组件）
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1499332673_Unm7V)'
       operationId: card/membercard/activatetempinfo/get
       security:
         - accessToken: []
@@ -960,10 +1122,55 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              activate_ticket:
+                type: string
+                description: 跳转型开卡组件开卡后回调中的激活票据，可以用来获取用户开卡资料
+            example:
+              activate_ticket: abcdefg
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  info:
+                    type: object
+                    properties:
+                      common_field_list:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              description: 会员信息类目名称
+                              enum:
+                                - USER_FORM_INFO_FLAG_MOBILE
+                                - USER_FORM_INFO_FLAG_SEX
+                                - USER_FORM_INFO_FLAG_NAME
+                                - USER_FORM_INFO_FLAG_BIRTHDAY
+                                - USER_FORM_INFO_FLAG_IDCARD
+                                - USER_FORM_INFO_FLAG_EMAIL
+                                - USER_FORM_INFO_FLAG_LOCATION
+                                - USER_FORM_INFO_FLAG_EDUCATION_BACKGRO
+                                - USER_FORM_INFO_FLAG_INDUSTRY
+                                - USER_FORM_INFO_FLAG_INCOME
+                                - USER_FORM_INFO_FLAG_HABIT
+                            value:
+                              type: string
+                              description: 会员卡信息类目值，比如等级值等
+                      custom_field_list:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+            example:
+              errcode: 0
+              errmsg: ok
+              url: https://mp.weixin.qq.com/bizmall/activatemembercard?action=preshow&&enxxxxxxx=MjM5Mzc0OTEwMA%3D%3D#wechat_redirect
   /card/membercard/activateuserform/set:
     post:
       summary: 设置开卡字段接口
@@ -1092,7 +1299,6 @@ paths:
                     properties:
                       type:
                         type: string
-                        required: true
                         enum:
                           - AFTER_PAY_PACKAGE
       responses:
@@ -1108,16 +1314,42 @@ paths:
               activity_id: 123456
   /card/modifystock:
     post:
-      summary: ''
+      summary: 修改库存
+      description: 增减某张卡券的库存。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)
       operationId: card/modifystock
       security:
         - accessToken: []
       tags:
         - 卡券
-      parameters: []
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              card_id:
+                type: string
+                description: 卡券ID。
+              increase_stock_value:
+                type: integer
+                format: int32
+                description: 增加多少库存，支持不填或填0。
+              reduce_stock_value:
+                type: integer
+                format: int32
+                description: 减少多少库存，可以不填或填0。
+            example:
+              card_id: pFS7Fjg8kV1IdDz01r4SQwMkuCKc
+              increase_stock_value: 1231231
+              reduce_stock_value: 1231231
       responses:
         '200':
           description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+            example:
+              errcode: 0
+              errmsg: ok
   /card/movieticket/updateuser:
     post:
       summary: 更新电影票
@@ -1302,6 +1534,7 @@ paths:
   /card/storewxa/get:
     post:
       summary: 获取门店小程序配置的卡券
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496904104_cfEfT)'
       operationId: card/storewxa/get
       security:
         - accessToken: []
@@ -1313,27 +1546,57 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              poi_id:
+                type: integer
+                format: int32
+                description: 门店id
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  card_id:
+                    type: string
+                    description: 卡券id
+            example:
+              errcode: 0
+              errmsg: ok
+              card_id: pbLatjtQrAGz1Iaz08qB_H3NSBrc
   /card/storewxa/set:
     post:
       summary: 设置门店小程序配置的卡券
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496904104_cfEfT)'
       operationId: card/storewxa/set
       security:
         - accessToken: []
       tags:
+        - 卡券
         - 门店/小程序
       parameters:
         - in: body
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              poi_id:
+                type: integer
+                format: int32
+                description: 门店id
+              card_id:
+                type: string
+                description: 卡券id,需要为非自定义code，即base_info.use_custom_code==fase
       responses:
         '200':
           description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+            example:
+              errcode: 0
+              errmsg: ok
   /card/testwhitelist/set:
     post:
       summary: 设置测试白名单
@@ -1369,16 +1632,59 @@ paths:
               errmsg: ok
   /card/update:
     post:
-      summary: ''
+      summary: 更改卡券信息
+      description: 支持更新所有卡券类型的部分通用字段及特殊卡券（会员卡、飞机票、电影票、会议门票）中特定字段的信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)
       operationId: card/update
       security:
         - accessToken: []
       tags:
         - 卡券
-      parameters: []
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              card_id:
+                type: string
+                description: 卡券ID。
+              groupon:
+                $ref: '#/definitions/card.type.GrouponBo'
+              cash:
+                $ref: '#/definitions/card.type.CashBo'
+              discount:
+                $ref: '#/definitions/card.type.DiscountBo'
+              gift:
+                $ref: '#/definitions/card.type.GiftBo'
+              general_coupon:
+                $ref: '#/definitions/card.type.GeneralCouponBo'
+              general_card:
+                $ref: '#/definitions/card.type.GeneralCardBo'
+              meeting_ticket:
+                $ref: '#/definitions/card.type.MeetingTicketBo'
+              scenic_ticket:
+                $ref: '#/definitions/card.type.ScenicTicketBo'
+              movie_ticket:
+                $ref: '#/definitions/card.type.MovieTicketBo'
+              boarding_pass:
+                $ref: '#/definitions/card.type.BoardingPassBo'
+              member_card:
+                $ref: '#/definitions/card.type.MemberCardBo'
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  send_check:
+                    type: boolean
+                    description: 是否提交审核，false为修改后不会重新提审，true为修改字段后重新提审，该卡券的状态变为审核中。
+            example:
+              errcode: 0
+              errmsg: ok
+              send_check: false
   /cgi-bin/changeopenid:
     post:
       summary: 公众号粉丝迁移
@@ -3132,6 +3438,78 @@ paths:
         - accessToken: []
       tags:
         - 数据统计/图文分析
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getcardbizuininfo:
+    post:
+      summary: 拉取卡券概况数据
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)'
+      operationId: datacube/getcardbizuininfo
+      security:
+        - accessToken: []
+      tags:
+        - 数据统计/卡券
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getcardcardinfo:
+    post:
+      summary: 获取免费券数据
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)'
+      operationId: datacube/getcardcardinfo
+      security:
+        - accessToken: []
+      tags:
+        - 数据统计/卡券
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getcardmembercarddetail:
+    post:
+      summary: 拉取单张会员卡数据
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)'
+      operationId: datacube/getcardmembercarddetail
+      security:
+        - accessToken: []
+      tags:
+        - 数据统计/卡券
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /datacube/getcardmembercardinfo:
+    post:
+      summary: 拉取会员卡概况数据
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)'
+      operationId: datacube/getcardmembercardinfo
+      security:
+        - accessToken: []
+      tags:
+        - 数据统计/卡券
       parameters:
         - in: body
           name: body
@@ -6265,7 +6643,7 @@ definitions:
     description: 飞机票类型数据结构。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025288)
     properties:
       base_info:
-        $ref: '#definitions/card.BaseInfoBo'
+        $ref: '#/definitions/card.BaseInfoBo'
       from:
         type: string
         description: 起点，上限为18个汉字。
@@ -6295,9 +6673,9 @@ definitions:
     description: 代金券数据结构
     properties:
       base_info:
-        $ref: '#definitions/card.BaseInfoBo'
+        $ref: '#/definitions/card.BaseInfoBo'
       advanced_info:
-        $ref: '#definitions/card.AdvancedInfoBo'
+        $ref: '#/definitions/card.AdvancedInfoBo'
       least_cost:
         type: integer
         format: int32
@@ -6311,9 +6689,9 @@ definitions:
     description: 折扣券数据结构
     properties:
       base_info:
-        $ref: '#definitions/card.BaseInfoBo'
+        $ref: '#/definitions/card.BaseInfoBo'
       advanced_info:
-        $ref: '#definitions/card.AdvancedInfoBo'
+        $ref: '#/definitions/card.AdvancedInfoBo'
       discount:
         type: integer
         format: int32
@@ -6323,9 +6701,9 @@ definitions:
     description: 礼品卡数据结构，仅能在supply_balance和custom_field1、custom_field2、custom_field3中选择最多3个填写。
     properties:
       base_info:
-        $ref: '#definitions/card.BaseInfoBo'
+        $ref: '#/definitions/card.BaseInfoBo'
       advanced_info:
-        $ref: '#definitions/card.AdvancedInfoBo'
+        $ref: '#/definitions/card.AdvancedInfoBo'
       background_pic_url:
         type: string
       auto_activate:
@@ -6395,9 +6773,9 @@ definitions:
     description: 优惠券数据结构
     properties:
       base_info:
-        $ref: '#definitions/card.BaseInfoBo'
+        $ref: '#/definitions/card.BaseInfoBo'
       advanced_info:
-        $ref: '#definitions/card.AdvancedInfoBo'
+        $ref: '#/definitions/card.AdvancedInfoBo'
       default_detail:
         type: string
         description: 优惠券专用，填写优惠详情。
@@ -6406,9 +6784,9 @@ definitions:
     description: 兑换券数据结构
     properties:
       base_info:
-        $ref: '#definitions/card.BaseInfoBo'
+        $ref: '#/definitions/card.BaseInfoBo'
       advanced_info:
-        $ref: '#definitions/card.AdvancedInfoBo'
+        $ref: '#/definitions/card.AdvancedInfoBo'
       gift:
         type: string
         description: 兑换券专用，填写兑换内容的名称。
@@ -6417,9 +6795,9 @@ definitions:
     description: 团购券数据结构
     properties:
       base_info:
-        $ref: '#definitions/card.BaseInfoBo'
+        $ref: '#/definitions/card.BaseInfoBo'
       advanced_info:
-        $ref: '#definitions/card.AdvancedInfoBo'
+        $ref: '#/definitions/card.AdvancedInfoBo'
       deal_detail:
         type: string
         description: 团购券专用，团购详情。
@@ -6428,7 +6806,7 @@ definitions:
     description: 会议门票类型据结构。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025288)
     properties:
       base_info:
-        $ref: '#definitions/card.BaseInfoBo'
+        $ref: '#/definitions/card.BaseInfoBo'
       meeting_detail:
         type: string
         description: 会议详情。
@@ -6441,7 +6819,7 @@ definitions:
     properties:
       base_info:
         allOf:
-          - $ref: '#definitions/card.BaseInfoBo'
+          - $ref: '#/definitions/card.BaseInfoBo'
           - type: object
             properties:
               pay_info:
@@ -6457,7 +6835,7 @@ definitions:
                         type: boolean
                         description: 是否设置该会员卡中部的按钮同时支持微信支付刷卡和会员卡二维码
       advanced_info:
-        $ref: '#definitions/card.AdvancedInfoBo'
+        $ref: '#/definitions/card.AdvancedInfoBo'
       background_pic_url:
         type: string
         description: 商家自定义会员卡背景图，须先调用上传图片接口将背景图上传至CDN，否则报错， 卡面设计请遵循微信会员卡自定义背景设计规范,像素大小控制在 1000像素*600像素以下
@@ -6586,7 +6964,7 @@ definitions:
     description: 电影票类型数据结构。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025288)
     properties:
       base_info:
-        $ref: '#definitions/card.BaseInfoBo'
+        $ref: '#/definitions/card.BaseInfoBo'
       detail:
         type: string
         description: 电影票详情
@@ -6595,7 +6973,7 @@ definitions:
     description: 团景区门票数据结构。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025288)
     properties:
       base_info:
-        $ref: '#definitions/card.BaseInfoBo'
+        $ref: '#/definitions/card.BaseInfoBo'
       ticket_class:
         type: string
         description: 票类型，例如平日全票，套票等。

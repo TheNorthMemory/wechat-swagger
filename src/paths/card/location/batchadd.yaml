@@ -1,11 +1,42 @@
 post:
-  summary: ''
+  summary: 上传门店列表
   operationId: card/location/batchadd
   security:
     - accessToken: []
   tags:
     - 卡券
-  parameters: []
+    - 门店
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          location_list:
+            type: array
+            items:
+              type: object
+              properties:
+                business_name:
+                  type: string
+                branch_name:
+                  type: string
+                province:
+                  type: string
+                city:
+                  type: string
+                district:
+                  type: string
+                address:
+                  type: string
+                telephone:
+                  type: string
+                category:
+                  type: string
+                longitude:
+                  type: string
+                latitude:
+                  type: string
   responses:
     '200':
       description: ''

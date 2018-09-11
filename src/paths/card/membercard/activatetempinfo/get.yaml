@@ -1,5 +1,6 @@
 post:
-  summary: 获取用户提交资料
+  summary: 获取用户开卡时提交的信息（跳转型开卡组件）
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1499332673_Unm7V)'
   operationId: card/membercard/activatetempinfo/get
   security:
     - accessToken: []
@@ -10,7 +11,52 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          activate_ticket:
+            type: string
+            description: 跳转型开卡组件开卡后回调中的激活票据，可以用来获取用户开卡资料
+        example:
+          activate_ticket: abcdefg
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              info:
+                type: object
+                properties:
+                  common_field_list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: 会员信息类目名称
+                          enum:
+                            - USER_FORM_INFO_FLAG_MOBILE
+                            - USER_FORM_INFO_FLAG_SEX
+                            - USER_FORM_INFO_FLAG_NAME
+                            - USER_FORM_INFO_FLAG_BIRTHDAY
+                            - USER_FORM_INFO_FLAG_IDCARD
+                            - USER_FORM_INFO_FLAG_EMAIL
+                            - USER_FORM_INFO_FLAG_LOCATION
+                            - USER_FORM_INFO_FLAG_EDUCATION_BACKGRO
+                            - USER_FORM_INFO_FLAG_INDUSTRY
+                            - USER_FORM_INFO_FLAG_INCOME
+                            - USER_FORM_INFO_FLAG_HABIT
+                        value:
+                          type: string
+                          description: 会员卡信息类目值，比如等级值等
+                  custom_field_list:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+        example:
+          errcode: 0
+          errmsg: ok
+          url: https://mp.weixin.qq.com/bizmall/activatemembercard?action=preshow&&enxxxxxxx=MjM5Mzc0OTEwMA%3D%3D#wechat_redirect

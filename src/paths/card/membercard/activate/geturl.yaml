@@ -1,5 +1,6 @@
 post:
-  summary: 获取开卡组件链接接口
+  summary: 获取会员卡开卡组件链接
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1499332673_Unm7V)'
   operationId: card/membercard/activate/geturl
   security:
     - accessToken: []
@@ -10,7 +11,28 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          card_id:
+            type: string
+            description: 会员卡的card_id
+          outer_str:
+            type: string
+            description: 渠道值，用于统计本次领取的渠道参数
+        example:
+          card_id: pbLatji6o5g7hJh8Otuvux4y1ty0
+          outer_str: 123
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              url:
+                type: string
+                description: 返回的url，内含调用开卡插件所需的参数
+        example:
+          errcode: 0
+          errmsg: ok
+          url: https://mp.weixin.qq.com/bizmall/activatemembercard?action=preshow&&enxxxxxxx=MjM5Mzc0OTEwMA%3D%3D#wechat_redirect

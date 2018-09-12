@@ -1,5 +1,6 @@
 post:
   summary: 上传小程序代码
+  description: 公众号须与小程序有绑定关系；小程序代码上传后须登录小程序后台进行提交审核；[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
   operationId: card/giftcard/wxa/set
   security:
     - accessToken: []
@@ -10,7 +11,15 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          wxa_appid:
+            type: string
+            description: 小程序APPID
+          page_id:
+            type: string
+            description: 礼品卡货架页面ID
   responses:
     '200':
       description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'

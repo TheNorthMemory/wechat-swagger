@@ -1,5 +1,6 @@
 post:
   summary: 查询-批量查询礼品卡订单信息接口
+  description: 查询该商户某个时间段内创建的所有订单详情。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
   operationId: card/giftcard/order/batchget
   security:
     - accessToken: []
@@ -10,7 +11,43 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          begin_time:
+            type: integer
+            format: int32
+            description: 查询的时间起点，十位时间戳（utc+8）
+          end_time:
+            type: integer
+            format: int32
+            description: 查询的时间终点，十位时间戳（utc+8），跨度不能超过31天。
+          sort_type:
+            type: string
+            description: 填"ASC" / "DESC"，表示对订单创建时间进行“升 / 降”排序
+            enum:
+              - ASC
+              - DESC
+          offset:
+            type: integer
+            format: int32
+            description: 查询的订单偏移量，如填写100则表示从第100个订单开始拉取
+          count:
+            type: integer
+            format: int32
+            description: 查询订单的数量，如offset填写100，count填写10，则表示查询第100个到第110个订单
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              total_count:
+                type: integer
+                format: int32
+                description: 总计订单数
+              order_list:
+                type: array
+                description: 订单列表结构
+                items:
+                  $ref: '#/definitions/card.type.GiftCardOrderBo'

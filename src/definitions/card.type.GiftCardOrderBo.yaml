@@ -1,0 +1,63 @@
+type: object
+properties:
+  order_id:
+    type: string
+    description: 订单号
+  page_id:
+    type: string
+    description: 货架的id
+  trans_id:
+    type: string
+    description: 微信支付交易订单号
+  create_time:
+    type: integer
+    format: int32
+    description: 订单创建时间，十位时间戳（utc+8）
+  pay_finish_time:
+    type: integer
+    format: int32
+    description: 订单支付完成时间，十位时间戳（utc+8）
+  total_price:
+    type: integer
+    format: int32
+    description: 全部金额，以分为单位
+  open_id:
+    type: string
+    description: 购买者的openid
+  accepter_openid:
+    type: string
+    description: 接收者的openid
+  outer_str:
+    type: string
+    description: 购买货架的渠道参数
+  IsChatRoom:
+    type: boolean
+    description: 该订单那对应礼品卡是否发送至群
+  card_list:
+    type: array
+    description: 卡列表结构，包含以下字段
+    items:
+      type: object
+      properties:
+        card_id:
+          type: string
+          description: 购买的卡card_id列表
+        price:
+          type: integer
+          format: int32
+          description: 该卡的价格
+        code:
+          type: string
+          description: 用户获得的code
+        default_gifting_msg:
+          type: string
+          description: 默认祝福语，当用户填入了祝福语时该字段为空
+        background_pic_url:
+          type: string
+          description: 用户选择的背景图
+        outer_img_id:
+          type: string
+          description: 自定义卡面说明
+        accepter_openid:
+          type: string
+          description: 礼品卡发送至群时，领取者的openid

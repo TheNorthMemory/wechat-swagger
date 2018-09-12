@@ -1,0 +1,55 @@
+post:
+  summary: 获取用户已领取卡券
+  description: 获取用户卡包里的，属于该appid下所有可用卡券，包括正常状态和异常状态。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)
+  operationId: card/user/getcardlist
+  security:
+    - accessToken: []
+  tags:
+    - 卡券
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          openid:
+            type: string
+            description: 需要查询的用户openid
+          card_id:
+            type: string
+            description: 卡券ID。不填写时默认查询当前appid下的卡券。
+        example:
+          openid: 1231231
+          card_id: xxxxxxxxxx
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              has_share_card:
+                type: boolean
+                description: 是否有可用的朋友的券
+              card_id_list:
+                type: array
+                description: 卡券列表
+                items:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 自定义code
+                    card_id:
+                      type: string
+                      description: 卡券ID
+        example:
+          errcode: 0
+          errmsg: ok
+          card_list:
+            - code: xxx1434079154
+              card_id: xxxxxxxxxx
+            - code: xxx1434079155
+              card_id: xxxxxxxxxx
+          has_share_card: true

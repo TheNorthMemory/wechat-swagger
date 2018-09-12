@@ -1,5 +1,6 @@
 post:
   summary: 设置开卡字段接口
+  description: 开发者在创建时填入wx_activate字段后，需要调用该接口设置用户激活时需要填写的选项，否则一键开卡设置不生效。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025283)
   operationId: card/membercard/activateuserform/set
   security:
     - accessToken: []
@@ -10,7 +11,109 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          card_id:
+            type: string
+            description: 卡券ID。
+          service_statement:
+            type: object
+            description: 服务声明，用于放置商户会员卡守则
+            properties:
+              name:
+                type: string
+                description: 会员声明字段名称
+              url:
+                type: string
+                description: 自定义url 请填写 http:// 或者 https:// 开头的链接
+          bind_old_card:
+            type: object
+            description: 绑定老会员链接
+            properties:
+              name:
+                type: string
+                description: 链接名称
+              url:
+                type: string
+                description: 自定义url，请填写 http:// 或者 https:// 开头的链接
+          required_form:
+            type: object
+            description: 会员卡激活时的必填选项。
+            properties:
+              can_modify:
+                  type: boolean
+                  description: 当前结构（required_form或者optional_form ）内 的字段是否允许用户激活后再次修改，商户设置为true 时，需要接收相应事件通知处理修改事件
+              rich_field_list:
+                type: array
+                description: 自定义富文本类型，包含以下三个字段，开发者可 以分别在必填和选填中至多定义五个自定义选项
+                items:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                      description: 富文本类型 FORM_FIELD_RADIO 自定义单选 FORM_FIELD_SELECT 自定义选择项 FORM_FIELD_CHECK_BOX 自定义多选
+                      enum:
+                        - FORM_FIELD_RADIO
+                        - FORM_FIELD_SELECT
+                        - FORM_FIELD_CHECK_BOX
+                    name:
+                      type: string
+                      description: 字段名
+                    values:
+                      type: array
+                      description: 选择项
+                      items:
+                        type: string
+              common_field_id_list:
+                type: array
+                description: 微信格式化的选项类型。见以下列表。
+                items:
+                  type: string
+                  enum:
+                    - USER_FORM_INFO_FLAG_MOBILE
+                    - USER_FORM_INFO_FLAG_SEX
+                    - USER_FORM_INFO_FLAG_NAME
+                    - USER_FORM_INFO_FLAG_BIRTHDAY
+                    - USER_FORM_INFO_FLAG_IDCARD
+                    - USER_FORM_INFO_FLAG_EMAIL
+                    - USER_FORM_INFO_FLAG_LOCATION
+                    - USER_FORM_INFO_FLAG_EDUCATION_BACKGRO
+                    - USER_FORM_INFO_FLAG_INDUSTRY
+                    - USER_FORM_INFO_FLAG_INCOME
+                    - USER_FORM_INFO_FLAG_HABIT
+          optional_form:
+            type: object
+            description: 会员卡激活时的选填项。
+            properties:
+              can_modify:
+                  type: boolean
+                  description: 当前结构（required_form或者optional_form ）内 的字段是否允许用户激活后再次修改，商户设置为true 时，需要接收相应事件通知处理修改事件
+              common_field_id_list:
+                type: array
+                description: 微信格式化的选项类型。见以下列表。
+                items:
+                  type: string
+                  enum:
+                    - USER_FORM_INFO_FLAG_MOBILE
+                    - USER_FORM_INFO_FLAG_SEX
+                    - USER_FORM_INFO_FLAG_NAME
+                    - USER_FORM_INFO_FLAG_BIRTHDAY
+                    - USER_FORM_INFO_FLAG_IDCARD
+                    - USER_FORM_INFO_FLAG_EMAIL
+                    - USER_FORM_INFO_FLAG_LOCATION
+                    - USER_FORM_INFO_FLAG_EDUCATION_BACKGRO
+                    - USER_FORM_INFO_FLAG_INDUSTRY
+                    - USER_FORM_INFO_FLAG_INCOME
+                    - USER_FORM_INFO_FLAG_HABIT
+              custom_field_list:
+                type: array
+                description: 自定义选项名称，开发者可以分别在必填和选填中至多定义五个自定义选项
+                items:
+                  type: string
   responses:
     '200':
       description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'
+        example:
+          errcode: 0
+          errmsg: ok

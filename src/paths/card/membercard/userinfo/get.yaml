@@ -1,5 +1,6 @@
 post:
   summary: 拉取会员信息接口
+  description: 根据CardID和Code查询会员信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025283)
   operationId: card/membercard/userinfo/get
   security:
     - accessToken: []
@@ -10,7 +11,83 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          card_id:
+            type: string
+            description: 单张卡券的唯一标准。
+          code:
+            type: string
+            description: 卡券ID代表一类卡券。自定义code卡券必填。
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              openid:
+                type: string
+                description: 用户在本公众号内唯一识别码
+              nickname:
+                type: string
+                description: 用户昵称
+              bonus:
+                type: string
+                description: 积分信息
+              balance:
+                type: string
+                description: 余额信息
+              sex:
+                type: string
+                description: 用户性别
+              user_card_status:
+                type: string
+                description: 当前用户的会员卡状态，NORMAL 正常 EXPIRE 已过期 GIFTING 转赠中 GIFT_SUCC 转赠成功 GIFT_TIMEOUT 转赠超时 DELETE 已删除，UNAVAILABLE 已失效
+              has_active:
+                type: boolean
+                description: 该卡是否已经被激活，true表示已经被激活，false表示未被激活
+              user_info:
+                type: object
+                description: 会员信息
+                properties:
+                  common_field_list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: 会员信息类目名称
+                          enum:
+                            - USER_FORM_INFO_FLAG_MOBILE
+                            - USER_FORM_INFO_FLAG_SEX
+                            - USER_FORM_INFO_FLAG_NAME
+                            - USER_FORM_INFO_FLAG_BIRTHDAY
+                            - USER_FORM_INFO_FLAG_IDCARD
+                            - USER_FORM_INFO_FLAG_EMAIL
+                            - USER_FORM_INFO_FLAG_LOCATION
+                            - USER_FORM_INFO_FLAG_EDUCATION_BACKGRO
+                            - USER_FORM_INFO_FLAG_INDUSTRY
+                            - USER_FORM_INFO_FLAG_INCOME
+                            - USER_FORM_INFO_FLAG_HABIT
+                        value:
+                          type: string
+                          description: 会员卡信息类目值，比如等级值等
+                  custom_field_list:
+                    type: array
+                    description: 开发者设置的会员卡会员信息类目，如等级。
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: 会员信息类目名称
+                        value:
+                          type: string
+                          description: 会员卡信息类目值，比如等级值等
+                        value_list:
+                          type: array
+                          description: 填写项目为多选时的返回
+                          items:
+                            type: string

@@ -635,6 +635,7 @@ paths:
   /card/generalcard/updateuser:
     post:
       summary: 更新用户礼品卡信息接口
+      description: 当礼品卡被使用后，开发者可以通过该接口变更某个礼品卡的余额信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
       operationId: card/generalcard/updateuser
       security:
         - accessToken: []
@@ -645,10 +646,81 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              code:
+                type: string
+                description: 卡券Code码。
+              card_id:
+                type: string
+                description: 卡券ID。
+              background_pic_url:
+                type: string
+                description: 支持商家激活时针对单个礼品卡分配自定义的礼品卡背景。
+              bonus:
+                type: integer
+                format: int32
+                description: 需要设置的积分全量值，传入的数值会直接显示
+              record_bonus:
+                type: string
+                description: 商家自定义积分消耗记录，不超过14个汉字
+              balance:
+                type: integer
+                format: int32
+                description: 需要设置的余额全量值，传入的数值会直接显示在卡面
+              record_balance:
+                type: string
+                description: 商家自定义金额消耗记录，不超过14个汉字。
+              custom_field_value1:
+                type: string
+                description: 创建时字段custom_field1定义类型的最新数值，限制为4个汉字，12字节。
+              custom_field_value2:
+                type: string
+                description: 创建时字段custom_field2定义类型的最新数值，限制为4个汉字，12字节。
+              custom_field_value3:
+                type: string
+                description: 创建时字段custom_field3定义类型的最新数值，限制为4个汉字，12字节。
+              can_give_friend:
+                type: boolean
+                description: 控制本次积分变动后转赠入口是否出现
+            required:
+              - code
+              - card_id
+            example:
+              code: 179011264953
+              card_id: p1Pj9jr90_SQRaVqYI239Ka1erkI
+              background_pic_url: https://mmbiz.qlogo.cn/mmbiz/0?wx_fmt=jpeg
+              record_bonus: 消费30元，获得3积分
+              bonus: 3000
+              custom_field_value1: xxxxx
+              can_give_friend: true
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  info:
+                    type: object
+                    properties:
+                      result_bonus:
+                        type: integer
+                        format: int32
+                        description: 当前用户积分总额
+                      result_balance:
+                        type: integer
+                        format: int32
+                        description: 当前用户预存总金额
+                      openid:
+                        type: string
+                        description: 用户openid
+            example:
+              errcode: 0
+              errmsg: ok
+              result_bonus: 100
+              result_balance: 200
+              openid: oFS7Fjl0WsZ9AMZqrI80nbIq8xrA
   /card/get:
     post:
       summary: 查看卡券详情
@@ -799,6 +871,7 @@ paths:
   /card/giftcard/maintain/set:
     post:
       summary: 下架-礼品卡货架接口
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)'
       operationId: card/giftcard/maintain/set
       security:
         - accessToken: []
@@ -809,13 +882,64 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              page_id:
+                type: string
+                description: 需要下架的page_id
+              maintain:
+                type: boolean
+              all:
+                type: boolean
+                description: 或者将该商户下所有的货架设置为下架
+            example:
+              page_id: abcedfghifk=+Uasdaseq14fadkf8123h4jk
+              maintain: true
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  control_info:
+                    type: object
+                    properties:
+                      biz_control_type:
+                        type: string
+                        description: 商户控制的该appid下所有货架的状态
+                      system_biz_control_type:
+                        type: string
+                        description: 系统控制的商家appid下所有的货架状态
+                      list:
+                        type: array
+                        description: Page列表的结构体，为商户下所有page列表
+                        items:
+                          type: object
+                          properties:
+                            page_id:
+                              type: string
+                              description: Page的唯一id
+                            page_control_type:
+                              type: string
+                              description: 商户控制的货架状态
+                            system_page_control_type:
+                              type: string
+                              description: 由系统控制的货架状态
+            example:
+              errcode: 0
+              errmsg: ok
+              control_info:
+                biz_control_type: E_PAGE_CONTROL_BIZ
+                system_biz_control_type: E_PAGE_CONTROL_NORMAL
+                list:
+                  - page_id: abcedfghifk=+Uasdaseq14fadkf8123h4jk
+                    page_control_type: E_PAGE_CONTROL_BIZ
+                    system_page_control_type: E_PAGE_CONTROL_SYSTEM
   /card/giftcard/order/batchget:
     post:
       summary: 查询-批量查询礼品卡订单信息接口
+      description: 查询该商户某个时间段内创建的所有订单详情。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
       operationId: card/giftcard/order/batchget
       security:
         - accessToken: []
@@ -826,13 +950,50 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              begin_time:
+                type: integer
+                format: int32
+                description: 查询的时间起点，十位时间戳（utc+8）
+              end_time:
+                type: integer
+                format: int32
+                description: 查询的时间终点，十位时间戳（utc+8），跨度不能超过31天。
+              sort_type:
+                type: string
+                description: 填"ASC" / "DESC"，表示对订单创建时间进行“升 / 降”排序
+                enum:
+                  - ASC
+                  - DESC
+              offset:
+                type: integer
+                format: int32
+                description: 查询的订单偏移量，如填写100则表示从第100个订单开始拉取
+              count:
+                type: integer
+                format: int32
+                description: 查询订单的数量，如offset填写100，count填写10，则表示查询第100个到第110个订单
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  total_count:
+                    type: integer
+                    format: int32
+                    description: 总计订单数
+                  order_list:
+                    type: array
+                    description: 订单列表结构
+                    items:
+                      $ref: '#/definitions/card.type.GiftCardOrderBo'
   /card/giftcard/order/get:
     post:
       summary: 查询-单个礼品卡订单信息接口
+      description: 查询某个订单号对应的订单详情。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
       operationId: card/giftcard/order/get
       security:
         - accessToken: []
@@ -843,13 +1004,21 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              order_id:
+                type: string
+                description: 礼品卡订单号，商户可以通过购买成功的事件推送或者批量查询订单接口获得
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/card.type.GiftCardOrderBo'
   /card/giftcard/order/refund:
     post:
-      summary: ''
+      summary: 退款
+      description: 对某一笔订单操作退款，注意该接口比较隐私，请开发者提高操作该功能的权限等级，退款后，对应的礼品卡将会在用户卡包消失。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
       operationId: card/giftcard/order/refund
       security:
         - accessToken: []
@@ -860,13 +1029,19 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              order_id:
+                type: string
+                description: 须退款的订单id
       responses:
         '200':
           description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
   /card/giftcard/page/add:
     post:
       summary: 创建-礼品卡货架接口
+      description: 创建一个礼品卡货架并且用于公众号、门店的礼品卡售卖。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
       operationId: card/giftcard/page/add
       security:
         - accessToken: []
@@ -877,13 +1052,24 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              page:
+                $ref: '#/definitions/card.type.GiftCardPageBo'
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  page_id:
+                    type: string
+                    description: 货架的id，用于查询货架详情以及获得货架访问链接=>https://mp.weixin.qq.com/bizmall/giftcard?action=homepage&page_id=123456#wechat_redirect
   /card/giftcard/page/batchget:
     post:
       summary: 查询-礼品卡货架列表接口
+      description: 查询当前商户下所有的礼品卡货架id。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
       operationId: card/giftcard/page/batchget
       security:
         - accessToken: []
@@ -898,9 +1084,28 @@ paths:
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  page_id_list:
+                    type: array
+                    description: 礼品卡货架id列表
+                    items:
+                      type: string
+            example:
+              errcode: 0
+              errmsg: ok
+              page_id_list:
+                - abcedfghifk=+Uasdaseq14fadkf8123h4jk
+                - abcedfghifk=+Uasdaseq14fadkf8123h4jl
+                - abcedfghifk=+Uasdaseq14fadkf8123h4jm
+                - abcedfghifk=+Uasdaseq14fadkf8123h4jn
   /card/giftcard/page/get:
     post:
       summary: 查询-礼品卡货架信息接口
+      description: 查询某个礼品卡货架信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
       operationId: card/giftcard/page/get
       security:
         - accessToken: []
@@ -911,13 +1116,24 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              page_id:
+                type: string
+                description: 货架id
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  page:
+                    $ref: '#/definitions/card.type.GiftCardPageBo'
   /card/giftcard/page/update:
     post:
       summary: 修改-礼品卡货架信息接口
+      description: 更新礼品卡货架信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
       operationId: card/giftcard/page/update
       security:
         - accessToken: []
@@ -928,13 +1144,24 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              page:
+                allOf:
+                  - type: object
+                    properties:
+                      page_id:
+                        type: string
+                        description: 货架id
+                  - $ref: '#/definitions/card.type.GiftCardPageBo'
       responses:
         '200':
           description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
   /card/giftcard/pay/submch/bind:
     post:
       summary: 绑定商户号到礼品卡小程序接口
+      description: 传入的商户号须为普通服务商模式或者直连商户号，建议为礼品卡专用商户号；商户号必须为公众号申请的商户号。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
       operationId: card/giftcard/pay/submch/bind
       security:
         - accessToken: []
@@ -945,13 +1172,22 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              sub_mch_id:
+                type: string
+                description: 微信支付子商户号
+              wxa_appid:
+                type: string
+                description: 小程序APPID
       responses:
         '200':
           description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
   /card/giftcard/pay/whitelist/add:
     post:
       summary: 开通微信支付礼品卡权限
+      description: 传入的商户号须为普通服务商模式或者直连商户号，建议为礼品卡专用商户号。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
       operationId: card/giftcard/pay/whitelist/add
       security:
         - accessToken: []
@@ -962,13 +1198,28 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              sub_mch_id:
+                type: string
+                description: 微信支付子商户号
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  url:
+                    type: string
+            example:
+              errcode: 0
+              errmsg: ok
+              url: https://pay.weixin.qq.com/index.php/public/product/detail?pid=61&productType=0
   /card/giftcard/wxa/set:
     post:
       summary: 上传小程序代码
+      description: 公众号须与小程序有绑定关系；小程序代码上传后须登录小程序后台进行提交审核；[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
       operationId: card/giftcard/wxa/set
       security:
         - accessToken: []
@@ -979,25 +1230,121 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              wxa_appid:
+                type: string
+                description: 小程序APPID
+              page_id:
+                type: string
+                description: 礼品卡货架页面ID
       responses:
         '200':
           description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
   /card/invoice/getauthdata:
     post:
       summary: 查询开票信息
+      description: '商户可以调用该接口查询某一个订单的开票信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)'
       operationId: card/invoice/getauthdata
       security:
         - accessToken: []
       tags:
         - 卡券/礼品卡/财务
-      parameters: []
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              order_id:
+                type: string
+                description: 发票order_id
+              s_appid:
+                type: string
+                description: 发票平台的身份id
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  invoice_status:
+                    type: string
+                    description: 订单授权状态，见备注
+                  auth_time:
+                    type: integer
+                    format: int32
+                    description: 授权时间，为十位时间戳（utc+8）
+                  user_auth_info:
+                    type: object
+                    description: 用户授权信息结构体，仅在type=1时出现
+                    properties:
+                      user_field:
+                        type: object
+                        description: 个人类型发票的授权信息结构体
+                        properties:
+                          title:
+                            type: string
+                            description: 个人/单位抬头
+                          phone:
+                            type: string
+                            description: 个人/单位联系电话
+                          email:
+                            type: string
+                            description: 个人邮箱
+                          custom_field:
+                            type: array
+                            description: 商户自定义信息结构体
+                            items:
+                              type: object
+                              properties:
+                                key:
+                                  type: string
+                                  description: 商户自定义填写项名称
+                                value:
+                                  type: string
+                                  description: 商户自定义填写项用户填写的信息
+                      biz_field:
+                        type: object
+                        description: 单位类型发票的授权信息结构体
+                        properties:
+                          title:
+                            type: string
+                            description: 单位抬头
+                          phone:
+                            type: string
+                            description: 个人/单位联系电话
+                          tax_no:
+                            type: string
+                            description: 单位税号
+                          addr:
+                            type: string
+                            description: 单位注册地址
+                          bank_type:
+                            type: string
+                            description: 单位开户银行
+                          bank_no:
+                            type: string
+                            description: 单位开户银行账号
+                          custom_field:
+                            type: array
+                            description: 商户自定义信息结构体
+                            items:
+                              type: object
+                              properties:
+                                key:
+                                  type: string
+                                  description: 商户自定义填写项名称
+                                value:
+                                  type: string
+                                  description: 商户自定义填写项用户填写的信息
   /card/invoice/setbizattr:
     post:
       summary: 设置支付后开票信息
+      description: '四大杂烩接口。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)'
       operationId: card/invoice/setbizattr
       security:
         - accessToken: []
@@ -1008,6 +1355,7 @@ paths:
           name: action
           type: string
           required: true
+          description: set_pay_mch=设置支付后开票信息,get_pay_mch=查询支付后开票信息,set_auth_field=设置开票页面信息,get_auth_field=查询授权页字段信息
           enum:
             - set_pay_mch
             - get_pay_mch
@@ -7398,6 +7746,209 @@ definitions:
       gift:
         type: string
         description: 兑换券专用，填写兑换内容的名称。
+  card.type.GiftCardOrderBo:
+    type: object
+    properties:
+      order_id:
+        type: string
+        description: 订单号
+      page_id:
+        type: string
+        description: 货架的id
+      trans_id:
+        type: string
+        description: 微信支付交易订单号
+      create_time:
+        type: integer
+        format: int32
+        description: 订单创建时间，十位时间戳（utc+8）
+      pay_finish_time:
+        type: integer
+        format: int32
+        description: 订单支付完成时间，十位时间戳（utc+8）
+      total_price:
+        type: integer
+        format: int32
+        description: 全部金额，以分为单位
+      open_id:
+        type: string
+        description: 购买者的openid
+      accepter_openid:
+        type: string
+        description: 接收者的openid
+      outer_str:
+        type: string
+        description: 购买货架的渠道参数
+      IsChatRoom:
+        type: boolean
+        description: 该订单那对应礼品卡是否发送至群
+      card_list:
+        type: array
+        description: 卡列表结构，包含以下字段
+        items:
+          type: object
+          properties:
+            card_id:
+              type: string
+              description: 购买的卡card_id列表
+            price:
+              type: integer
+              format: int32
+              description: 该卡的价格
+            code:
+              type: string
+              description: 用户获得的code
+            default_gifting_msg:
+              type: string
+              description: 默认祝福语，当用户填入了祝福语时该字段为空
+            background_pic_url:
+              type: string
+              description: 用户选择的背景图
+            outer_img_id:
+              type: string
+              description: 自定义卡面说明
+            accepter_openid:
+              type: string
+              description: 礼品卡发送至群时，领取者的openid
+  card.type.GiftCardPageBo:
+    type: object
+    properties:
+      page_title:
+        type: string
+        description: 礼品卡货架名称
+      support_multi:
+        type: boolean
+        description: 是否支持一次购买多张及发送至群，填true或者false，若填true则支持，默认为false
+      support_buy_for_self:
+        type: boolean
+        description: 礼品卡货架是否支持买给自己，填true或者false，若填true则支持，默认为false
+      banner_pic_url:
+        type: string
+        description: 礼品卡货架主题页顶部banner图片，须先将图片上传至CDN，建议尺寸为750px*630px
+      theme_list:
+        type: array
+        description: 主题结构体
+        items:
+          type: object
+          properties:
+            theme_pic_url:
+              type: string
+              description: 主题的封面图片，须先将图片上传至CDN 大小控制在1000px*600px
+            title:
+              type: string
+              description: 主题名称，如“圣诞”“感恩家人”
+            title_color:
+              type: string
+              description: 主题title的颜色，直接传入色值
+            item_list:
+              type: array
+              description: 礼品卡列表，标识该主题可选择的面额
+              items:
+                type: object
+                properties:
+                  card_id:
+                    type: string
+                    description: 待上架的card_id
+                  title:
+                    type: string
+                    description: 商品名，不填写默认为卡名称
+                  pic_url:
+                    type: string
+                    description: 商品缩略图，1000像素*600像素以下
+                  desc:
+                    type: string
+                    description: 商品简介
+            pic_item_list:
+              type: array
+              description: 封面列表
+              items:
+                type: object
+                properties:
+                  background_pic_url:
+                    type: string
+                    description: 卡面图片，须先将图片上传至CDN，大小控制在1000像素*600像素以下
+                  outer_img_id:
+                    type: string
+                    description: 自定义的卡面的标识
+                  default_gifting_msg:
+                    type: string
+                    description: 该卡面对应的默认祝福语，当用户没有编辑内容时会随卡默认填写为用户祝福内容
+            category_index:
+              type: integer
+              format: int32
+              description: 主题标号，对应category_list内的title字段， 若填写了category_list则每个主题必填该序号
+            show_sku_title_first:
+              type: boolean
+              description: 该主题购买页是否突出商品名显示
+            is_banner:
+              type: boolean
+              description: 是否将当前主题设置为banner主题（主推荐）
+      category_list:
+        type: array
+        description: 主题分类列表
+        items:
+          type: object
+          properties:
+            title:
+              type: string
+              description: 主题分类的名称
+      address:
+        type: string
+        description: 商家地址
+      service_phone:
+        type: string
+        description: 商家服务电话
+      biz_description:
+        type: string
+        description: 商家使用说明，用于描述退款、发票等流程
+      need_receipt:
+        type: boolean
+        description: 该货架的订单是否支持开发票，填true或者false，若填true则需要调试文档2.2的流程，默认为false
+      cell_1:
+        type: object
+        description: 商家自定义链接，用于承载退款、发票等流程
+        properties:
+          title:
+            type: string
+            description: 自定义入口名称
+          url:
+            type: string
+            description: 自定义入口链接
+      cell_2:
+        type: object
+        description: 商家自定义链接，用于承载退款、发票等流程
+        properties:
+          title:
+            type: string
+            description: 自定义入口名称
+          url:
+            type: string
+            description: 自定义入口链接
+    required:
+      - page_title
+      - banner_pic_url
+      - theme_list
+        - theme_pic_url
+        - title
+        - title_color
+        - item_list
+          - card_id
+          - title
+          - pic_url
+          - desc
+        - pic_item_list
+          - background_pic_url
+          - default_gifting_msg
+        - category_index
+      - address
+      - service_phone
+      - biz_description
+      - cell_1
+        - title
+        - url
+      - cell_2
+        - title
+        - url
   card.type.GrouponBo:
     type: object
     description: 团购券数据结构

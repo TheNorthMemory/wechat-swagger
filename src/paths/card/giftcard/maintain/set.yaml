@@ -18,7 +18,7 @@ post:
           maintain:
             type: boolean
           all:
-            type: blloean
+            type: boolean
             description: 或者将该商户下所有的货架设置为下架
         example:
           page_id: abcedfghifk=+Uasdaseq14fadkf8123h4jk

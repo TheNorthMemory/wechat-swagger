@@ -1,5 +1,6 @@
 post:
   summary: 更新会议门票
+  description: 更新会议入场时间、区域、座位等信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025288)
   operationId: card/meetingticket/updateuser
   security:
     - accessToken: []
@@ -10,7 +11,41 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          code:
+              type: string
+              description: 卡券Code码。
+          card_id:
+              type: string
+              description: 要更新门票序列号所述的card_id，生成券时use_custom_code 填写true 时必填。
+          begin_time:
+              type: integer
+              format: int32
+              description: 开场时间，微信会在开场时间前两小时通过制票公众阿訇或者服务通知下发开场提醒，Unix时间戳格式。
+          end_time:
+              type: integer
+              format: int32
+              description: 结束时间，Unix时间戳格式。
+          zone:
+              type: string
+              description: 区域。
+          entrance:
+              type: string
+              description: 入口。
+          seat_number:
+              type: string
+              description: 座位号。
+        required:
+          - code
+          - card_id
+          - zone
+          - entrance
+          - seat_number
   responses:
     '200':
       description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'
+        example:
+          errcode: 0
+          errmsg: ok

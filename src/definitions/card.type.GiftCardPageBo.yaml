@@ -1,0 +1,138 @@
+type: object
+properties:
+  page_title:
+    type: string
+    description: 礼品卡货架名称
+  support_multi:
+    type: boolean
+    description: 是否支持一次购买多张及发送至群，填true或者false，若填true则支持，默认为false
+  support_buy_for_self:
+    type: boolean
+    description: 礼品卡货架是否支持买给自己，填true或者false，若填true则支持，默认为false
+  banner_pic_url:
+    type: string
+    description: 礼品卡货架主题页顶部banner图片，须先将图片上传至CDN，建议尺寸为750px*630px
+  theme_list:
+    type: array
+    description: 主题结构体
+    items:
+      type: object
+      properties:
+        theme_pic_url:
+          type: string
+          description: 主题的封面图片，须先将图片上传至CDN 大小控制在1000px*600px
+        title:
+          type: string
+          description: 主题名称，如“圣诞”“感恩家人”
+        title_color:
+          type: string
+          description: 主题title的颜色，直接传入色值
+        item_list:
+          type: array
+          description: 礼品卡列表，标识该主题可选择的面额
+          items:
+            type: object
+            properties:
+              card_id:
+                type: string
+                description: 待上架的card_id
+              title:
+                type: string
+                description: 商品名，不填写默认为卡名称
+              pic_url:
+                type: string
+                description: 商品缩略图，1000像素*600像素以下
+              desc:
+                type: string
+                description: 商品简介
+        pic_item_list:
+          type: array
+          description: 封面列表
+          items:
+            type: object
+            properties:
+              background_pic_url:
+                type: string
+                description: 卡面图片，须先将图片上传至CDN，大小控制在1000像素*600像素以下
+              outer_img_id:
+                type: string
+                description: 自定义的卡面的标识
+              default_gifting_msg:
+                type: string
+                description: 该卡面对应的默认祝福语，当用户没有编辑内容时会随卡默认填写为用户祝福内容
+        category_index:
+          type: integer
+          format: int32
+          description: 主题标号，对应category_list内的title字段， 若填写了category_list则每个主题必填该序号
+        show_sku_title_first:
+          type: boolean
+          description: 该主题购买页是否突出商品名显示
+        is_banner:
+          type: boolean
+          description: 是否将当前主题设置为banner主题（主推荐）
+  category_list:
+    type: array
+    description: 主题分类列表
+    items:
+      type: object
+      properties:
+        title:
+          type: string
+          description: 主题分类的名称
+  address:
+    type: string
+    description: 商家地址
+  service_phone:
+    type: string
+    description: 商家服务电话
+  biz_description:
+    type: string
+    description: 商家使用说明，用于描述退款、发票等流程
+  need_receipt:
+    type: boolean
+    description: 该货架的订单是否支持开发票，填true或者false，若填true则需要调试文档2.2的流程，默认为false
+  cell_1:
+    type: object
+    description: 商家自定义链接，用于承载退款、发票等流程
+    properties:
+      title:
+        type: string
+        description: 自定义入口名称
+      url:
+        type: string
+        description: 自定义入口链接
+  cell_2:
+    type: object
+    description: 商家自定义链接，用于承载退款、发票等流程
+    properties:
+      title:
+        type: string
+        description: 自定义入口名称
+      url:
+        type: string
+        description: 自定义入口链接
+required:
+  - page_title
+  - banner_pic_url
+  - theme_list
+    - theme_pic_url
+    - title
+    - title_color
+    - item_list
+      - card_id
+      - title
+      - pic_url
+      - desc
+    - pic_item_list
+      - background_pic_url
+      - default_gifting_msg
+    - category_index
+  - address
+  - service_phone
+  - biz_description
+  - cell_1
+    - title
+    - url
+  - cell_2
+    - title
+    - url

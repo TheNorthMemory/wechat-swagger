@@ -1,5 +1,6 @@
 post:
   summary: 查询-礼品卡货架列表接口
+  description: 查询当前商户下所有的礼品卡货架id。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
   operationId: card/giftcard/page/batchget
   security:
     - accessToken: []
@@ -14,3 +15,21 @@ post:
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              page_id_list:
+                type: array
+                description: 礼品卡货架id列表
+                items:
+                  type: string
+        example:
+          errcode: 0
+          errmsg: ok
+          page_id_list:
+            - abcedfghifk=+Uasdaseq14fadkf8123h4jk
+            - abcedfghifk=+Uasdaseq14fadkf8123h4jl
+            - abcedfghifk=+Uasdaseq14fadkf8123h4jm
+            - abcedfghifk=+Uasdaseq14fadkf8123h4jn

@@ -1,5 +1,6 @@
 post:
   summary: 创建-礼品卡货架接口
+  description: 创建一个礼品卡货架并且用于公众号、门店的礼品卡售卖。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
   operationId: card/giftcard/page/add
   security:
     - accessToken: []
@@ -10,7 +11,17 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          page:
+            $ref: '#/definitions/card.type.GiftCardPageBo'
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              page_id:
+                type: string
+                description: 货架的id，用于查询货架详情以及获得货架访问链接=>https://mp.weixin.qq.com/bizmall/giftcard?action=homepage&page_id=123456#wechat_redirect

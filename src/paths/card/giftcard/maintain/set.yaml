@@ -1,5 +1,6 @@
 post:
   summary: 下架-礼品卡货架接口
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)'
   operationId: card/giftcard/maintain/set
   security:
     - accessToken: []
@@ -10,7 +11,57 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          page_id:
+            type: string
+            description: 需要下架的page_id
+          maintain:
+            type: boolean
+          all:
+            type: blloean
+            description: 或者将该商户下所有的货架设置为下架
+        example:
+          page_id: abcedfghifk=+Uasdaseq14fadkf8123h4jk
+          maintain: true
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              control_info:
+                type: object
+                properties:
+                  biz_control_type:
+                    type: string
+                    description: 商户控制的该appid下所有货架的状态
+                  system_biz_control_type:
+                    type: string
+                    description: 系统控制的商家appid下所有的货架状态
+                  list:
+                    type: array
+                    description: Page列表的结构体，为商户下所有page列表
+                    items:
+                      type: object
+                      properties:
+                        page_id:
+                          type: string
+                          description: Page的唯一id
+                        page_control_type:
+                          type: string
+                          description: 商户控制的货架状态
+                        system_page_control_type:
+                          type: string
+                          description: 由系统控制的货架状态
+        example:
+          errcode: 0
+          errmsg: ok
+          control_info:
+            biz_control_type: E_PAGE_CONTROL_BIZ
+            system_biz_control_type: E_PAGE_CONTROL_NORMAL
+            list:
+              - page_id: abcedfghifk=+Uasdaseq14fadkf8123h4jk
+                page_control_type: E_PAGE_CONTROL_BIZ
+                system_page_control_type: E_PAGE_CONTROL_SYSTEM

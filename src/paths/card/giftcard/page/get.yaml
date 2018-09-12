@@ -1,5 +1,6 @@
 post:
   summary: 查询-礼品卡货架信息接口
+  description: 查询某个礼品卡货架信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
   operationId: card/giftcard/page/get
   security:
     - accessToken: []
@@ -10,7 +11,17 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          page_id:
+            type: string
+            description: 货架id
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              page:
+                $ref: '#/definitions/card.type.GiftCardPageBo'

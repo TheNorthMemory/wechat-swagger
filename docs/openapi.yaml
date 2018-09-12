@@ -114,6 +114,7 @@ paths:
   /card/boardingpass/checkin:
     post:
       summary: 更新飞机票信息接口
+      description: 机票生成后无需经过微信审核，即时生效。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025288)
       operationId: card/boardingpass/checkin
       security:
         - accessToken: []
@@ -124,10 +125,49 @@ paths:
           name: buffer
           schema:
             type: object
-            properties: {}
+            properties:
+              code:
+                type: string
+                description: 卡券Code码。
+              card_id:
+                type: string
+                description: 卡券ID，自定义Code码的卡券必填。
+              etkt_bnr:
+                type: string
+                description: 电子客票号，上限为14个数字。
+              class:
+                type: string
+                description: 舱等，如头等舱等，上限为5个汉字。
+              qrcode_data:
+                type: string
+                description: 二维码数据。乘客用于值机的二维码字符串，微信会通过此数据为用户生成值机用的二维码。
+              seat:
+                type: string
+                description: 乘客座位号。
+              is_cancel:
+                type: boolean
+                description: 是否取消值机。填写true或false。true代表取消，如填写true上述字段（如calss等）均不做判断，机票返回未值机状态，乘客可重新值机。默认填写false。
+            required:
+              - code
+              - etkt_bnr
+              - class
+            example:
+              code: 198374613512
+              card_id: p1Pj9jr90_SQRaVqYI239Ka1erkI
+              passenger_name: 乘客姓名
+              class: 舱等
+              seat: 座位号
+              etkt_bnr: 电子客票号
+              qrcode_data: 二维码数据
+              is_cancel: false
       responses:
         '200':
           description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+            example:
+              errcode: 0
+              errmsg: ok
   /card/code/checkcode:
     post:
       summary: 核查code接口
@@ -1156,6 +1196,7 @@ paths:
   /card/meetingticket/updateuser:
     post:
       summary: 更新会议门票
+      description: 更新会议入场时间、区域、座位等信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025288)
       operationId: card/meetingticket/updateuser
       security:
         - accessToken: []
@@ -1166,13 +1207,48 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              code:
+                  type: string
+                  description: 卡券Code码。
+              card_id:
+                  type: string
+                  description: 要更新门票序列号所述的card_id，生成券时use_custom_code 填写true 时必填。
+              begin_time:
+                  type: integer
+                  format: int32
+                  description: 开场时间，微信会在开场时间前两小时通过制票公众阿訇或者服务通知下发开场提醒，Unix时间戳格式。
+              end_time:
+                  type: integer
+                  format: int32
+                  description: 结束时间，Unix时间戳格式。
+              zone:
+                  type: string
+                  description: 区域。
+              entrance:
+                  type: string
+                  description: 入口。
+              seat_number:
+                  type: string
+                  description: 座位号。
+            required:
+              - code
+              - card_id
+              - zone
+              - entrance
+              - seat_number
       responses:
         '200':
           description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+            example:
+              errcode: 0
+              errmsg: ok
   /card/membercard/activate:
     post:
       summary: 激活会员卡
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025283)'
       operationId: card/membercard/activate
       security:
         - accessToken: []
@@ -1183,10 +1259,59 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              membership_number:
+                type: string
+                description: 会员卡编号，由开发者填入，作为序列号显示在用户的卡包里。可与Code码保持等值。
+              code:
+                type: string
+                description: 领取会员卡用户获得的code
+              card_id:
+                type: string
+                description: 卡券ID,自定义code卡券必填
+              background_pic_url:
+                type: string
+                description: 商家自定义会员卡背景图，须 先调用 上传图片接口 将背景图上传至CDN，否则报错， 卡面设计请遵循 微信会员卡自定义背景设计规范
+              activate_begin_time:
+                type: integer
+                format: int32
+                description: 激活后的有效起始时间。若不填写默认以创建时的 data_info 为准。Unix时间戳格式。
+              activate_end_time:
+                type: integer
+                format: int32
+                description: 激活后的有效截至时间。若不填写默认以创建时的 data_info 为准。Unix时间戳格式。
+              init_bonus:
+                type: integer
+                format: int32
+                description: 初始积分，不填为0。
+              init_bonus_record:
+                type: string
+                description: 积分同步说明。
+              init_balance:
+                type: integer
+                format: int32
+                description: 初始余额，不填为0。
+              init_custom_field_value1:
+                type: string
+                description: 创建时字段custom_field1定义类型的初始值，限制为4个汉字，12字节。
+              init_custom_field_value2:
+                type: string
+                description: 创建时字段custom_field2定义类型的初始值，限制为4个汉字，12字节。
+              init_custom_field_value3:
+                type: string
+                description: 创建时字段custom_field3定义类型的初始值，限制为4个汉字，12字节。
+            required:
+              - membership_number
+              - code
+              - card_id
       responses:
         '200':
           description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+            example:
+              errcode: 0
+              errmsg: ok
   /card/membercard/activate/geturl:
     post:
       summary: 获取会员卡开卡组件链接
@@ -1285,13 +1410,10 @@ paths:
                         items:
                           type: object
                           properties: {}
-            example:
-              errcode: 0
-              errmsg: ok
-              url: https://mp.weixin.qq.com/bizmall/activatemembercard?action=preshow&&enxxxxxxx=MjM5Mzc0OTEwMA%3D%3D#wechat_redirect
   /card/membercard/activateuserform/set:
     post:
       summary: 设置开卡字段接口
+      description: 开发者在创建时填入wx_activate字段后，需要调用该接口设置用户激活时需要填写的选项，否则一键开卡设置不生效。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025283)
       operationId: card/membercard/activateuserform/set
       security:
         - accessToken: []
@@ -1302,13 +1424,116 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              card_id:
+                type: string
+                description: 卡券ID。
+              service_statement:
+                type: object
+                description: 服务声明，用于放置商户会员卡守则
+                properties:
+                  name:
+                    type: string
+                    description: 会员声明字段名称
+                  url:
+                    type: string
+                    description: 自定义url 请填写 http:// 或者 https:// 开头的链接
+              bind_old_card:
+                type: object
+                description: 绑定老会员链接
+                properties:
+                  name:
+                    type: string
+                    description: 链接名称
+                  url:
+                    type: string
+                    description: 自定义url，请填写 http:// 或者 https:// 开头的链接
+              required_form:
+                type: object
+                description: 会员卡激活时的必填选项。
+                properties:
+                  can_modify:
+                      type: boolean
+                      description: 当前结构（required_form或者optional_form ）内 的字段是否允许用户激活后再次修改，商户设置为true 时，需要接收相应事件通知处理修改事件
+                  rich_field_list:
+                    type: array
+                    description: 自定义富文本类型，包含以下三个字段，开发者可 以分别在必填和选填中至多定义五个自定义选项
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: 富文本类型 FORM_FIELD_RADIO 自定义单选 FORM_FIELD_SELECT 自定义选择项 FORM_FIELD_CHECK_BOX 自定义多选
+                          enum:
+                            - FORM_FIELD_RADIO
+                            - FORM_FIELD_SELECT
+                            - FORM_FIELD_CHECK_BOX
+                        name:
+                          type: string
+                          description: 字段名
+                        values:
+                          type: array
+                          description: 选择项
+                          items:
+                            type: string
+                  common_field_id_list:
+                    type: array
+                    description: 微信格式化的选项类型。见以下列表。
+                    items:
+                      type: string
+                      enum:
+                        - USER_FORM_INFO_FLAG_MOBILE
+                        - USER_FORM_INFO_FLAG_SEX
+                        - USER_FORM_INFO_FLAG_NAME
+                        - USER_FORM_INFO_FLAG_BIRTHDAY
+                        - USER_FORM_INFO_FLAG_IDCARD
+                        - USER_FORM_INFO_FLAG_EMAIL
+                        - USER_FORM_INFO_FLAG_LOCATION
+                        - USER_FORM_INFO_FLAG_EDUCATION_BACKGRO
+                        - USER_FORM_INFO_FLAG_INDUSTRY
+                        - USER_FORM_INFO_FLAG_INCOME
+                        - USER_FORM_INFO_FLAG_HABIT
+              optional_form:
+                type: object
+                description: 会员卡激活时的选填项。
+                properties:
+                  can_modify:
+                      type: boolean
+                      description: 当前结构（required_form或者optional_form ）内 的字段是否允许用户激活后再次修改，商户设置为true 时，需要接收相应事件通知处理修改事件
+                  common_field_id_list:
+                    type: array
+                    description: 微信格式化的选项类型。见以下列表。
+                    items:
+                      type: string
+                      enum:
+                        - USER_FORM_INFO_FLAG_MOBILE
+                        - USER_FORM_INFO_FLAG_SEX
+                        - USER_FORM_INFO_FLAG_NAME
+                        - USER_FORM_INFO_FLAG_BIRTHDAY
+                        - USER_FORM_INFO_FLAG_IDCARD
+                        - USER_FORM_INFO_FLAG_EMAIL
+                        - USER_FORM_INFO_FLAG_LOCATION
+                        - USER_FORM_INFO_FLAG_EDUCATION_BACKGRO
+                        - USER_FORM_INFO_FLAG_INDUSTRY
+                        - USER_FORM_INFO_FLAG_INCOME
+                        - USER_FORM_INFO_FLAG_HABIT
+                  custom_field_list:
+                    type: array
+                    description: 自定义选项名称，开发者可以分别在必填和选填中至多定义五个自定义选项
+                    items:
+                      type: string
       responses:
         '200':
           description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+            example:
+              errcode: 0
+              errmsg: ok
   /card/membercard/updateuser:
     post:
       summary: 更新会员信息
+      description: 当会员持卡消费后，支持开发者调用该接口更新会员信息。会员卡交易后的每次信息变更需通过该接口通知微信，便于后续消息通知及其他扩展功能。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025283)
       operationId: card/membercard/updateuser
       security:
         - accessToken: []
@@ -1319,13 +1544,111 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              code:
+                type: string
+                description: 卡券Code码。
+              card_id:
+                type: string
+                description: 卡券ID。
+              background_pic_url:
+                type: string
+                description: 支持商家激活时针对单个会员卡分配自定义的会员卡背景。
+              bonus:
+                type: integer
+                format: int32
+                description: 需要设置的积分全量值，传入的数值会直接显示
+              add_bonus:
+                type: integer
+                format: int32
+                description: 本次积分变动值，传负数代表减少
+              record_bonus:
+                type: string
+                description: 商家自定义积分消耗记录，不超过14个汉字
+              balance:
+                type: integer
+                format: int32
+                description: 需要设置的余额全量值，传入的数值会直接显示在卡面
+              add_balance:
+                type: integer
+                format: int32
+                description: 本次余额变动值，传负数代表减少
+              record_balance:
+                type: string
+                description: 商家自定义金额消耗记录，不超过14个汉字。
+              custom_field_value1:
+                type: string
+                description: 创建时字段custom_field1定义类型的最新数值，限制为4个汉字，12字节。
+              custom_field_value2:
+                type: string
+                description: 创建时字段custom_field2定义类型的最新数值，限制为4个汉字，12字节。
+              custom_field_value3:
+                type: string
+                description: 创建时字段custom_field3定义类型的最新数值，限制为4个汉字，12字节。
+              notify_optional:
+                type: object
+                description: 控制原生消息结构体，包含各字段的消息控制字段
+                properties:
+                  is_notify_bonus:
+                    type: boolean
+                    description: 积分变动时是否触发系统模板消息，默认为true
+                  is_notify_balance:
+                    type: boolean
+                    description: 余额变动时是否触发系统模板消息，默认为true
+                  is_notify_custom_field1:
+                    type: boolean
+                    description: 自定义group1变动时是否触发系统模板消息，默认为false。（2、3同理）
+            required:
+              - code
+              - card_id
+            example:
+              code: 179011264953
+              card_id: p1Pj9jr90_SQRaVqYI239Ka1erkI
+              background_pic_url: https://mmbiz.qlogo.cn/mmbiz/0?wx_fmt=jpeg
+              record_bonus: 消费30元，获得3积分
+              bonus: 3000
+              add_bonus: 30
+              balance: 3000
+              add_balance: -30
+              record_balance: 购买焦糖玛琪朵一杯，扣除金额30元。
+              custom_field_value1: xxxxx
+              custom_field_value2: xxxxx
+              notify_optional:
+                is_notify_bonus: true
+                is_notify_balance: true
+                is_notify_custom_field1: true
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  info:
+                    type: object
+                    properties:
+                      result_bonus:
+                        type: integer
+                        format: int32
+                        description: 当前用户积分总额
+                      result_balance:
+                        type: integer
+                        format: int32
+                        description: 当前用户预存总金额
+                      openid:
+                        type: string
+                        description: 用户openid
+            example:
+              errcode: 0
+              errmsg: ok
+              result_bonus: 100
+              result_balance: 200
+              openid: oFS7Fjl0WsZ9AMZqrI80nbIq8xrA
   /card/membercard/userinfo/get:
     post:
       summary: 拉取会员信息接口
+      description: 根据CardID和Code查询会员信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025283)
       operationId: card/membercard/userinfo/get
       security:
         - accessToken: []
@@ -1336,10 +1659,86 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              card_id:
+                type: string
+                description: 单张卡券的唯一标准。
+              code:
+                type: string
+                description: 卡券ID代表一类卡券。自定义code卡券必填。
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  openid:
+                    type: string
+                    description: 用户在本公众号内唯一识别码
+                  nickname:
+                    type: string
+                    description: 用户昵称
+                  bonus:
+                    type: string
+                    description: 积分信息
+                  balance:
+                    type: string
+                    description: 余额信息
+                  sex:
+                    type: string
+                    description: 用户性别
+                  user_card_status:
+                    type: string
+                    description: 当前用户的会员卡状态，NORMAL 正常 EXPIRE 已过期 GIFTING 转赠中 GIFT_SUCC 转赠成功 GIFT_TIMEOUT 转赠超时 DELETE 已删除，UNAVAILABLE 已失效
+                  has_active:
+                    type: boolean
+                    description: 该卡是否已经被激活，true表示已经被激活，false表示未被激活
+                  user_info:
+                    type: object
+                    description: 会员信息
+                    properties:
+                      common_field_list:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              description: 会员信息类目名称
+                              enum:
+                                - USER_FORM_INFO_FLAG_MOBILE
+                                - USER_FORM_INFO_FLAG_SEX
+                                - USER_FORM_INFO_FLAG_NAME
+                                - USER_FORM_INFO_FLAG_BIRTHDAY
+                                - USER_FORM_INFO_FLAG_IDCARD
+                                - USER_FORM_INFO_FLAG_EMAIL
+                                - USER_FORM_INFO_FLAG_LOCATION
+                                - USER_FORM_INFO_FLAG_EDUCATION_BACKGRO
+                                - USER_FORM_INFO_FLAG_INDUSTRY
+                                - USER_FORM_INFO_FLAG_INCOME
+                                - USER_FORM_INFO_FLAG_HABIT
+                            value:
+                              type: string
+                              description: 会员卡信息类目值，比如等级值等
+                      custom_field_list:
+                        type: array
+                        description: 开发者设置的会员卡会员信息类目，如等级。
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              description: 会员信息类目名称
+                            value:
+                              type: string
+                              description: 会员卡信息类目值，比如等级值等
+                            value_list:
+                              type: array
+                              description: 填写项目为多选时的返回
+                              items:
+                                type: string
   /card/mkt/activity/create:
     post:
       summary: 创建支付后领取立减金活动
@@ -1471,6 +1870,7 @@ paths:
   /card/movieticket/updateuser:
     post:
       summary: 更新电影票
+      description: 更新电影及用户选座信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025288)
       operationId: card/movieticket/updateuser
       security:
         - accessToken: []
@@ -1481,10 +1881,44 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              code:
+                type: string
+                description: 卡券Code码。
+              card_id:
+                type: string
+                description: 要更新门票序列号所述的card_id，生成券时use_custom_code填写true时必填。
+              ticket_class:
+                type: string
+                description: 电影票的类别，如2D、3D。
+              screening_room:
+                type: string
+                description: 该场电影的影厅信息。
+              seat_number:
+                type: string
+                description: 座位号。
+              show_time:
+                type: integer
+                format: int32
+                description: 电影的放映时间，Unix时间戳格式。
+              duration:
+                type: integer
+                format: int32
+                description: 放映时长,，填写整数。
+            required:
+              - code
+              - card_id
+              - ticket_class
+              - show_time
+              - duration
       responses:
         '200':
           description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+            example:
+              errcode: 0
+              errmsg: ok
   /card/mpnews/gethtml:
     post:
       summary: 获取卡券嵌入图文消息文本

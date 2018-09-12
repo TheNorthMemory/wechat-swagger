@@ -1,5 +1,6 @@
 post:
   summary: 更新飞机票信息接口
+  description: 机票生成后无需经过微信审核，即时生效。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025288)
   operationId: card/boardingpass/checkin
   security:
     - accessToken: []
@@ -10,7 +11,46 @@ post:
       name: buffer
       schema:
         type: object
-        properties: {}
+        properties:
+          code:
+            type: string
+            description: 卡券Code码。
+          card_id:
+            type: string
+            description: 卡券ID，自定义Code码的卡券必填。
+          etkt_bnr:
+            type: string
+            description: 电子客票号，上限为14个数字。
+          class:
+            type: string
+            description: 舱等，如头等舱等，上限为5个汉字。
+          qrcode_data:
+            type: string
+            description: 二维码数据。乘客用于值机的二维码字符串，微信会通过此数据为用户生成值机用的二维码。
+          seat:
+            type: string
+            description: 乘客座位号。
+          is_cancel:
+            type: boolean
+            description: 是否取消值机。填写true或false。true代表取消，如填写true上述字段（如calss等）均不做判断，机票返回未值机状态，乘客可重新值机。默认填写false。
+        required:
+          - code
+          - etkt_bnr
+          - class
+        example:
+          code: 198374613512
+          card_id: p1Pj9jr90_SQRaVqYI239Ka1erkI
+          passenger_name: 乘客姓名
+          class: 舱等
+          seat: 座位号
+          etkt_bnr: 电子客票号
+          qrcode_data: 二维码数据
+          is_cancel: false
   responses:
     '200':
       description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'
+        example:
+          errcode: 0
+          errmsg: ok

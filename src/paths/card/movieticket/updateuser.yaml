@@ -1,5 +1,6 @@
 post:
   summary: 更新电影票
+  description: 更新电影及用户选座信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025288)
   operationId: card/movieticket/updateuser
   security:
     - accessToken: []
@@ -10,7 +11,41 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          code:
+            type: string
+            description: 卡券Code码。
+          card_id:
+            type: string
+            description: 要更新门票序列号所述的card_id，生成券时use_custom_code填写true时必填。
+          ticket_class:
+            type: string
+            description: 电影票的类别，如2D、3D。
+          screening_room:
+            type: string
+            description: 该场电影的影厅信息。
+          seat_number:
+            type: string
+            description: 座位号。
+          show_time:
+            type: integer
+            format: int32
+            description: 电影的放映时间，Unix时间戳格式。
+          duration:
+            type: integer
+            format: int32
+            description: 放映时长,，填写整数。
+        required:
+          - code
+          - card_id
+          - ticket_class
+          - show_time
+          - duration
   responses:
     '200':
       description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'
+        example:
+          errcode: 0
+          errmsg: ok

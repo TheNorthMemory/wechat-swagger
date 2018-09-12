@@ -1,0 +1,49 @@
+get:
+  summary: 卡券开放类目查询
+  description: 查询卡券开放的一级、二级类目ID，类目会随业务发展变更，请及时用接口去查询获取实时卡券类目。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1444460487&token=&lang=zh_CN)
+  operationId: card/getapplyprotocol
+  security:
+    - accessToken: []
+  tags:
+    - 卡券
+  parameters: []
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              category:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    primary_category_id:
+                      type: integer
+                      format: int32
+                      description: 一级类目id
+                    category_name:
+                      type: string
+                    secondary_category:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          secondary_category_id:
+                            type: integer
+                            format: int32
+                            description: 二级类目id
+                          category_name:
+                            type: string
+                          need_qualification_stuffs:
+                            type: array
+                            items:
+                              type: string
+                          can_choose_prepaid_card:
+                            type: integer
+                            format: int32
+                          can_choose_payment_card:
+                            type: integer
+                            format: int32

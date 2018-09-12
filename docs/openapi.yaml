@@ -609,6 +609,124 @@ paths:
       responses:
         '200':
           description: ''
+  /card/get:
+    post:
+      summary: 查看卡券详情
+      description: 查询某个card_id的创建信息、审核状态以及库存数量。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)
+      operationId: card/get
+      security:
+        - accessToken: []
+      tags:
+        - 卡券
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              card_id:
+                type: string
+                description: 卡券ID。
+            example:
+              card_id: pFS7Fjg8kV1IdDz01r4SQwMkuCKc
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  card:
+                    type: object
+                    properties:
+                      card_type:
+                        type: string
+                        description: 卡券类型。 团购券：GROUPON; 折扣券：DISCOUNT; 礼品券：GIFT; 代金券：CASH; 通用券：GENERAL_COUPON; 会员卡：MEMBER_CARD; 景点门票：SCENIC_TICKET ； 电影票：MOVIE_TICKET； 飞机票：BOARDING_PASS； 会议门票：MEETING_TICKET； 汽车票：BUS_TICKET;
+                        enum:
+                          - GROUPON
+                          - CASH
+                          - DISCOUNT
+                          - GIFT
+                          - GENERAL_COUPON
+                          - GENERAL_CARD
+                          - MEETING_TICKET
+                          - SCENIC_TICKET
+                          - MOVIE_TICKET
+                          - BOARDING_PASS
+                          - MEMBER_CARD
+                      groupon:
+                        $ref: '#/definitions/card.type.GrouponBo'
+                      cash:
+                        $ref: '#/definitions/card.type.CashBo'
+                      discount:
+                        $ref: '#/definitions/card.type.DiscountBo'
+                      gift:
+                        $ref: '#/definitions/card.type.GiftBo'
+                      general_coupon:
+                        $ref: '#/definitions/card.type.GeneralCouponBo'
+                      general_card:
+                        $ref: '#/definitions/card.type.GeneralCardBo'
+                      meeting_ticket:
+                        $ref: '#/definitions/card.type.MeetingTicketBo'
+                      scenic_ticket:
+                        $ref: '#/definitions/card.type.ScenicTicketBo'
+                      movie_ticket:
+                        $ref: '#/definitions/card.type.MovieTicketBo'
+                      boarding_pass:
+                        $ref: '#/definitions/card.type.BoardingPassBo'
+                      member_card:
+                        $ref: '#/definitions/card.type.MemberCardBo'
+  /card/getapplyprotocol:
+    get:
+      summary: 卡券开放类目查询
+      description: 查询卡券开放的一级、二级类目ID，类目会随业务发展变更，请及时用接口去查询获取实时卡券类目。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1444460487&token=&lang=zh_CN)
+      operationId: card/getapplyprotocol
+      security:
+        - accessToken: []
+      tags:
+        - 卡券
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  category:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        primary_category_id:
+                          type: integer
+                          format: int32
+                          description: 一级类目id
+                        category_name:
+                          type: string
+                        secondary_category:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              secondary_category_id:
+                                type: integer
+                                format: int32
+                                description: 二级类目id
+                              category_name:
+                                type: string
+                              need_qualification_stuffs:
+                                type: array
+                                items:
+                                  type: string
+                              can_choose_prepaid_card:
+                                type: integer
+                                format: int32
+                              can_choose_payment_card:
+                                type: integer
+                                format: int32
   /card/getcolors:
     get:
       summary: 获取卡券背景颜色
@@ -1685,6 +1803,62 @@ paths:
               errcode: 0
               errmsg: ok
               send_check: false
+  /card/user/getcardlist:
+    post:
+      summary: 获取用户已领取卡券
+      description: 获取用户卡包里的，属于该appid下所有可用卡券，包括正常状态和异常状态。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)
+      operationId: card/user/getcardlist
+      security:
+        - accessToken: []
+      tags:
+        - 卡券
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              openid:
+                type: string
+                description: 需要查询的用户openid
+              card_id:
+                type: string
+                description: 卡券ID。不填写时默认查询当前appid下的卡券。
+            example:
+              openid: 1231231
+              card_id: xxxxxxxxxx
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  has_share_card:
+                    type: boolean
+                    description: 是否有可用的朋友的券
+                  card_id_list:
+                    type: array
+                    description: 卡券列表
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                          description: 自定义code
+                        card_id:
+                          type: string
+                          description: 卡券ID
+            example:
+              errcode: 0
+              errmsg: ok
+              card_list:
+                - code: xxx1434079154
+                  card_id: xxxxxxxxxx
+                - code: xxx1434079155
+                  card_id: xxxxxxxxxx
+              has_share_card: true
   /cgi-bin/changeopenid:
     post:
       summary: 公众号粉丝迁移

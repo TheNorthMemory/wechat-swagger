@@ -1,0 +1,67 @@
+post:
+  summary: 查看卡券详情
+  description: 查询某个card_id的创建信息、审核状态以及库存数量。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)
+  operationId: car/get
+  security:
+    - accessToken: []
+  tags:
+    - 卡券
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          card_id:
+            type: string
+            description: 卡券ID。
+        example:
+          card_id: pFS7Fjg8kV1IdDz01r4SQwMkuCKc
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              card:
+                type: object
+                properties:
+                  card_type:
+                    type: string
+                    description: 卡券类型。 团购券：GROUPON; 折扣券：DISCOUNT; 礼品券：GIFT; 代金券：CASH; 通用券：GENERAL_COUPON; 会员卡：MEMBER_CARD; 景点门票：SCENIC_TICKET ； 电影票：MOVIE_TICKET； 飞机票：BOARDING_PASS； 会议门票：MEETING_TICKET； 汽车票：BUS_TICKET;
+                    enum:
+                      - GROUPON
+                      - CASH
+                      - DISCOUNT
+                      - GIFT
+                      - GENERAL_COUPON
+                      - GENERAL_CARD
+                      - MEETING_TICKET
+                      - SCENIC_TICKET
+                      - MOVIE_TICKET
+                      - BOARDING_PASS
+                      - MEMBER_CARD
+                  groupon:
+                    $ref: '#/definitions/card.type.GrouponBo'
+                  cash:
+                    $ref: '#/definitions/card.type.CashBo'
+                  discount:
+                    $ref: '#/definitions/card.type.DiscountBo'
+                  gift:
+                    $ref: '#/definitions/card.type.GiftBo'
+                  general_coupon:
+                    $ref: '#/definitions/card.type.GeneralCouponBo'
+                  general_card:
+                    $ref: '#/definitions/card.type.GeneralCardBo'
+                  meeting_ticket:
+                    $ref: '#/definitions/card.type.MeetingTicketBo'
+                  scenic_ticket:
+                    $ref: '#/definitions/card.type.ScenicTicketBo'
+                  movie_ticket:
+                    $ref: '#/definitions/card.type.MovieTicketBo'
+                  boarding_pass:
+                    $ref: '#/definitions/card.type.BoardingPassBo'
+                  member_card:
+                    $ref: '#/definitions/card.type.MemberCardBo'

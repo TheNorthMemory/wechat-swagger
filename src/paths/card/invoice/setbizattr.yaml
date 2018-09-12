@@ -1,5 +1,6 @@
 post:
   summary: 设置支付后开票信息
+  description: '四大杂烩接口。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)'
   operationId: card/invoice/setbizattr
   security:
     - accessToken: []
@@ -10,6 +11,7 @@ post:
       name: action
       type: string
       required: true
+      description: set_pay_mch=设置支付后开票信息,get_pay_mch=查询支付后开票信息,set_auth_field=设置开票页面信息,get_auth_field=查询授权页字段信息
       enum:
         - set_pay_mch
         - get_pay_mch

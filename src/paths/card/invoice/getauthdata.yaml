@@ -1,11 +1,98 @@
 post:
   summary: 查询开票信息
+  description: '商户可以调用该接口查询某一个订单的开票信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)'
   operationId: card/invoice/getauthdata
   security:
     - accessToken: []
   tags:
     - 卡券/礼品卡/财务
-  parameters: []
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          order_id:
+            type: string
+            description: 发票order_id
+          s_appid:
+            type: string
+            description: 发票平台的身份id
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              invoice_status:
+                type: string
+                description: 订单授权状态，见备注
+              auth_time:
+                type: integer
+                format: int32
+                description: 授权时间，为十位时间戳（utc+8）
+              user_auth_info:
+                type: object
+                description: 用户授权信息结构体，仅在type=1时出现
+                properties:
+                  user_field:
+                    type: object
+                    description: 个人类型发票的授权信息结构体
+                    properties:
+                      title:
+                        type: string
+                        description: 个人/单位抬头
+                      phone:
+                        type: string
+                        description: 个人/单位联系电话
+                      email:
+                        type: string
+                        description: 个人邮箱
+                      custom_field:
+                        type: array
+                        description: 商户自定义信息结构体
+                        items:
+                          type: object
+                          properties:
+                            key:
+                              type: string
+                              description: 商户自定义填写项名称
+                            value:
+                              type: string
+                              description: 商户自定义填写项用户填写的信息
+                  biz_field:
+                    type: object
+                    description: 单位类型发票的授权信息结构体
+                    properties:
+                      title:
+                        type: string
+                        description: 单位抬头
+                      phone:
+                        type: string
+                        description: 个人/单位联系电话
+                      tax_no:
+                        type: string
+                        description: 单位税号
+                      addr:
+                        type: string
+                        description: 单位注册地址
+                      bank_type:
+                        type: string
+                        description: 单位开户银行
+                      bank_no:
+                        type: string
+                        description: 单位开户银行账号
+                      custom_field:
+                        type: array
+                        description: 商户自定义信息结构体
+                        items:
+                          type: object
+                          properties:
+                            key:
+                              type: string
+                              description: 商户自定义填写项名称
+                            value:
+                              type: string
+                              description: 商户自定义填写项用户填写的信息

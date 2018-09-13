@@ -1,7 +1,7 @@
 post:
   summary: 批量拉取子商户信息
   description: 母商户可以通过该接口批量拉取子商户的相关信息，一次调用最多拉取100个子商户的信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
-  operationId: card/submerchant/update
+  operationId: card/submerchant/batchget
   security:
     - accessToken: []
   tags:

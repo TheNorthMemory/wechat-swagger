@@ -1,0 +1,47 @@
+type: object
+properties:
+  merchant_id:
+    type: integer
+    format: int32
+    description: 子商户id，对于一个母商户公众号下唯一
+  app_id:
+    type: string
+    description: 子商户若有公众号，且不愿意自己运营，通过授权方式让第三方代制，支持配置子商户公众号。配置后，1）该子商户的制券配额不再限制，2）该卡券详情页关联的公众号为子商户配置这个公众号。
+  create_time:
+    type: integer
+    format: int32
+    description: 子商户信息创建时间
+  update_time:
+    type: integer
+    format: int32
+    description: 子商户信息更新时间
+  brand_name:
+    type: string
+    description: 子商户名称（12个汉字内），该名称将在制券时填入并显示在卡券页面上。
+  logo_url:
+    type: string
+    description: 子商户logo，可通过上传logo接口获取。该logo将在制券时填入并显示在卡券页面上
+  status:
+    type: string
+    description: 子商户状态，"CHECKING" 审核中, "APPROVED" , 已通过；"REJECTED"被驳回, "EXPIRED"协议已过期
+    enum:
+      - CHECKING
+      - APPROVED
+      - REJECTED
+      - EXPIRED
+  bengin_time:
+    type: integer
+    format: int32
+    description: 创建时间（非协议开始时间）
+  end_time:
+    type: integer
+    format: int32
+    description: 授权函有效期截止时间（东八区时间，单位为秒）
+  primary_category_id:
+    type: integer
+    format: int32
+    description: 子商户一级类目
+  secondary_category_id:
+    type: integer
+    format: int32
+    description: 子商户二级类目

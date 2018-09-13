@@ -1,0 +1,30 @@
+post:
+  summary: 拉取单个子商户信息
+  description: 通过指定的子商户appid，拉取该子商户的基础信息。 注意，用母商户去调用接口，但接口内传入的是子商户的appid。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
+  operationId: card/submerchant/update
+  security:
+    - accessToken: []
+  tags:
+    - 卡券/第三方模式/代制
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          merchant_id:
+            type: integer
+            format: int32
+            description: 子商户id，对于一个母商户公众号下唯一
+        required:
+          - merchant_id
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              info:
+                $ref: '#/definitions/card.model.SubMerchantStatusInfoBo'

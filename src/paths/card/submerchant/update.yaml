@@ -1,0 +1,33 @@
+post:
+  summary: 更新子商户
+  description: 更新子商户信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
+  operationId: card/submerchant/update
+  security:
+    - accessToken: []
+  tags:
+    - 卡券/第三方模式/代制
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          info:
+            allOf:
+              - type: object
+                properties:
+                  merchant_id:
+                    type: integer
+                    format: int32
+                    description: 子商户id，对于一个母商户公众号下唯一
+              - $ref: '#/definitions/card.model.SubMerchantInfoBo'
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              info:
+                $ref: '#/definitions/card.model.SubMerchantStatusInfoBo'

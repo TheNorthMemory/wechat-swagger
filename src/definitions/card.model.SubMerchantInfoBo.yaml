@@ -1,0 +1,39 @@
+type: object
+properties:
+  app_id:
+    type: string
+    description: 子商户的公众号app_id，配置后子商户卡券券面上的app_id为该app_id。注意：该app_id须经过认证
+  brand_name:
+    type: string
+    description: 子商户名称（12个汉字内），该名称将在制券时填入并显示在卡券页面上
+  logo_url:
+    type: string
+    description: 子商户logo，可通过 上传图片接口 获取。该logo将在制券时填入并显示在卡券页面上
+  protocol:
+    type: string
+    description: 授权函ID，即通过 上传临时素材接口 上传授权函后获得的meida_id
+  end_time:
+    type: integer
+    format: int32
+    description: 授权函有效期截止时间（东八区时间，单位为秒），需要与提交的扫描件一致
+  primary_category_id:
+    type: integer
+    format: int32
+    description: 一级类目id,可以通过本文档中接口查询
+  secondary_category_id:
+    type: integer
+    format: int32
+    description: 二级类目id，可以通过本文档中接口查询
+  agreement_media_id:
+    type: string
+    description: 营业执照或个体工商户营业执照彩照或扫描件
+  operator_media_id:
+    type: string
+    description: 营业执照内登记的经营者身份证彩照或扫描件
+required:
+  - brand_name
+  - logo_url
+  - protocol
+  - end_time
+  - primary_category_id
+  - secondary_category_id

@@ -1,0 +1,29 @@
+post:
+  summary: 查询订单详情
+  description: 查询充值订单的状态。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481033345_5cGrc)
+  operationId: card/pay/getorder
+  security:
+    - accessToken: []
+  tags:
+    - 卡券/券点
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          order_id:
+            type: string
+            description: 上一步中获得的订单号，作为一次交易的唯一凭证
+        example:
+          order_id: 100005790********401000171
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              order_info:
+                $ref: '#/definitions/card.type.CoinOrderBo'

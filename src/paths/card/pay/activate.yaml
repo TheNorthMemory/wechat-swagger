@@ -1,0 +1,21 @@
+get:
+  summary: 开通券点账户
+  description: 为当前appid开通券点账户并获得免费券点奖励。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481033345_5cGrc)
+  operationId: card/pay/activate
+  security:
+    - accessToken: []
+  tags:
+    - 卡券/券点
+  parameters: []
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              reward:
+                type: integer
+                format: int32
+                description: 奖励券点数量，以元为单位，微信卡券对每一个新开通券点账户的商户奖励200个券点

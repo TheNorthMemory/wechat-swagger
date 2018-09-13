@@ -1,0 +1,44 @@
+post:
+  summary: 对优惠券批价
+  description: 用于提前查询本次新增库存需要多少券点。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481033345_5cGrc)
+  operationId: card/pay/getpayprice
+  security:
+    - accessToken: []
+  tags:
+    - 卡券/券点
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          card_id:
+            type: string
+            description: 需要来配置库存的card_id
+          quantity:
+            type: integer
+            format: int32
+            description: 本次需要兑换的库存数目
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              order_id:
+                type: string
+                description: 本次批价的订单号，用于下面的确认充值库存接口，仅对当前订单有效且仅可以使用一次，60s内可用于兑换库存。
+              price:
+                type: number
+                format: double
+                description: 本次需要支付的券点总额度
+              free_coin:
+                type: number
+                format: double
+                description: 本次需要支付的免费券点额度
+              pay_coin:
+                type: number
+                format: double
+                description: 本次需要支付的付费券点额度

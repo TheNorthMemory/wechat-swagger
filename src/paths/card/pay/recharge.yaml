@@ -1,0 +1,35 @@
+post:
+  summary: 充值券点
+  description: 通过此接口为券点账户充值券点，1元等于1点。开发者调用接口后可以获得一个微信支付的支付二维码链接， 开发者可以将链接转化为二维码扫码支付。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481033345_5cGrc)
+  operationId: card/pay/recharge
+  security:
+    - accessToken: []
+  tags:
+    - 卡券/券点
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          coin_count:
+            type: integer
+            format: int32
+            description: 需要充值的券点数目，1点=1元
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              order_id:
+                type: string
+                description: 本次支付的订单号，用于查询订单状态
+              qrcode_url:
+                type: string
+                description: 支付二维码的的链接，开发者可以调用二维码生成的公开库转化为二维码显示在网页上，微信扫码支付
+              qrcode_buffer:
+                type: string
+                description: 二维码的数据流，开发者可以使用写入一个文件的方法显示该二维码

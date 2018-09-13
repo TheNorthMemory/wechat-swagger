@@ -1,0 +1,29 @@
+post:
+  summary: 确认兑换库存
+  description: 确认兑换库存，确认后券点兑换为库存，过程不可逆。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481033345_5cGrc)
+  operationId: card/pay/confirm
+  security:
+    - accessToken: []
+  tags:
+    - 卡券/券点
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          card_id:
+            type: string
+            description: 需要来兑换库存的card_id
+          order_id:
+            type: string
+            description: 仅可以使用上面得到的订单号，保证批价有效性
+          quantity:
+            type: integer
+            format: int32
+            description: 本次需要兑换的库存数目
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'

@@ -1,0 +1,29 @@
+get:
+  summary: 查询券点余额
+  description: 查询当前券点账户中的免费券点/付费券点数目以及总额。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481033345_5cGrc)
+  operationId: card/pay/getcoinsinfo
+  security:
+    - accessToken: []
+  tags:
+    - 卡券/券点
+  parameters: []
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              free_coin:
+                type: integer
+                format: int32
+                description: 免费券点数目
+              pay_coin:
+                type: integer
+                format: int32
+                description: 免费券点数目
+              total_coin:
+                type: integer
+                format: int32
+                description: 全部券点数目

@@ -1,0 +1,62 @@
+type: object
+properties:
+  order_id:
+    type: string
+    description: 订单号
+  status:
+    type: string
+    description: 订单状态， ORDER_STATUS_WAITING 等待支付 ORDER_STATUS_SUCC 支付成功 ORDER_STATUS_FINANCE_SUCC 加代币成功 ORDER_STATUS_QUANTITY_SUCC 加库存成功 ORDER_STATUS_HAS_REFUND 已退币 ORDER_STATUS_REFUND_WAITING 等待退币确认 ORDER_STATUS_ROLLBACK 已回退,系统失败 ORDER_STATUS_HAS_RECEIPT 已开发票
+    enum:
+      - ORDER_STATUS_WAITING
+      - ORDER_STATUS_SUCC
+      - ORDER_STATUS_FINANCE_SUCC
+      - ORDER_STATUS_QUANTITY_SUCC
+      - ORDER_STATUS_HAS_REFUND
+      - ORDER_STATUS_REFUND_WAITING
+      - ORDER_STATUS_ROLLBACK
+      - ORDER_STATUS_HAS_RECEIPT
+  create_time:
+    type: integer
+    format: int32
+    description: 订单创建时间
+  pay_finish_time:
+    type: integer
+    format: int32
+    description: 支付完成时间
+  desc:
+    type: string
+    description: 支付描述，一般为微信支付充值
+  free_coin_count:
+    type: integer
+    format: int32
+    description: 本次充值的付费券点数量，以元为单位
+  pay_coin_count:
+    type: integer
+    format: int32
+    description: 二维码的数据流，开发者可以使用写入一个文件的方法显示该二维码
+  refund_free_coin_count:
+    type: integer
+    format: int32
+    description: 回退的免费券点
+  refund_pay_coin_count:
+    type: integer
+    format: int32
+    description: 回退的付费券点
+  openid:
+    type: string
+    description: 支付人的openid
+  order_tpye:
+    type: string
+    description: 订单类型，ORDER_TYPE_WXPAY为充值
+example:
+  order_id: 100005790120151221401000171
+  status: ORDER_STATUS_FINANCE_SUCC
+  create_time: 1450712798
+  pay_finish_time: 1450712905
+  desc: 微信支付充值
+  free_coin_count: 0
+  pay_coin_count: 1
+  refund_free_coin_count: 0
+  refund_pay_coin_count: 0
+  openid: oWE-GwF1gGoyVVZC5PG6GXd4cKMY
+  order_type: ORDER_TYPE_WXPAY

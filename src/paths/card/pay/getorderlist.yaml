@@ -1,0 +1,82 @@
+post:
+  summary: 查询券点流水详情
+  description: 查询券点的流水详情。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481033345_5cGrc)
+  operationId: card/pay/getorderlist
+  security:
+    - accessToken: []
+  tags:
+    - 卡券/券点
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          offset:
+            type: integer
+            format: int32
+            description: 分批查询的起点，默认为0
+          count:
+            type: integer
+            format: int32
+            description: 分批查询的数量
+          begin_time:
+            type: integer
+            format: int32
+            description: 批量查询订单的起始事件，为时间戳，默认1周前
+          end_time:
+            type: integer
+            format: int32
+            description: 批量查询订单的结束事件，为时间戳，默认为当前时间
+          order_type:
+            type: string
+            description: 所要拉取的订单类型 ORDER_TYPE_SYS_ADD 平台赠送 ORDER_TYPE_WXPAY 充值 ORDER_TYPE_REFUND 库存回退券点 ORDER_TYPE_REDUCE 券点兑换库存 ORDER_TYPE_SYS_REDUCE 平台扣减
+            enum:
+              - ORDER_TYPE_SYS_ADD
+              - ORDER_TYPE_WXPAY
+              - ORDER_TYPE_REFUND
+              - ORDER_TYPE_REDUCE
+              - ORDER_TYPE_SYS_REDUCE
+          nor_filter:
+            type: object
+            description: 反选，不要拉取的订单
+            properties:
+              status:
+                type: string
+                description: 不要拉取的订单状态 订单状态包括： ORDER_STATUS_WAITING 等待支付 ORDER_STATUS_SUCC 支付成功 ORDER_STATUS_FINANCE_SUCC 加代币成功 ORDER_STATUS_QUANTITY_SUCC 加库存成功 ORDER_STATUS_HAS_REFUND 已退币 ORDER_STATUS_REFUND_WAITING 等待退币确认 ORDER_STATUS_ROLLBACK 已回退,系统失败 ORDER_STATUS_HAS_RECEIPT 已开发票
+                enum:
+                  - ORDER_STATUS_WAITING
+                  - ORDER_STATUS_SUCC
+                  - ORDER_STATUS_FINANCE_SUCC
+                  - ORDER_STATUS_QUANTITY_SUCC
+                  - ORDER_STATUS_HAS_REFUND
+                  - ORDER_STATUS_REFUND_WAITING
+                  - ORDER_STATUS_ROLLBACK
+                  - ORDER_STATUS_HAS_RECEIPT
+          sort_info:
+            type: object
+            description: 对结果排序
+            properties:
+              sort_key:
+                type: string
+                description: 排序依据，SORT_BY_TIME 以订单时间排序
+              sort_type:
+                type: string
+                description: 排序规则，SORT_ASC 升序 SORT_DESC 降序
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              total_num:
+                type: integer
+                format: int32
+                description: 符合条件的订单总数量
+              order_list:
+                type: array
+                description: 显示的订单详情列表，根据offset和count来显示
+                items:
+                  $ref: '#/definitions/card.type.CoinOrderBo'

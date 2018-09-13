@@ -1,0 +1,39 @@
+post:
+  summary: Mark(占用)Code
+  description: 朋友的券由于共享的特性，会出现多个消费者同时进入某一个卡券的自定义H5网页的情况，若该网页涉及线上下单、核销、支付等行为，会造成两个消费者同时使用同一张券，会有一个消费者使用失败的情况，为此我们设计了mark（占用）code接口。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025239)
+  operationId: card/code/mark
+  security:
+    - accessToken: []
+  tags:
+    - 卡券
+  parameters:
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties:
+          code:
+            type: string
+            description: 经过加密的Code码。
+          card_id:
+            type: string
+            description: 卡券的ID。
+          openid:
+            type: string
+            description: 用券用户的openid。
+          mark:
+            type: boolean
+            description: 是否要mark（占用）这个code，填写true或者false，表示占用或解除占用。
+        example:
+          code: 114567897765
+          card_id: pbxxxxxxxxhjahkdjad
+          openid: obcdkalgsdklkdooooooo
+          is_mark: true
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'
+        example:
+          errcode: 0
+          errmsg: ok

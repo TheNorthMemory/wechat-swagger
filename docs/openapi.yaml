@@ -17,6 +17,12 @@ securityDefinitions:
     in: query
     type: apiKey
     name: access_token
+    description: 公众号调用API凭证
+  componentAccessToken:
+    in: query
+    type: apiKey
+    name: component_access_token
+    description: 第三方代公众号调用API凭证
 tags:
   - name: 基础支持
   - name: 自定义菜单
@@ -24,7 +30,7 @@ tags:
   - name: 用户管理/标签
   - name: 素材管理
   - name: 卡券
-  - name: 卡券/立减金活动
+  - name: 卡券/券点
   - name: 卡券/会员卡
   - name: 卡券/会议门票
   - name: 卡券/电影票
@@ -34,6 +40,9 @@ tags:
   - name: 卡券/礼品卡/小程序
   - name: 卡券/礼品卡/订单
   - name: 卡券/礼品卡/财务
+  - name: 卡券/立减金活动
+  - name: 卡券/第三方模式/代制
+  - name: 卡券/第三方模式/强授权
   - name: 多客服/客服消息
   - name: 多客服/客服管理
   - name: 多客服/会话控制
@@ -463,6 +472,46 @@ paths:
               errcode: 0
               errmsg: ok
               count: 122
+  /card/code/mark:
+    post:
+      summary: Mark(占用)Code
+      description: 朋友的券由于共享的特性，会出现多个消费者同时进入某一个卡券的自定义H5网页的情况，若该网页涉及线上下单、核销、支付等行为，会造成两个消费者同时使用同一张券，会有一个消费者使用失败的情况，为此我们设计了mark（占用）code接口。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025239)
+      operationId: card/code/mark
+      security:
+        - accessToken: []
+      tags:
+        - 卡券
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                description: 经过加密的Code码。
+              card_id:
+                type: string
+                description: 卡券的ID。
+              openid:
+                type: string
+                description: 用券用户的openid。
+              mark:
+                type: boolean
+                description: 是否要mark（占用）这个code，填写true或者false，表示占用或解除占用。
+            example:
+              code: 114567897765
+              card_id: pbxxxxxxxxhjahkdjad
+              openid: obcdkalgsdklkdooooooo
+              is_mark: true
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+            example:
+              errcode: 0
+              errmsg: ok
   /card/code/unavailable:
     post:
       summary: 设置卡券失效
@@ -798,6 +847,8 @@ paths:
         - accessToken: []
       tags:
         - 卡券
+        - 卡券/第三方模式/代制
+        - 卡券/第三方模式/强授权
       parameters: []
       responses:
         '200':
@@ -2300,6 +2351,282 @@ paths:
               errcode: 0
               errmsg: ok
               content: '<iframe class="res_iframecard_iframejs_editor_card" data-src="https://mp.weixin.qq.com/bizmall/appmsgcard"></iframe>'
+  /card/pay/activate:
+    get:
+      summary: 开通券点账户
+      description: 为当前appid开通券点账户并获得免费券点奖励。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481033345_5cGrc)
+      operationId: card/pay/activate
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/券点
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  reward:
+                    type: integer
+                    format: int32
+                    description: 奖励券点数量，以元为单位，微信卡券对每一个新开通券点账户的商户奖励200个券点
+  /card/pay/confirm:
+    post:
+      summary: 确认兑换库存
+      description: 确认兑换库存，确认后券点兑换为库存，过程不可逆。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481033345_5cGrc)
+      operationId: card/pay/confirm
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/券点
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              card_id:
+                type: string
+                description: 需要来兑换库存的card_id
+              order_id:
+                type: string
+                description: 仅可以使用上面得到的订单号，保证批价有效性
+              quantity:
+                type: integer
+                format: int32
+                description: 本次需要兑换的库存数目
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /card/pay/getcoinsinfo:
+    get:
+      summary: 查询券点余额
+      description: 查询当前券点账户中的免费券点/付费券点数目以及总额。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481033345_5cGrc)
+      operationId: card/pay/getcoinsinfo
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/券点
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  free_coin:
+                    type: integer
+                    format: int32
+                    description: 免费券点数目
+                  pay_coin:
+                    type: integer
+                    format: int32
+                    description: 免费券点数目
+                  total_coin:
+                    type: integer
+                    format: int32
+                    description: 全部券点数目
+  /card/pay/getorder:
+    post:
+      summary: 查询订单详情
+      description: 查询充值订单的状态。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481033345_5cGrc)
+      operationId: card/pay/getorder
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/券点
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              order_id:
+                type: string
+                description: 上一步中获得的订单号，作为一次交易的唯一凭证
+            example:
+              order_id: 100005790********401000171
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  order_info:
+                    $ref: '#/definitions/card.type.CoinOrderBo'
+  /card/pay/getorderlist:
+    post:
+      summary: 查询券点流水详情
+      description: 查询券点的流水详情。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481033345_5cGrc)
+      operationId: card/pay/getorderlist
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/券点
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              offset:
+                type: integer
+                format: int32
+                description: 分批查询的起点，默认为0
+              count:
+                type: integer
+                format: int32
+                description: 分批查询的数量
+              begin_time:
+                type: integer
+                format: int32
+                description: 批量查询订单的起始事件，为时间戳，默认1周前
+              end_time:
+                type: integer
+                format: int32
+                description: 批量查询订单的结束事件，为时间戳，默认为当前时间
+              order_type:
+                type: string
+                description: 所要拉取的订单类型 ORDER_TYPE_SYS_ADD 平台赠送 ORDER_TYPE_WXPAY 充值 ORDER_TYPE_REFUND 库存回退券点 ORDER_TYPE_REDUCE 券点兑换库存 ORDER_TYPE_SYS_REDUCE 平台扣减
+                enum:
+                  - ORDER_TYPE_SYS_ADD
+                  - ORDER_TYPE_WXPAY
+                  - ORDER_TYPE_REFUND
+                  - ORDER_TYPE_REDUCE
+                  - ORDER_TYPE_SYS_REDUCE
+              nor_filter:
+                type: object
+                description: 反选，不要拉取的订单
+                properties:
+                  status:
+                    type: string
+                    description: 不要拉取的订单状态 订单状态包括： ORDER_STATUS_WAITING 等待支付 ORDER_STATUS_SUCC 支付成功 ORDER_STATUS_FINANCE_SUCC 加代币成功 ORDER_STATUS_QUANTITY_SUCC 加库存成功 ORDER_STATUS_HAS_REFUND 已退币 ORDER_STATUS_REFUND_WAITING 等待退币确认 ORDER_STATUS_ROLLBACK 已回退,系统失败 ORDER_STATUS_HAS_RECEIPT 已开发票
+                    enum:
+                      - ORDER_STATUS_WAITING
+                      - ORDER_STATUS_SUCC
+                      - ORDER_STATUS_FINANCE_SUCC
+                      - ORDER_STATUS_QUANTITY_SUCC
+                      - ORDER_STATUS_HAS_REFUND
+                      - ORDER_STATUS_REFUND_WAITING
+                      - ORDER_STATUS_ROLLBACK
+                      - ORDER_STATUS_HAS_RECEIPT
+              sort_info:
+                type: object
+                description: 对结果排序
+                properties:
+                  sort_key:
+                    type: string
+                    description: 排序依据，SORT_BY_TIME 以订单时间排序
+                  sort_type:
+                    type: string
+                    description: 排序规则，SORT_ASC 升序 SORT_DESC 降序
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  total_num:
+                    type: integer
+                    format: int32
+                    description: 符合条件的订单总数量
+                  order_list:
+                    type: array
+                    description: 显示的订单详情列表，根据offset和count来显示
+                    items:
+                      $ref: '#/definitions/card.type.CoinOrderBo'
+  /card/pay/getpayprice:
+    post:
+      summary: 对优惠券批价
+      description: 用于提前查询本次新增库存需要多少券点。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481033345_5cGrc)
+      operationId: card/pay/getpayprice
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/券点
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              card_id:
+                type: string
+                description: 需要来配置库存的card_id
+              quantity:
+                type: integer
+                format: int32
+                description: 本次需要兑换的库存数目
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  order_id:
+                    type: string
+                    description: 本次批价的订单号，用于下面的确认充值库存接口，仅对当前订单有效且仅可以使用一次，60s内可用于兑换库存。
+                  price:
+                    type: number
+                    format: double
+                    description: 本次需要支付的券点总额度
+                  free_coin:
+                    type: number
+                    format: double
+                    description: 本次需要支付的免费券点额度
+                  pay_coin:
+                    type: number
+                    format: double
+                    description: 本次需要支付的付费券点额度
+  /card/pay/recharge:
+    post:
+      summary: 充值券点
+      description: 通过此接口为券点账户充值券点，1元等于1点。开发者调用接口后可以获得一个微信支付的支付二维码链接， 开发者可以将链接转化为二维码扫码支付。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481033345_5cGrc)
+      operationId: card/pay/recharge
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/券点
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              coin_count:
+                type: integer
+                format: int32
+                description: 需要充值的券点数目，1点=1元
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  order_id:
+                    type: string
+                    description: 本次支付的订单号，用于查询订单状态
+                  qrcode_url:
+                    type: string
+                    description: 支付二维码的的链接，开发者可以调用二维码生成的公开库转化为二维码显示在网页上，微信扫码支付
+                  qrcode_buffer:
+                    type: string
+                    description: 二维码的数据流，开发者可以使用写入一个文件的方法显示该二维码
   /card/paycell/set:
     post:
       summary: 设置买单
@@ -2497,6 +2824,136 @@ paths:
             example:
               errcode: 0
               errmsg: ok
+  /card/submerchant/batchget:
+    post:
+      summary: 批量拉取子商户信息
+      description: 母商户可以通过该接口批量拉取子商户的相关信息，一次调用最多拉取100个子商户的信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
+      operationId: card/submerchant/batchget
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/第三方模式/代制
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              begin_id:
+                type: integer
+                format: int32
+                description: 起始的子商户id，一个母商户公众号下唯一
+              limit:
+                type: integer
+                format: int32
+                description: 拉取的子商户的个数，最大值为100
+              status:
+                type: string
+                description: 子商户审核状态，填入后，只会拉出当前状态的子商户
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  info_list:
+                    type: array
+                    items:
+                      $ref: '#/definitions/card.model.SubMerchantStatusInfoBo'
+  /card/submerchant/get:
+    post:
+      summary: 拉取单个子商户信息
+      description: 通过指定的子商户appid，拉取该子商户的基础信息。 注意，用母商户去调用接口，但接口内传入的是子商户的appid。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
+      operationId: card/submerchant/get
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/第三方模式/代制
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              merchant_id:
+                type: integer
+                format: int32
+                description: 子商户id，对于一个母商户公众号下唯一
+            required:
+              - merchant_id
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  info:
+                    $ref: '#/definitions/card.model.SubMerchantStatusInfoBo'
+  /card/submerchant/submit:
+    post:
+      summary: 创建子商户
+      description: 支持母商户调用该接口传入子商户的相关资料，并获取子商户ID，用于子商户的卡券功能管理。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
+      operationId: card/submerchant/submit
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/第三方模式/代制
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              info:
+                $ref: '#/definitions/card.model.SubMerchantInfoBo'
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  info:
+                    $ref: '#/definitions/card.model.SubMerchantStatusInfoBo'
+  /card/submerchant/update:
+    post:
+      summary: 更新子商户
+      description: 更新子商户信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
+      operationId: card/submerchant/update
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/第三方模式/代制
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              info:
+                allOf:
+                  - type: object
+                    properties:
+                      merchant_id:
+                        type: integer
+                        format: int32
+                        description: 子商户id，对于一个母商户公众号下唯一
+                  - $ref: '#/definitions/card.model.SubMerchantInfoBo'
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  info:
+                    $ref: '#/definitions/card.model.SubMerchantStatusInfoBo'
   /card/testwhitelist/set:
     post:
       summary: 设置测试白名单
@@ -2717,6 +3174,458 @@ paths:
               appid:
                 type: string
                 description: 第三方用户唯一凭证
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /cgi-bin/component/api_confirm_authorization:
+    post:
+      summary: 确认授权
+      description: 该API用于使用授权码换取授权公众号的授权信息，并换取authorizer_access_token和authorizer_refresh_token。 授权码的获取，需要在用户在第三方平台授权页中完成授权流程后，在回调URI中通过URL参数提供给第三方平台方。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
+      operationId: cgi-bin/component/api_confirm_authorization
+      security:
+        - componentAccessToken: []
+      tags:
+        - 卡券/第三方模式/强授权
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              component_appid:
+                type: string
+                description: 第三方平台appid
+              authorizer_appid:
+                type: string
+                description: 授权方appid
+              funscope_category_id:
+                type: integer
+                format: int32
+                description: 授权集id
+              confirm_value:
+                type: integer
+                format: int32
+                description: 是否确认，1为确认，2为取消
+            required:
+              - component_appid
+              - authorizer_appid
+              - funscope_category_id
+              - confirm_value
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /cgi-bin/component/api_get_authorizer_info:
+    post:
+      summary: 获取授权方的账户信息
+      description: 该API用于获取授权方的公众号基本信息，包括头像、昵称、帐号类型、认证类型、微信号、原始ID和二维码图片URL。 需要特别记录授权方的帐号类型，在消息及事件推送时，对于不具备客服接口的公众号，需要在5秒内立即响应；而若有客服接口，则可以选择暂时不响应，而选择后续通过客服接口来发送消息触达粉丝。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
+      operationId: cgi-bin/component/api_get_authorizer_info
+      security:
+        - componentAccessToken: []
+      tags:
+        - 卡券/第三方模式/强授权
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              component_appid:
+                type: string
+                description: 第三方平台appid
+              authorizer_appid:
+                type: string
+                description: 授权方appid
+            required:
+              - component_appid
+              - authorizer_appid
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  authorizer_info:
+                    type: object
+                    description: 授权信息
+                    properties:
+                      head_img:
+                        type: string
+                        description: 授权方头像
+                      service_type_info:
+                        type: object
+                        description: 授权方公众号类型，0代表订阅号，1代表由历史老帐号升级后的订阅号，2代表服务号
+                        properties:
+                          id:
+                            type: integer
+                            format: int32
+                            enum:
+                              - 0
+                              - 1
+                              - 2
+                      verify_type_info:
+                        type: object
+                        description: 授权方认证类型，-1代表未认证，0代表微信认证，1代表新浪微博认证，2代表腾讯微博认证，3代表已资质认证通过但还未通过名称认证，4代表已资质认证通过、还未通过名称认证，但通过了新浪微博认证，5代表已资质认证通过、还未通过名称认证，但通过了腾讯微博认证
+                        properties:
+                          id:
+                            type: integer
+                            format: int32
+                            enum:
+                              - -1
+                              - 0
+                              - 1
+                              - 2
+                              - 3
+                              - 4
+                              - 5
+                      user_name:
+                        type: string
+                        description: 授权方公众号原始id
+                      alias:
+                        type: string
+                        description: 授权方公众号设置的微信号，可能为空。
+                      qrcode_url:
+                        type: string
+                        description: 二维码图片链接，开发者最好保存
+                      authorization_info:
+                        type: object
+                        description: 授权信息
+                        properties:
+                          appid:
+                            type: string
+                            description: 授权方appid
+                          func_info:
+                            type: array
+                            description: 公众号授权给开发者的权限集列表（请注意，当出现用户已经将消息与菜单权限集授权给了某个第三方，再授权给另一个第三方时，由于该权限集是互斥的，后一个第三方的授权将去除此权限集，开发者可以在返回的func_info信息中验证这一点，避免信息遗漏）， id位对应的权限集编号。 confirm_info是强授权相关字段。 其中need_confirm：是否需要第三方平台确认（0，不需确认，1，需要认）， already_confirm：是否已经确认。（0，未确认，1，已经确认）。
+                            items:
+                              type: object
+                              properties:
+                                funcscope_category:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: integer
+                                      description: 1=消息与菜单权限集,2=用户管理权限集,3=账号管理权限集,4=网页授权权限集,5=微信小店权限集,6=多客服权限集,7=业务通知权限集,8=微信卡券权限集,9=扫一扫权限集,10=Wi-Fi权限集,11=素材管理权限集,12=摇周边权限集,13=离线数据权限集
+                                confirm_info:
+                                    type: object
+                                    properties:
+                                      need_confirm:
+                                        type: integer
+                                        format: int32
+                                        description: 是否需要确认
+                                      already_confirm:
+                                        type: integer
+                                        format: int32
+                                        description: 是否已经确认
+  /cgi-bin/component/api_query_auth:
+    post:
+      summary: 使用授权码换取公众号的授权信息
+      description: 该API用于使用授权码换取授权公众号的授权信息，并换取authorizer_access_token和authorizer_refresh_token。 授权码的获取，需要在用户在第三方平台授权页中完成授权流程后，在回调URI中通过URL参数提供给第三方平台方。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
+      operationId: cgi-bin/component/api_query_auth
+      security:
+        - componentAccessToken: []
+      tags:
+        - 卡券/第三方模式/强授权
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              component_appid:
+                type: string
+                description: 第三方平台appid
+              authorization_code:
+                type: string
+                description: 授权code,会在授权成功时返回给第三方平台，详见第三方平台授权流程说明。
+            required:
+              - component_appid
+              - authorization_code
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  authorization_info:
+                    type: object
+                    description: 授权信息
+                    properties:
+                      authorization_appid:
+                        type: string
+                        description: 授权方appid
+                      authorizer_access_token:
+                        type: string
+                        description: 授权方令牌（在授权的公众号具备API权限时，才有此返回值）。
+                      expires_in:
+                        type: integer
+                        format: int32
+                        description: 有效期（在授权的公众号具备API权限时，才有此返回值）
+                      authorizer_refresh_token:
+                        type: string
+                        description: 刷新令牌（在授权的公众号具备API权限时，才有此返回值），刷新令牌主要用于公众号第三方平台获取和刷新已授权用户的access_token，只会在授权时刻提供，请妥善保存。 一旦丢失，只能让用户重新授权，才能再次拿到新的刷新令牌
+                      func_info:
+                        type: array
+                        description: 公众号授权给开发者的权限集列表（请注意，当出现用户已经将消息与菜单权限集授权给了某个第三方，再授权给另一个第三方时，由于该权限集是互斥的，后一个第三方的授权将去除此权限集，开发者可以在返回的func_info信息中验证这一点，避免信息遗漏）， id位对应的权限集编号。 confirm_info是强授权相关字段。 其中need_confirm：是否需要第三方平台确认（0，不需确认，1，需要认）， already_confirm：是否已经确认。（0，未确认，1，已经确认）。
+                        items:
+                          type: object
+                          properties:
+                            funcscope_category:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  description: 1=消息与菜单权限集,2=用户管理权限集,3=账号管理权限集,4=网页授权权限集,5=微信小店权限集,6=多客服权限集,7=业务通知权限集,8=微信卡券权限集,9=扫一扫权限集,10=Wi-Fi权限集,11=素材管理权限集,12=摇周边权限集,13=离线数据权限集
+                            confirm_info:
+                                type: object
+                                properties:
+                                  need_confirm:
+                                    type: integer
+                                    format: int32
+                                    description: 是否需要确认
+                                  already_confirm:
+                                    type: integer
+                                    format: int32
+                                    description: 是否已经确认
+  /cgi-bin/component/batchget_card_merchant:
+    post:
+      summary: 拉取单个子商户信息
+      description: 通过指定的子商户appid，拉取该子商户的基础信息。 注意，用母商户去调用接口，但接口内传入的是子商户的appid。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
+      operationId: cgi-bin/component/batchget_card_merchant
+      security:
+        - componentAccessToken: []
+      tags:
+        - 卡券/第三方模式/强授权
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              next_get:
+                type: string
+                description: 获取子商户列表，注意最开始时为空。每次拉取20个子商户，下次拉取时填入返回数据中该字段的值，该值无实际意义。
+            required:
+              - next_get
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        appid:
+                          type: string
+                        name:
+                          type: string
+                        primary_category_id:
+                          type: integer
+                          format: int32
+                        secondary_category_id:
+                          type: integer
+                          format: int32
+                        submit_time:
+                          type: integer
+                          format: int32
+                        result:
+                          type: string
+                          description: 查询结果 1.RESULT_PASS：审核通过 2.RESULT_NOT_PASS：审核驳回 3.RESULT_CHECKING：待审核 4.RESULT_NOTHING_TO_CHECK：无提审记录
+                          enum:
+                            - RESULT_PASS
+                            - RESULT_NOT_PASS
+                            - RESULT_CHECKING
+                            - RESULT_NOTHING_TO_CHECK
+  /cgi-bin/component/check_card_agent_qualification:
+    get:
+      summary: 母商户资质审核查询
+      description: 查询母商户资质审核的结果，审核通过后才能用接口继续提交子商户资质。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
+      operationId: cgi-bin/component/check_card_agent_qualification
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/第三方模式/强授权
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  result:
+                    type: string
+                    description: 查询结果 1.RESULT_PASS：审核通过 2.RESULT_NOT_PASS：审核驳回 3.RESULT_CHECKING：待审核 4.RESULT_NOTHING_TO_CHECK：无提审记录
+                    enum:
+                      - RESULT_PASS
+                      - RESULT_NOT_PASS
+                      - RESULT_CHECKING
+                      - RESULT_NOTHING_TO_CHECK
+  /cgi-bin/component/check_card_merchant_qualification:
+    post:
+      summary: 子商户资质审核查询
+      description: 该接口用于查询子商户资质审核的结果，审核通过后才能进行后续授权流程。 注意，用母商户去调用接口，但接口内传入的是子商户的appid。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
+      operationId: cgi-bin/component/check_card_merchant_qualification
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/第三方模式/强授权
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              appid:
+                type: string
+            required:
+              - appid
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  result:
+                    type: string
+                    description: 查询结果 1.RESULT_PASS：审核通过 2.RESULT_NOT_PASS：审核驳回 3.RESULT_CHECKING：待审核 4.RESULT_NOTHING_TO_CHECK：无提审记录
+                    enum:
+                      - RESULT_PASS
+                      - RESULT_NOT_PASS
+                      - RESULT_CHECKING
+                      - RESULT_NOTHING_TO_CHECK
+  /cgi-bin/component/get_card_merchant:
+    post:
+      summary: 拉取单个子商户信息
+      description: 通过指定的子商户appid，拉取该子商户的基础信息。 注意，用母商户去调用接口，但接口内传入的是子商户的appid。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
+      operationId: cgi-bin/component/get_card_merchant
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/第三方模式/强授权
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              appid:
+                type: string
+            required:
+              - appid
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  appid:
+                    type: string
+                  name:
+                    type: string
+                  primary_category_id:
+                    type: integer
+                    format: int32
+                  secondary_category_id:
+                    type: integer
+                    format: int32
+                  submit_time:
+                    type: integer
+                    format: int32
+                  result:
+                    type: string
+                    description: 查询结果 1.RESULT_PASS：审核通过 2.RESULT_NOT_PASS：审核驳回 3.RESULT_CHECKING：待审核 4.RESULT_NOTHING_TO_CHECK：无提审记录
+                    enum:
+                      - RESULT_PASS
+                      - RESULT_NOT_PASS
+                      - RESULT_CHECKING
+                      - RESULT_NOTHING_TO_CHECK
+  /cgi-bin/component/upload_card_agent_qualification:
+    post:
+      summary: 母商户资质申请
+      description: 母商户资质申请接口是第三方平台用以申请第三方强授权能力，并提交自身资质资料的上传接口，只有上传相关资质，并审核通过后才可代名下子商户提交资质。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
+      operationId: cgi-bin/component/upload_card_agent_qualification
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/第三方模式/强授权
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              register_capital:
+                type: string
+                description: 注册资本，数字，单位：分
+              business_license_media_id:
+                type: string
+                description: 营业执照扫描件的media_id
+              tax_registration_certificate_media_id:
+                type: string
+                description: 税务登记证扫描件的media_id
+              last_quarter_tax_listing_media_id:
+                type: string
+                description: 上个季度纳税清单扫描件media_id
+            required:
+              - register_capital
+              - business_license_media_id
+              - tax_registration_certificate_media_id
+              - last_quarter_tax_listing_media_id
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /cgi-bin/component/upload_card_merchant_qualification:
+    post:
+      summary: 母商户资质申请
+      description: 母商户资质申请接口是第三方平台用以申请第三方强授权能力，并提交自身资质资料的上传接口，只有上传相关资质，并审核通过后才可代名下子商户提交资质。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
+      operationId: cgi-bin/component/upload_card_merchant_qualification
+      security:
+        - accessToken: []
+      tags:
+        - 卡券/第三方模式/强授权
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              register_capital:
+                type: string
+                description: 注册资本，数字，单位：分
+              business_license_media_id:
+                type: string
+                description: 营业执照扫描件的media_id
+              tax_registration_certificate_media_id:
+                type: string
+                description: 税务登记证扫描件的media_id
+              last_quarter_tax_listing_media_id:
+                type: string
+                description: 上个季度纳税清单扫描件media_id
+            required:
+              - register_capital
+              - business_license_media_id
+              - tax_registration_certificate_media_id
+              - last_quarter_tax_listing_media_id
       responses:
         '200':
           description: ''
@@ -7568,6 +8477,94 @@ definitions:
       - sku
       - date_info
       - end_time
+  card.model.SubMerchantInfoBo:
+    type: object
+    properties:
+      app_id:
+        type: string
+        description: 子商户的公众号app_id，配置后子商户卡券券面上的app_id为该app_id。注意：该app_id须经过认证
+      brand_name:
+        type: string
+        description: 子商户名称（12个汉字内），该名称将在制券时填入并显示在卡券页面上
+      logo_url:
+        type: string
+        description: 子商户logo，可通过 上传图片接口 获取。该logo将在制券时填入并显示在卡券页面上
+      protocol:
+        type: string
+        description: 授权函ID，即通过 上传临时素材接口 上传授权函后获得的meida_id
+      end_time:
+        type: integer
+        format: int32
+        description: 授权函有效期截止时间（东八区时间，单位为秒），需要与提交的扫描件一致
+      primary_category_id:
+        type: integer
+        format: int32
+        description: 一级类目id,可以通过本文档中接口查询
+      secondary_category_id:
+        type: integer
+        format: int32
+        description: 二级类目id，可以通过本文档中接口查询
+      agreement_media_id:
+        type: string
+        description: 营业执照或个体工商户营业执照彩照或扫描件
+      operator_media_id:
+        type: string
+        description: 营业执照内登记的经营者身份证彩照或扫描件
+    required:
+      - brand_name
+      - logo_url
+      - protocol
+      - end_time
+      - primary_category_id
+      - secondary_category_id
+  card.model.SubMerchantStatusInfoBo:
+    type: object
+    properties:
+      merchant_id:
+        type: integer
+        format: int32
+        description: 子商户id，对于一个母商户公众号下唯一
+      app_id:
+        type: string
+        description: 子商户若有公众号，且不愿意自己运营，通过授权方式让第三方代制，支持配置子商户公众号。配置后，1）该子商户的制券配额不再限制，2）该卡券详情页关联的公众号为子商户配置这个公众号。
+      create_time:
+        type: integer
+        format: int32
+        description: 子商户信息创建时间
+      update_time:
+        type: integer
+        format: int32
+        description: 子商户信息更新时间
+      brand_name:
+        type: string
+        description: 子商户名称（12个汉字内），该名称将在制券时填入并显示在卡券页面上。
+      logo_url:
+        type: string
+        description: 子商户logo，可通过上传logo接口获取。该logo将在制券时填入并显示在卡券页面上
+      status:
+        type: string
+        description: 子商户状态，"CHECKING" 审核中, "APPROVED" , 已通过；"REJECTED"被驳回, "EXPIRED"协议已过期
+        enum:
+          - CHECKING
+          - APPROVED
+          - REJECTED
+          - EXPIRED
+      bengin_time:
+        type: integer
+        format: int32
+        description: 创建时间（非协议开始时间）
+      end_time:
+        type: integer
+        format: int32
+        description: 授权函有效期截止时间（东八区时间，单位为秒）
+      primary_category_id:
+        type: integer
+        format: int32
+        description: 子商户一级类目
+      secondary_category_id:
+        type: integer
+        format: int32
+        description: 子商户二级类目
   card.qrcode.BaseBo:
     type: object
     properties:
@@ -7640,6 +8637,69 @@ definitions:
         type: integer
         format: int32
         description: 代金券专用，表示减免金额。（单位为分）
+  card.type.CoinOrderBo:
+    type: object
+    properties:
+      order_id:
+        type: string
+        description: 订单号
+      status:
+        type: string
+        description: 订单状态， ORDER_STATUS_WAITING 等待支付 ORDER_STATUS_SUCC 支付成功 ORDER_STATUS_FINANCE_SUCC 加代币成功 ORDER_STATUS_QUANTITY_SUCC 加库存成功 ORDER_STATUS_HAS_REFUND 已退币 ORDER_STATUS_REFUND_WAITING 等待退币确认 ORDER_STATUS_ROLLBACK 已回退,系统失败 ORDER_STATUS_HAS_RECEIPT 已开发票
+        enum:
+          - ORDER_STATUS_WAITING
+          - ORDER_STATUS_SUCC
+          - ORDER_STATUS_FINANCE_SUCC
+          - ORDER_STATUS_QUANTITY_SUCC
+          - ORDER_STATUS_HAS_REFUND
+          - ORDER_STATUS_REFUND_WAITING
+          - ORDER_STATUS_ROLLBACK
+          - ORDER_STATUS_HAS_RECEIPT
+      create_time:
+        type: integer
+        format: int32
+        description: 订单创建时间
+      pay_finish_time:
+        type: integer
+        format: int32
+        description: 支付完成时间
+      desc:
+        type: string
+        description: 支付描述，一般为微信支付充值
+      free_coin_count:
+        type: integer
+        format: int32
+        description: 本次充值的付费券点数量，以元为单位
+      pay_coin_count:
+        type: integer
+        format: int32
+        description: 二维码的数据流，开发者可以使用写入一个文件的方法显示该二维码
+      refund_free_coin_count:
+        type: integer
+        format: int32
+        description: 回退的免费券点
+      refund_pay_coin_count:
+        type: integer
+        format: int32
+        description: 回退的付费券点
+      openid:
+        type: string
+        description: 支付人的openid
+      order_tpye:
+        type: string
+        description: 订单类型，ORDER_TYPE_WXPAY为充值
+    example:
+      order_id: 100005790120151221401000171
+      status: ORDER_STATUS_FINANCE_SUCC
+      create_time: 1450712798
+      pay_finish_time: 1450712905
+      desc: 微信支付充值
+      free_coin_count: 0
+      pay_coin_count: 1
+      refund_free_coin_count: 0
+      refund_pay_coin_count: 0
+      openid: oWE-GwF1gGoyVVZC5PG6GXd4cKMY
+      order_type: ORDER_TYPE_WXPAY
   card.type.DiscountBo:
     type: object
     description: 折扣券数据结构

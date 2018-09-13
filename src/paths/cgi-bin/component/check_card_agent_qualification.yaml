@@ -1,0 +1,25 @@
+get:
+  summary: 母商户资质审核查询
+  description: 查询母商户资质审核的结果，审核通过后才能用接口继续提交子商户资质。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
+  operationId: cgi-bin/component/check_card_agent_qualification
+  security:
+    - accessToken: []
+  tags:
+    - 卡券/第三方模式/强授权
+  parameters: []
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              result:
+                type: string
+                description: 查询结果 1.RESULT_PASS：审核通过 2.RESULT_NOT_PASS：审核驳回 3.RESULT_CHECKING：待审核 4.RESULT_NOTHING_TO_CHECK：无提审记录
+                enum:
+                  - RESULT_PASS
+                  - RESULT_NOT_PASS
+                  - RESULT_CHECKING
+                  - RESULT_NOTHING_TO_CHECK

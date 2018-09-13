@@ -1,0 +1,71 @@
+post:
+  summary: 使用授权码换取公众号的授权信息
+  description: 该API用于使用授权码换取授权公众号的授权信息，并换取authorizer_access_token和authorizer_refresh_token。 授权码的获取，需要在用户在第三方平台授权页中完成授权流程后，在回调URI中通过URL参数提供给第三方平台方。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
+  operationId: cgi-bin/component/api_query_auth
+  security:
+    - componentAccessToken: []
+  tags:
+    - 卡券/第三方模式/强授权
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          component_appid:
+            type: string
+            description: 第三方平台appid
+          authorization_code:
+            type: string
+            description: 授权code,会在授权成功时返回给第三方平台，详见第三方平台授权流程说明。
+        required:
+          - component_appid
+          - authorization_code
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              authorization_info:
+                type: object
+                description: 授权信息
+                properties:
+                  authorization_appid:
+                    type: string
+                    description: 授权方appid
+                  authorizer_access_token:
+                    type: string
+                    description: 授权方令牌（在授权的公众号具备API权限时，才有此返回值）。
+                  expires_in:
+                    type: integer
+                    format: int32
+                    description: 有效期（在授权的公众号具备API权限时，才有此返回值）
+                  authorizer_refresh_token:
+                    type: string
+                    description: 刷新令牌（在授权的公众号具备API权限时，才有此返回值），刷新令牌主要用于公众号第三方平台获取和刷新已授权用户的access_token，只会在授权时刻提供，请妥善保存。 一旦丢失，只能让用户重新授权，才能再次拿到新的刷新令牌
+                  func_info:
+                    type: array
+                    description: 公众号授权给开发者的权限集列表（请注意，当出现用户已经将消息与菜单权限集授权给了某个第三方，再授权给另一个第三方时，由于该权限集是互斥的，后一个第三方的授权将去除此权限集，开发者可以在返回的func_info信息中验证这一点，避免信息遗漏）， id位对应的权限集编号。 confirm_info是强授权相关字段。 其中need_confirm：是否需要第三方平台确认（0，不需确认，1，需要认）， already_confirm：是否已经确认。（0，未确认，1，已经确认）。
+                    items:
+                      type: object
+                      properties:
+                        funcscope_category:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              description: 1=消息与菜单权限集,2=用户管理权限集,3=账号管理权限集,4=网页授权权限集,5=微信小店权限集,6=多客服权限集,7=业务通知权限集,8=微信卡券权限集,9=扫一扫权限集,10=Wi-Fi权限集,11=素材管理权限集,12=摇周边权限集,13=离线数据权限集
+                        confirm_info:
+                            type: object
+                            properties:
+                              need_confirm:
+                                type: integer
+                                format: int32
+                                description: 是否需要确认
+                              already_confirm:
+                                type: integer
+                                format: int32
+                                description: 是否已经确认

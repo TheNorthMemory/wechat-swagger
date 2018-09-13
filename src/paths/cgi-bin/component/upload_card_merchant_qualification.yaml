@@ -1,0 +1,36 @@
+post:
+  summary: 母商户资质申请
+  description: 母商户资质申请接口是第三方平台用以申请第三方强授权能力，并提交自身资质资料的上传接口，只有上传相关资质，并审核通过后才可代名下子商户提交资质。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
+  operationId: cgi-bin/component/upload_card_merchant_qualification
+  security:
+    - accessToken: []
+  tags:
+    - 卡券/第三方模式/强授权
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          register_capital:
+            type: string
+            description: 注册资本，数字，单位：分
+          business_license_media_id:
+            type: string
+            description: 营业执照扫描件的media_id
+          tax_registration_certificate_media_id:
+            type: string
+            description: 税务登记证扫描件的media_id
+          last_quarter_tax_listing_media_id:
+            type: string
+            description: 上个季度纳税清单扫描件media_id
+        required:
+          - register_capital
+          - business_license_media_id
+          - tax_registration_certificate_media_id
+          - last_quarter_tax_listing_media_id
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'

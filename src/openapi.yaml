@@ -17,6 +17,12 @@ securityDefinitions:
     in: query
     type: apiKey
     name: access_token
+    description: 公众号调用API凭证
+  componentAccessToken:
+    in: query
+    type: apiKey
+    name: component_access_token
+    description: 第三方代公众号调用API凭证
 tags:
   - name: 基础支持
   - name: 自定义菜单
@@ -36,6 +42,7 @@ tags:
   - name: 卡券/礼品卡/财务
   - name: 卡券/立减金活动
   - name: 卡券/第三方模式/代制
+  - name: 卡券/第三方模式/强授权
   - name: 多客服/客服消息
   - name: 多客服/客服管理
   - name: 多客服/会话控制

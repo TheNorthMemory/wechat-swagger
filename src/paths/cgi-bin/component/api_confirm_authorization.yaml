@@ -1,0 +1,38 @@
+post:
+  summary: 确认授权
+  description: 该API用于使用授权码换取授权公众号的授权信息，并换取authorizer_access_token和authorizer_refresh_token。 授权码的获取，需要在用户在第三方平台授权页中完成授权流程后，在回调URI中通过URL参数提供给第三方平台方。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
+  operationId: cgi-bin/component/api_confirm_authorization
+  security:
+    - componentAccessToken: []
+  tags:
+    - 卡券/第三方模式/强授权
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          component_appid:
+            type: string
+            description: 第三方平台appid
+          authorizer_appid:
+            type: string
+            description: 授权方appid
+          funscope_category_id:
+            type: integer
+            format: int32
+            description: 授权集id
+          confirm_value:
+            type: integer
+            format: int32
+            description: 是否确认，1为确认，2为取消
+        required:
+          - component_appid
+          - authorizer_appid
+          - funscope_category_id
+          - confirm_value
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'

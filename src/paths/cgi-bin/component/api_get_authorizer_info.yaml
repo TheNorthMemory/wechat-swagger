@@ -1,0 +1,103 @@
+post:
+  summary: 获取授权方的账户信息
+  description: 该API用于获取授权方的公众号基本信息，包括头像、昵称、帐号类型、认证类型、微信号、原始ID和二维码图片URL。 需要特别记录授权方的帐号类型，在消息及事件推送时，对于不具备客服接口的公众号，需要在5秒内立即响应；而若有客服接口，则可以选择暂时不响应，而选择后续通过客服接口来发送消息触达粉丝。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
+  operationId: cgi-bin/component/api_get_authorizer_info
+  security:
+    - componentAccessToken: []
+  tags:
+    - 卡券/第三方模式/强授权
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          component_appid:
+            type: string
+            description: 第三方平台appid
+          authorizer_appid:
+            type: string
+            description: 授权方appid
+        required:
+          - component_appid
+          - authorizer_appid
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              authorizer_info:
+                type: object
+                description: 授权信息
+                properties:
+                  head_img:
+                    type: string
+                    description: 授权方头像
+                  service_type_info:
+                    type: object
+                    description: 授权方公众号类型，0代表订阅号，1代表由历史老帐号升级后的订阅号，2代表服务号
+                    properties:
+                      id:
+                        type: integer
+                        format: int32
+                        enum:
+                          - 0
+                          - 1
+                          - 2
+                  verify_type_info:
+                    type: object
+                    description: 授权方认证类型，-1代表未认证，0代表微信认证，1代表新浪微博认证，2代表腾讯微博认证，3代表已资质认证通过但还未通过名称认证，4代表已资质认证通过、还未通过名称认证，但通过了新浪微博认证，5代表已资质认证通过、还未通过名称认证，但通过了腾讯微博认证
+                    properties:
+                      id:
+                        type: integer
+                        format: int32
+                        enum:
+                          - -1
+                          - 0
+                          - 1
+                          - 2
+                          - 3
+                          - 4
+                          - 5
+                  user_name:
+                    type: string
+                    description: 授权方公众号原始id
+                  alias:
+                    type: string
+                    description: 授权方公众号设置的微信号，可能为空。
+                  qrcode_url:
+                    type: string
+                    description: 二维码图片链接，开发者最好保存
+                  authorization_info:
+                    type: object
+                    description: 授权信息
+                    properties:
+                      appid:
+                        type: string
+                        description: 授权方appid
+                      func_info:
+                        type: array
+                        description: 公众号授权给开发者的权限集列表（请注意，当出现用户已经将消息与菜单权限集授权给了某个第三方，再授权给另一个第三方时，由于该权限集是互斥的，后一个第三方的授权将去除此权限集，开发者可以在返回的func_info信息中验证这一点，避免信息遗漏）， id位对应的权限集编号。 confirm_info是强授权相关字段。 其中need_confirm：是否需要第三方平台确认（0，不需确认，1，需要认）， already_confirm：是否已经确认。（0，未确认，1，已经确认）。
+                        items:
+                          type: object
+                          properties:
+                            funcscope_category:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  description: 1=消息与菜单权限集,2=用户管理权限集,3=账号管理权限集,4=网页授权权限集,5=微信小店权限集,6=多客服权限集,7=业务通知权限集,8=微信卡券权限集,9=扫一扫权限集,10=Wi-Fi权限集,11=素材管理权限集,12=摇周边权限集,13=离线数据权限集
+                            confirm_info:
+                                type: object
+                                properties:
+                                  need_confirm:
+                                    type: integer
+                                    format: int32
+                                    description: 是否需要确认
+                                  already_confirm:
+                                    type: integer
+                                    format: int32
+                                    description: 是否已经确认

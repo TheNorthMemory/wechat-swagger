@@ -1,0 +1,75 @@
+post:
+  summary: 上传图文消息素材
+  description: 【订阅号与服务号认证后均可用】[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481187827_i0l21)
+  operationId: cgi-bin/media/uploadnews
+  security:
+    - accessToken: []
+  tags:
+    - 素材管理
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          articles:
+            type: array
+            description: 图文消息，一个图文消息支持1到8条图文
+            items:
+              type: object
+              properties:
+                thumb_media_id:
+                  type: string
+                  description: 图文消息缩略图的media_id，可以在基础支持-上传多媒体文件接口中获得
+                author:
+                  type: string
+                  description: 图文消息的作者
+                title:
+                  type: string
+                  description: 图文消息的标题
+                content_source_url:
+                  type: string
+                  description: '在图文消息页面点击“阅读原文”后的页面，受安全限制，如需跳转Appstore，可以使用itun.es或appsto.re的短链服务，并在短链后增加 #wechat_redirect 后缀。'
+                content:
+                  type: string
+                  description: 图文消息页面的内容，支持HTML标签。具备微信支付权限的公众号，可以使用a标签，其他公众号不能使用，如需插入小程序卡片，可参考下文。
+                digest:
+                  type: string
+                  description: 图文消息的描述，如本字段为空，则默认抓取正文前64个字
+                show_cover_pic:
+                  type: integer
+                  format: int32
+                  description: 是否显示封面，1为显示，0为不显示
+                  enum:
+                    - '0'
+                    - '1'
+        example:
+          articles:
+            - thumb_media_id: qI6_Ze_6PtV7svjolgs-rN6stStuHIjs9_DidOHaj0Q-mwvBelOXCFZiq2OsIU-p
+              author: xxx
+              title: Happy Day
+              content_source_url: www.qq.com
+              content: content
+              digest: digest
+              show_cover_pic: 1
+  responses:
+    '200':
+      description: ''
+      schema:
+        type: object
+        properties:
+          type:
+            type: string
+            description: 媒体文件类型，分别有图片（image）、语音（voice）、视频（video）和缩略图（thumb），图文消息（news）
+          media_id:
+            type: string
+            description: 媒体文件/图文消息上传后获取的唯一标识
+          created_at:
+            type: integer
+            format: int32
+            description: 媒体文件上传时间
+        example:
+          type: news
+          media_id: CsEf3ldqkAYJAU6EJeIkStVDSvffUJ54vqbThMgplD-VJXXof6ctX5fI6-aYyUiQ
+          created_at: 1391857799

@@ -28,8 +28,10 @@ tags:
   - name: 自定义菜单
   - name: 用户管理
   - name: 用户管理/标签
+  - name: 帐号管理/二维码
   - name: 素材管理
   - name: 消息管理
+  - name: 模版消息
   - name: 卡券
   - name: 卡券/券点
   - name: 卡券/会员卡
@@ -5154,6 +5156,128 @@ paths:
       responses:
         '200':
           description: ''
+  /cgi-bin/qrcode/create:
+    post:
+      summary: 创建二维码ticket
+      description: 每次创建二维码ticket需要提供一个开发者自行设定的参数（scene_id），分别介绍临时二维码和永久二维码的创建二维码ticket过程。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443433542)
+      operationId: cgi-bin/qrcode/create
+      security:
+        - accessToken: []
+      tags:
+        - 帐号管理/二维码
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              expire_seconds:
+                type: integer
+                format: int32
+                description: 该二维码有效时间，以秒为单位。 最大不超过2592000（即30天），此字段如果不填，则默认有效期为30秒。
+              action_name:
+                type: string
+                description: 二维码类型，QR_SCENE为临时的整型参数值，QR_STR_SCENE为临时的字符串参数值，QR_LIMIT_SCENE为永久的整型参数值，QR_LIMIT_STR_SCENE为永久的字符串参数值
+                enum:
+                  - QR_SCENE
+                  - QR_STR_SCENE
+                  - QR_LIMIT_SCENE
+                  - QR_LIMIT_STR_SCENE
+              action_info:
+                type: object
+                description: 二维码详细信息
+                properties:
+                  scene:
+                    type: object
+                    properties:
+                      scene_id:
+                        type: integer
+                        format: int32
+                        description: 场景值ID，临时二维码时为32位非0整型，永久二维码时最大值为100000（目前参数只支持1--100000）
+                      scene_str:
+                        type: string
+                        description: 场景值ID（字符串形式的ID），字符串类型，长度限制为1到64
+            example:
+              expire_seconds: 604800
+              action_name: QR_SCENE
+              action_info:
+                scene:
+                  scene_id: 123
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              ticket:
+                type: string
+                description: 获取的二维码ticket，凭借此ticket可以在有效时间内换取二维码。
+              expire_seconds:
+                type: integer
+                format: int32
+                description: 该二维码有效时间，以秒为单位。 最大不超过2592000（即30天）。
+              url:
+                type: string
+                description: 二维码图片解析后的地址，开发者可根据该地址自行生成需要的二维码图片
+            example:
+              ticket: gQH47joAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL2taZ2Z3TVRtNzJXV1Brb3ZhYmJJAAIEZ23sUwMEmm3sUw==
+              expire_seconds: 60
+              url: http://weixin.qq.com/q/kZgfwMTm72WWPkovabbI
+  /cgi-bin/shorturl:
+    post:
+      summary: 长链接转短链接
+      description: 开发者用于生成二维码的原链接（商品、支付二维码等）太长导致扫码速度和成功率下降，将原长链接通过此接口转成短链接再生成二维码将大大提升扫码速度和成功率。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443433600)
+      operationId: cgi-bin/shorturl
+      security:
+        - accessToken: []
+      tags:
+        - 基础支持
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              action:
+                type: string
+                description: 此处填long2short，代表长链接转短链接
+                default: long2short
+                enum:
+                  - long2short
+              long_url:
+                type: string
+                description: 需要转换的长链接，支持http://、https://、weixin://wxpay 格式的url
+            example:
+              action: long2short
+              long_url: http://wap.koudaitong.com/v2/showcase/goods?alias=128wi9shh&spm=h56083&redirect_count=1
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  short_url:
+                    type: string
+                    description: 短链接。
+  /cgi-bin/showqrcode:
+    get:
+      summary: 通过ticket换取二维码
+      description: 获取二维码ticket后，开发者可用ticket换取二维码图片。请注意，本接口无须登录态即可调用。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443433542)
+      operationId: cgi-bin/showqrcode
+      tags:
+        - 帐号管理/二维码
+      parameters:
+        - in: query
+          name: ticket
+          type: string
+          description: 获取的二维码ticket，凭借此ticket可以在有效时间内换取二维码。
+      responses:
+        '200':
+          description: ''
   /cgi-bin/tags/create:
     post:
       summary: 创建
@@ -5476,6 +5600,321 @@ paths:
                   name:
                     type: string
                     description: 标签名，UTF8编码
+  /cgi-bin/template/api_add_template:
+    post:
+      summary: 获得模板ID
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277)'
+      operationId: cgi-bin/template/api_add_template
+      security:
+        - accessToken: []
+      tags:
+        - 模版消息
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              template_id_short:
+                type: string
+                description: 模板库中模板的编号，有“TM**”和“OPENTMTM**”等形式
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  template_id:
+                    type: string
+                    description: 模板ID
+  /cgi-bin/template/api_set_industry:
+    post:
+      summary: 设置所属行业
+      description: 每月可修改行业1次，帐号仅可使用所属行业中相关的模板。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277)
+      operationId: cgi-bin/template/api_set_industry
+      security:
+        - accessToken: []
+      tags:
+        - 模版消息
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              industry_id1:
+                type: integer
+                format: int32
+                description: 公众号模板消息所属行业编号
+              industry_id2:
+                type: integer
+                format: int32
+                description: 公众号模板消息所属行业编号
+      responses:
+        '200':
+          description: ''
+  /cgi-bin/template/del_private_template:
+    post:
+      summary: 删除模板
+      description: 通过接口调用的方式来删除某帐号下的模板。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277)
+      operationId: cgi-bin/template/del_private_template
+      security:
+        - accessToken: []
+      tags:
+        - 模版消息
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              template_id:
+                type: string
+                description: 公众帐号下模板消息ID
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /cgi-bin/template/get_all_private_template:
+    get:
+      summary: 获取模板列表
+      description: 获取已添加至帐号下所有模板列表。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277)
+      operationId: cgi-bin/template/get_all_private_template
+      security:
+        - accessToken: []
+      tags:
+        - 模版消息
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              template_list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    template_id:
+                      type: string
+                      description: 模板ID
+                    title:
+                      type: string
+                      description: 模板标题
+                    primary_industry:
+                      type: string
+                      description: 模板所属行业的一级行业
+                    deputy_industry:
+                      type: string
+                      description: 模板所属行业的二级行业
+                    content:
+                      type: string
+                      description: 模板内容
+                    example:
+                      type: string
+                      description: 模板示例
+  /cgi-bin/template/get_industry:
+    get:
+      summary: 获取设置的行业信息
+      description: 获取帐号设置的行业信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277)
+      operationId: cgi-bin/template/get_industry
+      security:
+        - accessToken: []
+      tags:
+        - 模版消息
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              primary_industry:
+                type: object
+                description: 帐号设置的主营行业
+                properties:
+                  first_class:
+                    type: string
+                  second_class:
+                    type: string
+              secondary_industry:
+                type: object
+                description: 帐号设置的副营行业
+                properties:
+                  first_class:
+                    type: string
+                  second_class:
+                    type: string
+            example:
+              primary_industry:
+                first_class: 运输与仓储
+                second_class: 快递
+              secondary_industry:
+                first_class: IT科技
+                second_class: 互联网|电子商务
+  /cgi-bin/template/send:
+    post:
+      summary: 发送模板消息
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277)'
+      operationId: cgi-bin/template/send
+      security:
+        - accessToken: []
+      tags:
+        - 模版消息
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              touser:
+                type: string
+                description: 接收者openid
+              template_id:
+                type: string
+                description: 模板ID
+              url:
+                type: string
+                description: 模板跳转链接
+              miniprogram:
+                type: object
+                description: 跳小程序所需数据，不需跳小程序可不用传该数据
+                properties:
+                  appid:
+                    type: string
+                    description: 所需跳转到的小程序appid（该小程序appid必须与发模板消息的公众号是绑定关联关系，暂不支持小游戏）
+                  pagepath:
+                    type: string
+                    description: 所需跳转到小程序的具体页面路径，支持带参数,（示例index?foo=bar），暂不支持小游戏
+              data:
+                type: object
+                description: 模板数据
+                additionalProperties:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                      description: 模版数据值
+                    color:
+                      type: string
+                      description: 模板内容字体颜色，不填默认为黑色
+            example:
+              touser: OPENID
+              template_id: ngqIpbwh8bUfcSsECmogfXcV14J0tQlEpBO27izEYtY
+              url: http://weixin.qq.com/download
+              miniprogram:
+                appid: xiaochengxuappid12345
+                pagepath: index?foo=bar
+              data:
+                first:
+                  value: 恭喜你购买成功！
+                  color: '#173177'
+                keyword1:
+                  value: 巧克力
+                  color: '#173177'
+                keyword2:
+                  value: 39.8元
+                  color: '#173177'
+                keyword3:
+                  value: 2014年9月22日
+                  color: '#173177'
+                remark:
+                  value: 欢迎再次购买！
+                  color: '#173177'
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  msgid:
+                    type: integer
+                    format: int32
+                    description: 消息id
+  /cgi-bin/template/subscribe:
+    post:
+      summary: 推送订阅模板消息给到授权微信用户
+      description: 对于已关注公众号的，消息将下发到公众号会话里；未关注公众号的，将下发到服务通知。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1500374289_66bvB)
+      operationId: cgi-bin/template/subscribe
+      security:
+        - accessToken: []
+      tags:
+        - 模版消息
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              touser:
+                type: string
+                description: 接收者openid
+              template_id:
+                type: string
+                description: 模板ID
+              url:
+                type: string
+                description: 模板跳转链接
+              miniprogram:
+                type: object
+                description: 跳小程序所需数据，不需跳小程序可不用传该数据
+                properties:
+                  appid:
+                    type: string
+                    description: 所需跳转到的小程序appid（该小程序appid必须与发模板消息的公众号是绑定关联关系，暂不支持小游戏）
+                  pagepath:
+                    type: string
+                    description: 所需跳转到小程序的具体页面路径，支持带参数,（示例index?foo=bar），暂不支持小游戏
+              scene:
+                type: integer
+                format: int32
+                description: 订阅场景值，可以填0-10000的整形值
+              title:
+                type: string
+                description: 消息标题，15字以内
+              data:
+                type: object
+                description: 模板数据
+                properties:
+                  content:
+                    type: object
+                    description: 消息正文，value为消息内容文本（200字以内），没有固定格式，可用\n换行，color为整段消息内容的字体颜色（目前仅支持整段消息为一种颜色）
+                    properties:
+                      value:
+                        type: string
+                        description: 模版数据值
+                      color:
+                        type: string
+                        description: 模板内容字体颜色，不填默认为黑色
+            example:
+              touser: OPENID
+              template_id: ngqIpbwh8bUfcSsECmogfXcV14J0tQlEpBO27izEYtY
+              url: http://weixin.qq.com/download
+              miniprogram:
+                appid: xiaochengxuappid12345
+                pagepath: index?foo=bar
+              scene: 1
+              title: TITLE
+              data:
+                content:
+                  value: VALUE
+                  color: COLOR
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
   /cgi-bin/ticket/getticket:
     get:
       summary: 获取卡券api_ticket/jsapi_ticket

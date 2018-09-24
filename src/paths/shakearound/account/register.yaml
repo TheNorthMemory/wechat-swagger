@@ -1,0 +1,62 @@
+post:
+  summary: 申请开通功能
+  description: 申请开通摇一摇周边功能。成功提交申请请求后，工作人员会在三个工作日内完成审核。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443447487)
+  operationId: shakearound/account/register
+  security:
+    - accessToken: []
+  tags:
+    - 摇一摇周边
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          name:
+            type: string
+            description: 联系人姓名，不超过20汉字或40个英文字母
+          phone_number:
+            type: string
+            description: 联系人电话
+          email:
+            type: string
+            description: 联系人邮箱
+          industry_id:
+            type: integer
+            format: int32
+            description: 平台定义的行业代号，具体请查看链接 行业代号
+          qualification_cert_urls:
+            type: array
+            description: 相关资质文件的图片url，图片需先上传至微信侧服务器，用“素材管理-上传图片素材”接口上传图片，返回的图片URL再配置在此处； 当不需要资质文件时，数组内可以不填写url
+            items:
+              type: string
+          apply_reason:
+            type: string
+            description: 申请理由，不超过250汉字或500个英文字母
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  apply_time:
+                    type: integer
+                    format: int32
+                    description: 提交申请的时间戳
+                  audit_status:
+                    type: integer
+                    format: int32
+                    description: 审核状态。0：审核未通过、1：审核中、2：审核已通过；审核会在三个工作日内完成
+                  audit_comment:
+                    type: string
+                    description: 审核备注，包括审核不通过的原因
+                  audit_time:
+                    type: integer
+                    format: int32
+                    description: 确定审核结果的时间戳；若状态为审核中，则该时间值为0

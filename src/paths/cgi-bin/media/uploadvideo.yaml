@@ -1,0 +1,48 @@
+post:
+  summary: 上传群发消息时的视频素材
+  description: 群发视频消息时，须换算源素材视频media_id为群发media_id。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481187827_i0l21)
+  operationId: cgi-bin/media/uploadvideo
+  security:
+    - accessToken: []
+  tags:
+    - 素材管理
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          media_id:
+            type: string
+            description: 源素材视频media_id
+          title:
+            type: string
+            description: 视频素材的标题
+          description:
+            type: string
+            description: 视频素材的描述
+        example:
+          media_id: rF4UdIMfYK3efUfyoddYRMU50zMiRmmt_l0kszupYh_SzrcW5Gaheq05p_lHuOTQ
+          title: TITLE
+          description: DESCRIPTION
+  responses:
+    '200':
+      description: ''
+      schema:
+        type: object
+        properties:
+          type:
+            type: string
+            description: 媒体文件类型，分别有图片（image）、语音（voice）、视频（video）和缩略图（thumb），图文消息（news）
+          media_id:
+            type: string
+            description: 媒体文件/图文消息上传后获取的唯一标识
+          created_at:
+            type: integer
+            format: int32
+            description: 媒体文件上传时间
+        example:
+          type: video
+          media_id: IhdaAQXuvJtGzwwc0abfXnzeezfO0NgPK6AQYShD8RQYMTtfzbLdBIQkQziv2XJc
+          created_at: 1398848981

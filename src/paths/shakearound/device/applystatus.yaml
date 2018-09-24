@@ -5,7 +5,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 摇一摇周边
+    - 摇一摇周边/设备管理
   parameters:
     - in: body
       name: body

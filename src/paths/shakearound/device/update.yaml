@@ -1,0 +1,43 @@
+post:
+  summary: 编辑设备信息
+  description: 编辑设备的备注信息。可用设备ID或完整的UUID、Major、Minor指定设备，二者选其一。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459246245)
+  operationId: shakearound/device/update
+  security:
+    - accessToken: []
+  tags:
+    - 摇一摇周边/设备管理
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          device_identifier:
+            type: object
+            description: 指定的设备ID
+            properties:
+              device_id:
+                type: integer
+                format: int32
+                description: 设备编号，若填了UUID、major、minor，则可不填设备编号，若二者都填，则以设备编号为优先
+              uuid:
+                type: string
+              major:
+                type: string
+              minor:
+                type: string
+          comment:
+            type: string
+            description: 设备的备注信息，不超过15个汉字或30个英文字母。
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties: {}

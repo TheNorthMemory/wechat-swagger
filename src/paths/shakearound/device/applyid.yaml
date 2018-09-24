@@ -1,0 +1,51 @@
+post:
+  summary: 申请设备ID
+  description: 申请配置设备所需的UUID、Major、Minor。申请成功后返回批次ID，可用返回的批次ID通过“查询设备ID申请状态”接口查询目前申请的审核状态。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459246241)
+  operationId: shakearound/device/applyid
+  security:
+    - accessToken: []
+  tags:
+    - 摇一摇周边/设备管理
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          quantity:
+            type: integer
+            format: int32
+            description: 申请的设备ID的数量，单次新增设备超过500个，需走人工审核流程
+          apply_reason:
+            type: string
+            description: 申请理由，不超过100个汉字或200个英文字母
+          comment:
+            type: string
+            description: 备注，不超过15个汉字或30个英文字母
+          poi_id:
+            type: integer
+            format: int32
+            description: 设备关联的门店ID，关联门店后，在门店1KM的范围内有优先摇出信息的机会。门店相关信息具体可 查看门店相关的接口文档
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  audit_status:
+                    type: integer
+                    format: int32
+                    description: 审核状态。0：审核未通过、1：审核中、2：审核已通过；若单次申请的设备ID数量小于等于500个，系统会进行快速审核；若单次申请的设备ID数量大于500个，会在三个工作日内完成审核；此时返回值全部为1(审核中)
+                  audit_comment:
+                    type: string
+                    description: 审核备注，对审核状态的文字说明
+                  apply_id:
+                    type: integer
+                    format: int32
+                    description: 申请的批次ID，可用在“查询设备列表”接口按批次查询本次申请成功的设备ID。

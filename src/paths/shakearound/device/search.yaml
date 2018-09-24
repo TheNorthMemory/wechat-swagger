@@ -1,0 +1,97 @@
+post:
+  summary: 查询设备列表
+  description: 查询已有的设备ID、UUID、Major、Minor、激活状态、备注信息、关联门店、关联页面等信息。查询所返回的设备列表按设备ID正序排序。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443447624)
+  operationId: shakearound/device/search
+  security:
+    - accessToken: []
+  tags:
+    - 摇一摇周边/设备管理
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          type:
+            type: integer
+            format: int32
+            description: 查询类型。1：查询设备id列表中的设备；2：分页查询所有设备信息；3：分页查询某次申请的所有设备信息
+            enum: [1, 2, 3]
+          device_identifiers:
+            type: array
+            description: 指定的设备 ； 当type为1时，此项为必填
+            items:
+              type: object
+              description: 指定的设备ID
+              properties:
+                device_id:
+                  type: integer
+                  format: int32
+                  description: 设备编号，若填了UUID、major、minor，则可不填设备编号，若二者都填，则以设备编号为优先；查询指定设备时，单次查询的设备数量不能超过50个
+                uuid:
+                  type: string
+                major:
+                  type: string
+                minor:
+                  type: string
+          apply_id:
+            type: integer
+            format: int32
+            description: 批次ID，申请设备ID时所返回的批次ID；当type为3时，此项为必填
+          last_seen:
+            type: integer
+            format: int32
+            description: 前一次查询列表末尾的设备ID ， 第一次查询last_seen 为0
+          count:
+            type: integer
+            format: int32
+            description: 待查询的设备数量，不能超过50个
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  devices:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        device_id:
+                          type: integer
+                          format: int32
+                          description: 设备编号，若填了UUID、major、minor，则可不填设备编号，若二者都填，则以设备编号为优先
+                        uuid:
+                          type: string
+                        major:
+                          type: string
+                        minor:
+                          type: string
+                        status:
+                          type: integer
+                          format: int32
+                          description: 激活状态，0：未激活，1：已激活
+                        last_active_time:
+                          type: integer
+                          format: int32
+                          description: 设备最近一次被摇到的日期（最早只能获取前一天的数据）；新申请的设备该字段值为0
+                        poi_appid:
+                          type: string
+                          description: 若配置了设备与其他公众账号门店关联关系，则返回配置门店归属的公众账号appid。 查看 配置设备与其他公众账号门店关联关系接口
+                        poi_id:
+                          type: integer
+                          format: int32
+                          description: 设备关联的门店ID，关联门店后，在门店1KM的范围内有优先摇出信息的机会。门店相关信息具体可 查看门店相关的接口文档
+                        comment:
+                          type: string
+                          description: 设备的备注信息
+                  total_count:
+                    type: integer
+                    format: int32
+                    description: 商户名下的设备总量

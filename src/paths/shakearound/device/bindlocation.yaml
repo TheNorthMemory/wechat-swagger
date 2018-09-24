@@ -1,0 +1,52 @@
+post:
+  summary: 配置设备与门店的关联关系
+  description: 支持创建门店后直接关联在设备上，无需为审核通过状态，摇周边后台自动更新门店的最新信息和状态。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459246245)支持设备关联其他公众账号的门店，门店需为审核通过状态。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459246251)
+  operationId: shakearound/device/bindlocation
+  security:
+    - accessToken: []
+  tags:
+    - 摇一摇周边/设备管理
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          device_identifier:
+            type: object
+            description: 指定的设备ID
+            properties:
+              device_id:
+                type: integer
+                format: int32
+                description: 设备编号，若填了UUID、major、minor，则可不填设备编号，若二者都填，则以设备编号为优先
+              uuid:
+                type: string
+              major:
+                type: string
+              minor:
+                type: string
+          poi_id:
+            type: integer
+            format: int32
+            description: 设备关联的门店ID，关联门店后，在门店1KM的范围内有优先摇出信息的机会。当值为0时，将清除设备已关联的门店ID。门店相关信息具体可 查看门店相关的接口文档
+          type:
+            type: integer
+            format: int32
+            default: 1
+            description: 不填默认为1； 为1时，关联的门店和设备归属于同一公众账号； 为2时，关联的门店为其他公众账号的门店
+          poi_appid:
+            type: string
+            description: 关联门店所归属的公众账号的APPID
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties: {}

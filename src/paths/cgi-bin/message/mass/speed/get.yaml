@@ -1,0 +1,32 @@
+post:
+  summary: 获取群发速度
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481187827_i0l21)'
+  operationId: cgi-bin/message/mass/speed/get
+  security:
+    - accessToken: []
+  tags:
+    - 消息管理
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''
+      schema:
+        type: object
+        properties:
+          speed:
+            type: integer
+            format: int32
+            description: 群发速度的级别
+          realspeed:
+            type: integer
+            format: int32
+            description: 群发速度的真实值 单位：万/分钟
+        example:
+          speed: 3
+          realspeed: 15

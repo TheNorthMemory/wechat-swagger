@@ -1,0 +1,114 @@
+post:
+  summary: 预览接口
+  description: 开发者可通过该接口发送消息给指定用户，在手机端查看消息的样式和排版。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481187827_i0l21)
+  operationId: cgi-bin/message/mass/preview
+  security:
+    - accessToken: []
+  tags:
+    - 消息管理
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          touser:
+            type: string
+            description: 接收消息用户对应该公众号的openid，该字段也可以改为towxname，以实现对微信号的预览
+          towxname:
+            type: string
+            description: towxname和touser同时赋值时，以towxname优先
+          mpnews:
+            type: object
+            description: 用于设定即将发送的图文消息
+            properties:
+              media_id:
+                type: string
+                description: 用于群发的消息的media_id
+          text:
+            type: object
+            description: 用于设定即将发送的文本消息
+            properties:
+              content:
+                type: string
+                description: 用于群发的消息的文本内容
+          voice:
+            type: object
+            description: 用于设定即将发送的语音消息
+            properties:
+              media_id:
+                type: string
+                description: 用于群发的消息的media_id
+          music:
+            type: object
+            description: 用于设定即将发送的音乐消息
+            properties:
+              media_id:
+                type: string
+                description: 用于群发的消息的media_id
+          image:
+            type: object
+            description: 用于设定即将发送的图片消息
+            properties:
+              media_id:
+                type: string
+                description: 用于群发的消息的media_id
+          mpvideo:
+            type: object
+            description: 用于设定即将发送的图片消息
+            properties:
+              media_id:
+                type: string
+                description: 用于群发的消息的media_id
+              title:
+                type: string
+                description: 消息的标题
+              description:
+                type: string
+                description: 消息的描述
+              thumb_media_id:
+                type: string
+                description: 视频缩略图的媒体ID
+          wxcard:
+            type: object
+            description: 用于设定即将发送的图片消息
+            properties:
+              card_id:
+                type: string
+                description: 用于群发的消息的card_id
+          msgtype:
+            type: string
+            description: 群发的消息类型，图文消息为mpnews，文本消息为text，语音为voice，音乐为music，图片为image，视频为mpvideo，卡券为wxcard
+            enum:
+              - mpnews
+              - text
+              - voice
+              - music
+              - image
+              - mpvideo
+              - wxcard
+        example:
+          touser: OPENID1
+          mpvideo:
+            media_id: IhdaAQXuvJtGzwwc0abfXnzeezfO0NgPK6AQYShD8RQYMTtfzbLdBIQkQziv2XJc
+          msgtype: mpvideo
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              type:
+                type: string
+                description: 媒体文件类型，分别有图片（image）、语音（voice）、视频（video）和缩略图（thumb），图文消息（news）
+              msg_id:
+                type: integer
+                format: int32
+                description: 消息发送任务的ID
+        example:
+          errcode: 0
+          errmsg: preview success
+          msg_id: 34182

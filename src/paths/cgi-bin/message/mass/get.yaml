@@ -1,0 +1,37 @@
+post:
+  summary: 查询群发消息发送状态
+  description: 【订阅号与服务号认证后均可用】[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481187827_i0l21)
+  operationId: cgi-bin/message/mass/get
+  security:
+    - accessToken: []
+  tags:
+    - 消息管理
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          msg_id:
+            type: integer
+            format: int32
+            description: 发送出去的消息ID
+        example:
+          msg_id: 30124
+  responses:
+    '200':
+      description: ''
+      schema:
+        type: object
+        properties:
+          msg_id:
+            type: integer
+            format: int32
+            description: 消息发送任务的ID
+          msg_status:
+            type: string
+            description: 消息发送后的状态，SEND_SUCCESS表示发送成功，SENDING表示发送中，SEND_FAIL表示发送失败，DELETE表示已删除
+        example:
+          msg_id: 34182
+          msg_status: 206227730

@@ -1,0 +1,30 @@
+post:
+  summary: 设置群发速度
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481187827_i0l21)'
+  operationId: cgi-bin/message/mass/speed/set
+  security:
+    - accessToken: []
+  tags:
+    - 消息管理
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          speed:
+            type: integer
+            format: int32
+            description: 群发速度的级别
+            enum:
+              - '0'
+              - '1'
+              - '2'
+              - '3'
+              - '4'
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'

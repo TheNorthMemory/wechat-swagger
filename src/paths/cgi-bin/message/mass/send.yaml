@@ -1,0 +1,132 @@
+post:
+  summary: 根据OpenID列表群发
+  description: 【订阅号与服务号认证后均可用】。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481187827_i0l21)
+  operationId: cgi-bin/message/mass/send
+  security:
+    - accessToken: []
+  tags:
+    - 消息管理
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          touser:
+            type: array
+            description: 填写图文消息的接收者，一串OpenID列表，OpenID最少2个，最多10000个
+            items:
+              type: string
+              description: OpenID
+          mpnews:
+            type: object
+            description: 用于设定即将发送的图文消息
+            properties:
+              media_id:
+                type: string
+                description: 用于群发的消息的media_id
+          text:
+            type: object
+            description: 用于设定即将发送的文本消息
+            properties:
+              content:
+                type: string
+                description: 用于群发的消息的文本内容
+          voice:
+            type: object
+            description: 用于设定即将发送的语音消息
+            properties:
+              media_id:
+                type: string
+                description: 用于群发的消息的media_id
+          music:
+            type: object
+            description: 用于设定即将发送的音乐消息
+            properties:
+              media_id:
+                type: string
+                description: 用于群发的消息的media_id
+          image:
+            type: object
+            description: 用于设定即将发送的图片消息
+            properties:
+              media_id:
+                type: string
+                description: 用于群发的消息的media_id
+          mpvideo:
+            type: object
+            description: 用于设定即将发送的图片消息
+            properties:
+              media_id:
+                type: string
+                description: 用于群发的消息的media_id
+              title:
+                type: string
+                description: 消息的标题
+              description:
+                type: string
+                description: 消息的描述
+              thumb_media_id:
+                type: string
+                description: 视频缩略图的媒体ID
+          wxcard:
+            type: object
+            description: 用于设定即将发送的图片消息
+            properties:
+              card_id:
+                type: string
+                description: 用于群发的消息的card_id
+          msgtype:
+            type: string
+            description: 群发的消息类型，图文消息为mpnews，文本消息为text，语音为voice，音乐为music，图片为image，视频为mpvideo，卡券为wxcard
+            enum:
+              - mpnews
+              - text
+              - voice
+              - music
+              - image
+              - mpvideo
+              - wxcard
+          send_ignore_reprint:
+            type: integer
+            format: int32
+            description: 指定待群发的文章被判定为转载时，是否继续群发。1=继续进行群发操作;0=将停止群发操作
+            default: '0'
+            enum:
+              - '0'
+              - '1'
+          clientmsgid:
+            type: string
+            description: 开发者侧群发msgid，长度限制64字节，如不填，则后台默认以群发范围和群发内容的摘要值做为clientmsgid
+        example:
+          touser:
+            - OPENID1
+            - OPENID2
+          mpvideo:
+            media_id: IhdaAQXuvJtGzwwc0abfXnzeezfO0NgPK6AQYShD8RQYMTtfzbLdBIQkQziv2XJc
+          msgtype: mpvideo
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              type:
+                type: string
+                description: 媒体文件类型，分别有图片（image）、语音（voice）、视频（video）和缩略图（thumb），图文消息（news）
+              msg_id:
+                type: integer
+                format: int32
+                description: 消息发送任务的ID
+              msg_data_id:
+                type: integer
+                format: int32
+                description: 消息的数据ID，该字段只有在群发图文消息时，才会出现。可以用于在图文分析数据接口中，获取到对应的图文消息的数据，是图文分析数据接口中的msgid字段中的前半部分，详见图文分析数据接口中的msgid字段的介绍。
+        example:
+          errcode: 0
+          errmsg: send job submission success
+          msg_id: 34182
+          msg_data_id: 206227730

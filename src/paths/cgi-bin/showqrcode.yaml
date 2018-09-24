@@ -1,0 +1,14 @@
+get:
+  summary: 通过ticket换取二维码
+  description: 获取二维码ticket后，开发者可用ticket换取二维码图片。请注意，本接口无须登录态即可调用。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443433542)
+  operationId: cgi-bin/showqrcode
+  tags:
+    - 帐号管理/二维码
+  parameters:
+    - in: query
+      name: ticket
+      type: string
+      description: 获取的二维码ticket，凭借此ticket可以在有效时间内换取二维码。
+  responses:
+    '200':
+      description: ''

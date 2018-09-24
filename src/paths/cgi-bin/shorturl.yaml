@@ -1,0 +1,38 @@
+post:
+  summary: 长链接转短链接
+  description: 开发者用于生成二维码的原链接（商品、支付二维码等）太长导致扫码速度和成功率下降，将原长链接通过此接口转成短链接再生成二维码将大大提升扫码速度和成功率。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443433600)
+  operationId: cgi-bin/shorturl
+  security:
+    - accessToken: []
+  tags:
+    - 基础支持
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          action:
+            type: string
+            description: 此处填long2short，代表长链接转短链接
+            default: long2short
+            enum:
+              - long2short
+          long_url:
+            type: string
+            description: 需要转换的长链接，支持http://、https://、weixin://wxpay 格式的url
+        example:
+          action: long2short
+          long_url: http://wap.koudaitong.com/v2/showcase/goods?alias=128wi9shh&spm=h56083&redirect_count=1
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              short_url:
+                type: string
+                description: 短链接。

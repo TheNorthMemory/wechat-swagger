@@ -76,6 +76,6 @@ post:
           - type: object
             properties:
               msgid:
-              type: integer
-              format: int32
-              description: 消息id
+                type: integer
+                format: int32
+                description: 消息id

@@ -1,0 +1,46 @@
+post:
+  summary: 新增摇一摇出来的页面信息
+  description: 包括在摇一摇页面出现的主标题、副标题、图片和点击进去的超链接。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459246752)
+  operationId: shakearound/page/add
+  security:
+    - accessToken: []
+  tags:
+    - 摇一摇周边/页面管理
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          title:
+            type: string
+            description: 在摇一摇页面展示的主标题，不超过6个汉字或12个英文字母
+          description:
+            type: string
+            description: 在摇一摇页面展示的副标题，不超过7个汉字或14个英文字母
+          icon_url:
+            type: string
+            description: 在摇一摇页面展示的图片。图片需先上传至微信侧服务器，用“素材管理-上传图片素材”接口上传图片，返回的图片URL再配置在此处
+          comment:
+            type: string
+            description: 页面的备注信息，不超过15个汉字或30个英文字母
+        required:
+          - title
+          - description
+          - icon_url
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  page_id:
+                    type: integer
+                    format: int32
+                    description: 新增页面的页面id

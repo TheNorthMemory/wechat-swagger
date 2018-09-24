@@ -1,0 +1,75 @@
+post:
+  summary: 查询页面列表
+  description: 查询已有的页面，包括在摇一摇页面出现的主标题、副标题、图片和点击进去的超链接。提供两种查询方式，可指定页面ID查询，也可批量拉取页面列表。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459246754)
+  operationId: shakearound/page/search
+  security:
+    - accessToken: []
+  tags:
+    - 摇一摇周边/页面管理
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          type:
+            type: integer
+            format: int32
+            description: 查询类型。1： 查询页面id列表中的页面信息；2：分页查询所有页面信息
+            enum: [1, 2]
+          page_ids:
+            type: array
+            description: 指定页面的id列表；当type为1时，此项为必填
+            items:
+              type: integer
+              format: int32
+          begin:
+            type: integer
+            format: int32
+            description: 页面列表的起始索引值；当type为2时，此项为必填
+          count:
+            type: integer
+            format: int32
+            description: 待查询的页面数量，不能超过50个；当type为2时，此项为必填
+        required:
+          - type
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  pages:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        page_id:
+                          type: integer
+                          format: int32
+                          description: 摇周边页面唯一ID
+                        title:
+                          type: string
+                          description: 在摇一摇页面展示的主标题
+                        description:
+                          type: string
+                          description: 在摇一摇页面展示的副标题
+                        icon_url:
+                          type: string
+                          description: 在摇一摇页面展示的图片。
+                        page_url:
+                          type: string
+                          description: 跳转链接
+                        comment:
+                          type: string
+                          description: 页面的备注信息
+                  total_count:
+                    type: integer
+                    format: int32
+                    description: 商户名下的页面总数

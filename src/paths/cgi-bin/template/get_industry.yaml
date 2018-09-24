@@ -1,0 +1,38 @@
+get:
+  summary: 获取设置的行业信息
+  description: 获取帐号设置的行业信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277)
+  operationId: cgi-bin/template/get_industry
+  security:
+    - accessToken: []
+  tags:
+    - 模版消息
+  parameters: []
+  responses:
+    '200':
+      description: ''
+      schema:
+        type: object
+        properties:
+          primary_industry:
+            type: object
+            description: 帐号设置的主营行业
+            properties:
+              first_class:
+                type: string
+              second_class:
+                type: string
+          secondary_industry:
+            type: object
+            description: 帐号设置的副营行业
+            properties:
+              first_class:
+                type: string
+              second_class:
+                type: string
+        example:
+          primary_industry:
+            first_class: 运输与仓储
+            second_class: 快递
+          secondary_industry:
+            first_class: IT科技
+            second_class: 互联网|电子商务

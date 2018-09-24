@@ -1,0 +1,81 @@
+post:
+  summary: 发送模板消息
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277)'
+  operationId: cgi-bin/template/send
+  security:
+    - accessToken: []
+  tags:
+    - 模版消息
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          touser:
+            type: string
+            description: 接收者openid
+          template_id:
+            type: string
+            description: 模板ID
+          url:
+            type: string
+            description: 模板跳转链接
+          miniprogram:
+            type: object
+            description: 跳小程序所需数据，不需跳小程序可不用传该数据
+            properties:
+              appid:
+                type: string
+                description: 所需跳转到的小程序appid（该小程序appid必须与发模板消息的公众号是绑定关联关系，暂不支持小游戏）
+              pagepath:
+                type: string
+                description: 所需跳转到小程序的具体页面路径，支持带参数,（示例index?foo=bar），暂不支持小游戏
+          data:
+            type: object
+            description: 模板数据
+            additionalProperties:
+              type: object
+              properties:
+                value:
+                  type: string
+                  description: 模版数据值
+                color:
+                  type: string
+                  description: 模板内容字体颜色，不填默认为黑色
+        example:
+          touser: OPENID
+          template_id: ngqIpbwh8bUfcSsECmogfXcV14J0tQlEpBO27izEYtY
+          url: http://weixin.qq.com/download
+          miniprogram:
+            appid: xiaochengxuappid12345
+            pagepath: index?foo=bar
+          data:
+            first:
+              value: 恭喜你购买成功！
+              color: '#173177'
+            keyword1:
+              value: 巧克力
+              color: '#173177'
+            keyword2:
+              value: 39.8元
+              color: '#173177'
+            keyword3:
+              value: 2014年9月22日
+              color: '#173177'
+            remark:
+              value: 欢迎再次购买！
+              color: '#173177'
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              msgid:
+              type: integer
+              format: int32
+              description: 消息id

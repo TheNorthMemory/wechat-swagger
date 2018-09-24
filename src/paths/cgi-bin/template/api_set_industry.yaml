@@ -1,0 +1,26 @@
+post:
+  summary: 设置所属行业
+  description: 每月可修改行业1次，帐号仅可使用所属行业中相关的模板。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277)
+  operationId: cgi-bin/template/api_set_industry
+  security:
+    - accessToken: []
+  tags:
+    - 模版消息
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          industry_id1:
+            type: integer
+            format: int32
+            description: 公众号模板消息所属行业编号
+          industry_id2:
+            type: integer
+            format: int32
+            description: 公众号模板消息所属行业编号
+  responses:
+    '200':
+      description: ''

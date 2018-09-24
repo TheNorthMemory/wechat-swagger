@@ -1,0 +1,23 @@
+post:
+  summary: 删除模板
+  description: 通过接口调用的方式来删除某帐号下的模板。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277)
+  operationId: cgi-bin/template/del_private_template
+  security:
+    - accessToken: []
+  tags:
+    - 模版消息
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          template_id:
+            type: string
+            description: 公众帐号下模板消息ID
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'

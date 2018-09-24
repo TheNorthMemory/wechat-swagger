@@ -1,0 +1,38 @@
+get:
+  summary: 获取模板列表
+  description: 获取已添加至帐号下所有模板列表。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277)
+  operationId: cgi-bin/template/get_all_private_template
+  security:
+    - accessToken: []
+  tags:
+    - 模版消息
+  parameters: []
+  responses:
+    '200':
+      description: ''
+      schema:
+        type: object
+        properties:
+          template_list:
+            type: array
+            items:
+              type: object
+              properties:
+                template_id:
+                  type: string
+                  description: 模板ID
+                title:
+                  type: string
+                  description: 模板标题
+                primary_industry:
+                  type: string
+                  description: 模板所属行业的一级行业
+                deputy_industry:
+                  type: string
+                  description: 模板所属行业的二级行业
+                content:
+                  type: string
+                  description: 模板内容
+                example:
+                  type: string
+                  description: 模板示例

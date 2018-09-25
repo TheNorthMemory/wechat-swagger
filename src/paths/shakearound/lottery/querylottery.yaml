@@ -1,0 +1,86 @@
+get:
+  summary: 红包查询接口
+  description: 查询红包活动信息。注意：调用SetPrizeBucket录入红包次数超过3000次的，或红包总数超过1万个的活动，目前暂不支持expired_prizes, drawed_prizes, available_prizes, expired_value, drawed_value, available_value这6个字段的查询。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443448105)
+  operationId: shakearound/lottery/querylottery
+  deprecated: true
+  security:
+    - accessToken: []
+  tags:
+    - 摇一摇周边/红包
+  parameters:
+    - in: query
+      name: lottery_id
+      required: true
+      type: string
+      description: 红包抽奖id，来自addlotteryinfo返回的lottery_id
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              result:
+                type: object
+                description: 生成的红包活动id
+                properties:
+                  title:
+                    type: string
+                    description: 抽奖活动名称（选择使用模板时，也作为摇一摇消息主标题），最长6个汉字，12个英文字母。
+                  desc:
+                    type: string
+                    description: 抽奖活动描述（选择使用模板时，也作为摇一摇消息副标题），最长7个汉字，14个英文字母。
+                  onoff:
+                    type: integer
+                    format: int32
+                    description: 抽奖开关。0关闭，1开启，默认为1
+                  begin_time:
+                    type: integer
+                    format: int64
+                    description: 抽奖活动开始时间，unix时间戳，单位秒
+                  expire_time:
+                    type: integer
+                    format: int64
+                    description: 抽奖活动结束时间，unix时间戳，单位秒，红包活动有效期最长为91天
+                  sponsor_appid:
+                    type: string
+                    description: 红包提供商户公众号的appid
+                  appid:
+                    type: string
+                    description: 创建活动的开发者appid
+                  prize_count:
+                    type: integer
+                    format: int64
+                    description: 已录入的红包总数
+                  prize_count_limit:
+                    type: integer
+                    format: int64
+                    description: 创建活动时预设的录入红包ticket数量上限
+                  jump_url:
+                    type: string
+                    description: 红包关注界面后可以跳转到第三方自定义的页面
+                  expired_prizes:
+                    type: integer
+                    format: int64
+                    description: 过期红包ticket数量
+                  drawed_prizes:
+                    type: integer
+                    format: int64
+                    description: 已发放的红包ticket数量
+                  available_prizes:
+                    type: integer
+                    format: int64
+                    description: 可用的红包ticket数量
+                  expired_value:
+                    type: integer
+                    format: int64
+                    description: 已过期的红包金额总和
+                  drawed_value:
+                    type: integer
+                    format: int64
+                    description: 已发放的红包金额总和
+                  available_value:
+                    type: integer
+                    format: int64
+                    description: 可用的红包金额总和

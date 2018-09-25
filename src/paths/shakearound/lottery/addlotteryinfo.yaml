@@ -1,0 +1,74 @@
+post:
+  summary: 创建红包活动
+  description: 创建红包活动，设置红包活动有效期，红包活动开关等基本信息，返回活动id。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459327195)
+  operationId: shakearound/lottery/addlotteryinfo
+  deprecated: true
+  security:
+    - accessToken: []
+  tags:
+    - 摇一摇周边/红包
+  parameters:
+    - in: query
+      name: use_template
+      required: true
+      type: integer
+      format: int32
+      description: 是否使用模板，1：使用，2：不使用,以参数的形式拼装在url后。（模版即交互流程图中的红包加载页，使用模板用户不需要点击可自动打开红包；不使用模版需自行开发HTML5页面，并在页面调用红包jsapi）
+      enum: [1, 2]
+    - in: query
+      name: logo_url
+      nullable: true
+      type: string
+      description: 使用模板页面的logo_url，不使用模板时可不加。展示在摇一摇界面的消息图标。图片尺寸为120x120。
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          title:
+            type: string
+            description: 抽奖活动名称（选择使用模板时，也作为摇一摇消息主标题），最长6个汉字，12个英文字母。
+          desc:
+            type: string
+            description: 抽奖活动描述（选择使用模板时，也作为摇一摇消息副标题），最长7个汉字，14个英文字母。
+          onoff:
+            type: integer
+            format: int32
+            description: 抽奖开关。0关闭，1开启，默认为1
+          begin_time:
+            type: integer
+            format: int64
+            description: 抽奖活动开始时间，unix时间戳，单位秒
+          expire_time:
+            type: integer
+            format: int64
+            description: 抽奖活动结束时间，unix时间戳，单位秒,红包活动有效期最长为91天
+          sponsor_appid:
+            type: string
+            description: 红包提供商户公众号的appid，需与预下单中的公众账号appid（wxappid）一致
+          total:
+            type: integer
+            format: int64
+            description: 红包总数，红包总数是录入红包ticket总数的上限，因此红包总数应该大于等于预下单时红包ticket总数。
+          jump_url:
+            type: string
+            description: 红包关注界面后可以跳转到第三方自定义的页面
+          key:
+            type: string
+            description: 开发者自定义的key，用来生成活动抽奖接口的签名参数，长度32位。使用方式见sign生成规则
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              lottery_id:
+                type: string
+                description: 生成的红包活动id
+              page_id:
+                type: integer
+                format: int32
+                description: 生成的模板页面ID

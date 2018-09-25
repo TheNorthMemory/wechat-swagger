@@ -1,0 +1,91 @@
+post:
+  summary: 录入红包信息
+  description: 在调用"创建红包活动"接口之后，调用此接口录入红包信息。注意，此接口每次调用，都会向某个活动新增一批红包信息，如果红包数少于100个，请通过一次调用添加所有红包信息。如果红包数大于100，可以多次调用接口添加。请注意确保多次录入的红包ticket总的数目不大于创建该红包活动时设置的total值。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459327196)
+  operationId: shakearound/lottery/setprizebucket
+  deprecated: true
+  security:
+    - accessToken: []
+  tags:
+    - 摇一摇周边/红包
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          lottery_id:
+            type: string
+            description: 红包抽奖id，来自addlotteryinfo返回的lottery_id
+          mchid:
+            type: string
+            description: 红包提供者的商户号，，需与预下单中的商户号mch_id一致
+          sponsor_appid:
+            type: string
+            description: 红包提供商户公众号的appid，需与预下单中的公众账号appid（wxappid）一致
+          prize_info_list:
+            type: array
+            description: 红包ticket列表，如果红包数较多，可以一次传入多个红包，批量调用该接口设置红包信息。每次请求传入的红包个数上限为100
+            items:
+              type: object
+              properties:
+                ticket:
+                  type: string
+                  description: 预下单时返回的红包ticket，单个活动红包ticket数量上限为100000个，可添加多次。
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              success_num:
+                type: integer
+                format: int32
+                description: 成功录入的红包数量
+              repeat_ticket_list:
+                type: array
+                description: 重复使用的ticket列表，如为空，将不返回
+                items:
+                  type: object
+                  properties:
+                    ticket:
+                      type: string
+                      description: 预下单时返回的红包ticket，单个活动红包ticket数量上限为100000个，可添加多次。
+              expire_ticket_list:
+                type: array
+                description: 过期的ticket列表，如为空，将不返回
+                items:
+                  type: object
+                  properties:
+                    ticket:
+                      type: string
+                      description: 预下单时返回的红包ticket，单个活动红包ticket数量上限为100000个，可添加多次。
+              invalid_amount_ticket_list:
+                type: array
+                description: 金额不在大于1元，小于1000元的ticket列表，如为空，将不返回
+                items:
+                  type: object
+                  properties:
+                    ticket:
+                      type: string
+                      description: 预下单时返回的红包ticket，单个活动红包ticket数量上限为100000个，可添加多次。
+              wrong_authmchid_ticket_list:
+                type: array
+                description: 原因：生成红包的时候，授权商户号auth_mchid和auth_appid没有写摇周边的商户号
+                items:
+                  type: object
+                  properties:
+                    ticket:
+                      type: string
+                      description: 预下单时返回的红包ticket，单个活动红包ticket数量上限为100000个，可添加多次。
+              invalid_ticket_list:
+                type: array
+                description: ticket解析失败，可能有错别字符或不完整
+                items:
+                  type: object
+                  properties:
+                    ticket:
+                      type: string
+                      description: 预下单时返回的红包ticket，单个活动红包ticket数量上限为100000个，可添加多次。

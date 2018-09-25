@@ -1,0 +1,16 @@
+type: array
+description: 自定义字段
+items:
+  type: object
+  properties:
+    key:
+      type: string
+      description: 字段名
+    is_require:
+      type: integer
+      format: int32
+      description: 0：否，1：是， 默认为0
+      enum: [0, 1]
+    notice:
+      type: string
+      description: 提示文案

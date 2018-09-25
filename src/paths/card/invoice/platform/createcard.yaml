@@ -1,0 +1,63 @@
+post:
+  summary: 创建发票卡券模板
+  description: 通过本接口可以为创建一个商户的发票卡券模板，为该商户配置发票卡券模板上的自定义栏位。创建发票卡券模板生成的card_id将在创建发票卡券时被引用，故创建发票卡券模板是创建发票卡券的基础。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918915Cvo2k)
+  operationId: card/invoice/platform/createcard
+  security:
+    - accessToken: []
+  tags:
+    - 电子发票/开票平台接口
+  parameters:
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties:
+          invoice_info:
+            type: object
+            description: 发票模板对象
+            properties:
+              base_info:
+                type: object
+                description: 发票卡券模板基础信息
+                properties:
+                  logo_url:
+                    type: string
+                    description: 发票商家 LOGO ，请参考 上传图片接口
+                  title:
+                    type: string
+                    description: 收款方（显示在列表），上限为 9 个汉字，建议填入商户简称
+                  custom_url_name:
+                    type: string
+                    description: 开票平台自定义入口名称，与 custom_url 字段共同使用，长度限制在 5 个汉字内
+                  custom_url:
+                    type: string
+                    description: 开票平台自定义入口跳转外链的地址链接 , 发票外跳的链接会带有发票参数，用于标识是从哪张发票跳出的链接
+                  custom_url_sub_title:
+                    type: string
+                    description: 显示在入口右侧的 tips ，长度限制在 6 个汉字内
+                  promotion_url_name:
+                    type: string
+                    description: 营销场景的自定义入口
+                  promotion_url:
+                    type: string
+                    description: 入口跳转外链的地址链接，发票外跳的链接会带有发票参数，用于标识是从那张发票跳出的链接
+                  promotion_url_sub_title:
+                    type: string
+                    description: 显示在入口右侧的 tips ，长度限制在 6 个汉字内
+              payee:
+                type: string
+                description: 收款方（开票方）全称，显示在发票详情内。故建议一个收款方对应一个发票卡券模板
+              type:
+                type: string
+                description: 发票类型
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              card_id:
+                type: string
+                description: 当错误码为 0 时，返回发票卡券模板的编号，用于后续该商户发票生成后，作为必填参数在调用插卡接口时传入

@@ -1,0 +1,39 @@
+post:
+  summary: 查询已上传的PDF文件
+  description: 用于供发票PDF的上传方查询已经上传的发票或消费凭证PDF。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918915Cvo2k)
+  operationId: card/invoice/getpdf
+  security:
+    - accessToken: []
+  tags:
+    - 电子发票/开票平台接口
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          action:
+            type: string
+            enum: ['get_url']
+          s_media_id:
+            type: string
+            description:  发票s_media_id
+        required:
+          - action
+          - s_media_id
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              pdf_url:
+                type: string
+                description: pdf 的 url ，两个小时有效期
+              pdf_url_expire_time:
+                type: integer
+                format: int64
+                description: pdf_url 过期时间， 7200 秒

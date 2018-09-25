@@ -1,0 +1,25 @@
+post:
+  summary: 获取自身的开票平台识别码
+  description: 开票平台可以通过此接口获得本开票平台的预开票url，进而获取s_pappid。开票平台将该s_pappid并透传给商户，商户可以通过该s_pappid参数在微信电子发票方案中标识出为自身提供开票服务的开票平台。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918915Cvo2k)
+  operationId: card/invoice/seturl
+  security:
+    - accessToken: []
+  tags:
+    - 电子发票/开票平台接口
+  parameters:
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              invoice_url:
+                type: string
+                description: 该开票平台专用的授权链接。开票平台须将 invoice_url 内的 s_pappid 给到服务的商户，商户在请求授权链接时会向微信传入该参数，标识所使用的开票平台是哪家

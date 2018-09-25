@@ -1,0 +1,9 @@
+type: object
+description: 微信商户号与开票平台关系信息
+properties:
+  mchid:
+    type: string
+    description: 微信支付商户号
+  s_pappid:
+    type: string
+    description: 为该商户提供开票服务的开票平台 id ，由开票平台提供给商户

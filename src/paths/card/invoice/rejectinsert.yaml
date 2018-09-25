@@ -1,0 +1,36 @@
+post:
+  summary: 拒绝开票
+  description: 用户完成授权后，商户若发现用户提交信息错误、或者发生了退款时，可以调用该接口拒绝开票并告知用户。拒绝开票后，该订单无法向用户再次开票。已经拒绝开票的订单，无法再次使用，如果要重新开票，需使用新的order_id，获取授权链接，让用户再次授权。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918906Epe65)
+  operationId: card/invoice/rejectinsert
+  security:
+    - accessToken: []
+  tags:
+    - 电子发票/商户接口
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          s_pappid:
+            type: string
+            description: 开票平台在微信的标识号，商户需要找开票平台提供
+          order_id:
+            type: string
+            description: 订单id，在商户内单笔开票请求的唯一识别号，
+          reason:
+            type: string
+            description: 商家解释拒绝开票的原因，如重复开票，抬头无效、已退货无法开票等
+          url:
+            type: string
+            description: 跳转链接，引导用户进行下一步处理，如重新发起开票、重新填写抬头、展示订单情况等
+        required:
+          - s_pappid
+          - order_id
+          - reason
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'

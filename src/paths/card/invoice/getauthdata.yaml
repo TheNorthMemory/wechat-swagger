@@ -1,11 +1,12 @@
 post:
-  summary: 查询开票信息
-  description: '商户可以调用该接口查询某一个订单的开票信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)'
+  summary: 查询开票信息/查询授权完成状态
+  description: 商户可以调用该接口查询某一个订单的开票信息。A->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y) B->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918906Epe65)
   operationId: card/invoice/getauthdata
   security:
     - accessToken: []
   tags:
     - 卡券/礼品卡/财务
+    - 电子发票/商户接口
   parameters:
     - in: body
       name: body

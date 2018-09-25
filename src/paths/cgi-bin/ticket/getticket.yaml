@@ -1,10 +1,12 @@
 get:
   summary: 获取卡券api_ticket/jsapi_ticket
+  description: 商户在调用授权页前需要先获取一个7200s过期的授权页ticket，在获取授权页接口中，该ticket作为参数传入，加强安全性。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918906Epe65)
   operationId: cgi-bin/ticket/getticket
   security:
     - accessToken: []
   tags:
     - 网页开发
+    - 电子发票/商户接口
   parameters:
     - in: query
       name: type
@@ -17,3 +19,18 @@ get:
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              result:
+                type: object
+                properties:
+                  ticket:
+                    type: string
+                    description: 临时票据，用于在获取授权链接时作为参数传入
+                  expires_in:
+                    type: integer
+                    format: int32
+                    description: ticket 的有效期，一般为 7200 秒

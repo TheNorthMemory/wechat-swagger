@@ -1,0 +1,50 @@
+post:
+  summary: 查询已开发票
+  description: 对于使用微信电子发票开票接入能力的商户，在公众号后台选择任何一家开票平台的套餐，都可以使用本接口实现已开具电子发票的查询。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918906Epe65)
+  operationId: card/invoice/queryinvoceinfo
+  security:
+    - accessToken: []
+  tags:
+    - 电子发票/商户接口
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          fpqqlsh:
+            type: string
+            description: 发票请求流水号，唯一识别开票请求的流水号。为开票的唯一标识，头六位需要和后台的商户识别号保持一致
+          nsrsbh:
+            type: string
+            description: 纳税人识别码
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              invoicedetail:
+                type: object
+                properties:
+                  fpqqlsh:
+                    type: string
+                    description: 发票请求流水号，唯一识别开票请求的流水号。为开票的唯一标识，头六位需要和后台的商户识别号保持一致
+                  jym:
+                    type: string
+                    description: 校验码，位于电子发票右上方，开票日期下
+                  kprq:
+                    type: string
+                    description: 校验码
+                  fpdm:
+                    type: string
+                    description: 发票代码
+                  fphm:
+                    type: string
+                    description: 发票号码
+                  pdfurl:
+                    type: string
+                    description: 发票url

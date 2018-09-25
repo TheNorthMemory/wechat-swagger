@@ -1,11 +1,12 @@
 post:
   summary: Code解码
-  description: 只能解码本公众号卡券获取的加密code。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025239)
+  description: 只能解码本公众号卡券获取的加密code。A->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025239) B->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918915Cvo2k)
   operationId: card/code/decrypt
   security:
     - accessToken: []
   tags:
     - 卡券
+    - 电子发票/开票平台接口
   parameters:
     - in: body
       name: buffer

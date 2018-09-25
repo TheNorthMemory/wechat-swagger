@@ -1,0 +1,10 @@
+type: object
+description: 联系方式信息
+properties:
+  time_out:
+    type: integer
+    format: int32
+    description: 开票超时时间
+  phone:
+    type: string
+    description: 联系电话

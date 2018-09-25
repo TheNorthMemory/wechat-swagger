@@ -1,0 +1,95 @@
+type: object
+description: 授权页字段
+properties:
+  user_field:
+    type: object
+    description: 授权页个人发票字段
+    properties:
+      show_title:
+        type: integer
+        format: int32
+        description: 是否填写抬头，0为否，1为是
+        enum: [0, 1]
+      show_phone:
+        type: integer
+        format: int32
+        description: 是否填写电话号码，0为否，1为是
+        enum: [0, 1]
+      show_email:
+        type: integer
+        format: int32
+        description: 是否填写邮箱，0为否，1为是
+        enum: [0, 1]
+      require_phone:
+        type: integer
+        format: int32
+        description: 电话号码是否必填,0为否，1为是
+        enum: [0, 1]
+      require_email:
+        type: integer
+        format: int32
+        description: 邮箱是否必填，0位否，1为是
+        enum: [0, 1]
+      custom_field:
+        $ref: '#/definitions/card.invoice.CustomAuthFieldBo'
+  biz_field:
+    type: object
+    description: 授权页单位发票字段
+    properties:
+      show_title:
+        type: integer
+        format: int32
+        description: 是否填写抬头，0为否，1为是
+        enum: [0, 1]
+      show_tax_no:
+        type: integer
+        format: int32
+        description: 是否填写税号，0为否，1为是
+        enum: [0, 1]
+      show_addr:
+        type: integer
+        format: int32
+        description: 是否填写单位地址，0为否，1为是
+        enum: [0, 1]
+      show_phone:
+        type: integer
+        format: int32
+        description: 是否填写电话号码，0为否，1为是
+        enum: [0, 1]
+      show_bank_type:
+        type: integer
+        format: int32
+        description: 是否填写开户银行，0为否，1为是
+        enum: [0, 1]
+      show_bank_no:
+        type: integer
+        format: int32
+        description: 是否填写银行帐号，0为否，1为是
+        enum: [0, 1]
+      require_tax_no:
+        type: integer
+        format: int32
+        description: 税号是否必填，0为否，1为是
+        enum: [0, 1]
+      require_addr:
+        type: integer
+        format: int32
+        description: 单位地址是否必填，0为否，1为是
+        enum: [0, 1]
+      require_phone:
+        type: integer
+        format: int32
+        description: 电话号码是否必填，0为否，1为是
+        enum: [0, 1]
+      require_bank_type:
+        type: integer
+        format: int32
+        description: 开户类型是否必填，0为否，1为是
+        enum: [0, 1]
+      require_bank_no:
+        type: integer
+        format: int32
+        description: 税号是否必填，0为否，1为是
+        enum: [0, 1]
+      custom_field:
+        $ref: '#/definitions/card.invoice.CustomAuthFieldBo'

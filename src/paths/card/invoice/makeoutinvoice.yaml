@@ -1,0 +1,122 @@
+post:
+  summary: 开具蓝票
+  description: 对于使用微信电子发票开票接入能力的商户，在公众号后台选择任何一家开票平台的套餐，都可以使用本接口实现电子发票的开具。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918906Epe65)
+  operationId: card/invoice/makeoutinvoice
+  security:
+    - accessToken: []
+  tags:
+    - 电子发票/商户接口
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          wxopenid:
+            type: string
+            description: 用户的openid 用户知道是谁在开票
+          ddh:
+            type: string
+            description: 订单号，企业自己内部的订单号码。需要和拉起授权页时的order_id保持一致，否则会出现未授权订单号的报错
+          fpqqlsh:
+            type: string
+            description: 发票请求流水号，唯一识别开票请求的流水号。为开票的唯一标识，头六位需要和后台的商户识别号保持一致
+          nsrsbh:
+            type: string
+            description: 纳税人识别码
+          nsrmc:
+            type: string
+            description: 纳税人名称
+          nsrdz:
+            type: string
+            description: 纳税人地址
+          nsrdh:
+            type: string
+            description: 纳税人电话
+          nsrbank:
+            type: string
+            description: 纳税人开户行
+          nsrbankid:
+            type: string
+            description: 纳税人银行账号
+          ghfmc:
+            type: string
+            description: 购货方名称
+          ghfnsrsbh:
+            type: string
+            description: 购货方识别号
+          ghfdz:
+            type: string
+            description: 购货方地址
+          ghfdh:
+            type: string
+            description: 购货方电话
+          ghfbank:
+            type: string
+            description: 购货方开户行
+          ghfbankid:
+            type: string
+            description: 购货方银行帐号
+          kpr:
+            type: string
+            description: 开票人
+          skr:
+            type: string
+            description: 收款人
+          fhr:
+            type: string
+            description: 复核人
+          jshj:
+            type: string
+            description: 价税合计
+          hjse:
+            type: string
+            description: 合计金额
+          bz:
+            type: string
+            description: 备注
+          hylx:
+            type: string
+            description: 行业类型 0 商业 1其它
+          invoicedetail_list:
+            type: array
+            description: 发票行项目数据
+            items:
+              type: object
+              properties:
+                fphxz:
+                  type: string
+                  description: 发票行性质 0 正常 1折扣 2 被折扣
+                spbm:
+                  type: string
+                  description: 19位税收分类编码说明见注
+                xmmc:
+                  type: string
+                  description: 项目名称
+                dw:
+                  type: string
+                  description: 计量单位
+                ggxh:
+                  type: string
+                  description: 规格型号
+                xmsl:
+                  type: string
+                  description: 项目数量
+                xmdj:
+                  type: string
+                  description: 项目单价
+                xmje:
+                  type: string
+                  description: 项目金额 不含税，单位元 两位小数
+                sl:
+                  type: string
+                  description: 税率 精确到两位小数 如0.01
+                se:
+                  type: string
+                  description: 税额 单位元 两位小数
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'

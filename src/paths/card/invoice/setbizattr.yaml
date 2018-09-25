@@ -1,33 +1,48 @@
 post:
-  summary: 设置支付后开票信息
-  description: '四大杂烩接口。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)'
+  summary: 设置/查询支付后开票/页面信息,设置/查询商户联系方式
+  description: 六大杂烩接口。A->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y) B->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918906Epe65)
   operationId: card/invoice/setbizattr
   security:
     - accessToken: []
   tags:
     - 卡券/礼品卡/财务
+    - 电子发票/商户接口
   parameters:
     - in: query
       name: action
       type: string
       required: true
-      description: set_pay_mch=设置支付后开票信息,get_pay_mch=查询支付后开票信息,set_auth_field=设置开票页面信息,get_auth_field=查询授权页字段信息
+      description: set_pay_mch=设置支付后开票信息,get_pay_mch=查询支付后开票信息,set_auth_field=设置开票页面信息,get_auth_field=查询授权页字段信息,set_contact=设置商户联系方式,get_contact=查询商户联系方式
       enum:
         - set_pay_mch
         - get_pay_mch
         - set_auth_field
         - get_auth_field
+        - set_contact
+        - get_contact
     - in: body
       name: buffer
       schema:
         type: object
         properties:
           paymch_info:
-            type: object
-            properties: {}
+            $ref: '#/definitions/card.invoice.PaymchInfoBo'
           auth_field:
-            type: object
-            properties: {}
+            $ref: '#/definitions/card.invoice.AuthFieldBo'
+          contact:
+            $ref: '#/definitions/card.invoice.ContactBo'
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            description: 当action为get_pay_mch/get_auth_field/get_contact时返回
+            properties:
+              paymch_info:
+                $ref: '#/definitions/card.invoice.PaymchInfoBo'
+              auth_field:
+                $ref: '#/definitions/card.invoice.AuthFieldBo'
+              contact:
+                $ref: '#/definitions/card.invoice.ContactBo'

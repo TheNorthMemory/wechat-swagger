@@ -1,0 +1,30 @@
+post:
+  summary: 删除分组
+  description: 删除设备分组，若分组中还存在设备，则不能删除成功。需把设备移除以后，才能删除。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459330212)
+  operationId: shakearound/device/group/delete
+  security:
+    - accessToken: []
+  tags:
+    - 摇一摇周边/设备管理/分组
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          group_id:
+            type: integer
+            format: int32
+            description: 分组唯一标识，全局唯一
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties: {}

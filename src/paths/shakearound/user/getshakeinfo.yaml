@@ -1,0 +1,58 @@
+post:
+  summary: 获取设备及用户信息
+  description: 获取设备信息，包括UUID、major、minor，以及距离、openID等信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443447963)
+  operationId: shakearound/user/getshakeinfo
+  security:
+    - accessToken: []
+  tags:
+    - 摇一摇周边
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          ticket:
+            type: string
+            description: 摇周边业务的ticket，可在摇到的URL中得到，ticket生效时间为30分钟，每一次摇都会重新生成新的ticket
+          need_poi:
+            type: integer
+            format: int32
+            description: 是否需要返回门店poi_id，传1则返回，否则不返回；门店相关信息具体可 查看门店相关的接口文档
+            enum: [0, 1]
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  page_id:
+                    type: integer
+                    format: int32
+                    description: 摇周边页面唯一ID
+                  openid:
+                    type: string
+                    description: 商户AppID下用户的唯一标识
+                  poi_id:
+                    type: integer
+                    format: int32
+                    description: 门店ID，有的话则返回，反之不会在JSON格式内
+                  beacon_info:
+                    type: object
+                    properties:
+                      distance:
+                        type: number
+                        format: double
+                        description: Beacon信号与手机的距离，单位为米
+                      major:
+                        type: string
+                      minor:
+                        type: string
+                      uuid:
+                        type: string

@@ -1,0 +1,46 @@
+post:
+  summary: 从分组中移除设备
+  description: 从分组中移除设备，每次删除操作的上限为1000。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459330217)
+  operationId: shakearound/device/group/deletedevice
+  security:
+    - accessToken: []
+  tags:
+    - 摇一摇周边/设备管理/分组
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          group_id:
+            type: integer
+            format: int32
+            description: 分组唯一标识，全局唯一
+          device_identifiers:
+            type: array
+            items:
+              type: object
+              description: 指定的设备ID
+              properties:
+                device_id:
+                  type: integer
+                  format: int32
+                  description: 设备编号，若填了UUID、major、minor，则可不填设备编号，若二者都填，则以设备编号为优先
+                uuid:
+                  type: string
+                major:
+                  type: string
+                minor:
+                  type: string
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties: {}

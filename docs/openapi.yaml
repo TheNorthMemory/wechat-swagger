@@ -65,7 +65,10 @@ tags:
   - name: 门店/小程序
   - name: 摇一摇周边
   - name: 摇一摇周边/设备管理
+  - name: 摇一摇周边/设备管理/分组
   - name: 摇一摇周边/页面管理
+  - name: 摇一摇周边/红包
+  - name: 摇一摇周边/数据统计
   - name: 智能接口/语义理解
   - name: 智能接口/AI开放接口
   - name: 数据统计/用户分析
@@ -8989,6 +8992,371 @@ paths:
                   data:
                     type: object
                     properties: {}
+  /shakearound/device/bindpage:
+    post:
+      summary: 配置设备与页面的关联关系
+      description: 若设备配置多个页面，则随机出现页面信息。一个设备最多可配置30个关联页面。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443447914)
+      operationId: shakearound/device/bindpage
+      security:
+        - accessToken: []
+      tags:
+        - 摇一摇周边/设备管理
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              device_identifier:
+                type: object
+                description: 指定的设备ID
+                properties:
+                  device_id:
+                    type: integer
+                    format: int32
+                    description: 设备编号，若填了UUID、major、minor，则可不填设备编号，若二者都填，则以设备编号为优先
+                  uuid:
+                    type: string
+                  major:
+                    type: string
+                  minor:
+                    type: string
+              page_ids:
+                type: array
+                description: 待关联的页面列表
+                items:
+                  type: integer
+                  format: int32
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {}
+  /shakearound/device/group/add:
+    post:
+      summary: 新增分组
+      description: 新建设备分组，每个帐号下最多只有1000个分组。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459330208)
+      operationId: shakearound/device/group/add
+      security:
+        - accessToken: []
+      tags:
+        - 摇一摇周边/设备管理/分组
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              group_name:
+                type: string
+                description: 分组名称，不超过100汉字或200个英文字母
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      group_id:
+                        type: integer
+                        format: int32
+                        description: 分组唯一标识，全局唯一
+                      group_name:
+                        type: string
+                        description: 分组名
+  /shakearound/device/group/adddevice:
+    post:
+      summary: 添加设备到分组
+      description: 添加设备到分组，每个分组能够持有的设备上限为10000，并且每次添加操作的添加上限为1000。只有在摇周边申请的设备才能添加到分组。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459330215)
+      operationId: shakearound/device/group/adddevice
+      security:
+        - accessToken: []
+      tags:
+        - 摇一摇周边/设备管理/分组
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              group_id:
+                type: integer
+                format: int32
+                description: 分组唯一标识，全局唯一
+              device_identifier:
+                type: object
+                description: 指定的设备ID
+                properties:
+                  device_id:
+                    type: integer
+                    format: int32
+                    description: 设备编号，若填了UUID、major、minor，则可不填设备编号，若二者都填，则以设备编号为优先
+                  uuid:
+                    type: string
+                  major:
+                    type: string
+                  minor:
+                    type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {}
+  /shakearound/device/group/delete:
+    post:
+      summary: 删除分组
+      description: 删除设备分组，若分组中还存在设备，则不能删除成功。需把设备移除以后，才能删除。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459330212)
+      operationId: shakearound/device/group/delete
+      security:
+        - accessToken: []
+      tags:
+        - 摇一摇周边/设备管理/分组
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              group_id:
+                type: integer
+                format: int32
+                description: 分组唯一标识，全局唯一
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {}
+  /shakearound/device/group/deletedevice:
+    post:
+      summary: 从分组中移除设备
+      description: 从分组中移除设备，每次删除操作的上限为1000。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459330217)
+      operationId: shakearound/device/group/deletedevice
+      security:
+        - accessToken: []
+      tags:
+        - 摇一摇周边/设备管理/分组
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              group_id:
+                type: integer
+                format: int32
+                description: 分组唯一标识，全局唯一
+              device_identifiers:
+                type: array
+                items:
+                  type: object
+                  description: 指定的设备ID
+                  properties:
+                    device_id:
+                      type: integer
+                      format: int32
+                      description: 设备编号，若填了UUID、major、minor，则可不填设备编号，若二者都填，则以设备编号为优先
+                    uuid:
+                      type: string
+                    major:
+                      type: string
+                    minor:
+                      type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {}
+  /shakearound/device/group/getdetail:
+    post:
+      summary: 查询分组详情
+      description: 查询分组详情，包括分组名，分组id，分组里的设备列表。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459330212)
+      operationId: shakearound/device/group/getdetail
+      security:
+        - accessToken: []
+      tags:
+        - 摇一摇周边/设备管理/分组
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              group_id:
+                type: integer
+                format: int32
+                description: 分组唯一标识，全局唯一
+              begin:
+                type: integer
+                format: int32
+                description: 分组列表的起始索引值
+              count:
+                type: integer
+                format: int32
+                description: 待查询的分组数量，不能超过1000个
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      group_id:
+                        type: integer
+                        format: int32
+                        description: 分组唯一标识，全局唯一
+                      group_name:
+                        type: string
+                        description: 分组名称，不超过100汉字或200个英文字母
+                      total_count:
+                        type: integer
+                        format: int32
+                        description: 此分组现有的总设备数
+                      devices:
+                        type: array
+                        description: 分组下的设备列表
+                        items:
+                          type: object
+                          properties:
+                            device_id:
+                              type: integer
+                              format: int32
+                              description: 设备编号，若填了UUID、major、minor，则可不填设备编号，若二者都填，则以设备编号为优先
+                            uuid:
+                              type: string
+                            major:
+                              type: string
+                            minor:
+                              type: string
+                            poi_id:
+                              type: integer
+                              format: int32
+                              description: 设备关联的门店ID，关联门店后，在门店1KM的范围内有优先摇出信息的机会。门店相关信息具体可 查看门店相关的接口文档
+                            comment:
+                              type: string
+                              description: 设备的备注信息
+  /shakearound/device/group/getlist:
+    post:
+      summary: 查询分组列表
+      description: 查询账号下所有的分组。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459330214)
+      operationId: shakearound/device/group/getlist
+      security:
+        - accessToken: []
+      tags:
+        - 摇一摇周边/设备管理/分组
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              begin:
+                type: integer
+                format: int32
+                description: 分组列表的起始索引值
+              count:
+                type: integer
+                format: int32
+                description: 待查询的分组数量，不能超过1000个
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      total_count:
+                        type: integer
+                        format: int32
+                        description: 此账号下现有的总分组数
+                      groups:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            group_id:
+                              type: integer
+                              format: int32
+                              description: 分组唯一标识，全局唯一
+                            group_name:
+                              type: string
+                              description: 分组名称，不超过100汉字或200个英文字母
+  /shakearound/device/group/update:
+    post:
+      summary: 编辑分组信息
+      description: 编辑设备分组信息，目前只能修改分组名。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459330210)
+      operationId: shakearound/device/group/update
+      security:
+        - accessToken: []
+      tags:
+        - 摇一摇周边/设备管理/分组
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              group_id:
+                type: integer
+                format: int32
+                description: 分组唯一标识，全局唯一
+              group_name:
+                type: string
+                description: 分组名称，不超过100汉字或200个英文字母
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties: {}
   /shakearound/device/search:
     post:
       summary: 查询设备列表
@@ -9131,6 +9499,326 @@ paths:
                   data:
                     type: object
                     properties: {}
+  /shakearound/lottery/addlotteryinfo:
+    post:
+      summary: 创建红包活动
+      description: 创建红包活动，设置红包活动有效期，红包活动开关等基本信息，返回活动id。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459327195)
+      operationId: shakearound/lottery/addlotteryinfo
+      deprecated: true
+      security:
+        - accessToken: []
+      tags:
+        - 摇一摇周边/红包
+      parameters:
+        - in: query
+          name: use_template
+          required: true
+          type: integer
+          format: int32
+          description: 是否使用模板，1：使用，2：不使用,以参数的形式拼装在url后。（模版即交互流程图中的红包加载页，使用模板用户不需要点击可自动打开红包；不使用模版需自行开发HTML5页面，并在页面调用红包jsapi）
+          enum: [1, 2]
+        - in: query
+          name: logo_url
+          nullable: true
+          type: string
+          description: 使用模板页面的logo_url，不使用模板时可不加。展示在摇一摇界面的消息图标。图片尺寸为120x120。
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                description: 抽奖活动名称（选择使用模板时，也作为摇一摇消息主标题），最长6个汉字，12个英文字母。
+              desc:
+                type: string
+                description: 抽奖活动描述（选择使用模板时，也作为摇一摇消息副标题），最长7个汉字，14个英文字母。
+              onoff:
+                type: integer
+                format: int32
+                description: 抽奖开关。0关闭，1开启，默认为1
+              begin_time:
+                type: integer
+                format: int64
+                description: 抽奖活动开始时间，unix时间戳，单位秒
+              expire_time:
+                type: integer
+                format: int64
+                description: 抽奖活动结束时间，unix时间戳，单位秒,红包活动有效期最长为91天
+              sponsor_appid:
+                type: string
+                description: 红包提供商户公众号的appid，需与预下单中的公众账号appid（wxappid）一致
+              total:
+                type: integer
+                format: int64
+                description: 红包总数，红包总数是录入红包ticket总数的上限，因此红包总数应该大于等于预下单时红包ticket总数。
+              jump_url:
+                type: string
+                description: 红包关注界面后可以跳转到第三方自定义的页面
+              key:
+                type: string
+                description: 开发者自定义的key，用来生成活动抽奖接口的签名参数，长度32位。使用方式见sign生成规则
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  lottery_id:
+                    type: string
+                    description: 生成的红包活动id
+                  page_id:
+                    type: integer
+                    format: int32
+                    description: 生成的模板页面ID
+  /shakearound/lottery/querylottery:
+    get:
+      summary: 红包查询接口
+      description: 查询红包活动信息。注意：调用SetPrizeBucket录入红包次数超过3000次的，或红包总数超过1万个的活动，目前暂不支持expired_prizes, drawed_prizes, available_prizes, expired_value, drawed_value, available_value这6个字段的查询。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443448105)
+      operationId: shakearound/lottery/querylottery
+      deprecated: true
+      security:
+        - accessToken: []
+      tags:
+        - 摇一摇周边/红包
+      parameters:
+        - in: query
+          name: lottery_id
+          required: true
+          type: string
+          description: 红包抽奖id，来自addlotteryinfo返回的lottery_id
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  result:
+                    type: object
+                    description: 生成的红包活动id
+                    properties:
+                      title:
+                        type: string
+                        description: 抽奖活动名称（选择使用模板时，也作为摇一摇消息主标题），最长6个汉字，12个英文字母。
+                      desc:
+                        type: string
+                        description: 抽奖活动描述（选择使用模板时，也作为摇一摇消息副标题），最长7个汉字，14个英文字母。
+                      onoff:
+                        type: integer
+                        format: int32
+                        description: 抽奖开关。0关闭，1开启，默认为1
+                      begin_time:
+                        type: integer
+                        format: int64
+                        description: 抽奖活动开始时间，unix时间戳，单位秒
+                      expire_time:
+                        type: integer
+                        format: int64
+                        description: 抽奖活动结束时间，unix时间戳，单位秒，红包活动有效期最长为91天
+                      sponsor_appid:
+                        type: string
+                        description: 红包提供商户公众号的appid
+                      appid:
+                        type: string
+                        description: 创建活动的开发者appid
+                      prize_count:
+                        type: integer
+                        format: int64
+                        description: 已录入的红包总数
+                      prize_count_limit:
+                        type: integer
+                        format: int64
+                        description: 创建活动时预设的录入红包ticket数量上限
+                      jump_url:
+                        type: string
+                        description: 红包关注界面后可以跳转到第三方自定义的页面
+                      expired_prizes:
+                        type: integer
+                        format: int64
+                        description: 过期红包ticket数量
+                      drawed_prizes:
+                        type: integer
+                        format: int64
+                        description: 已发放的红包ticket数量
+                      available_prizes:
+                        type: integer
+                        format: int64
+                        description: 可用的红包ticket数量
+                      expired_value:
+                        type: integer
+                        format: int64
+                        description: 已过期的红包金额总和
+                      drawed_value:
+                        type: integer
+                        format: int64
+                        description: 已发放的红包金额总和
+                      available_value:
+                        type: integer
+                        format: int64
+                        description: 可用的红包金额总和
+  /shakearound/lottery/setlotteryswitch:
+    get:
+      summary: 设置红包活动抽奖开关
+      description: 在调用"创建红包活动"开发者实时控制红包活动抽奖的开启和关闭。注意活动抽奖开关只在红包活动有效期之内才能生效，如果不能确定红包活动有效期，请尽量将红包活动有效期的范围设置大。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459327198)
+      operationId: shakearound/lottery/setlotteryswitch
+      deprecated: true
+      security:
+        - accessToken: []
+      tags:
+        - 摇一摇周边/红包
+      parameters:
+        - in: query
+          name: lottery_id
+          required: true
+          type: string
+          description: 红包抽奖id，来自addlotteryinfo返回的lottery_id
+        - in: query
+          name: onoff
+          required: true
+          type: integer
+          format: int32
+          description: 活动抽奖开关，0：关闭，1：开启
+          enum: [0, 1]
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /shakearound/lottery/setprizebucket:
+    post:
+      summary: 录入红包信息
+      description: 在调用"创建红包活动"接口之后，调用此接口录入红包信息。注意，此接口每次调用，都会向某个活动新增一批红包信息，如果红包数少于100个，请通过一次调用添加所有红包信息。如果红包数大于100，可以多次调用接口添加。请注意确保多次录入的红包ticket总的数目不大于创建该红包活动时设置的total值。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459327196)
+      operationId: shakearound/lottery/setprizebucket
+      deprecated: true
+      security:
+        - accessToken: []
+      tags:
+        - 摇一摇周边/红包
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              lottery_id:
+                type: string
+                description: 红包抽奖id，来自addlotteryinfo返回的lottery_id
+              mchid:
+                type: string
+                description: 红包提供者的商户号，，需与预下单中的商户号mch_id一致
+              sponsor_appid:
+                type: string
+                description: 红包提供商户公众号的appid，需与预下单中的公众账号appid（wxappid）一致
+              prize_info_list:
+                type: array
+                description: 红包ticket列表，如果红包数较多，可以一次传入多个红包，批量调用该接口设置红包信息。每次请求传入的红包个数上限为100
+                items:
+                  type: object
+                  properties:
+                    ticket:
+                      type: string
+                      description: 预下单时返回的红包ticket，单个活动红包ticket数量上限为100000个，可添加多次。
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  success_num:
+                    type: integer
+                    format: int32
+                    description: 成功录入的红包数量
+                  repeat_ticket_list:
+                    type: array
+                    description: 重复使用的ticket列表，如为空，将不返回
+                    items:
+                      type: object
+                      properties:
+                        ticket:
+                          type: string
+                          description: 预下单时返回的红包ticket，单个活动红包ticket数量上限为100000个，可添加多次。
+                  expire_ticket_list:
+                    type: array
+                    description: 过期的ticket列表，如为空，将不返回
+                    items:
+                      type: object
+                      properties:
+                        ticket:
+                          type: string
+                          description: 预下单时返回的红包ticket，单个活动红包ticket数量上限为100000个，可添加多次。
+                  invalid_amount_ticket_list:
+                    type: array
+                    description: 金额不在大于1元，小于1000元的ticket列表，如为空，将不返回
+                    items:
+                      type: object
+                      properties:
+                        ticket:
+                          type: string
+                          description: 预下单时返回的红包ticket，单个活动红包ticket数量上限为100000个，可添加多次。
+                  wrong_authmchid_ticket_list:
+                    type: array
+                    description: 原因：生成红包的时候，授权商户号auth_mchid和auth_appid没有写摇周边的商户号
+                    items:
+                      type: object
+                      properties:
+                        ticket:
+                          type: string
+                          description: 预下单时返回的红包ticket，单个活动红包ticket数量上限为100000个，可添加多次。
+                  invalid_ticket_list:
+                    type: array
+                    description: ticket解析失败，可能有错别字符或不完整
+                    items:
+                      type: object
+                      properties:
+                        ticket:
+                          type: string
+                          description: 预下单时返回的红包ticket，单个活动红包ticket数量上限为100000个，可添加多次。
+  /shakearound/material/add:
+    post:
+      summary: 上传图片素材
+      description: 上传在摇一摇功能中需使用到的图片素材，素材保存在微信侧服务器上。图片格式限定为：jpg,jpeg,png,gif。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738726)
+      operationId: shakearound/material/add
+      security:
+        - accessToken: []
+      tags:
+        - 摇一摇周边
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: query
+          name: type
+          type: string
+          description: Icon：摇一摇页面展示的icon图；License：申请开通摇一摇周边功能时需上传的资质文件；若不传type，则默认type=icon
+          required: true
+          enum:
+            - icon
+            - license
+        - in: formData
+          name: media
+          type: file
+          description: form-data中媒体文件标识，有filename、filelength、content-type等信息
+          required: true
+      responses:
+        '200':
+          description: ''
+          schema:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      pic_url:
+                        type: string
+                        description: 图片url地址，若type=icon，可用在“新增页面”和“编辑页面”的“icon_url”字段；若type= license，可用在“申请入驻”的“qualification_cert_urls”字段
   /shakearound/page/add:
     post:
       summary: 新增摇一摇出来的页面信息
@@ -9339,6 +10027,429 @@ paths:
                   data:
                     type: object
                     properties: {}
+  /shakearound/relation/search:
+    post:
+      summary: 查询设备与页面的关联关系
+      description: 查询设备与页面的关联关系。提供两种查询方式，可指定页面ID分页查询该页面所关联的所有的设备信息；也可根据设备ID或完整的UUID、Major、Minor查询该设备所关联的所有页面信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443447914)
+      operationId: shakearound/relation/search
+      security:
+        - accessToken: []
+      tags:
+        - 摇一摇周边
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              type:
+                type: integer
+                format: int32
+                description: 查询方式。1： 查询设备的关联关系；2：查询页面的关联关系
+                enum: [1, 2]
+              device_identifiers:
+                type: object
+                description: 指定的设备；当type为1时，此项为必填
+                properties:
+                  device_id:
+                    type: integer
+                    format: int32
+                    description: 设备编号，若填了UUID、major、minor，则可不填设备编号，若二者都填，则以设备编号为优先；查询指定设备时，单次查询的设备数量不能超过50个
+                  uuid:
+                    type: string
+                  major:
+                    type: string
+                  minor:
+                    type: string
+              page_id:
+                type: integer
+                format: int32
+                description: 指定的页面id；当type为2时，此项为必填
+              begin:
+                type: integer
+                format: int32
+                description: 关联关系列表的起始索引值；当type为2时，此项为必填
+              count:
+                type: integer
+                format: int32
+                description: 待查询的关联关系数量，不能超过50个；当type为2时，此项为必填
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      relations:
+                        type: array
+                        description: 关联关系列表
+                        items:
+                          type: object
+                          properties:
+                            device_id:
+                              type: integer
+                              format: int32
+                              description: 设备编号，若填了UUID、major、minor，则可不填设备编号，若二者都填，则以设备编号为优先
+                            uuid:
+                              type: string
+                            major:
+                              type: string
+                            minor:
+                              type: string
+                            page_id:
+                              type: integer
+                              format: int32
+                              description: 摇周边页面唯一ID
+                      total_count:
+                        type: integer
+                        format: int32
+                        description: 设备或页面的关联关系总数
+  /shakearound/statistics/device:
+    post:
+      summary: 以设备为维度的数据统计
+      description: 查询单个设备进行摇周边操作的人数、次数，点击摇周边消息的人数、次数；查询的最长时间跨度为30天。只能查询最近90天的数据。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459302173)
+      operationId: shakearound/statistics/device
+      security:
+        - accessToken: []
+      tags:
+        - 摇一摇周边/数据统计
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              device_identifiers:
+                type: object
+                description: 指定的设备ID
+                properties:
+                  device_id:
+                    type: integer
+                    format: int32
+                    description: 设备编号，若填了UUID、major、minor，则可不填设备编号，若二者都填，则以设备编号为优先；查询指定设备时，单次查询的设备数量不能超过50个
+                  uuid:
+                    type: string
+                  major:
+                    type: string
+                  minor:
+                    type: string
+              begin_date:
+                type: integer
+                format: int32
+                description: 起始日期时间戳，最长时间跨度为30天，单位为秒
+              end_date:
+                type: integer
+                format: int32
+                description: 结束日期时间戳，最长时间跨度为30天，单位为秒
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ftime:
+                          type: integer
+                          format: int32
+                          description: 当天0点对应的时间戳
+                        click_pv:
+                          type: integer
+                          format: int32
+                          description: 点击摇周边消息的次数
+                        click_uv:
+                          type: integer
+                          format: int32
+                          description: 点击摇周边消息的人数
+                        shake_pv:
+                          type: integer
+                          format: int32
+                          description: 摇周边的次数
+                        shake_uv:
+                          type: integer
+                          format: int32
+                          description: 摇周边的人数
+  /shakearound/statistics/devicelist:
+    post:
+      summary: 批量查询设备统计数据
+      description: 查询指定时间商家帐号下的每个设备进行摇周边操作的人数、次数，点击摇周边消息的人数、次数。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459302175)
+      operationId: shakearound/statistics/devicelist
+      security:
+        - accessToken: []
+      tags:
+        - 摇一摇周边/数据统计
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              date:
+                type: integer
+                format: int32
+                description: 指定查询日期时间戳，单位为秒
+              page_index:
+                type: integer
+                format: int32
+                description: 指定查询的结果页序号；返回结果按摇周边人数降序排序，每50条记录为一页
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      devices:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            device_id:
+                              type: integer
+                              format: int32
+                              description: 设备编号
+                            uuid:
+                              type: string
+                            major:
+                              type: string
+                            minor:
+                              type: string
+                            click_pv:
+                              type: integer
+                              format: int32
+                              description: 点击摇周边消息的次数
+                            click_uv:
+                              type: integer
+                              format: int32
+                              description: 点击摇周边消息的人数
+                            shake_pv:
+                              type: integer
+                              format: int32
+                              description: 摇周边的次数
+                            shake_uv:
+                              type: integer
+                              format: int32
+                              description: 摇周边的人数
+                  date:
+                    type: integer
+                    format: int32
+                    description: 所查询的日期时间戳
+                  total_count:
+                    type: integer
+                    format: int32
+                    description: 设备总量
+                  page_index:
+                    type: integer
+                    format: int32
+                    description: 所查询的结果页序号；返回结果按摇周边人数降序排序，每50条记录为一页
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+  /shakearound/statistics/page:
+    post:
+      summary: 以页面为维度的数据统计
+      description: 查询单个页面通过摇周边摇出来的人数、次数，点击摇周边页面的人数、次数；查询的最长时间跨度为30天。只能查询最近90天的数据。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459302176)
+      operationId: shakearound/statistics/page
+      security:
+        - accessToken: []
+      tags:
+        - 摇一摇周边/数据统计
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              page_id:
+                type: integer
+                format: int32
+                description: 指定页面的设备ID
+              begin_date:
+                type: integer
+                format: int32
+                description: 起始日期时间戳，最长时间跨度为30天，单位为秒
+              end_date:
+                type: integer
+                format: int32
+                description: 结束日期时间戳，最长时间跨度为30天，单位为秒
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ftime:
+                          type: integer
+                          format: int32
+                          description: 当天0点对应的时间戳
+                        click_pv:
+                          type: integer
+                          format: int32
+                          description: 点击摇周边消息的次数
+                        click_uv:
+                          type: integer
+                          format: int32
+                          description: 点击摇周边消息的人数
+                        shake_pv:
+                          type: integer
+                          format: int32
+                          description: 摇周边的次数
+                        shake_uv:
+                          type: integer
+                          format: int32
+                          description: 摇周边的人数
+  /shakearound/statistics/pagelist:
+    post:
+      summary: 批量查询页面统计数据
+      description: 查询指定时间商家帐号下的每个页面进行摇周边操作的人数、次数，点击摇周边消息的人数、次数。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443448005)
+      operationId: shakearound/statistics/pagelist
+      security:
+        - accessToken: []
+      tags:
+        - 摇一摇周边/数据统计
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              date:
+                type: integer
+                format: int32
+                description: 指定查询日期时间戳，单位为秒
+              page_index:
+                type: integer
+                format: int32
+                description: 指定查询的结果页序号；返回结果按摇周边人数降序排序，每50条记录为一页
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      pages:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            page_id:
+                              type: integer
+                              format: int32
+                              description: 页面ID
+                            click_pv:
+                              type: integer
+                              format: int32
+                              description: 点击摇周边消息的次数
+                            click_uv:
+                              type: integer
+                              format: int32
+                              description: 点击摇周边消息的人数
+                            shake_pv:
+                              type: integer
+                              format: int32
+                              description: 摇周边的次数
+                            shake_uv:
+                              type: integer
+                              format: int32
+                              description: 摇周边的人数
+                  date:
+                    type: integer
+                    format: int32
+                    description: 所查询的日期时间戳
+                  total_count:
+                    type: integer
+                    format: int32
+                    description: 设备总量
+                  page_index:
+                    type: integer
+                    format: int32
+                    description: 所查询的结果页序号；返回结果按摇周边人数降序排序，每50条记录为一页
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+  /shakearound/user/getshakeinfo:
+    post:
+      summary: 获取设备及用户信息
+      description: 获取设备信息，包括UUID、major、minor，以及距离、openID等信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443447963)
+      operationId: shakearound/user/getshakeinfo
+      security:
+        - accessToken: []
+      tags:
+        - 摇一摇周边
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              ticket:
+                type: string
+                description: 摇周边业务的ticket，可在摇到的URL中得到，ticket生效时间为30分钟，每一次摇都会重新生成新的ticket
+              need_poi:
+                type: integer
+                format: int32
+                description: 是否需要返回门店poi_id，传1则返回，否则不返回；门店相关信息具体可 查看门店相关的接口文档
+                enum: [0, 1]
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      page_id:
+                        type: integer
+                        format: int32
+                        description: 摇周边页面唯一ID
+                      openid:
+                        type: string
+                        description: 商户AppID下用户的唯一标识
+                      poi_id:
+                        type: integer
+                        format: int32
+                        description: 门店ID，有的话则返回，反之不会在JSON格式内
+                      beacon_info:
+                        type: object
+                        properties:
+                          distance:
+                            type: number
+                            format: double
+                            description: Beacon信号与手机的距离，单位为米
+                          major:
+                            type: string
+                          minor:
+                            type: string
+                          uuid:
+                            type: string
   /sns/auth:
     get:
       summary: 检验授权凭证（access_token）是否有效

@@ -1,0 +1,81 @@
+post:
+  summary: 查询设备与页面的关联关系
+  description: 查询设备与页面的关联关系。提供两种查询方式，可指定页面ID分页查询该页面所关联的所有的设备信息；也可根据设备ID或完整的UUID、Major、Minor查询该设备所关联的所有页面信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443447914)
+  operationId: shakearound/relation/search
+  security:
+    - accessToken: []
+  tags:
+    - 摇一摇周边
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          type:
+            type: integer
+            format: int32
+            description: 查询方式。1： 查询设备的关联关系；2：查询页面的关联关系
+            enum: [1, 2]
+          device_identifiers:
+            type: object
+            description: 指定的设备；当type为1时，此项为必填
+            properties:
+              device_id:
+                type: integer
+                format: int32
+                description: 设备编号，若填了UUID、major、minor，则可不填设备编号，若二者都填，则以设备编号为优先；查询指定设备时，单次查询的设备数量不能超过50个
+              uuid:
+                type: string
+              major:
+                type: string
+              minor:
+                type: string
+          page_id:
+            type: integer
+            format: int32
+            description: 指定的页面id；当type为2时，此项为必填
+          begin:
+            type: integer
+            format: int32
+            description: 关联关系列表的起始索引值；当type为2时，此项为必填
+          count:
+            type: integer
+            format: int32
+            description: 待查询的关联关系数量，不能超过50个；当type为2时，此项为必填
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  relations:
+                    type: array
+                    description: 关联关系列表
+                    items:
+                      type: object
+                      properties:
+                        device_id:
+                          type: integer
+                          format: int32
+                          description: 设备编号，若填了UUID、major、minor，则可不填设备编号，若二者都填，则以设备编号为优先
+                        uuid:
+                          type: string
+                        major:
+                          type: string
+                        minor:
+                          type: string
+                        page_id:
+                          type: integer
+                          format: int32
+                          description: 摇周边页面唯一ID
+                  total_count:
+                    type: integer
+                    format: int32
+                    description: 设备或页面的关联关系总数

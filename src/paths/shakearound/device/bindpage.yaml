@@ -1,0 +1,46 @@
+post:
+  summary: 配置设备与页面的关联关系
+  description: 若设备配置多个页面，则随机出现页面信息。一个设备最多可配置30个关联页面。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443447914)
+  operationId: shakearound/device/bindpage
+  security:
+    - accessToken: []
+  tags:
+    - 摇一摇周边/设备管理
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          device_identifier:
+            type: object
+            description: 指定的设备ID
+            properties:
+              device_id:
+                type: integer
+                format: int32
+                description: 设备编号，若填了UUID、major、minor，则可不填设备编号，若二者都填，则以设备编号为优先
+              uuid:
+                type: string
+              major:
+                type: string
+              minor:
+                type: string
+          page_ids:
+            type: array
+            description: 待关联的页面列表
+            items:
+              type: integer
+              format: int32
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties: {}

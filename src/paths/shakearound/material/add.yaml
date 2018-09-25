@@ -1,0 +1,37 @@
+post:
+  summary: 上传图片素材
+  description: 上传在摇一摇功能中需使用到的图片素材，素材保存在微信侧服务器上。图片格式限定为：jpg,jpeg,png,gif。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738726)
+  operationId: shakearound/material/add
+  security:
+    - accessToken: []
+  tags:
+    - 摇一摇周边
+  consumes:
+    - multipart/form-data
+  parameters:
+    - in: query
+      name: type
+      type: string
+      description: Icon：摇一摇页面展示的icon图；License：申请开通摇一摇周边功能时需上传的资质文件；若不传type，则默认type=icon
+      required: true
+      enum:
+        - icon
+        - license
+    - in: formData
+      name: media
+      type: file
+      description: form-data中媒体文件标识，有filename、filelength、content-type等信息
+      required: true
+  responses:
+    '200':
+      description: ''
+      schema:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  pic_url:
+                    type: string
+                    description: 图片url地址，若type=icon，可用在“新增页面”和“编辑页面”的“icon_url”字段；若type= license，可用在“申请入驻”的“qualification_cert_urls”字段

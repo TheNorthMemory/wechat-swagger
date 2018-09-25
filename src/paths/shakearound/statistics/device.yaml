@@ -1,0 +1,70 @@
+post:
+  summary: 以设备为维度的数据统计
+  description: 查询单个设备进行摇周边操作的人数、次数，点击摇周边消息的人数、次数；查询的最长时间跨度为30天。只能查询最近90天的数据。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459302173)
+  operationId: shakearound/statistics/device
+  security:
+    - accessToken: []
+  tags:
+    - 摇一摇周边/数据统计
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          device_identifiers:
+            type: object
+            description: 指定的设备ID
+            properties:
+              device_id:
+                type: integer
+                format: int32
+                description: 设备编号，若填了UUID、major、minor，则可不填设备编号，若二者都填，则以设备编号为优先；查询指定设备时，单次查询的设备数量不能超过50个
+              uuid:
+                type: string
+              major:
+                type: string
+              minor:
+                type: string
+          begin_date:
+            type: integer
+            format: int32
+            description: 起始日期时间戳，最长时间跨度为30天，单位为秒
+          end_date:
+            type: integer
+            format: int32
+            description: 结束日期时间戳，最长时间跨度为30天，单位为秒
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    ftime:
+                      type: integer
+                      format: int32
+                      description: 当天0点对应的时间戳
+                    click_pv:
+                      type: integer
+                      format: int32
+                      description: 点击摇周边消息的次数
+                    click_uv:
+                      type: integer
+                      format: int32
+                      description: 点击摇周边消息的人数
+                    shake_pv:
+                      type: integer
+                      format: int32
+                      description: 摇周边的次数
+                    shake_uv:
+                      type: integer
+                      format: int32
+                      description: 摇周边的人数

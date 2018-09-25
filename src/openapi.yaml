@@ -30,6 +30,7 @@ tags:
   - name: 用户管理/标签
   - name: 帐号管理/二维码
   - name: 素材管理
+  - name: 图文消息留言管理
   - name: 消息管理
   - name: 模版消息
   - name: 卡券

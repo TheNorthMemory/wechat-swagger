@@ -26,6 +26,16 @@ properties:
   content_source_url:
     type: string
     description: 图文消息的原文地址，即点击“阅读原文”后的URL
+  need_open_comment:
+    type: integer
+    format: int32
+    description: 是否打开评论，0不打开，1打开
+    enum: [0, 1]
+  only_fans_can_comment:
+    type: integer
+    format: int32
+    description: 是否打开评论，0不打开，1打开
+    enum: [0, 1]
 required:
   - title
   - thumb_media_id

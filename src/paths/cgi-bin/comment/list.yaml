@@ -1,0 +1,83 @@
+post:
+  summary: 查看指定文章的评论数据
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1494572718_WzHIY)'
+  operationId: cgi-bin/comment/list
+  security:
+    - accessToken: []
+  tags:
+    - 图文消息留言管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          msg_data_id:
+            type: integer
+            format: int32
+            description: 群发返回的msg_data_id
+          index:
+            type: integer
+            format: int32
+            description: 多图文时，用来指定第几篇图文，从0开始，不带默认操作该msg_data_id的第一篇图文
+          begin:
+            type: integer
+            format: int32
+            description: 起始位置
+          count:
+            type: integer
+            format: int32
+            description: 获取数目（>=50会被拒绝）
+          type:
+            type: integer
+            format: int32
+            description: type=0 普通评论&精选评论 type=1 普通评论 type=2 精选评论
+            enum: [0, 1, 2]
+        required:
+          - msg_data_id
+          - begin
+          - count
+          - type
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              total:
+                type: integer
+                format: int32
+                description: 总数
+              comment:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    user_comment_id:
+                      type: integer
+                      format: int32
+                      description: 用户评论id
+                    create_time:
+                      type: integer
+                      format: int32
+                      description: 评论时间
+                    content:
+                      type: string
+                      description: 评论内容
+                    comment_type:
+                      type: integer
+                      format: int32
+                      description: 是否精选评论，0为即非精选，1为true，即精选
+                      enum: [0, 1]
+                    reply:
+                      type: object
+                      properties:
+                        content:
+                          type: string
+                          description: 作者回复内容
+                        create_time:
+                          type: integer
+                          format: int32
+                          description: 作者回复时间

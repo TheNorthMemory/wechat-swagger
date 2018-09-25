@@ -30,6 +30,7 @@ tags:
   - name: 用户管理/标签
   - name: 帐号管理/二维码
   - name: 素材管理
+  - name: 图文消息留言管理
   - name: 消息管理
   - name: 模版消息
   - name: 卡券
@@ -3183,6 +3184,325 @@ paths:
               appid:
                 type: string
                 description: 第三方用户唯一凭证
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /cgi-bin/comment/close:
+    post:
+      summary: 关闭已群发文章评论
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1494572718_WzHIY)'
+      operationId: cgi-bin/comment/close
+      security:
+        - accessToken: []
+      tags:
+        - 图文消息留言管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              msg_data_id:
+                type: integer
+                format: int32
+                description: 群发返回的msg_data_id
+              index:
+                type: integer
+                format: int32
+                description: 多图文时，用来指定第几篇图文，从0开始，不带默认操作该msg_data_id的第一篇图文
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /cgi-bin/comment/delete:
+    post:
+      summary: 删除评论
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1494572718_WzHIY)'
+      operationId: cgi-bin/comment/delete
+      security:
+        - accessToken: []
+      tags:
+        - 图文消息留言管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              msg_data_id:
+                type: integer
+                format: int32
+                description: 群发返回的msg_data_id
+              index:
+                type: integer
+                format: int32
+                description: 多图文时，用来指定第几篇图文，从0开始，不带默认操作该msg_data_id的第一篇图文
+              user_comment_id:
+                type: integer
+                format: int32
+                description: 用户评论id
+            required:
+              - msg_data_id
+              - user_comment_id
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /cgi-bin/comment/list:
+    post:
+      summary: 查看指定文章的评论数据
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1494572718_WzHIY)'
+      operationId: cgi-bin/comment/list
+      security:
+        - accessToken: []
+      tags:
+        - 图文消息留言管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              msg_data_id:
+                type: integer
+                format: int32
+                description: 群发返回的msg_data_id
+              index:
+                type: integer
+                format: int32
+                description: 多图文时，用来指定第几篇图文，从0开始，不带默认操作该msg_data_id的第一篇图文
+              begin:
+                type: integer
+                format: int32
+                description: 起始位置
+              count:
+                type: integer
+                format: int32
+                description: 获取数目（>=50会被拒绝）
+              type:
+                type: integer
+                format: int32
+                description: type=0 普通评论&精选评论 type=1 普通评论 type=2 精选评论
+                enum: [0, 1, 2]
+            required:
+              - msg_data_id
+              - begin
+              - count
+              - type
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  total:
+                    type: integer
+                    format: int32
+                    description: 总数
+                  comment:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        user_comment_id:
+                          type: integer
+                          format: int32
+                          description: 用户评论id
+                        create_time:
+                          type: integer
+                          format: int32
+                          description: 评论时间
+                        content:
+                          type: string
+                          description: 评论内容
+                        comment_type:
+                          type: integer
+                          format: int32
+                          description: 是否精选评论，0为即非精选，1为true，即精选
+                          enum: [0, 1]
+                        reply:
+                          type: object
+                          properties:
+                            content:
+                              type: string
+                              description: 作者回复内容
+                            create_time:
+                              type: integer
+                              format: int32
+                              description: 作者回复时间
+  /cgi-bin/comment/markelect:
+    post:
+      summary: 将评论标记精选
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1494572718_WzHIY)'
+      operationId: cgi-bin/comment/markelect
+      security:
+        - accessToken: []
+      tags:
+        - 图文消息留言管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              msg_data_id:
+                type: integer
+                format: int32
+                description: 群发返回的msg_data_id
+              index:
+                type: integer
+                format: int32
+                description: 多图文时，用来指定第几篇图文，从0开始，不带默认操作该msg_data_id的第一篇图文
+              user_comment_id:
+                type: integer
+                format: int32
+                description: 用户评论id
+            required:
+              - msg_data_id
+              - user_comment_id
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /cgi-bin/comment/open:
+    post:
+      summary: 打开已群发文章评论
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1494572718_WzHIY)'
+      operationId: cgi-bin/comment/open
+      security:
+        - accessToken: []
+      tags:
+        - 图文消息留言管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              msg_data_id:
+                type: integer
+                format: int32
+                description: 群发返回的msg_data_id
+              index:
+                type: integer
+                format: int32
+                description: 多图文时，用来指定第几篇图文，从0开始，不带默认操作该msg_data_id的第一篇图文
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /cgi-bin/comment/reply/add:
+    post:
+      summary: 回复评论
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1494572718_WzHIY)'
+      operationId: cgi-bin/comment/reply/add
+      security:
+        - accessToken: []
+      tags:
+        - 图文消息留言管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              msg_data_id:
+                type: integer
+                format: int32
+                description: 群发返回的msg_data_id
+              index:
+                type: integer
+                format: int32
+                description: 多图文时，用来指定第几篇图文，从0开始，不带默认操作该msg_data_id的第一篇图文
+              user_comment_id:
+                type: integer
+                format: int32
+                description: 用户评论id
+              content:
+                type: string
+                description: 回复内容
+            required:
+              - msg_data_id
+              - user_comment_id
+              - content
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /cgi-bin/comment/reply/delete:
+    post:
+      summary: 删除回复
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1494572718_WzHIY)'
+      operationId: cgi-bin/comment/reply/delete
+      security:
+        - accessToken: []
+      tags:
+        - 图文消息留言管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              msg_data_id:
+                type: integer
+                format: int32
+                description: 群发返回的msg_data_id
+              index:
+                type: integer
+                format: int32
+                description: 多图文时，用来指定第几篇图文，从0开始，不带默认操作该msg_data_id的第一篇图文
+              user_comment_id:
+                type: integer
+                format: int32
+                description: 用户评论id
+            required:
+              - msg_data_id
+              - user_comment_id
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /cgi-bin/comment/unmarkelect:
+    post:
+      summary: 将评论取消精选
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1494572718_WzHIY)'
+      operationId: cgi-bin/comment/unmarkelect
+      security:
+        - accessToken: []
+      tags:
+        - 图文消息留言管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              msg_data_id:
+                type: integer
+                format: int32
+                description: 群发返回的msg_data_id
+              index:
+                type: integer
+                format: int32
+                description: 多图文时，用来指定第几篇图文，从0开始，不带默认操作该msg_data_id的第一篇图文
+              user_comment_id:
+                type: integer
+                format: int32
+                description: 用户评论id
+            required:
+              - msg_data_id
+              - user_comment_id
       responses:
         '200':
           description: ''
@@ -10835,6 +11155,16 @@ definitions:
       content_source_url:
         type: string
         description: 图文消息的原文地址，即点击“阅读原文”后的URL
+      need_open_comment:
+        type: integer
+        format: int32
+        description: 是否打开评论，0不打开，1打开
+        enum: [0, 1]
+      only_fans_can_comment:
+        type: integer
+        format: int32
+        description: 是否打开评论，0不打开，1打开
+        enum: [0, 1]
     required:
       - title
       - thumb_media_id

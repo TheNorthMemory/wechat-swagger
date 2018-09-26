@@ -75,6 +75,11 @@ tags:
   - name: 摇一摇周边/页面管理
   - name: 摇一摇周边/红包
   - name: 摇一摇周边/数据统计
+  - name: 连WI-FI
+  - name: 连WI-FI/小程序
+  - name: 连WI-FI/门店
+  - name: 连WI-FI/设备
+  - name: 连WI-FI/商家主页
   - name: 智能接口/语义理解
   - name: 智能接口/AI开放接口
   - name: 数据统计/用户分析
@@ -90,6 +95,851 @@ tags:
   - name: 小程序/数据/用户画像
   - name: 小程序/文件/内容安全
 paths:
+  /bizwifi/apportal/register:
+    post:
+      summary: 添加portal型设备
+      description: 调用下述接口可以添加portal型设备的网络信息，并获得secretkey。secretkey为加密字符串参数，是portal设备改造流程中的重要参数。为防止secretkey泄露，可通过此接口重置刷新，重置后之前生成的secretkey将会失效。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457443857)
+      operationId: bizwifi/apportal/register
+      security:
+        - accessToken: []
+      tags:
+        - 连WI-FI/设备
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              shop_id:
+                type: integer
+                format: int32
+                description: 门店ID
+              ssid:
+                type: string
+                description: 无线网络设备的ssid。32个字符以内；ssid支持中文，但可能因设备兼容性问题导致显示乱码，或无法连接等问题，相关风险自行承担！ 当门店下是portal型设备时，ssid必填；当门店下是密码型设备时，ssid选填，且ssid和密码必须有一个以大写字母“WX”开头
+              reset:
+                type: boolean
+                description: 重置secretkey，false-不重置，true-重置，默认为false
+            required:
+              - shop_id
+              - ssid
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      secretkey:
+                        type: string
+                        description: 改造portal页面所需参数，该参数用于触发呼起微信的JSAPI接口的sign参数值的计算
+  /bizwifi/bar/set:
+    post:
+      summary: 设置微信首页欢迎语
+      description: 设置微信首页欢迎语，可选择“欢迎光临XXX”或“已连接XXXWiFi”，XXX为公众号名称或门店名称。注：设置微信首页欢迎语的接口，未审核的门店不能设置包含门店名称（bar_type为1、3）的欢迎语内容。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457505524)
+      operationId: bizwifi/bar/set
+      security:
+        - accessToken: []
+      tags:
+        - 连WI-FI/商家主页
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              shop_id:
+                type: integer
+                format: int32
+                description: 门店ID
+              bar_type:
+                type: integer
+                format: int32
+                description: 微信首页欢迎语的文本内容：0--欢迎光临+公众号名称；1--欢迎光临+门店名称；2--已连接+公众号名称+WiFi；3--已连接+门店名称+Wi-Fi。
+                enum: [0, 1, 2, 3]
+            required:
+              - shop_id
+              - bar_type
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+  /bizwifi/couponput/get:
+    post:
+      summary: 查询门店卡券投放信息
+      description: 通过此接口查询某一门店的详细卡券投放信息，包括卡券投放状态，卡券ID，卡券的投放时间等信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457427203)
+      operationId: bizwifi/couponput/get
+      security:
+        - accessToken: []
+      tags:
+        - 连WI-FI
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              shop_id:
+                type: integer
+                format: int32
+                description: 门店ID，可设置为0，表示所有门店
+            required:
+              - shop_id
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      shop_id:
+                        type: integer
+                        format: int32
+                        description: 门店ID，可设置为0，表示所有门店
+                      card_id:
+                        type: integer
+                        format: int32
+                        description: 卡券ID
+                      card_describe:
+                        type: string
+                        description: 卡券描述，不能超过18个字符
+                      start_time:
+                        type: integer
+                        format: int32
+                        description: 卡券投放开始时间（单位是秒）
+                      end_time:
+                        type: integer
+                        format: int32
+                        description: 卡券投放结束时间（单位是秒） 注：不能超过卡券的有效期时间
+  /bizwifi/couponput/set:
+    post:
+      summary: 设置门店卡券投放信息
+      description: 调用设置门店卡劵投放信息接口后，用户可在连网流程中关注商家公众号之后，领取配置的卡券。需设置卡劵ID，投放的有效时间等。注：需要先创建卡劵后，才能获取卡劵ID。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457425371)
+      operationId: bizwifi/couponput/set
+      security:
+        - accessToken: []
+      tags:
+        - 连WI-FI
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              shop_id:
+                type: integer
+                format: int32
+                description: 门店ID，可设置为0，表示所有门店
+              card_id:
+                type: integer
+                format: int32
+                description: 卡券ID
+              card_describe:
+                type: string
+                description: 卡券描述，不能超过18个字符
+              start_time:
+                type: integer
+                format: int32
+                description: 卡券投放开始时间（单位是秒）
+              end_time:
+                type: integer
+                format: int32
+                description: 卡券投放结束时间（单位是秒） 注：不能超过卡券的有效期时间
+            required:
+              - shop_id
+              - card_id
+              - card_describe
+              - start_time
+              - end_time
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+  /bizwifi/device/add:
+    post:
+      summary: 添加密码型设备
+      description: 调用此接口向指定门店添加密码型设备的Wi-Fi信息。为保证门店下多台设备无缝漫游。一个门店只能拥有一种设备类型，只要调用此接口添加一个ssid后，该门店即为密码型设备，不能再添加portal型设备。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444894120)
+      operationId: bizwifi/device/add
+      security:
+        - accessToken: []
+      tags:
+        - 连WI-FI/设备
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              shop_id:
+                type: integer
+                format: int32
+                description: 门店ID
+              ssid:
+                type: string
+                description: 无线网络设备的ssid。32个字符以内；ssid支持中文，但可能因设备兼容性问题导致显示乱码，或无法连接等问题，相关风险自行承担！ 当门店下是portal型设备时，ssid必填；当门店下是密码型设备时，ssid选填，且ssid和密码必须有一个以大写字母“WX”开头
+              password:
+                type: string
+                description: 无线网络设备的密码。8-24个字符；不能包含中文字符； 当门店下是密码型设备时，才可填写password，且ssid和密码必须有一个以大写字母“WX”开头
+            required:
+              - shop_id
+              - ssid
+              - password
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /bizwifi/device/delete:
+    post:
+      summary: 删除设备
+      description: 根据bssid删除门店下的单个设备。删除后请尽快修改设备的网络名称和密码，或停止使用设备，否则设备会自动重新添加进来。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457443872)
+      operationId: bizwifi/device/delete
+      security:
+        - accessToken: []
+      tags:
+        - 连WI-FI/设备
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              bssid:
+                type: string
+                description: 需要删除的无线网络设备无线mac地址，格式冒号分隔，字符长度17个，并且字母小写，例如：00:1f:7a:ad:5c:a8
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /bizwifi/device/list:
+    post:
+      summary: 查询设备
+      description: 可通过指定分页或具体门店ID的方式，查询当前MP账号下指定门店连网成功的设备信息。一次最多能查询20个门店的设备信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457443871)
+      operationId: bizwifi/device/list
+      security:
+        - accessToken: []
+      tags:
+        - 连WI-FI/设备
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              pageindex:
+                type: integer
+                format: int32
+                description: 分页下标，默认从1开始
+              pagesize:
+                type: integer
+                format: int32
+                description: 每页的个数，默认10个，最大20个
+              shop_id:
+                type: integer
+                format: int32
+                description: 门店ID
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      totalcount:
+                        type: integer
+                        format: int32
+                        description: 总数
+                      pageindex:
+                        type: integer
+                        format: int32
+                        description: 分页下标
+                      pagecount:
+                        type: integer
+                        format: int32
+                        description: 分页页数
+                      records:
+                        type: array
+                        description: 当前页列表数组
+                        items:
+                          type: object
+                          properties:
+                            shop_id:
+                              type: integer
+                              format: int32
+                              description: 门店ID
+                            ssid:
+                              type: string
+                              description: 无线网络设备的ssid，未添加设备为空，多个ssid时显示第一个
+                            bssid:
+                              type: string
+                              description:  无线MAC地址
+                            protocol_type:
+                              type: integer
+                              format: int32
+                              description: 门店内设备的设备类型，0-未添加设备，4-密码型设备，31-portal型设备
+                              enum: [0, 4, 31]
+  /bizwifi/finishpage/set:
+    post:
+      summary: 连Wi-Fi完成页跳转小程序/设置连网完成页
+      description: 设置需要跳转的小程序，连网完成点击“完成”按钮，即可进入设置的小程序。注：只能跳转与公众号关联的小程序。A->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215135855720FBA0) B->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457505542)
+      operationId: bizwifi/finishpage/set
+      security:
+        - accessToken: []
+      tags:
+        - 连WI-FI/小程序
+        - 连WI-FI/商家主页
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              shop_name:
+                type: string
+                description: 门店名称
+              finishpage_url:
+                type: string
+                description: 连网完成页URL，finishpage_type为0时有效
+              wxa_user_name:
+                type: string
+                description: 连网完成页跳转小程序原始id，finishpage_type为1时有效，要求小程序与公众号有绑定关系
+              wxa_path:
+                type: string
+                description: 连网完成页跳转小程序路径，finishpage_type为1时有效，需要做urlencode
+              finishpage_type:
+                type: integer
+                format: int32
+                description: 连网完成页跳转类型，0为H5，1为小程序
+                enum: [0, 1]
+            required:
+              - shop_name
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+  /bizwifi/homepage/get:
+    post:
+      summary: 查询商家主页
+      description: 通过门店ID查询商户主页的信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457505498)
+      operationId: bizwifi/homepage/get
+      security:
+        - accessToken: []
+      tags:
+        - 连WI-FI/商家主页
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              shop_id:
+                type: integer
+                format: int32
+                description: 门店ID
+            required:
+              - shop_id
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  shop_id:
+                    type: integer
+                    format: int32
+                    description: 门店ID
+                  template_id:
+                    type: integer
+                    format: int32
+                    description:  模板类型
+                  url:
+                    type: string
+                    description: 商家主页链接
+  /bizwifi/homepage/set:
+    post:
+      summary: 设置顶部banner跳转小程序接口/设置商家主页
+      description: 用户连Wi-Fi后长期逗留在场所内，可以在连接Wi-Fi后进入微信点击微信聊首页欢迎语，即可进入预先设置的小程序中获得资讯或服务。注：只能跳转与公众号关联的小程序。A->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215135855720FBA0) B->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444894127)
+      operationId: bizwifi/homepage/set
+      security:
+        - accessToken: []
+      tags:
+        - 连WI-FI/小程序
+        - 连WI-FI/商家主页
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              shop_id:
+                type: string
+                description: 门店ID
+              template_id:
+                type: integer
+                format: int32
+                description: 模板ID，0-默认模板，1-自定义url，2-关联小程序（支持门店小程序）
+                enum: [0, 1, 2]
+              struct:
+                type: object
+                description: 当template_id为0时可以不填；连网完成页跳转小程序原始id，finishpage_type为1时有效，要求小程序与公众号有绑定关系
+                properties:
+                  wxa_user_name:
+                    type: string
+                    description: 账号原始ID
+                  wxa_path:
+                    type: string
+                    description: 小程序页面路径
+                  url:
+                    type: string
+                    description: 自定义链接，当template_id为1时必填
+                required:
+                  - wxa_user_name
+                  - wxa_path
+            required:
+              - shop_id
+              - template_id
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+  /bizwifi/openplugin/token:
+    post:
+      summary: 第三方平台获取开插件wifi_token
+      description: 开通插件接口只支持公众号第三方平台调用，公众账号开发者请在微信公众平台自行开通。第三方平台接入，请参考微信开放平台。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455869988)
+      operationId: bizwifi/openplugin/token
+      security:
+        - accessToken: []
+      tags:
+        - 连WI-FI
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              callback_url:
+                type: string
+                description: 回调URL，开通插件成功后的跳转页面。注：该参数域名必须与跳转进开通插件页面的页面域名保持一致，建议均采用第三方平台域名。
+            required:
+              - callback_url
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      is_open:
+                        type: boolean
+                        description: 该公众号是否已开通微信连Wi-Fi插件，true-已开通，false-未开通
+                      wifi_token:
+                        type: string
+                        description: 开通插件的凭证，当is_open为false时才返回值
+  /bizwifi/qrcode/get:
+    post:
+      summary: 获取物料二维码
+      description: 添加设备后，通过此接口可以获取物料，包括二维码和桌贴两种样式。将物料铺设在线下门店里，可供用户扫码上网。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444894125)
+      operationId: bizwifi/qrcode/get
+      security:
+        - accessToken: []
+      tags:
+        - 连WI-FI
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              shop_id:
+                type: integer
+                format: int32
+                description: 门店ID
+              ssid:
+                type: string
+                description: 已添加到门店下的无线网络名称
+              img_id:
+                type: integer
+                format: int32
+                description: 物料样式编号： 0-纯二维码，可用于自由设计宣传材料； 1-二维码物料，155mm×215mm(宽×高)，可直接张贴
+                enum: [0, 1]
+            required:
+              - shop_id
+              - ssid
+              - img_id
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      qrcode_url:
+                        type: string
+                        description: 二维码图片url
+  /bizwifi/shop/clean:
+    post:
+      summary: 清空门店网络及设备
+      description: 通过此接口清空门店的网络配置及所有设备，恢复空门店状态。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457435430)
+      operationId: bizwifi/shop/clean
+      security:
+        - accessToken: []
+      tags:
+        - 连WI-FI/门店
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              shop_id:
+                type: integer
+                format: int32
+                description: 门店ID
+            required:
+              - shop_id
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /bizwifi/shop/get:
+    post:
+      summary: 查询门店WiFi信息接口
+      description: 通过此接口查询某一门店的详细Wi-Fi信息，包括门店内的设备类型、ssid、密码、设备数量、商家主页URL、顶部常驻入口文案。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457435331)
+      operationId: bizwifi/shop/get
+      security:
+        - accessToken: []
+      tags:
+        - 连WI-FI/门店
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              shop_id:
+                type: integer
+                format: int32
+                description: 门店ID
+            required:
+              - shop_id
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      shop_name:
+                        type: string
+                        description: 门店名称
+                      ssid:
+                        type: string
+                        description: 无线网络设备的ssid，未添加设备为空，多个ssid时显示第一个
+                      ssid_list:
+                        type: array
+                        description: 无线网络设备的ssid列表，返回数组格式
+                        items:
+                          type: string
+                      ssid_password_list:
+                        type: array
+                        description: ssid和密码的列表，数组格式。当为密码型设备时，密码才有值
+                        items:
+                          type: object
+                          properties:
+                            ssid:
+                              type: string
+                              description: 无线网络设备的ssid
+                            password:
+                              type: string
+                              description: 设备密码，当设备类型为密码型时返回
+                      password:
+                        type: string
+                        description: 设备密码，当设备类型为密码型时返回
+                      protocol_type:
+                        type: integer
+                        format: int32
+                        description: 门店内设备的设备类型，0-未添加设备，4-密码型设备，31-portal型设备
+                        enum: [0, 4, 31]
+                      ap_count:
+                        type: integer
+                        format: int32
+                        description: 门店内设备总数
+                      template_id:
+                        type: integer
+                        format: int32
+                        description: 商家主页（bar条）模板类型 0 默认页 1 自定义h5 2 跳转小程序
+                        enum: [0, 1, 2]
+                      homepage_url:
+                        type: string
+                        description: 商家主页（bar条）链接
+                      bar_type:
+                        type: integer
+                        format: int32
+                        description: 顶部常驻入口上显示的文本内容：0--欢迎光临+公众号名称；1--欢迎光临+门店名称；2--已连接+公众号名称+WiFi；3--已连接+门店名称+Wi-Fi
+                        enum: [0, 1, 2, 3]
+                      finishpage_url:
+                        type: string
+                        description: 连网完成页链接,finishpage_type为0时有效
+                      sid:
+                        type: string
+                        description: 商户自己的id，与门店poi_id对应关系，建议在添加门店时候建立关联关系，具体请参考“微信门店接口”
+                      poi_id:
+                        type: string
+                        description: 门店ID（适用于微信卡券、微信门店业务），具体定义参考微信门店，与shop_id一一对应。
+                      homepage_wxa_user_name:
+                        type: string
+                        description: 商家主页（bar条）跳转的小程序原始id，template_id为2时有效
+                      finishpage_wxa_user_name:
+                        type: string
+                        description: 完成页跳转的小程序原始id，finishpage_type为1时有效
+                      inishpage_wxa_path:
+                        type: string
+                        description: 完成页跳转的小程序路径，需要做urlencode，finishpage_type为1时有效
+                      finishpage_type:
+                        type: integer
+                        format: int32
+                        description: 完成页跳转类型 0为H5；1为小程序
+                        enum: [0, 1]
+  /bizwifi/shop/list:
+    post:
+      summary: 获取Wi-Fi门店列表
+      description: 通过此接口获取WiFi的门店列表，该列表包括公众平台的门店信息、以及添加设备后的WiFi相关信息。注：微信连Wi-Fi下的所有接口中的shop_id，必需先通过此接口获取。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444894115)
+      operationId: bizwifi/shop/list
+      security:
+        - accessToken: []
+      tags:
+        - 连WI-FI/门店
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              pageindex:
+                type: integer
+                format: int32
+                description: 分页下标，默认从1开始
+              pagesize:
+                type: integer
+                format: int32
+                description: 每页的个数，默认10个，最大20个
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      totalcount:
+                        type: integer
+                        format: int32
+                        description: 总数
+                      pageindex:
+                        type: integer
+                        format: int32
+                        description: 分页下标
+                      pagecount:
+                        type: integer
+                        format: int32
+                        description: 分页页数
+                      records:
+                        type: array
+                        description: 当前页列表数组
+                        items:
+                          type: object
+                          properties:
+                            shop_id:
+                              type: integer
+                              format: int32
+                              description: 门店ID
+                            shop_name:
+                              type: string
+                              description: 门店名称
+                            ssid:
+                              type: string
+                              description: 无线网络设备的ssid，未添加设备为空，多个ssid时显示第一个
+                            ssid_list:
+                              type: array
+                              description: 无线网络设备的ssid列表，返回数组格式
+                              items:
+                                type: string
+                            ssid_password_list:
+                              type: array
+                              description: ssid和密码的列表，数组格式。当为密码型设备时，密码才有值
+                              items:
+                                type: object
+                                properties:
+                                  ssid:
+                                    type: string
+                                    description: 无线网络设备的ssid
+                                  password:
+                                    type: string
+                                    description: 设备密码，当设备类型为密码型时返回
+                            password:
+                              type: string
+                              description: 设备密码，当设备类型为密码型时返回
+                            protocol_type:
+                              type: integer
+                              format: int32
+                              description: 门店内设备的设备类型，0-未添加设备，4-密码型设备，31-portal型设备
+                              enum: [0, 4, 31]
+                            sid:
+                              type: string
+                              description: 商户自己的id，与门店poi_id对应关系，建议在添加门店时候建立关联关系，具体请参考“微信门店接口”
+                            poi_id:
+                              type: string
+                              description: 门店ID（适用于微信卡券、微信门店业务），具体定义参考微信门店，与shop_id一一对应。
+  /bizwifi/shop/update:
+    post:
+      summary: 修改门店网络信息
+      description: 通过此接口修改门店的网络信息，包括网络名称（ssid）或密码。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457435413)
+      operationId: bizwifi/shop/update
+      security:
+        - accessToken: []
+      tags:
+        - 连WI-FI/门店
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              shop_id:
+                type: integer
+                format: int32
+                description: 门店ID
+              old_ssid:
+                type: string
+              ssid:
+                type: string
+                description: 无线网络设备的ssid。32个字符以内；ssid支持中文，但可能因设备兼容性问题导致显示乱码，或无法连接等问题，相关风险自行承担！ 当门店下是portal型设备时，ssid必填；当门店下是密码型设备时，ssid选填，且ssid和密码必须有一个以大写字母“WX”开头
+              password:
+                type: string
+                description: 无线网络设备的密码。8-24个字符；不能包含中文字符； 当门店下是密码型设备时，才可填写password，且ssid和密码必须有一个以大写字母“WX”开头
+            required:
+              - shop_id
+              - old_ssid
+              - ssid
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /bizwifi/statistics/list:
+    post:
+      summary: Wi-Fi数据统计
+      description: 查询一定时间范围内的WiFi连接总人数、微信方式连Wi-Fi人数、商家主页访问人数、连网后消息发送人数、新增公众号关注人数和累计公众号关注人数。查询的最长时间跨度为30天。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444894129)
+      operationId: bizwifi/statistics/list
+      security:
+        - accessToken: []
+      tags:
+        - 连WI-FI
+      parameters:
+        - in: body
+          name: buffer
+          schema:
+            type: object
+            properties:
+              begin_date:
+                type: integer
+                format: int32
+                description: 起始日期时间，格式yyyy-mm-dd，最长时间跨度为30天
+              end_date:
+                type: integer
+                format: int32
+                description: 结束日期时间戳，格式yyyy-mm-dd，最长时间跨度为30天
+              shop_id:
+                type: integer
+                format: int32
+                description: 按门店ID搜索，-1为总统计
+            required:
+              - begin_date
+              - end_date
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        shop_id:
+                          type: integer
+                          format: int32
+                          description: 门店ID，-1为总统计
+                        statis_time:
+                          type: integer
+                          format: int32
+                          description: 统计时间，单位为毫秒
+                        total_user:
+                          type: integer
+                          format: int32
+                          description: Wi-Fi连接总人数
+                        homepage_uv:
+                          type: integer
+                          format: int32
+                          description: 商家主页访问人数
+                        new_fans:
+                          type: integer
+                          format: int32
+                          description: 新增公众号关注人数
+                        total_fans:
+                          type: integer
+                          format: int32
+                          description: 累计公众号关注人数
+                        wxconnect_user:
+                          type: integer
+                          format: int32
+                          description: 微信方式连Wi-Fi人数
+                        connect_msg_user:
+                          type: integer
+                          format: int32
+                          description: 连网后消息发送人数
   /card/batchget:
     post:
       summary: 批量查询

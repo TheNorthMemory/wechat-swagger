@@ -2,7 +2,7 @@ swagger: '2.0'
 host: 127.0.0.1:7788
 basePath: /gateway
 info:
-  title: 微信接口工具
+  title: 微信接口文档及调试工具
   description: 整理自[微信官方文档](https://mp.weixin.qq.com)及社区贡献
   version: 2.0.0
 schemes:

@@ -6,6 +6,7 @@ post:
     - accessToken: []
   tags:
     - 电子发票/商户接口
+    - 电子发票/非税票据
   parameters:
     - in: body
       name: body

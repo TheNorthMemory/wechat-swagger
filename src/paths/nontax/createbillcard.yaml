@@ -1,0 +1,41 @@
+post:
+  summary: 创建财政电子票据接口
+  description: 财政局可以通过这个接口帮助执收单位创建一张财政电子票据模板。同一个财政局可以对应多个执收单位，同一个执收单位，使用同一个card_id，不同的执收单位，使用不同的card_id。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21530623533CgUdj)
+  operationId: nontax/createbillcard
+  security:
+    - accessToken: []
+  tags:
+    - 电子发票/非税票据
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          base_info:
+            type: object
+            description: 财政电子票据信息
+            properties:
+              logo_url:
+                type: string
+                description: 财政局LOGO，请参考上传图片接口
+            required:
+              - logo_url
+          payee:
+            type: string
+            description: 收款方（开票方）全称，显示在财政电子票据详情内
+        required:
+          - base_info
+          - payee
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              card_id:
+                type: string
+                description: 票据card_id

@@ -1,0 +1,54 @@
+post:
+  summary: 获取用户抬头（方式二）:商户扫描用户的发票抬头二维码
+  description: 商户扫用户“我的—个人信息—我的发票抬头”里面的抬头二维码后，通过调用本接口，可以获取用户抬头信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496554912_vfWU0)
+  operationId: card/invoice/scantitle
+  security:
+    - accessToken: []
+  tags:
+    - 电子发票/极速开票
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          scan_text:
+            type: string
+            description: 扫码后获取的文本
+        required:
+          - scan_text
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              title_type:
+                type: integer
+                format: int32
+                description: 0=单位抬头；1=个人抬头
+                enum: [0, 1]
+              title:
+                type: string
+                description: 抬头
+              phone:
+                type: string
+                description: 联系方式，必须是数字或者“-”
+              tax_no:
+                type: string
+                description: 税号，必须是15-20位数字或者英文字母
+              addr:
+                type: string
+                description: 地址
+              bank_type:
+                type: string
+                description: 银行类型
+              bank_no:
+                type: string
+                description: 银行号码，必须是小于23位的数字
+            required:
+              - title_type
+              - title

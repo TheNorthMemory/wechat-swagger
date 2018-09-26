@@ -1,0 +1,61 @@
+post:
+  summary: 获取授权页链接
+  description: 通过此接口，获取授权页链接，让用户跳转到授权页。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21530623533CgUdj)
+  operationId: nontax/getbillauthurl
+  security:
+    - accessToken: []
+  tags:
+    - 电子发票/非税票据
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          s_pappid:
+            type: string
+            description: 财政局id，需要找财政局提供
+          order_id:
+            type: string
+            description: 订单id
+          money:
+            type: integer
+            format: int32
+            description: 订单金额，以分为单位
+          timestamp:
+            type: integer
+            format: int32
+            description: 时间戳
+          source:
+            type: string
+            description: 开票来源，web：公众号开票，app：app开票
+            enum: ['web', 'app']
+          redirect_url:
+            type: string
+            description: 授权成功后跳转页面
+          ticket:
+            type: string
+            description: Api_ticket，参考获取api_ticket接口获取
+        required:
+          - s_pappid
+          - order_id
+          - money
+          - timestamp
+          - source
+          - ticket
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              auth_url:
+                type: string
+                description: 授权链接
+              expire_time:
+                type: integer
+                format: int32
+                description: 过期时间，单位为秒，授权链接会在一段时间之后过期

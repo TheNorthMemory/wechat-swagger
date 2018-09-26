@@ -1,0 +1,52 @@
+post:
+  summary: 将发票抬头信息录入到用户微信中
+  description: 调用接口，获取添加存储发票抬头信息的链接，将链接发给微信用户，用户确认后将保存该信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496554912_vfWU0)
+  operationId: card/invoice/biz/getusertitleurl
+  security:
+    - accessToken: []
+  tags:
+    - 电子发票/极速开票
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          title:
+            type: string
+            description: 抬头, user_fill为0时必填
+          phone:
+            type: string
+            description: 联系方式，必须是数字或者“-”
+          tax_no:
+            type: string
+            description: 税号，必须是15-20位数字或者英文字母
+          addr:
+            type: string
+            description: 地址
+          bank_type:
+            type: string
+            description: 银行类型
+          bank_no:
+            type: string
+            description: 银行号码，必须是小于23位的数字
+          user_fill:
+            type: integer
+            format: int32
+            description: 0=企业设置的抬头；1=用户自己填写的抬头
+            enum: [0, 1]
+          out_title_id:
+            type: string
+            description: 开票码
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              url:
+                type: string
+                description: 添加抬头卡链接

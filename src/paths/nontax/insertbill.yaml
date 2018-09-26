@@ -1,0 +1,76 @@
+post:
+  summary: 将财政电子票据添加到用户微信卡包
+  description: 执收单位完成用户插卡授权后，向财政局请求给某一个订单号进行领取财政电子票据，财政局须调用该接口对用户进行开票。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21530623533CgUdj)
+  operationId: nontax/createbillcard
+  security:
+    - accessToken: []
+  tags:
+    - 电子发票/非税票据
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          order_id:
+            type: string
+            description: 财政电子票据order_id
+          card_id:
+            type: string
+            description: 财政电子票据card_id
+          appid:
+            type: string
+            description: 该订单号授权时使用的appid，一般为执收单位appid
+          card_ext:
+            type: object
+            description: 财政电子票据具体内容
+            properties:
+              user_card:
+                type: object
+                description: 用户信息结构体
+                properties:
+                  invoice_user_data:
+                    type: object
+                    properties:
+                      fee:
+                        type: integer
+                        format: int32
+                        description: 财政电子票据的金额，以分为单位
+                      title:
+                        type: string
+                        description: 财政电子票据的缴费单位
+                      billing_time:
+                        type: integer
+                        format: int32
+                        description: 财政电子票据的开票时间，为10位时间戳（utc+8）
+                      billing_no:
+                        type: string
+                        description: 财政电子票据代码
+                      billing_code:
+                        type: string
+                        description: 财政电子票据号码
+                      s_pdf_media_id:
+                        type: string
+                        description: 财政电子票据pdf文件上传到微信财政电子票据平台后，会生成一个财政电子票据s_media_id，该s_media_id可以直接用于开财政电子票据，上传参考“5、上传pdf”
+                    required:
+                      - fee
+                      - title
+                      - billing_time
+                      - billing_no
+                      - billing_code
+                      - s_pdf_media_id
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              code:
+                type: string
+                description: 财政电子票据code
+              openid:
+                type: string
+                description: 用户标识，即领取到财政电子票据的openid

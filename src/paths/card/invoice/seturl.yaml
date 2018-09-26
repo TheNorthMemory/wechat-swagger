@@ -6,6 +6,7 @@ post:
     - accessToken: []
   tags:
     - 电子发票/开票平台接口
+    - 电子发票/非税票据
   parameters:
     - in: body
       name: buffer

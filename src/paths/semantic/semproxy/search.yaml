@@ -1,5 +1,6 @@
 post:
-  summary: 客服输入状态
+  summary: 语义理解
+  description: 微信开放平台语义理解接口调用（http请求）简单方便，用户无需掌握语义理解及相关技术，只需根据自己的产品特点，选择相应的服务即可搭建一套智能语义服务。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457443857) [详细内容与协议说明语义理解接口协议文档](https://open.weixin.qq.com/zh_CN/htmledition/res/assets/smart_lang_protocol.pdf)
   operationId: semantic/semproxy/search
   security:
     - accessToken: []
@@ -10,7 +11,52 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          query:
+            type: string
+            description: 输入文本串
+          category:
+            type: string
+            description: 需要使用的服务类型，多个用“，”隔开，不能为空
+          latitude:
+            type: number
+            format: double
+            description: 纬度坐标，与经度同时传入；与城市二选一传入
+          longitude:
+            type: number
+            format: double
+            description: 经度坐标，与纬度同时传入；与城市二选一传入
+          city:
+            type: string
+            description: 城市名称，与经纬度二选一传入
+          region:
+            type: string
+            description: 区域名称，在城市存在的情况下可省；与经纬度二选一传入
+          appid:
+            type: string
+            description: 公众号唯一标识，用于区分公众号开发者
+          uid:
+            type: string
+            description: 用户唯一id（非开发者id），用户区分公众号下的不同用户（建议填入用户openid），如果为空，则无法使用上下文理解功能。appid和uid同时存在的情况下，才可以使用上下文理解功能。
+        required:
+          - query
+          - category
+          - appid
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              query:
+                type: string
+                description: 用户的输入字符串
+              type:
+                type: string
+                description: 服务的全局类型id，详见协议文档中垂直服务协议定义
+              semantic:
+                type: object
+                description: 语义理解后的结构化标识，各服务不同
+                properties: {}

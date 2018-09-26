@@ -34,89 +34,18 @@ post:
                 description: 用户信息结构体
                 properties:
                   invoice_user_data:
-                    type: object
-                    properties:
-                      fee:
-                        type: integer
-                        format: int32
-                        description: 发票的金额，以分为单位
-                      title:
-                        type: string
-                        description: 发票的抬头
-                      billing_time:
-                        type: integer
-                        format: int32
-                        description: 发票的开票时间，为10位时间戳（utc+8）
-                      billing_no:
-                        type: string
-                        description: 发票的发票代码
-                      billing_code:
-                        type: string
-                        description: 发票的发票号码
-                      info:
-                        type: array
-                        description: 商品详情结构，见下方
-                        items:
-                          type: object
-                          properties:
-                            name:
-                              type: String
-                              description: 项目的名称
-                            num:
-                              type: integer
-                              format: int32
-                              description: 项目的数量
-                            unit:
-                              type: string
-                              description: 项目的单位，如个
-                            price:
-                              type: integer
-                              format: int32
-                              description: 项目的单价
-                      fee_without_tax:
-                        type: integer
-                        format: int32
-                        description: 不含税金额，以分为单位
-                      tax:
-                        type: integer
-                        format: int32
-                        description: 税额，以分为单位
-                      s_pdf_media_id:
-                        type: string
-                        description: 发票pdf文件上传到微信发票平台后，会生成一个发票s_media_id，该s_media_id可以直接用于关联发票PDF和发票卡券。发票上传参考“ 3 上传PDF ”一节
-                      s_trip_pdf_media_id:
-                        type: string
-                        description: 其它消费附件的PDF，如行程单、水单等，PDF上传方式参考“ 3 上传PDF ”一节
-                      check_code:
-                        type: string
-                        description: 校验码，发票pdf右上角，开票日期下的校验码
-                      buyer_number:
-                        type: string
-                        description: 购买方纳税人识别号
-                      buyer_address_and_phone:
-                        type: string
-                        description: 购买方地址、电话
-                      buyer_bank_account:
-                        type: string
-                        description: 购买方开户行及账号
-                      seller_number:
-                        type: string
-                        description: 销售方纳税人识别号
-                      seller_address_and_phone:
-                        type: string
-                        description: 销售方地址、电话
-                      seller_bank_account:
-                        type: string
-                        description: 销售方开户行及账号
-                      remarks:
-                        type: string
-                        description: 备注，发票右下角初
-                      cashier:
-                        type: string
-                        description: 收款人，发票左下角处
-                      maker:
-                        type: string
-                        description: 开票人，发票下方处
+                    allOf:
+                      - $ref: '#/definitions/card.invoice.UserInfoDataBo'
+                      - type: object
+                        properties:
+                          s_pdf_media_id:
+                            type: string
+                            description: 发票pdf文件上传到微信发票平台后，会生成一个发票s_media_id，该s_media_id可以直接用于关联发票PDF和发票卡券。发票上传参考“ 3 上传PDF ”一节
+                          s_trip_pdf_media_id:
+                            type: string
+                            description: 其它消费附件的PDF，如行程单、水单等，PDF上传方式参考“ 3 上传PDF ”一节
+                        required:
+                          - s_pdf_media_id
         required:
           - order_id
           - card_id

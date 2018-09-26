@@ -1,0 +1,43 @@
+post:
+  summary: 报销方批量更新发票状态
+  description: 批量更新发票状态接口为事务性操作，如果其中一张发票更新失败，列表中的其它发票状态更新也会无法执行，恢复到接口调用前的状态。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918939oae3U)
+  operationId: card/invoice/reimburse/updateinvoicestatus
+  security:
+    - accessToken: []
+  tags:
+    - 电子发票/报销方接口
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        required:
+          - openid
+          - reimburse_status
+          - invoice_list
+        properties:
+          openid:
+            type: string
+            description: 用户openid
+          reimburse_status:
+            $ref: '#/definitions/card.invoice.ReimburseStatusBo'
+          invoice_list:
+            type: array
+            items:
+              type: object
+              properties:
+                card_id:
+                  type: string
+                  description: 发票card_id
+                encrypt_code:
+                  type: string
+                  description: 发票卡券的加密 code ，和 card_id 共同构成一张发票卡券的唯一标识
+              required:
+                - card_id
+                - encrypt_code
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'

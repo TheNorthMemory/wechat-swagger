@@ -1,0 +1,71 @@
+post:
+  summary: 查询报销发票信息
+  description: 通过该接口查询电子发票的结构化信息，并获取发票PDF文件。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918939oae3U)
+  operationId: card/invoice/reimburse/getinvoiceinfo
+  security:
+    - accessToken: []
+  tags:
+    - 电子发票/报销方接口
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          card_id:
+            type: string
+            description: 发票card_id
+          encrypt_code:
+            type: string
+            description: 发票卡券的加密 code ，和 card_id 共同构成一张发票卡券的唯一标识
+        required:
+          - card_id
+          - encrypt_code
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              card_id:
+                type: string
+                description: 发票id
+              begin_time:
+                type: integer
+                format: int32
+                description: 发票的有效期起始时间
+              end_time:
+                type: integer
+                format: int32
+                description: 发票的有效期截止时间
+              openid:
+                type: string
+                description: 用户标识
+              type:
+                type: string
+                description: 发票的类型，如广东增值税普通发票
+              payee:
+                type: string
+                description: 发票的收款方
+              detail:
+                type: string
+                description: 发票详情
+              user_info:
+                allOf:
+                  - $ref: '#/definitions/card.invoice.UserInfoDataBo'
+                  - type: object
+                    properties:
+                      pdf_url:
+                        type: string
+                        description: 这张发票对应的PDF_URL
+                      trip_pdf_url:
+                        type: string
+                        description: 其它消费凭证附件对应的URL，如行程单、水单等
+                      reimburse_status:
+                        $ref: '#/definitions/card.invoice.ReimburseStatusBo'
+                    required:
+                      - pdf_url
+                      - reimburse_status

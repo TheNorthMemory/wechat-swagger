@@ -19,13 +19,7 @@ post:
             type: string
             description: 发票 code
           reimburse_status:
-            type: string
-            description: 发票报销状态,INVOICE_REIMBURSE_INIT=发票初始状态，未锁定,INVOICE_REIMBURSE_LOCK=发票已锁定,INVOICE_REIMBURSE_CLOSURE=发票已核销,INVOICE_REIMBURSE_CANCEL=发票被冲红
-            enum:
-              - INVOICE_REIMBURSE_INIT
-              - INVOICE_REIMBURSE_LOCK
-              - INVOICE_REIMBURSE_CLOSURE
-              - INVOICE_REIMBURSE_CANCEL
+            $ref: '#/definitions/card.invoice.ReimburseStatusBo'
         required:
           - card_id
           - code

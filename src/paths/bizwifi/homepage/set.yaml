@@ -1,0 +1,43 @@
+post:
+  summary: 设置顶部banner跳转小程序接口
+  description: 用户连Wi-Fi后长期逗留在场所内，可以在连接Wi-Fi后进入微信点击微信聊首页欢迎语，即可进入预先设置的小程序中获得资讯或服务。注：只能跳转与公众号关联的小程序。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215135855720FBA0)
+  operationId: bizwifi/homepage/set
+  security:
+    - accessToken: []
+  tags:
+    - 连WI-FI/小程序
+  parameters:
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties:
+          shop_id:
+            type: sting
+            description: 门店ID
+          template_id:
+            type: sting
+            description: 2-关联小程序（支持门店小程序）
+          struct:
+            type: object
+            description: 连网完成页跳转小程序原始id，finishpage_type为1时有效，要求小程序与公众号有绑定关系
+            properties:
+              wxa_user_name:
+                type: sting
+                description: 账号原始ID
+              wxa_path:
+                type: sting
+                description: 小程序页面路径
+            required:
+              - wxa_user_name
+              - wxa_path
+        required:
+          - shop_id
+          - template_id
+          - struct
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'

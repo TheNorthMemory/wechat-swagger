@@ -1,0 +1,102 @@
+post:
+  summary: 查询门店WiFi信息接口
+  description: 通过此接口查询某一门店的详细Wi-Fi信息，包括门店内的设备类型、ssid、密码、设备数量、商家主页URL、顶部常驻入口文案。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457435331)
+  operationId: bizwifi/shop/get
+  security:
+    - accessToken: []
+  tags:
+    - 连WI-FI/门店
+  parameters:
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties:
+          shop_id:
+            type: integer
+            format: int32
+            description: 门店ID
+        required:
+          - shop_id
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  shop_name:
+                    type: string
+                    description: 门店名称
+                  ssid:
+                    type: string
+                    description: 无线网络设备的ssid，未添加设备为空，多个ssid时显示第一个
+                  ssid_list:
+                    type: array
+                    description: 无线网络设备的ssid列表，返回数组格式
+                    items:
+                      type: string
+                  ssid_password_list:
+                    type: array
+                    description: ssid和密码的列表，数组格式。当为密码型设备时，密码才有值
+                    items:
+                      type: object
+                      properties:
+                        ssid:
+                          type: string
+                          description: 无线网络设备的ssid
+                        password:
+                          type: string
+                          description: 设备密码，当设备类型为密码型时返回
+                  password:
+                    type: string
+                    description: 设备密码，当设备类型为密码型时返回
+                  protocol_type:
+                    type: integer
+                    format: int32
+                    description: 门店内设备的设备类型，0-未添加设备，4-密码型设备，31-portal型设备
+                    enum: [0, 4, 31]
+                  ap_count:
+                    type: integer
+                    format: int32
+                    description: 门店内设备总数
+                  template_id:
+                    type: integer
+                    format: int32
+                    description: 商家主页（bar条）模板类型 0 默认页 1 自定义h5 2 跳转小程序
+                    enum: [0, 1, 2]
+                  homepage_url:
+                    type: string
+                    description: 商家主页（bar条）链接
+                  bar_type:
+                    type: integer
+                    format: int32
+                    description: 顶部常驻入口上显示的文本内容：0--欢迎光临+公众号名称；1--欢迎光临+门店名称；2--已连接+公众号名称+WiFi；3--已连接+门店名称+Wi-Fi
+                    enum: [0, 1, 2, 3]
+                  finishpage_url:
+                    type: string
+                    description: 连网完成页链接,finishpage_type为0时有效
+                  sid:
+                    type: string
+                    description: 商户自己的id，与门店poi_id对应关系，建议在添加门店时候建立关联关系，具体请参考“微信门店接口”
+                  poi_id:
+                    type: string
+                    description: 门店ID（适用于微信卡券、微信门店业务），具体定义参考微信门店，与shop_id一一对应。
+                  homepage_wxa_user_name:
+                    type: string
+                    description: 商家主页（bar条）跳转的小程序原始id，template_id为2时有效
+                  finishpage_wxa_user_name:
+                    type: string
+                    description: 完成页跳转的小程序原始id，finishpage_type为1时有效
+                  inishpage_wxa_path:
+                    type: string
+                    description: 完成页跳转的小程序路径，需要做urlencode，finishpage_type为1时有效
+                  finishpage_type:
+                    type: integer
+                    format: int32
+                    description: 完成页跳转类型 0为H5；1为小程序
+                    enum: [0, 1]

@@ -1,0 +1,35 @@
+post:
+  summary: 修改门店网络信息
+  description: 通过此接口修改门店的网络信息，包括网络名称（ssid）或密码。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457435413)
+  operationId: bizwifi/shop/update
+  security:
+    - accessToken: []
+  tags:
+    - 连WI-FI/门店
+  parameters:
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties:
+          shop_id:
+            type: integer
+            format: int32
+            description: 门店ID
+          old_ssid:
+            type: string
+          ssid:
+            type: string
+            description: 无线网络设备的ssid。32个字符以内；ssid支持中文，但可能因设备兼容性问题导致显示乱码，或无法连接等问题，相关风险自行承担！ 当门店下是portal型设备时，ssid必填；当门店下是密码型设备时，ssid选填，且ssid和密码必须有一个以大写字母“WX”开头
+          password:
+            type: string
+            description: 无线网络设备的密码。8-24个字符；不能包含中文字符； 当门店下是密码型设备时，才可填写password，且ssid和密码必须有一个以大写字母“WX”开头
+        required:
+          - shop_id
+          - old_ssid
+          - ssid
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'

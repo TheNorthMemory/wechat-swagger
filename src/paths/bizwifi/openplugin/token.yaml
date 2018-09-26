@@ -1,0 +1,36 @@
+post:
+  summary: 第三方平台获取开插件wifi_token
+  description: 开通插件接口只支持公众号第三方平台调用，公众账号开发者请在微信公众平台自行开通。第三方平台接入，请参考微信开放平台。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455869988)
+  operationId: bizwifi/openplugin/token
+  security:
+    - accessToken: []
+  tags:
+    - 连WI-FI
+  parameters:
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties:
+          callback_url:
+            type: string
+            description: 回调URL，开通插件成功后的跳转页面。注：该参数域名必须与跳转进开通插件页面的页面域名保持一致，建议均采用第三方平台域名。
+        required:
+          - callback_url
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  is_open:
+                    type: boolean
+                    description: 该公众号是否已开通微信连Wi-Fi插件，true-已开通，false-未开通
+                  wifi_token:
+                    type: string
+                    description: 开通插件的凭证，当is_open为false时才返回值

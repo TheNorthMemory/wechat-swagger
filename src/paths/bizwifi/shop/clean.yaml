@@ -1,0 +1,25 @@
+post:
+  summary: 清空门店网络及设备
+  description: 通过此接口清空门店的网络配置及所有设备，恢复空门店状态。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457435430)
+  operationId: bizwifi/shop/clean
+  security:
+    - accessToken: []
+  tags:
+    - 连WI-FI/门店
+  parameters:
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties:
+          shop_id:
+            type: integer
+            format: int32
+            description: 门店ID
+        required:
+          - shop_id
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'

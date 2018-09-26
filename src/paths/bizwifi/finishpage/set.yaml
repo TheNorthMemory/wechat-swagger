@@ -1,0 +1,39 @@
+post:
+  summary: 连Wi-Fi完成页跳转小程序
+  description: 设置需要跳转的小程序，连网完成点击“完成”按钮，即可进入设置的小程序。注：只能跳转与公众号关联的小程序。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215135855720FBA0)
+  operationId: bizwifi/finishpage/set
+  security:
+    - accessToken: []
+  tags:
+    - 连WI-FI/小程序
+  parameters:
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties:
+          shop_name:
+            type: sting
+            description: 门店名称
+          finishpage_url:
+            type: sting
+            description: 连网完成页URL，finishpage_type为0时有效
+          wxa_user_name:
+            type: sting
+            description: 连网完成页跳转小程序原始id，finishpage_type为1时有效，要求小程序与公众号有绑定关系
+          wxa_path:
+            type: sting
+            description: 连网完成页跳转小程序路径，finishpage_type为1时有效，需要做urlencode
+          finishpage_type:
+            type: integer
+            format: int32
+            description: 连网完成页跳转类型，0为H5，1为小程序
+            enum: [0, 1]
+        required:
+          - shop_name
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'

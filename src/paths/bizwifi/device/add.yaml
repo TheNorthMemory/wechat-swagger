@@ -1,0 +1,33 @@
+post:
+  summary: 添加密码型设备
+  description: 调用此接口向指定门店添加密码型设备的Wi-Fi信息。为保证门店下多台设备无缝漫游。一个门店只能拥有一种设备类型，只要调用此接口添加一个ssid后，该门店即为密码型设备，不能再添加portal型设备。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444894120)
+  operationId: bizwifi/device/add
+  security:
+    - accessToken: []
+  tags:
+    - 连WI-FI/设备
+  parameters:
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties:
+          shop_id:
+            type: integer
+            format: int32
+            description: 门店ID
+          ssid:
+            type: string
+            description: 无线网络设备的ssid。32个字符以内；ssid支持中文，但可能因设备兼容性问题导致显示乱码，或无法连接等问题，相关风险自行承担！ 当门店下是portal型设备时，ssid必填；当门店下是密码型设备时，ssid选填，且ssid和密码必须有一个以大写字母“WX”开头
+          password:
+            type: string
+            description: 无线网络设备的密码。8-24个字符；不能包含中文字符； 当门店下是密码型设备时，才可填写password，且ssid和密码必须有一个以大写字母“WX”开头
+        required:
+          - shop_id
+          - ssid
+          - password
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'

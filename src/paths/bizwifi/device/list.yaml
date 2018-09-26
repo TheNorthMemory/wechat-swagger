@@ -1,0 +1,70 @@
+post:
+  summary: 查询设备
+  description: 可通过指定分页或具体门店ID的方式，查询当前MP账号下指定门店连网成功的设备信息。一次最多能查询20个门店的设备信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457443871)
+  operationId: bizwifi/device/list
+  security:
+    - accessToken: []
+  tags:
+    - 连WI-FI/设备
+  parameters:
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties:
+          pageindex:
+            type: integer
+            format: int32
+            description: 分页下标，默认从1开始
+          pagesize:
+            type: integer
+            format: int32
+            description: 每页的个数，默认10个，最大20个
+          shop_id:
+            type: integer
+            format: int32
+            description: 门店ID
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  totalcount:
+                    type: integer
+                    format: int32
+                    description: 总数
+                  pageindex:
+                    type: integer
+                    format: int32
+                    description: 分页下标
+                  pagecount:
+                    type: integer
+                    format: int32
+                    description: 分页页数
+                  records:
+                    type: array
+                    description: 当前页列表数组
+                    items:
+                      type: object
+                      properties:
+                        shop_id:
+                          type: integer
+                          format: int32
+                          description: 门店ID
+                        ssid:
+                          type: string
+                          description: 无线网络设备的ssid，未添加设备为空，多个ssid时显示第一个
+                        bssid:
+                          type: string
+                          description:  无线MAC地址
+                        protocol_type:
+                          type: integer
+                          format: int32
+                          description: 门店内设备的设备类型，0-未添加设备，4-密码型设备，31-portal型设备
+                          enum: [0, 4, 31]

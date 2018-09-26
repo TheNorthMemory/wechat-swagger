@@ -1,11 +1,12 @@
 post:
-  summary: 设置顶部banner跳转小程序接口
-  description: 用户连Wi-Fi后长期逗留在场所内，可以在连接Wi-Fi后进入微信点击微信聊首页欢迎语，即可进入预先设置的小程序中获得资讯或服务。注：只能跳转与公众号关联的小程序。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215135855720FBA0)
+  summary: 设置顶部banner跳转小程序接口/设置商家主页
+  description: 用户连Wi-Fi后长期逗留在场所内，可以在连接Wi-Fi后进入微信点击微信聊首页欢迎语，即可进入预先设置的小程序中获得资讯或服务。注：只能跳转与公众号关联的小程序。A->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215135855720FBA0) B->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444894127)
   operationId: bizwifi/homepage/set
   security:
     - accessToken: []
   tags:
     - 连WI-FI/小程序
+    - 连WI-FI/商家主页
   parameters:
     - in: body
       name: buffer
@@ -13,28 +14,32 @@ post:
         type: object
         properties:
           shop_id:
-            type: sting
+            type: string
             description: 门店ID
           template_id:
-            type: sting
-            description: 2-关联小程序（支持门店小程序）
+            type: integer
+            format: int32
+            description: 模板ID，0-默认模板，1-自定义url，2-关联小程序（支持门店小程序）
+            enum: [0, 1, 2]
           struct:
             type: object
-            description: 连网完成页跳转小程序原始id，finishpage_type为1时有效，要求小程序与公众号有绑定关系
+            description: 当template_id为0时可以不填；连网完成页跳转小程序原始id，finishpage_type为1时有效，要求小程序与公众号有绑定关系
             properties:
               wxa_user_name:
-                type: sting
+                type: string
                 description: 账号原始ID
               wxa_path:
-                type: sting
+                type: string
                 description: 小程序页面路径
+              url:
+                type: string
+                description: 自定义链接，当template_id为1时必填
             required:
               - wxa_user_name
               - wxa_path
         required:
           - shop_id
           - template_id
-          - struct
   responses:
     '200':
       description: ''

@@ -1,0 +1,39 @@
+post:
+  summary: 查询商家主页
+  description: 通过门店ID查询商户主页的信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457505498)
+  operationId: bizwifi/homepage/get
+  security:
+    - accessToken: []
+  tags:
+    - 连WI-FI/商家主页
+  parameters:
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties:
+          shop_id:
+            type: integer
+            format: int32
+            description: 门店ID
+        required:
+          - shop_id
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              shop_id:
+                type: integer
+                format: int32
+                description: 门店ID
+              template_id:
+                type: integer
+                format: int32
+                description:  模板类型
+              url:
+                type: string
+                description: 商家主页链接

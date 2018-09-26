@@ -1,0 +1,74 @@
+post:
+  summary: Wi-Fi数据统计
+  description: 查询一定时间范围内的WiFi连接总人数、微信方式连Wi-Fi人数、商家主页访问人数、连网后消息发送人数、新增公众号关注人数和累计公众号关注人数。查询的最长时间跨度为30天。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444894129)
+  operationId: bizwifi/statistics/list
+  security:
+    - accessToken: []
+  tags:
+    - 连WI-FI
+  parameters:
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties:
+          begin_date:
+            type: integer
+            format: int32
+            description: 起始日期时间，格式yyyy-mm-dd，最长时间跨度为30天
+          end_date:
+            type: integer
+            format: int32
+            description: 结束日期时间戳，格式yyyy-mm-dd，最长时间跨度为30天
+          shop_id:
+            type: integer
+            format: int32
+            description: 按门店ID搜索，-1为总统计
+        required:
+          - begin_date
+          - end_date
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    shop_id:
+                      type: integer
+                      format: int32
+                      description: 门店ID，-1为总统计
+                    statis_time:
+                      type: integer
+                      format: int32
+                      description: 统计时间，单位为毫秒
+                    total_user:
+                      type: integer
+                      format: int32
+                      description: Wi-Fi连接总人数
+                    homepage_uv:
+                      type: integer
+                      format: int32
+                      description: 商家主页访问人数
+                    new_fans:
+                      type: integer
+                      format: int32
+                      description: 新增公众号关注人数
+                    total_fans:
+                      type: integer
+                      format: int32
+                      description: 累计公众号关注人数
+                    wxconnect_user:
+                      type: integer
+                      format: int32
+                      description: 微信方式连Wi-Fi人数
+                    connect_msg_user:
+                      type: integer
+                      format: int32
+                      description: 连网后消息发送人数

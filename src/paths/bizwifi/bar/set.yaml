@@ -1,0 +1,32 @@
+post:
+  summary: 设置微信首页欢迎语
+  description: 设置微信首页欢迎语，可选择“欢迎光临XXX”或“已连接XXXWiFi”，XXX为公众号名称或门店名称。注：设置微信首页欢迎语的接口，未审核的门店不能设置包含门店名称（bar_type为1、3）的欢迎语内容。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457505524)
+  operationId: bizwifi/bar/set
+  security:
+    - accessToken: []
+  tags:
+    - 连WI-FI/商家主页
+  parameters:
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties:
+          shop_id:
+            type: integer
+            format: int32
+            description: 门店ID
+          bar_type:
+            type: integer
+            format: int32
+            description: 微信首页欢迎语的文本内容：0--欢迎光临+公众号名称；1--欢迎光临+门店名称；2--已连接+公众号名称+WiFi；3--已连接+门店名称+Wi-Fi。
+            enum: [0, 1, 2, 3]
+        required:
+          - shop_id
+          - bar_type
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'

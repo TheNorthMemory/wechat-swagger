@@ -1,0 +1,41 @@
+post:
+  summary: 添加portal型设备
+  description: 调用下述接口可以添加portal型设备的网络信息，并获得secretkey。secretkey为加密字符串参数，是portal设备改造流程中的重要参数。为防止secretkey泄露，可通过此接口重置刷新，重置后之前生成的secretkey将会失效。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457443857)
+  operationId: bizwifi/apportal/register
+  security:
+    - accessToken: []
+  tags:
+    - 连WI-FI/设备
+  parameters:
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties:
+          shop_id:
+            type: integer
+            format: int32
+            description: 门店ID
+          ssid:
+            type: string
+            description: 无线网络设备的ssid。32个字符以内；ssid支持中文，但可能因设备兼容性问题导致显示乱码，或无法连接等问题，相关风险自行承担！ 当门店下是portal型设备时，ssid必填；当门店下是密码型设备时，ssid选填，且ssid和密码必须有一个以大写字母“WX”开头
+          reset:
+            type: boolean
+            description: 重置secretkey，false-不重置，true-重置，默认为false
+        required:
+          - shop_id
+          - ssid
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  secretkey:
+                    type: string
+                    description: 改造portal页面所需参数，该参数用于触发呼起微信的JSAPI接口的sign参数值的计算

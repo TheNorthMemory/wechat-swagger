@@ -1,0 +1,44 @@
+post:
+  summary: 获取物料二维码
+  description: 添加设备后，通过此接口可以获取物料，包括二维码和桌贴两种样式。将物料铺设在线下门店里，可供用户扫码上网。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444894125)
+  operationId: bizwifi/qrcode/get
+  security:
+    - accessToken: []
+  tags:
+    - 连WI-FI
+  parameters:
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties:
+          shop_id:
+            type: integer
+            format: int32
+            description: 门店ID
+          ssid:
+            type: string
+            description: 已添加到门店下的无线网络名称
+          img_id:
+            type: integer
+            format: int32
+            description: 物料样式编号： 0-纯二维码，可用于自由设计宣传材料； 1-二维码物料，155mm×215mm(宽×高)，可直接张贴
+            enum: [0, 1]
+        required:
+          - shop_id
+          - ssid
+          - img_id
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  qrcode_url:
+                    type: string
+                    description: 二维码图片url

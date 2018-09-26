@@ -1,0 +1,50 @@
+post:
+  summary: 查询门店卡券投放信息
+  description: 通过此接口查询某一门店的详细卡券投放信息，包括卡券投放状态，卡券ID，卡券的投放时间等信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457427203)
+  operationId: bizwifi/couponput/set
+  security:
+    - accessToken: []
+  tags:
+    - 连WI-FI
+  parameters:
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties:
+          shop_id:
+            type: integer
+            format: int32
+            description: 门店ID，可设置为0，表示所有门店
+        required:
+          - shop_id
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  shop_id:
+                    type: integer
+                    format: int32
+                    description: 门店ID，可设置为0，表示所有门店
+                  card_id:
+                    type: integer
+                    format: int32
+                    description: 卡券ID
+                  card_describe:
+                    type: string
+                    description: 卡券描述，不能超过18个字符
+                  start_time:
+                    type: integer
+                    format: int32
+                    description: 卡券投放开始时间（单位是秒）
+                  end_time:
+                    type: integer
+                    format: int32
+                    description: 卡券投放结束时间（单位是秒） 注：不能超过卡券的有效期时间

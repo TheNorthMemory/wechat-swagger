@@ -1,0 +1,45 @@
+post:
+  summary: 设置门店卡券投放信息
+  description: 调用设置门店卡劵投放信息接口后，用户可在连网流程中关注商家公众号之后，领取配置的卡券。需设置卡劵ID，投放的有效时间等。注：需要先创建卡劵后，才能获取卡劵ID。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457425371)
+  operationId: bizwifi/couponput/set
+  security:
+    - accessToken: []
+  tags:
+    - 连WI-FI
+  parameters:
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties:
+          shop_id:
+            type: integer
+            format: int32
+            description: 门店ID，可设置为0，表示所有门店
+          card_id:
+            type: integer
+            format: int32
+            description: 卡券ID
+          card_describe:
+            type: string
+            description: 卡券描述，不能超过18个字符
+          start_time:
+            type: integer
+            format: int32
+            description: 卡券投放开始时间（单位是秒）
+          end_time:
+            type: integer
+            format: int32
+            description: 卡券投放结束时间（单位是秒） 注：不能超过卡券的有效期时间
+        required:
+          - shop_id
+          - card_id
+          - card_describe
+          - start_time
+          - end_time
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/mall.ResponseBaseBo'

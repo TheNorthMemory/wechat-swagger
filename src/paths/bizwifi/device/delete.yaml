@@ -1,0 +1,22 @@
+post:
+  summary: 删除设备
+  description: 根据bssid删除门店下的单个设备。删除后请尽快修改设备的网络名称和密码，或停止使用设备，否则设备会自动重新添加进来。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457443872)
+  operationId: bizwifi/device/delete
+  security:
+    - accessToken: []
+  tags:
+    - 连WI-FI/设备
+  parameters:
+    - in: body
+      name: buffer
+      schema:
+        type: object
+        properties:
+          bssid:
+            type: string
+            description: 需要删除的无线网络设备无线mac地址，格式冒号分隔，字符长度17个，并且字母小写，例如：00:1f:7a:ad:5c:a8
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: '#/definitions/mall.ResponseBaseBo'

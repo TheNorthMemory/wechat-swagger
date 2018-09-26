@@ -47,6 +47,11 @@ tags:
   - name: 卡券/立减金活动
   - name: 卡券/第三方模式/代制
   - name: 卡券/第三方模式/强授权
+  - name: 电子发票/商户接口
+  - name: 电子发票/开票平台接口
+  - name: 电子发票/报销方接口
+  - name: 电子发票/极速开票
+  - name: 电子发票/非税票据
   - name: 多客服/客服消息
   - name: 多客服/客服管理
   - name: 多客服/会话控制
@@ -72,9 +77,6 @@ tags:
   - name: 摇一摇周边/数据统计
   - name: 智能接口/语义理解
   - name: 智能接口/AI开放接口
-  - name: 电子发票/商户接口
-  - name: 电子发票/开票平台接口
-  - name: 电子发票/报销方接口
   - name: 数据统计/用户分析
   - name: 数据统计/图文分析
   - name: 数据统计/消息分析
@@ -1307,6 +1309,92 @@ paths:
           description: ''
           schema:
             $ref: '#/definitions/mall.ResponseBaseBo'
+  /card/invoice/biz/getselecttitleurl:
+    post:
+      summary: 获取用户抬头（方式一）:获取商户专属二维码，立在收银台
+      description: 商户调用接口，获取链接，将链接转成二维码，用户扫码，可以选择抬头发给商户。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496554912_vfWU0)
+      operationId: card/invoice/biz/getselecttitleurl
+      security:
+        - accessToken: []
+      tags:
+        - 电子发票/极速开票
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              attach:
+                type: string
+                description: 附加字段，用户提交发票时会发给商户
+              biz_name:
+                type: string
+                description: 将商户名称显示给用户看
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  url:
+                    type: string
+                    description: 链接
+  /card/invoice/biz/getusertitleurl:
+    post:
+      summary: 将发票抬头信息录入到用户微信中
+      description: 调用接口，获取添加存储发票抬头信息的链接，将链接发给微信用户，用户确认后将保存该信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496554912_vfWU0)
+      operationId: card/invoice/biz/getusertitleurl
+      security:
+        - accessToken: []
+      tags:
+        - 电子发票/极速开票
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                description: 抬头, user_fill为0时必填
+              phone:
+                type: string
+                description: 联系方式，必须是数字或者“-”
+              tax_no:
+                type: string
+                description: 税号，必须是15-20位数字或者英文字母
+              addr:
+                type: string
+                description: 地址
+              bank_type:
+                type: string
+                description: 银行类型
+              bank_no:
+                type: string
+                description: 银行号码，必须是小于23位的数字
+              user_fill:
+                type: integer
+                format: int32
+                description: 0=企业设置的抬头；1=用户自己填写的抬头
+                enum: [0, 1]
+              out_title_id:
+                type: string
+                description: 开票码
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  url:
+                    type: string
+                    description: 添加抬头卡链接
   /card/invoice/clearoutinvoice:
     post:
       summary: 发票冲红
@@ -1349,13 +1437,14 @@ paths:
   /card/invoice/getauthdata:
     post:
       summary: 查询开票信息/查询授权完成状态
-      description: 商户可以调用该接口查询某一个订单的开票信息。A->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y) B->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918906Epe65)
+      description: 商户可以调用该接口查询某一个订单的开票信息。A->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y) B->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918906Epe65) C->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21530623533CgUdj)
       operationId: card/invoice/getauthdata
       security:
         - accessToken: []
       tags:
         - 卡券/礼品卡/财务
         - 电子发票/商户接口
+        - 电子发票/非税票据
       parameters:
         - in: body
           name: body
@@ -1550,89 +1639,18 @@ paths:
                     description: 用户信息结构体
                     properties:
                       invoice_user_data:
-                        type: object
-                        properties:
-                          fee:
-                            type: integer
-                            format: int32
-                            description: 发票的金额，以分为单位
-                          title:
-                            type: string
-                            description: 发票的抬头
-                          billing_time:
-                            type: integer
-                            format: int32
-                            description: 发票的开票时间，为10位时间戳（utc+8）
-                          billing_no:
-                            type: string
-                            description: 发票的发票代码
-                          billing_code:
-                            type: string
-                            description: 发票的发票号码
-                          info:
-                            type: array
-                            description: 商品详情结构，见下方
-                            items:
-                              type: object
-                              properties:
-                                name:
-                                  type: String
-                                  description: 项目的名称
-                                num:
-                                  type: integer
-                                  format: int32
-                                  description: 项目的数量
-                                unit:
-                                  type: string
-                                  description: 项目的单位，如个
-                                price:
-                                  type: integer
-                                  format: int32
-                                  description: 项目的单价
-                          fee_without_tax:
-                            type: integer
-                            format: int32
-                            description: 不含税金额，以分为单位
-                          tax:
-                            type: integer
-                            format: int32
-                            description: 税额，以分为单位
-                          s_pdf_media_id:
-                            type: string
-                            description: 发票pdf文件上传到微信发票平台后，会生成一个发票s_media_id，该s_media_id可以直接用于关联发票PDF和发票卡券。发票上传参考“ 3 上传PDF ”一节
-                          s_trip_pdf_media_id:
-                            type: string
-                            description: 其它消费附件的PDF，如行程单、水单等，PDF上传方式参考“ 3 上传PDF ”一节
-                          check_code:
-                            type: string
-                            description: 校验码，发票pdf右上角，开票日期下的校验码
-                          buyer_number:
-                            type: string
-                            description: 购买方纳税人识别号
-                          buyer_address_and_phone:
-                            type: string
-                            description: 购买方地址、电话
-                          buyer_bank_account:
-                            type: string
-                            description: 购买方开户行及账号
-                          seller_number:
-                            type: string
-                            description: 销售方纳税人识别号
-                          seller_address_and_phone:
-                            type: string
-                            description: 销售方地址、电话
-                          seller_bank_account:
-                            type: string
-                            description: 销售方开户行及账号
-                          remarks:
-                            type: string
-                            description: 备注，发票右下角初
-                          cashier:
-                            type: string
-                            description: 收款人，发票左下角处
-                          maker:
-                            type: string
-                            description: 开票人，发票下方处
+                        allOf:
+                          - $ref: '#/definitions/card.invoice.UserInfoDataBo'
+                          - type: object
+                            properties:
+                              s_pdf_media_id:
+                                type: string
+                                description: 发票pdf文件上传到微信发票平台后，会生成一个发票s_media_id，该s_media_id可以直接用于关联发票PDF和发票卡券。发票上传参考“ 3 上传PDF ”一节
+                              s_trip_pdf_media_id:
+                                type: string
+                                description: 其它消费附件的PDF，如行程单、水单等，PDF上传方式参考“ 3 上传PDF ”一节
+                            required:
+                              - s_pdf_media_id
             required:
               - order_id
               - card_id
@@ -1851,6 +1869,7 @@ paths:
         - accessToken: []
       tags:
         - 电子发票/开票平台接口
+        - 电子发票/非税票据
       parameters:
         - in: body
           name: body
@@ -1891,6 +1910,7 @@ paths:
         - accessToken: []
       tags:
         - 电子发票/开票平台接口
+        - 电子发票/非税票据
       consumes:
         - multipart/form-data
       parameters:
@@ -1919,6 +1939,7 @@ paths:
         - accessToken: []
       tags:
         - 电子发票/开票平台接口
+        - 电子发票/非税票据
       parameters:
         - in: body
           name: buffer
@@ -1932,13 +1953,7 @@ paths:
                 type: string
                 description: 发票 code
               reimburse_status:
-                type: string
-                description: 发票报销状态,INVOICE_REIMBURSE_INIT=发票初始状态，未锁定,INVOICE_REIMBURSE_LOCK=发票已锁定,INVOICE_REIMBURSE_CLOSURE=发票已核销,INVOICE_REIMBURSE_CANCEL=发票被冲红
-                enum:
-                  - INVOICE_REIMBURSE_INIT
-                  - INVOICE_REIMBURSE_LOCK
-                  - INVOICE_REIMBURSE_CLOSURE
-                  - INVOICE_REIMBURSE_CANCEL
+                $ref: '#/definitions/card.invoice.ReimburseStatusBo'
             required:
               - card_id
               - code
@@ -1999,6 +2014,242 @@ paths:
                       pdfurl:
                         type: string
                         description: 发票url
+  /card/invoice/reimburse/getinvoicebatch:
+    post:
+      summary: 批量查询报销发票信息
+      description: 通过该接口批量查询电子发票的结构化信息，并获取发票PDF文件。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918939oae3U)
+      operationId: card/invoice/reimburse/getinvoicebatch
+      security:
+        - accessToken: []
+      tags:
+        - 电子发票/报销方接口
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              item_list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    card_id:
+                      type: string
+                      description: 发票card_id
+                    encrypt_code:
+                      type: string
+                      description: 发票卡券的加密 code ，和 card_id 共同构成一张发票卡券的唯一标识
+                  required:
+                    - card_id
+                    - encrypt_code
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  item_list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        card_id:
+                          type: string
+                          description: 发票id
+                        begin_time:
+                          type: integer
+                          format: int32
+                          description: 发票的有效期起始时间
+                        end_time:
+                          type: integer
+                          format: int32
+                          description: 发票的有效期截止时间
+                        openid:
+                          type: string
+                          description: 用户标识
+                        type:
+                          type: string
+                          description: 发票的类型，如广东增值税普通发票
+                        payee:
+                          type: string
+                          description: 发票的收款方
+                        detail:
+                          type: string
+                          description: 发票详情
+                        user_info:
+                          allOf:
+                            - $ref: '#/definitions/card.invoice.UserInfoDataBo'
+                            - type: object
+                              properties:
+                                pdf_url:
+                                  type: string
+                                  description: 这张发票对应的PDF_URL
+                                trip_pdf_url:
+                                  type: string
+                                  description: 其它消费凭证附件对应的URL，如行程单、水单等
+                                reimburse_status:
+                                  $ref: '#/definitions/card.invoice.ReimburseStatusBo'
+                              required:
+                                - pdf_url
+                                - reimburse_status
+  /card/invoice/reimburse/getinvoiceinfo:
+    post:
+      summary: 查询报销发票信息
+      description: 通过该接口查询电子发票的结构化信息，并获取发票PDF文件。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918939oae3U)
+      operationId: card/invoice/reimburse/getinvoiceinfo
+      security:
+        - accessToken: []
+      tags:
+        - 电子发票/报销方接口
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              card_id:
+                type: string
+                description: 发票card_id
+              encrypt_code:
+                type: string
+                description: 发票卡券的加密 code ，和 card_id 共同构成一张发票卡券的唯一标识
+            required:
+              - card_id
+              - encrypt_code
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  card_id:
+                    type: string
+                    description: 发票id
+                  begin_time:
+                    type: integer
+                    format: int32
+                    description: 发票的有效期起始时间
+                  end_time:
+                    type: integer
+                    format: int32
+                    description: 发票的有效期截止时间
+                  openid:
+                    type: string
+                    description: 用户标识
+                  type:
+                    type: string
+                    description: 发票的类型，如广东增值税普通发票
+                  payee:
+                    type: string
+                    description: 发票的收款方
+                  detail:
+                    type: string
+                    description: 发票详情
+                  user_info:
+                    allOf:
+                      - $ref: '#/definitions/card.invoice.UserInfoDataBo'
+                      - type: object
+                        properties:
+                          pdf_url:
+                            type: string
+                            description: 这张发票对应的PDF_URL
+                          trip_pdf_url:
+                            type: string
+                            description: 其它消费凭证附件对应的URL，如行程单、水单等
+                          reimburse_status:
+                            $ref: '#/definitions/card.invoice.ReimburseStatusBo'
+                        required:
+                          - pdf_url
+                          - reimburse_status
+  /card/invoice/reimburse/updateinvoicestatus:
+    post:
+      summary: 报销方更新发票状态
+      description: 报销企业和报销服务商可以通过该接口对某一张发票进行锁定、解锁和报销操作。注意，报销状态为不可逆状态，请开发者慎重调用。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918939oae3U)
+      operationId: card/invoice/reimburse/updateinvoicestatus
+      security:
+        - accessToken: []
+      tags:
+        - 电子发票/报销方接口
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              item_list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    card_id:
+                      type: string
+                      description: 发票card_id
+                    encrypt_code:
+                      type: string
+                      description: 发票卡券的加密 code ，和 card_id 共同构成一张发票卡券的唯一标识
+                    reimburse_status:
+                      $ref: '#/definitions/card.invoice.ReimburseStatusBo'
+                  required:
+                    - card_id
+                    - encrypt_code
+                    - reimburse_status
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
+  /card/invoice/reimburse/updatestatusbatch:
+    post:
+      summary: 报销方批量更新发票状态
+      description: 批量更新发票状态接口为事务性操作，如果其中一张发票更新失败，列表中的其它发票状态更新也会无法执行，恢复到接口调用前的状态。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918939oae3U)
+      operationId: card/invoice/reimburse/updatestatusbatch
+      security:
+        - accessToken: []
+      tags:
+        - 电子发票/报销方接口
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            required:
+              - openid
+              - reimburse_status
+              - invoice_list
+            properties:
+              openid:
+                type: string
+                description: 用户openid
+              reimburse_status:
+                $ref: '#/definitions/card.invoice.ReimburseStatusBo'
+              invoice_list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    card_id:
+                      type: string
+                      description: 发票card_id
+                    encrypt_code:
+                      type: string
+                      description: 发票卡券的加密 code ，和 card_id 共同构成一张发票卡券的唯一标识
+                  required:
+                    - card_id
+                    - encrypt_code
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/mall.ResponseBaseBo'
   /card/invoice/rejectinsert:
     post:
       summary: 拒绝开票
@@ -2008,6 +2259,7 @@ paths:
         - accessToken: []
       tags:
         - 电子发票/商户接口
+        - 电子发票/非税票据
       parameters:
         - in: body
           name: body
@@ -2036,6 +2288,61 @@ paths:
           description: ''
           schema:
             $ref: '#/definitions/mall.ResponseBaseBo'
+  /card/invoice/scantitle:
+    post:
+      summary: 获取用户抬头（方式二）:商户扫描用户的发票抬头二维码
+      description: 商户扫用户“我的—个人信息—我的发票抬头”里面的抬头二维码后，通过调用本接口，可以获取用户抬头信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496554912_vfWU0)
+      operationId: card/invoice/scantitle
+      security:
+        - accessToken: []
+      tags:
+        - 电子发票/极速开票
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              scan_text:
+                type: string
+                description: 扫码后获取的文本
+            required:
+              - scan_text
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  title_type:
+                    type: integer
+                    format: int32
+                    description: 0=单位抬头；1=个人抬头
+                    enum: [0, 1]
+                  title:
+                    type: string
+                    description: 抬头
+                  phone:
+                    type: string
+                    description: 联系方式，必须是数字或者“-”
+                  tax_no:
+                    type: string
+                    description: 税号，必须是15-20位数字或者英文字母
+                  addr:
+                    type: string
+                    description: 地址
+                  bank_type:
+                    type: string
+                    description: 银行类型
+                  bank_no:
+                    type: string
+                    description: 银行号码，必须是小于23位的数字
+                required:
+                  - title_type
+                  - title
   /card/invoice/setbizattr:
     post:
       summary: 设置/查询支付后开票/页面信息,设置/查询商户联系方式
@@ -2094,6 +2401,7 @@ paths:
         - accessToken: []
       tags:
         - 电子发票/开票平台接口
+        - 电子发票/非税票据
       parameters:
         - in: body
           name: buffer
@@ -9572,6 +9880,187 @@ paths:
       responses:
         '200':
           description: ''
+  /nontax/createbillcard:
+    post:
+      summary: 创建财政电子票据接口
+      description: 财政局可以通过这个接口帮助执收单位创建一张财政电子票据模板。同一个财政局可以对应多个执收单位，同一个执收单位，使用同一个card_id，不同的执收单位，使用不同的card_id。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21530623533CgUdj)
+      operationId: nontax/createbillcard
+      security:
+        - accessToken: []
+      tags:
+        - 电子发票/非税票据
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              base_info:
+                type: object
+                description: 财政电子票据信息
+                properties:
+                  logo_url:
+                    type: string
+                    description: 财政局LOGO，请参考上传图片接口
+                required:
+                  - logo_url
+              payee:
+                type: string
+                description: 收款方（开票方）全称，显示在财政电子票据详情内
+            required:
+              - base_info
+              - payee
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  card_id:
+                    type: string
+                    description: 票据card_id
+  /nontax/getbillauthurl:
+    post:
+      summary: 获取授权页链接
+      description: 通过此接口，获取授权页链接，让用户跳转到授权页。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21530623533CgUdj)
+      operationId: nontax/getbillauthurl
+      security:
+        - accessToken: []
+      tags:
+        - 电子发票/非税票据
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              s_pappid:
+                type: string
+                description: 财政局id，需要找财政局提供
+              order_id:
+                type: string
+                description: 订单id
+              money:
+                type: integer
+                format: int32
+                description: 订单金额，以分为单位
+              timestamp:
+                type: integer
+                format: int32
+                description: 时间戳
+              source:
+                type: string
+                description: 开票来源，web：公众号开票，app：app开票
+                enum: ['web', 'app']
+              redirect_url:
+                type: string
+                description: 授权成功后跳转页面
+              ticket:
+                type: string
+                description: Api_ticket，参考获取api_ticket接口获取
+            required:
+              - s_pappid
+              - order_id
+              - money
+              - timestamp
+              - source
+              - ticket
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  auth_url:
+                    type: string
+                    description: 授权链接
+                  expire_time:
+                    type: integer
+                    format: int32
+                    description: 过期时间，单位为秒，授权链接会在一段时间之后过期
+  /nontax/insertbill:
+    post:
+      summary: 将财政电子票据添加到用户微信卡包
+      description: 执收单位完成用户插卡授权后，向财政局请求给某一个订单号进行领取财政电子票据，财政局须调用该接口对用户进行开票。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21530623533CgUdj)
+      operationId: nontax/insertbill
+      security:
+        - accessToken: []
+      tags:
+        - 电子发票/非税票据
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              order_id:
+                type: string
+                description: 财政电子票据order_id
+              card_id:
+                type: string
+                description: 财政电子票据card_id
+              appid:
+                type: string
+                description: 该订单号授权时使用的appid，一般为执收单位appid
+              card_ext:
+                type: object
+                description: 财政电子票据具体内容
+                properties:
+                  user_card:
+                    type: object
+                    description: 用户信息结构体
+                    properties:
+                      invoice_user_data:
+                        type: object
+                        properties:
+                          fee:
+                            type: integer
+                            format: int32
+                            description: 财政电子票据的金额，以分为单位
+                          title:
+                            type: string
+                            description: 财政电子票据的缴费单位
+                          billing_time:
+                            type: integer
+                            format: int32
+                            description: 财政电子票据的开票时间，为10位时间戳（utc+8）
+                          billing_no:
+                            type: string
+                            description: 财政电子票据代码
+                          billing_code:
+                            type: string
+                            description: 财政电子票据号码
+                          s_pdf_media_id:
+                            type: string
+                            description: 财政电子票据pdf文件上传到微信财政电子票据平台后，会生成一个财政电子票据s_media_id，该s_media_id可以直接用于开财政电子票据，上传参考“5、上传pdf”
+                        required:
+                          - fee
+                          - title
+                          - billing_time
+                          - billing_no
+                          - billing_code
+                          - s_pdf_media_id
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - type: object
+                properties:
+                  code:
+                    type: string
+                    description: 财政电子票据code
+                  openid:
+                    type: string
+                    description: 用户标识，即领取到财政电子票据的openid
   /scan/merchantinfo/get:
     get:
       summary: 获取商户信息
@@ -12432,6 +12921,104 @@ definitions:
       s_pappid:
         type: string
         description: 为该商户提供开票服务的开票平台 id ，由开票平台提供给商户
+  card.invoice.ReimburseStatusBo:
+    type: string
+    description: 发票报销状态,INVOICE_REIMBURSE_INIT=发票初始状态，未锁定,INVOICE_REIMBURSE_LOCK=发票已锁定,INVOICE_REIMBURSE_CLOSURE=发票已核销,INVOICE_REIMBURSE_CANCEL=发票被冲红
+    enum:
+      - INVOICE_REIMBURSE_INIT
+      - INVOICE_REIMBURSE_LOCK
+      - INVOICE_REIMBURSE_CLOSURE
+      - INVOICE_REIMBURSE_CANCEL
+  card.invoice.UserInfoDataBo:
+    type: object
+    properties:
+      fee:
+        type: integer
+        format: int32
+        description: 发票的金额，以分为单位
+      title:
+        type: string
+        description: 发票的抬头
+      billing_time:
+        type: integer
+        format: int32
+        description: 发票的开票时间，为10位时间戳（utc+8）
+      billing_no:
+        type: string
+        description: 发票的发票代码
+      billing_code:
+        type: string
+        description: 发票的发票号码
+      info:
+        type: array
+        description: 商品详情结构
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+              description: 项目的名称
+            num:
+              type: integer
+              format: int32
+              description: 项目的数量
+            unit:
+              type: string
+              description: 项目的单位，如个
+            price:
+              type: integer
+              format: int32
+              description: 项目的单价，以分为单位
+          required:
+            - name
+            - price
+      fee_without_tax:
+        type: integer
+        format: int32
+        description: 不含税金额，以分为单位
+      tax:
+        type: integer
+        format: int32
+        description: 税额，以分为单位
+      check_code:
+        type: string
+        description: 校验码，发票pdf右上角，开票日期下的校验码
+      buyer_number:
+        type: string
+        description: 购买方纳税人识别号
+      buyer_address_and_phone:
+        type: string
+        description: 购买方地址、电话
+      buyer_bank_account:
+        type: string
+        description: 购买方开户行及账号
+      seller_number:
+        type: string
+        description: 销售方纳税人识别号
+      seller_address_and_phone:
+        type: string
+        description: 销售方地址、电话
+      seller_bank_account:
+        type: string
+        description: 销售方开户行及账号
+      remarks:
+        type: string
+        description: 备注，发票右下角初
+      cashier:
+        type: string
+        description: 收款人，发票左下角处
+      maker:
+        type: string
+        description: 开票人，发票下方处
+    required:
+      - fee
+      - title
+      - billing_time
+      - billing_no
+      - billing_code
+      - fee_without_tax
+      - tax
+      - check_code
   card.model.SubMerchantInfoBo:
     type: object
     properties:

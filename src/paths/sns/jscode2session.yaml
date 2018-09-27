@@ -1,8 +1,9 @@
 get:
   summary: 登录凭证校验
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/api-login.html#wxloginobject)'
   operationId: sns/jscode2session
   tags:
-    - 网页授权
+    - 网页开发
   parameters:
     - in: query
       name: appid
@@ -28,3 +29,17 @@ get:
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              openid:
+                type: string
+                description: 用户唯一标识，请注意，在未关注公众号时，用户访问公众号的网页，也会产生一个用户和公众号唯一的OpenID
+              session_key:
+                type: string
+                description: 会话密钥
+              unionid:
+                type: string
+                description: 用户在开放平台的唯一标识符

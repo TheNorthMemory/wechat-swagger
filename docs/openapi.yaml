@@ -33,6 +33,7 @@ tags:
   - name: 图文消息留言管理
   - name: 消息管理
   - name: 模版消息
+  - name: 网页开发
   - name: 卡券
   - name: 卡券/券点
   - name: 卡券/会员卡
@@ -12995,9 +12996,10 @@ paths:
   /sns/auth:
     get:
       summary: 检验授权凭证（access_token）是否有效
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842)'
       operationId: sns/auth
       tags:
-        - 网页授权
+        - 网页开发
       security:
         - accessToken: []
       parameters:
@@ -13009,12 +13011,15 @@ paths:
       responses:
         '200':
           description: ''
+          schema:
+            $ref: '#/definitions/base.ResponseBo'
   /sns/jscode2session:
     get:
       summary: 登录凭证校验
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/api-login.html#wxloginobject)'
       operationId: sns/jscode2session
       tags:
-        - 网页授权
+        - 网页开发
       parameters:
         - in: query
           name: appid
@@ -13040,12 +13045,27 @@ paths:
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  openid:
+                    type: string
+                    description: 用户唯一标识，请注意，在未关注公众号时，用户访问公众号的网页，也会产生一个用户和公众号唯一的OpenID
+                  session_key:
+                    type: string
+                    description: 会话密钥
+                  unionid:
+                    type: string
+                    description: 用户在开放平台的唯一标识符
   /sns/oauth2/access_token:
     get:
       summary: 通过code换取网页授权access_token
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842)'
       operationId: sns/oauth2/access_token
       tags:
-        - 网页授权
+        - 网页开发
       parameters:
         - in: query
           name: grant_type
@@ -13071,12 +13091,34 @@ paths:
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  access_token:
+                    type: string
+                    description: 网页授权接口调用凭证,注意：此access_token与基础支持的access_token不同
+                  expires_in:
+                    type: integer
+                    format: int32
+                    description: access_token接口调用凭证超时时间，单位（秒）
+                  refresh_token:
+                    type: string
+                    description: 用户刷新access_token
+                  openid:
+                    type: string
+                    description: 用户唯一标识，请注意，在未关注公众号时，用户访问公众号的网页，也会产生一个用户和公众号唯一的OpenID
+                  scope:
+                    type: string
+                    description: 用户授权的作用域，使用逗号（,）分隔
   /sns/oauth2/refresh_token:
     get:
       summary: 刷新access_token（如果需要）
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842)'
       operationId: sns/oauth2/refresh_token
       tags:
-        - 网页授权
+        - 网页开发
       security:
         - accessToken: []
       parameters:
@@ -13099,12 +13141,36 @@ paths:
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  access_token:
+                    type: string
+                    description: 网页授权接口调用凭证,注意：此access_token与基础支持的access_token不同
+                  expires_in:
+                    type: integer
+                    format: int32
+                    description: access_token接口调用凭证超时时间，单位（秒）
+                  refresh_token:
+                    type: string
+                    description: 用户刷新access_token
+                  openid:
+                    type: string
+                    description: 用户唯一标识，请注意，在未关注公众号时，用户访问公众号的网页，也会产生一个用户和公众号唯一的OpenID
+                  scope:
+                    type: string
+                    description: 用户授权的作用域，使用逗号（,）分隔
   /sns/userinfo:
     get:
       summary: 拉取用户信息
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842)'
       operationId: sns/userinfo
       tags:
-        - 网页授权
+        - 网页开发
+      security:
+        - accessToken: []
       parameters:
         - in: query
           name: openid
@@ -13119,6 +13185,40 @@ paths:
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  openid:
+                    type: string
+                    description: 用户的唯一标识
+                  nickname:
+                    type: string
+                    description: 用户昵称
+                  sex:
+                    type: string
+                    description: 用户的性别，值为1时是男性，值为2时是女性，值为0时是未知
+                  province:
+                    type: string
+                    description: 用户个人资料填写的省份
+                  city:
+                    type: string
+                    description: 普通用户个人资料填写的城市
+                  country:
+                    type: string
+                    description: 国家，如中国为CN
+                  headimgurl:
+                    type: string
+                    description: 用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），用户没有头像时该项为空。若用户更换头像，原有头像URL将失效。
+                  privilege:
+                    type: array
+                    description: 用户特权信息，json 数组，如微信沃卡用户为（chinaunicom）
+                    items:
+                      type: string
+                  unionid:
+                    type: string
+                    description: 只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段。
   /wxa/add_store:
     post:
       summary: 添加门店

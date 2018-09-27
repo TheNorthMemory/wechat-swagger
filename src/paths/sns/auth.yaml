@@ -1,8 +1,9 @@
 get:
   summary: 检验授权凭证（access_token）是否有效
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842)'
   operationId: sns/auth
   tags:
-    - 网页授权
+    - 网页开发
   security:
     - accessToken: []
   parameters:
@@ -14,3 +15,5 @@ get:
   responses:
     '200':
       description: ''
+      schema:
+        $ref: '#/definitions/base.ResponseBo'

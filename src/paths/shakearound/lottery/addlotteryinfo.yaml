@@ -17,7 +17,6 @@ post:
       enum: [1, 2]
     - in: query
       name: logo_url
-      nullable: true
       type: string
       description: 使用模板页面的logo_url，不使用模板时可不加。展示在摇一摇界面的消息图标。图片尺寸为120x120。
     - in: body

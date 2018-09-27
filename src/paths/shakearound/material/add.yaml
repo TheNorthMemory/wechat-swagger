@@ -26,6 +26,7 @@ post:
     '200':
       description: ''
       schema:
+        allOf:
           - $ref: '#/definitions/base.ResponseBo'
           - type: object
             properties:

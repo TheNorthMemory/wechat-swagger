@@ -128,7 +128,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -169,7 +169,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
   /bizwifi/couponput/get:
     post:
       summary: 查询门店卡券投放信息
@@ -196,7 +196,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -266,7 +266,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
   /bizwifi/device/add:
     post:
       summary: 添加密码型设备
@@ -300,7 +300,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /bizwifi/device/delete:
     post:
       summary: 删除设备
@@ -323,7 +323,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /bizwifi/device/list:
     post:
       summary: 查询设备
@@ -356,7 +356,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -435,7 +435,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
   /bizwifi/homepage/get:
     post:
       summary: 查询商家主页
@@ -462,7 +462,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   shop_id:
@@ -524,7 +524,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
   /bizwifi/openplugin/token:
     post:
       summary: 第三方平台获取开插件wifi_token
@@ -550,7 +550,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -598,7 +598,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -632,7 +632,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /bizwifi/shop/get:
     post:
       summary: 查询门店WiFi信息接口
@@ -659,7 +659,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -764,7 +764,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -864,7 +864,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /bizwifi/statistics/list:
     post:
       summary: Wi-Fi数据统计
@@ -900,7 +900,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -973,7 +973,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   total_num:
@@ -1038,7 +1038,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
             example:
               errcode: 0
               errmsg: ok
@@ -1075,7 +1075,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   exist_code:
@@ -1124,7 +1124,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   card:
@@ -1168,7 +1168,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   code:
@@ -1211,7 +1211,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   succ_code:
@@ -1266,7 +1266,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   card:
@@ -1327,7 +1327,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   count:
@@ -1374,7 +1374,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
             example:
               errcode: 0
               errmsg: ok
@@ -1410,7 +1410,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
             example:
               errcode: 0
               errmsg: ok
@@ -1446,7 +1446,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
             example:
               errcode: 0
               errmsg: ok
@@ -1509,7 +1509,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   card_id:
@@ -1543,7 +1543,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
             example:
               errcode: 0
               errmsg: ok
@@ -1613,7 +1613,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   info:
@@ -1661,7 +1661,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   card:
@@ -1721,7 +1721,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   category:
@@ -1771,7 +1771,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   colors:
@@ -1816,7 +1816,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   control_info:
@@ -1895,7 +1895,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   total_count:
@@ -1930,7 +1930,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - $ref: '#/definitions/card.type.GiftCardOrderBo'
   /card/giftcard/order/refund:
     post:
@@ -1954,7 +1954,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /card/giftcard/page/add:
     post:
       summary: 创建-礼品卡货架接口
@@ -1977,7 +1977,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   page_id:
@@ -2003,7 +2003,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   page_id_list:
@@ -2042,7 +2042,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   page:
@@ -2074,7 +2074,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /card/giftcard/pay/submch/bind:
     post:
       summary: 绑定商户号到礼品卡小程序接口
@@ -2100,7 +2100,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /card/giftcard/pay/whitelist/add:
     post:
       summary: 开通微信支付礼品卡权限
@@ -2124,7 +2124,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   url:
@@ -2158,7 +2158,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /card/invoice/biz/getselecttitleurl:
     post:
       summary: 获取用户抬头（方式一）:获取商户专属二维码，立在收银台
@@ -2186,7 +2186,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   url:
@@ -2239,7 +2239,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   url:
@@ -2283,7 +2283,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /card/invoice/getauthdata:
     post:
       summary: 查询开票信息/查询授权完成状态
@@ -2312,7 +2312,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   invoice_status:
@@ -2443,7 +2443,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   auth_url:
@@ -2511,7 +2511,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   code:
@@ -2645,7 +2645,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /card/invoice/platform/createcard:
     post:
       summary: 创建发票卡券模板
@@ -2704,7 +2704,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   card_id:
@@ -2741,7 +2741,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   pdf_url:
@@ -2774,7 +2774,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   s_media_id:
@@ -2812,7 +2812,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /card/invoice/queryinvoceinfo:
     post:
       summary: 查询已开发票
@@ -2840,7 +2840,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   invoicedetail:
@@ -2899,7 +2899,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   item_list:
@@ -2976,7 +2976,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   card_id:
@@ -3055,7 +3055,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /card/invoice/reimburse/updatestatusbatch:
     post:
       summary: 报销方批量更新发票状态
@@ -3099,7 +3099,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /card/invoice/rejectinsert:
     post:
       summary: 拒绝开票
@@ -3137,7 +3137,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /card/invoice/scantitle:
     post:
       summary: 获取用户抬头（方式二）:商户扫描用户的发票抬头二维码
@@ -3164,7 +3164,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   title_type:
@@ -3232,7 +3232,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 description: 当action为get_pay_mch/get_auth_field/get_contact时返回
                 properties:
@@ -3263,7 +3263,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   invoice_url:
@@ -3320,7 +3320,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   url:
@@ -3405,7 +3405,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   location_list:
@@ -3483,7 +3483,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
             example:
               errcode: 0
               errmsg: ok
@@ -3550,7 +3550,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
             example:
               errcode: 0
               errmsg: ok
@@ -3583,7 +3583,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   url:
@@ -3618,7 +3618,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   info:
@@ -3768,7 +3768,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
             example:
               errcode: 0
               errmsg: ok
@@ -3864,7 +3864,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   info:
@@ -3913,7 +3913,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   openid:
@@ -4105,7 +4105,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
             example:
               errcode: 0
               errmsg: ok
@@ -4157,7 +4157,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
             example:
               errcode: 0
               errmsg: ok
@@ -4184,7 +4184,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   content:
@@ -4209,7 +4209,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   reward:
@@ -4245,7 +4245,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /card/pay/getcoinsinfo:
     get:
       summary: 查询券点余额
@@ -4261,7 +4261,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   free_coin:
@@ -4301,7 +4301,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   order_info:
@@ -4377,7 +4377,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   total_num:
@@ -4416,7 +4416,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   order_id:
@@ -4458,7 +4458,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   order_id:
@@ -4495,7 +4495,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
             example:
               errcode: 0
               errmsg: ok
@@ -4540,7 +4540,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   ticket:
@@ -4597,7 +4597,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
             example:
               errcode: 0
               errmsg: ok
@@ -4626,7 +4626,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   card_id:
@@ -4663,7 +4663,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
             example:
               errcode: 0
               errmsg: ok
@@ -4698,7 +4698,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   info_list:
@@ -4731,7 +4731,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   info:
@@ -4758,7 +4758,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   info:
@@ -4792,7 +4792,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   info:
@@ -4826,7 +4826,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
             example:
               errcode: 0
               errmsg: ok
@@ -4875,7 +4875,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   send_check:
@@ -4914,7 +4914,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   has_share_card:
@@ -4973,7 +4973,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   result_list:
@@ -5021,7 +5021,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/comment/close:
     post:
       summary: 关闭已群发文章评论
@@ -5049,7 +5049,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/comment/delete:
     post:
       summary: 删除评论
@@ -5084,7 +5084,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/comment/list:
     post:
       summary: 查看指定文章的评论数据
@@ -5131,7 +5131,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   total:
@@ -5203,7 +5203,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/comment/open:
     post:
       summary: 打开已群发文章评论
@@ -5231,7 +5231,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/comment/reply/add:
     post:
       summary: 回复评论
@@ -5270,7 +5270,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/comment/reply/delete:
     post:
       summary: 删除回复
@@ -5305,7 +5305,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/comment/unmarkelect:
     post:
       summary: 将评论取消精选
@@ -5340,7 +5340,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/component/api_confirm_authorization:
     post:
       summary: 确认授权
@@ -5379,7 +5379,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/component/api_get_authorizer_info:
     post:
       summary: 获取授权方的账户信息
@@ -5409,7 +5409,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   authorizer_info:
@@ -5513,7 +5513,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   authorization_info:
@@ -5581,7 +5581,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   list:
@@ -5625,7 +5625,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   result:
@@ -5660,7 +5660,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   result:
@@ -5695,7 +5695,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   appid:
@@ -5755,7 +5755,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/component/upload_card_merchant_qualification:
     post:
       summary: 母商户资质申请
@@ -5792,7 +5792,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/customservice/getkflist:
     get:
       summary: 获取所有客服账号
@@ -6032,7 +6032,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/material/get_material:
     post:
       summary: 获取永久素材
@@ -6134,7 +6134,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/media/get:
     get:
       summary: 获取临时素材
@@ -6443,7 +6443,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/menu/create:
     post:
       summary: 创建
@@ -6462,7 +6462,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/menu/delconditional:
     post:
       summary: 删除个性化
@@ -6486,7 +6486,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/menu/delete:
     get:
       summary: 删除
@@ -6501,7 +6501,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/menu/get:
     get:
       summary: 查询
@@ -6729,7 +6729,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/message/mass/get:
     post:
       summary: 查询群发消息发送状态
@@ -6869,7 +6869,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   type:
@@ -6997,7 +6997,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   type:
@@ -7135,7 +7135,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   type:
@@ -7217,7 +7217,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/poi/addpoi:
     post:
       summary: 增加门店
@@ -7416,7 +7416,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   short_url:
@@ -7500,7 +7500,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/tags/get:
     get:
       summary: 获取
@@ -7588,7 +7588,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/tags/members/batchtagging:
     post:
       summary: 批量为用户打标签
@@ -7614,7 +7614,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/tags/members/batchunblacklist:
     post:
       summary: 取消拉黑用户
@@ -7642,7 +7642,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/tags/members/batchuntagging:
     post:
       summary: 批量为用户取消标签
@@ -7668,7 +7668,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/tags/members/getblacklist:
     post:
       summary: 获取公众号的黑名单列表
@@ -7783,7 +7783,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   template_id:
@@ -7839,7 +7839,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/template/get_all_private_template:
     get:
       summary: 获取模板列表
@@ -7993,7 +7993,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   msgid:
@@ -8073,7 +8073,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/ticket/getticket:
     get:
       summary: 获取卡券api_ticket/jsapi_ticket
@@ -8098,7 +8098,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   result:
@@ -8309,7 +8309,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/user/tag/get:
     post:
       summary: 获取标签下粉丝列表
@@ -8355,6 +8355,7 @@ paths:
   /customservice/kfaccount/add:
     post:
       summary: 添加客服帐号
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1458044813)'
       operationId: customservice/kfaccount/add
       security:
         - accessToken: []
@@ -8365,10 +8366,18 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              kf_account:
+                type: string
+                description: 完整客服帐号，格式为：帐号前缀@公众号微信号，帐号前缀最多10个字符，必须是英文、数字字符或者下划线，后缀为公众号微信号，长度不超过30个字符
+              nickname:
+                type: string
+                description: 客服昵称，最长16个字
       responses:
         '200':
           description: ''
+          schema:
+            $ref: '#/definitions/base.ResponseBo'
   /customservice/kfaccount/del:
     get:
       summary: 删除客服帐号
@@ -8389,6 +8398,7 @@ paths:
   /customservice/kfaccount/inviteworker:
     post:
       summary: 邀请绑定客服帐号
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1458044813)'
       operationId: customservice/kfaccount/inviteworker
       security:
         - accessToken: []
@@ -8399,13 +8409,22 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              kf_account:
+                type: string
+                description: 完整客服帐号，格式为：帐号前缀@公众号微信号
+              invite_wx:
+                type: string
+                description: 接收绑定邀请的客服微信号
       responses:
         '200':
           description: ''
+          schema:
+            $ref: '#/definitions/base.ResponseBo'
   /customservice/kfaccount/update:
     post:
       summary: 设置客服信息
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1458044813)'
       operationId: customservice/kfaccount/update
       security:
         - accessToken: []
@@ -8416,10 +8435,18 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              kf_account:
+                type: string
+                description: 完整客服帐号，格式为：帐号前缀@公众号微信号
+              nickname:
+                type: string
+                description: 客服昵称，最长16个字
       responses:
         '200':
           description: ''
+          schema:
+            $ref: '#/definitions/base.ResponseBo'
   /customservice/kfaccount/uploadheadimg:
     post:
       summary: 上传客服头像
@@ -8447,6 +8474,7 @@ paths:
   /customservice/kfsession/close:
     post:
       summary: 关闭会话
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1458044820)'
       operationId: customservice/kfsession/close
       security:
         - accessToken: []
@@ -8457,13 +8485,22 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              kf_account:
+                type: string
+                description: 完整客服帐号，格式为：帐号前缀@公众号微信号
+              openid:
+                type: string
+                description: 粉丝的openid
       responses:
         '200':
           description: ''
+          schema:
+            $ref: '#/definitions/base.ResponseBo'
   /customservice/kfsession/create:
     post:
       summary: 创建会话
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1458044820)'
       operationId: customservice/kfsession/create
       security:
         - accessToken: []
@@ -8474,13 +8511,22 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              kf_account:
+                type: string
+                description: 完整客服帐号，格式为：帐号前缀@公众号微信号
+              openid:
+                type: string
+                description: 粉丝的openid
       responses:
         '200':
           description: ''
+          schema:
+            $ref: '#/definitions/base.ResponseBo'
   /customservice/kfsession/getsession:
     get:
       summary: 获取客户会话状态
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1458044820)'
       operationId: customservice/kfsession/getsession
       security:
         - accessToken: []
@@ -8494,9 +8540,20 @@ paths:
       responses:
         '200':
           description: ''
+          schema:
+            type: object
+            properties:
+              kf_account:
+                type: string
+                description: 正在接待的客服，为空表示没有人在接待
+              createtime:
+                type: integer
+                format: int32
+                description: 会话接入的时间
   /customservice/kfsession/getsessionlist:
     get:
       summary: 获取客服会话列表
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1458044820)'
       operationId: customservice/kfsession/getsessionlist
       security:
         - accessToken: []
@@ -8510,9 +8567,25 @@ paths:
       responses:
         '200':
           description: ''
+          schema:
+            type: object
+            properties:
+              sessionlist:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    kf_account:
+                      type: string
+                      description: 正在接待的客服，为空表示没有人在接待
+                    createtime:
+                      type: integer
+                      format: int32
+                      description: 会话接入的时间
   /customservice/kfsession/getwaitcase:
     get:
       summary: 获取未接入会话列表
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1458044820)'
       operationId: customservice/kfsession/getwaitcase
       security:
         - accessToken: []
@@ -8522,9 +8595,30 @@ paths:
       responses:
         '200':
           description: ''
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer
+                format: int32
+                description: 未接入会话数量
+              waitcaselist:
+                type: array
+                description: 未接入会话列表，最多返回100条数据，按照来访顺序
+                items:
+                  type: object
+                  properties:
+                    openid:
+                      type: string
+                      description: 粉丝的openid
+                    latest_time:
+                      type: integer
+                      format: int32
+                      description: 粉丝的最后一条消息的时间
   /customservice/msgrecord/getmsglist:
     post:
       summary: 获取聊天记录
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1464937269_mUtmK)'
       operationId: customservice/msgrecord/getmsglist
       security:
         - accessToken: []
@@ -8535,10 +8629,61 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              starttime:
+                type: integer
+                format: int32
+                description: 起始时间，unix时间戳
+              endtime:
+                type: integer
+                format: int32
+                description: 结束时间，unix时间戳，每次查询时段不能超过24小时
+              msgid:
+                type: integer
+                format: int32
+                description: 消息id顺序从小到大，从1开始
+              number:
+                type: integer
+                format: int32
+                description: 每次获取条数，最多10000条
       responses:
         '200':
           description: ''
+          schema:
+            type: object
+            properties:
+              number:
+                type: integer
+                format: int32
+                description: 每次获取条数，最多10000条
+              msgid:
+                type: integer
+                format: int32
+                description: 消息id顺序从小到大，从1开始
+              recordlist:
+                type: array
+                description: 未接入会话列表，最多返回100条数据，按照来访顺序
+                items:
+                  type: object
+                  properties:
+                    worker:
+                      type: string
+                      description: 完整客服帐号，格式为：帐号前缀@公众号微信号
+                    openid:
+                      type: string
+                      description: 用户标识
+                    opercode:
+                      type: integer
+                      format: int32
+                      description: 操作码，2002（客服发送信息），2003（客服接收消息）
+                      enum: [2002, 2003]
+                    text:
+                      type: string
+                      description: 聊天记录
+                    time:
+                      type: integer
+                      format: int32
+                      description: 操作时间，unix时间戳
   /datacube/getarticlesummary:
     post:
       summary: 获取图文群发每日数据
@@ -9089,7 +9234,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   item_code:
@@ -9118,7 +9263,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 description: 新增分组信息
                 properties:
@@ -9157,7 +9302,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
   /mall/addpropertyandpropertyvalue:
     post:
       summary: 类目下新增商户自定义属性和属性值
@@ -9201,7 +9346,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   property_id:
@@ -9247,7 +9392,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   property_value_id:
@@ -9282,7 +9427,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   stock_info:
@@ -9326,7 +9471,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /mall/deletegroup:
     post:
       summary: 删除分组
@@ -9350,7 +9495,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
   /mall/deleteitemgrouprelation:
     post:
       summary: 商品批量移出分组
@@ -9384,7 +9529,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
   /mall/delproperty:
     post:
       summary: 删除类目下的属性
@@ -9410,7 +9555,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /mall/delpropertyvalue:
     post:
       summary: 删除属性值
@@ -9436,7 +9581,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /mall/detelebranditem:
     post:
       summary: 删除未上架过的商品（暂不支持）
@@ -9462,7 +9607,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /mall/getbranditemdetail:
     post:
       summary: 拉取商品详情
@@ -9505,7 +9650,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   item:
@@ -9534,7 +9679,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   parent_info:
@@ -9563,7 +9708,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   group_list:
@@ -9597,7 +9742,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   order:
@@ -9649,7 +9794,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   total_count:
@@ -9684,7 +9829,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   property_list:
@@ -9716,7 +9861,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   stock_info:
@@ -9770,7 +9915,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   all_count:
@@ -9851,7 +9996,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /mall/updatebranditem:
     post:
       summary: 更新下架中的商品信息（暂不支持）
@@ -9872,7 +10017,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   item_code:
@@ -9900,7 +10045,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 description: 新增分组信息
                 properties:
@@ -9933,7 +10078,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /mall/updatestockinfo:
     post:
       summary: 更新商品库存或价格
@@ -9962,7 +10107,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   sku_code:
@@ -10002,7 +10147,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /mall/uploaditemimage:
     post:
       summary: 上传商品图片到商品管理后台
@@ -10027,7 +10172,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   image_url:
@@ -10766,7 +10911,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   card_id:
@@ -10824,7 +10969,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   auth_url:
@@ -10902,7 +11047,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   code:
@@ -11126,7 +11271,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   query:
@@ -11154,7 +11299,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -11217,7 +11362,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -11273,7 +11418,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -11315,7 +11460,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -11383,7 +11528,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -11430,7 +11575,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -11460,7 +11605,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -11512,7 +11657,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -11543,7 +11688,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -11590,7 +11735,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -11629,7 +11774,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -11698,7 +11843,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -11748,7 +11893,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -11809,7 +11954,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -11890,7 +12035,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -11916,7 +12061,6 @@ paths:
           enum: [1, 2]
         - in: query
           name: logo_url
-          nullable: true
           type: string
           description: 使用模板页面的logo_url，不使用模板时可不加。展示在摇一摇界面的消息图标。图片尺寸为120x120。
         - in: body
@@ -11961,7 +12105,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   lottery_id:
@@ -11992,7 +12136,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   result:
@@ -12085,7 +12229,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/mall.ResponseBaseBo'
+            $ref: '#/definitions/base.ResponseBo'
   /shakearound/lottery/setprizebucket:
     post:
       summary: 录入红包信息
@@ -12126,7 +12270,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   success_num:
@@ -12207,7 +12351,8 @@ paths:
         '200':
           description: ''
           schema:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -12253,7 +12398,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -12290,7 +12435,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -12338,7 +12483,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -12418,7 +12563,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -12476,7 +12621,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -12549,7 +12694,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -12654,7 +12799,7 @@ paths:
                     type: integer
                     format: int32
                     description: 所查询的结果页序号；返回结果按摇周边人数降序排序，每50条记录为一页
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
   /shakearound/statistics/page:
     post:
       summary: 以页面为维度的数据统计
@@ -12688,7 +12833,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -12787,7 +12932,7 @@ paths:
                     type: integer
                     format: int32
                     description: 所查询的结果页序号；返回结果按摇周边人数降序排序，每50条记录为一页
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
   /shakearound/user/getshakeinfo:
     post:
       summary: 获取设备及用户信息
@@ -12817,7 +12962,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/mall.ResponseBaseBo'
+              - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
                   data:
@@ -13363,6 +13508,17 @@ definitions:
       pagepath:
         type: string
         description: 小程序的页面路径(miniprogram类型必须)
+  base.ResponseBo:
+    type: object
+    description: 返回结果基础属性
+    properties:
+      errcode:
+        type: integer
+        format: int32
+        description: '错误码, 0为正常'
+      errmsg:
+        type: string
+        description: 错误信息，errcode不为0时有实际意义
   base.UserInfoBo:
     type: object
     properties:
@@ -15017,17 +15173,6 @@ definitions:
         description: 退款完成时间，unix秒级时间戳，默认为0
         type: integer
         format: int32
-  mall.ResponseBaseBo:
-    type: object
-    description: 返回结果基础属性
-    properties:
-      errcode:
-        type: integer
-        format: int32
-        description: '错误码, 0为正常'
-      errmsg:
-        type: string
-        description: 错误信息，为空正常
   mall.StockPicturesBo:
     type: object
     description: 商品的库存图片

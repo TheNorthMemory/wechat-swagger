@@ -1,5 +1,6 @@
 get:
   summary: 获取未接入会话列表
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1458044820)'
   operationId: customservice/kfsession/getwaitcase
   security:
     - accessToken: []
@@ -9,3 +10,23 @@ get:
   responses:
     '200':
       description: ''
+      schema:
+        type: object
+        properties:
+          count:
+            type: integer
+            format: int32
+            description: 未接入会话数量
+          waitcaselist:
+            type: array
+            description: 未接入会话列表，最多返回100条数据，按照来访顺序
+            items:
+              type: object
+              properties:
+                openid:
+                  type: string
+                  description: 粉丝的openid
+                latest_time:
+                  type: integer
+                  format: int32
+                  description: 粉丝的最后一条消息的时间

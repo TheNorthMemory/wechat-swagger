@@ -1,5 +1,6 @@
 get:
   summary: 获取客服会话列表
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1458044820)'
   operationId: customservice/kfsession/getsessionlist
   security:
     - accessToken: []
@@ -13,3 +14,18 @@ get:
   responses:
     '200':
       description: ''
+      schema:
+        type: object
+        properties:
+          sessionlist:
+            type: array
+            items:
+              type: object
+              properties:
+                kf_account:
+                  type: string
+                  description: 正在接待的客服，为空表示没有人在接待
+                createtime:
+                  type: integer
+                  format: int32
+                  description: 会话接入的时间

@@ -1,5 +1,6 @@
 post:
   summary: 添加客服帐号
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1458044813)'
   operationId: customservice/kfaccount/add
   security:
     - accessToken: []
@@ -10,7 +11,15 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          kf_account:
+            type: string
+            description: 完整客服帐号，格式为：帐号前缀@公众号微信号，帐号前缀最多10个字符，必须是英文、数字字符或者下划线，后缀为公众号微信号，长度不超过30个字符
+          nickname:
+            type: string
+            description: 客服昵称，最长16个字
   responses:
     '200':
       description: ''
+      schema:
+        $ref: '#/definitions/base.ResponseBo'

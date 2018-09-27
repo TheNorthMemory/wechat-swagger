@@ -1,5 +1,6 @@
 post:
   summary: 关闭会话
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1458044820)'
   operationId: customservice/kfsession/close
   security:
     - accessToken: []
@@ -10,7 +11,15 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          kf_account:
+            type: string
+            description: 完整客服帐号，格式为：帐号前缀@公众号微信号
+          openid:
+            type: string
+            description: 粉丝的openid
   responses:
     '200':
       description: ''
+      schema:
+        $ref: '#/definitions/base.ResponseBo'

@@ -36,7 +36,7 @@ post:
       description: ''
       schema:
         allOf:
-          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - $ref: '#/definitions/base.ResponseBo'
           - type: object
             description: 当action为get_pay_mch/get_auth_field/get_contact时返回
             properties:

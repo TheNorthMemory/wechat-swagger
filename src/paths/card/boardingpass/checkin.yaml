@@ -50,7 +50,7 @@ post:
     '200':
       description: ''
       schema:
-        $ref: '#/definitions/mall.ResponseBaseBo'
+        $ref: '#/definitions/base.ResponseBo'
         example:
           errcode: 0
           errmsg: ok

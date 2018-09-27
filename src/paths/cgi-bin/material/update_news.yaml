@@ -25,4 +25,4 @@ post:
     '200':
       description: ''
       schema:
-        $ref: '#/definitions/mall.ResponseBaseBo'
+        $ref: '#/definitions/base.ResponseBo'

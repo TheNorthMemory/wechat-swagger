@@ -25,7 +25,7 @@ post:
       description: ''
       schema:
         allOf:
-          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - $ref: '#/definitions/base.ResponseBo'
           - type: object
             properties:
               invoice_status:

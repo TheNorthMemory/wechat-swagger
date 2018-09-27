@@ -20,5 +20,5 @@ post:
       description: ''
       schema:
         allOf:
-          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - $ref: '#/definitions/base.ResponseBo'
           - $ref: '#/definitions/card.type.GiftCardOrderBo'

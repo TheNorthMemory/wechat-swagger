@@ -74,4 +74,4 @@ post:
                 type: integer
                 format: int32
                 description: 所查询的结果页序号；返回结果按摇周边人数降序排序，每50条记录为一页
-          - $ref: '#/definitions/mall.ResponseBaseBo'
+          - $ref: '#/definitions/base.ResponseBo'

@@ -7,4 +7,4 @@ properties:
     description: '错误码, 0为正常'
   errmsg:
     type: string
-    description: 错误信息，为空正常
+    description: 错误信息，errcode不为0时有实际意义

@@ -58,7 +58,7 @@ post:
                   type: integer
                   format: int32
                   description: 操作码，2002（客服发送信息），2003（客服接收消息）
-                  enum:[2002, 2003]
+                  enum: [2002, 2003]
                 text:
                   type: string
                   description: 聊天记录

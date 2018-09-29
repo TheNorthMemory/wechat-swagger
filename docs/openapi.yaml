@@ -22,7 +22,12 @@ securityDefinitions:
     in: query
     type: apiKey
     name: component_access_token
-    description: 第三方代公众号调用API凭证
+    description: 第三方代公众号/小程序调用API凭证
+  authorizerAccessToken:
+    in: query
+    type: apiKey
+    name: access_token
+    description: 第三方平台获取到的授权的authorizer_access_token
 tags:
   - name: 基础支持
   - name: 自定义菜单
@@ -81,6 +86,7 @@ tags:
   - name: 连WI-FI/门店
   - name: 连WI-FI/设备
   - name: 连WI-FI/商家主页
+  - name: 扫一扫
   - name: 智能接口/语义理解
   - name: 智能接口/AI开放接口
   - name: 数据统计/用户分析
@@ -95,6 +101,18 @@ tags:
   - name: 小程序/数据/访问分析/访问页面
   - name: 小程序/数据/用户画像
   - name: 小程序/文件/内容安全
+  - name: 广告服务商接口
+    description: '[接口文档](https://wximg.qq.com/wxp/pdftool/get.html?id=HJ2uqGgXW)'
+  - name: 开放平台/帐号管理
+  - name: 开放平台/第三方平台
+  - name: 开放平台/第三方平台/代公众号
+  - name: 开放平台/第三方平台/代公众号/网页开发
+  - name: 开放平台/第三方平台/代公众号/小程序管理
+  - name: 开放平台/第三方平台/代小程序
+  - name: 开放平台/第三方平台/代小程序/成员管理
+  - name: 开放平台/第三方平台/代小程序/代码管理
+  - name: 开放平台/第三方平台/代小程序/代码模版库
+  - name: 开放平台/第三方平台/代小程序/模板消息模板设置
 paths:
   /bizwifi/apportal/register:
     post:
@@ -4942,6 +4960,240 @@ paths:
                 - code: xxx1434079155
                   card_id: xxxxxxxxxx
               has_share_card: true
+  /cgi-bin/account/componentrebindadmin:
+    post:
+      summary: 小程序新旧管理员换绑
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
+      operationId: cgi-bin/account/componentrebindadmin
+      security:
+        - accessToken: []
+      tags:
+        - 开放平台/第三方平台/代公众号/小程序管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              taskid:
+                type: string
+                description:  换绑管理员任务序列号(公众平台最终点击提交回跳到第三方平台时携带)
+            required:
+              - taskid
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+  /cgi-bin/account/fastregister:
+    post:
+      summary: 跳转至第三方平台，第三方平台调用快速注册API完成注册
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
+      operationId: cgi-bin/account/fastregister
+      security:
+        - accessToken: []
+      tags:
+        - 开放平台/第三方平台/代公众号/小程序管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              ticket:
+                type: string
+                description: 公众号扫码授权的凭证(公众平台扫码页面回跳到第三方平台时携带)
+            required:
+              - ticket
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                description: 注：使用appid及authorization_code换取authorizer_refresh_token后需及时保存。
+                properties:
+                  appid:
+                    type: string
+                    description: 新创建小程序的appid
+                  authorization_code:
+                    type: string
+                    description: 新创建小程序的授权码
+                  is_wx_verify_succ:
+                    type: string
+                    description: 复用公众号微信认证小程序是否成功
+                  is_link_succ:
+                    type: string
+                    description: 小程序是否和公众号关联成功
+  /cgi-bin/account/getaccountbasicinfo:
+    get:
+      summary: 获取帐号基本信息
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
+      operationId: cgi-bin/account/getaccountbasicinfo
+      security:
+        - accessToken: []
+      tags:
+        - 开放平台/第三方平台/代公众号/小程序管理
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  appid:
+                    type: string
+                    description: 帐号appid
+                  account_type:
+                    type: integer
+                    format: int32
+                    description: 帐号类型（1：订阅号，2：服务号，3：小程序）
+                    enum: [1, 2, 3]
+                  principal_type:
+                    type: integer
+                    format: int32
+                    description: 主体类型（1：企业）
+                  principal_name:
+                    type: string
+                    description: 主体名称
+                  realname_status:
+                    type: integer
+                    format: int32
+                    description: 实名验证状态（1：实名验证成功，2：实名验证中，3：实名验证失败）调用接口1.1创建帐号时，realname_status会初始化为2对于注册方式为微信认证的帐号，资质认证成功时，realname_status会更新为1
+                    enum: [1, 2, 3]
+                  wx_verify_info:
+                    type: object
+                    description: 微信认证信息
+                    properties:
+                      qualification_verify:
+                        type: integer
+                        format: int32
+                        description: 是否资质认证（true：是，false：否）若是，拥有微信认证相关的权限。
+                        enum: [0, 1]
+                      naming_verify:
+                        type: integer
+                        format: int32
+                        description: 是否名称认证（true：是，false：否）对于公众号（订阅号、服务号），是名称认证，微信客户端才会有微信认证打勾的标识。
+                        enum: [0, 1]
+                      annual_review:
+                        type: integer
+                        format: int32
+                        description: 是否需要年审（true：是，false：否）（qualification_verify = true时才有该字段）
+                        enum: [0, 1]
+                      annual_review_begin_time:
+                        type: integer
+                        format: int32
+                        description: 年审开始时间，时间戳（qualification_verify = true时才有该字段）
+                      annual_review_end_time:
+                        type: integer
+                        format: int32
+                        description: 年审截止时间，时间戳（qualification_verify = true时才有该字段）
+                  signature_info:
+                    type: object
+                    description: 功能介绍信息
+                    properties:
+                      signature:
+                        type: string
+                        description: 功能介绍
+                      modify_used_count:
+                        type: integer
+                        format: int32
+                        description: 功能介绍已使用修改次数（本月）
+                      modify_quota:
+                        type: integer
+                        format: int32
+                        description: 功能介绍修改次数总额度（本月）
+                  head_image_info:
+                    type: object
+                    description: 头像信息
+                    properties:
+                      head_image_url:
+                        type: string
+                        description: 头像url
+                      modify_used_count:
+                        type: integer
+                        format: int32
+                        description: 头像已使用修改次数（本月）
+                      modify_quota:
+                        type: integer
+                        format: int32
+                        description: 头像修改次数总额度（本月）
+  /cgi-bin/account/modifyheadimage:
+    post:
+      summary: 修改头像
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
+      operationId: cgi-bin/account/modifyheadimage
+      security:
+        - accessToken: []
+      tags:
+        - 开放平台/第三方平台/代公众号/小程序管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              head_img_media_id:
+                type: string
+                description: 头像素材media_id
+              x1:
+                type: number
+                format: float
+                description: 裁剪框左上角x坐标（取值范围：[0, 1]）
+              y1:
+                type: number
+                format: float
+                description: 裁剪框左上角y坐标（取值范围：[0, 1]）
+              x2:
+                type: number
+                format: float
+                description: 裁剪框右上角x坐标（取值范围：[0, 1]）
+              y2:
+                type: number
+                format: float
+                description: 裁剪框右上角y坐标（取值范围：[0, 1]）
+            required:
+              - head_img_media_id
+              - x1
+              - x2
+              - y1
+              - y2
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+  /cgi-bin/account/modifysignature:
+    post:
+      summary: 修改功能介绍
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
+      operationId: cgi-bin/account/modifysignature
+      security:
+        - accessToken: []
+      tags:
+        - 开放平台/第三方平台/代公众号/小程序管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              signature:
+                type: string
+                description:  功能介绍（简介）
+            required:
+              - signature
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/changeopenid:
     post:
       summary: 公众号粉丝迁移
@@ -5342,6 +5594,93 @@ paths:
           description: ''
           schema:
             $ref: '#/definitions/base.ResponseBo'
+  /cgi-bin/component/api_authorizer_token:
+    post:
+      summary: 获取（刷新）授权公众号或小程序的接口调用凭据（令牌）
+      description: 该API用于在授权方令牌（authorizer_access_token）失效时，可用刷新令牌（authorizer_refresh_token）获取新的令牌。请注意，此处token是2小时刷新一次，开发者需要自行进行token的缓存，避免token的获取次数达到每日的限定额度。 [官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1453779503)
+      operationId: cgi-bin/component/api_authorizer_token
+      security:
+        - componentAccessToken: []
+      tags:
+        - 开放平台/第三方平台
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              component_appid:
+                type: string
+                description: 第三方平台appid
+              authorizer_appid:
+                type: string
+                description: 授权方appid
+              authorizer_refresh_token:
+                type: string
+                description: 授权方的刷新令牌，刷新令牌主要用于第三方平台获取和刷新已授权用户的access_token，只会在授权时刻提供，请妥善保存。一旦丢失，只能让用户重新授权，才能再次拿到新的刷新令牌
+            required:
+              - component_appid
+              - authorizer_appid
+              - authorizer_refresh_token
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  authorizer_access_token:
+                    type: string
+                    description: 授权方令牌
+                  expires_in:
+                    type: integer
+                    format: int32
+                    description: 有效期，为2小时
+                  authorizer_refresh_token:
+                    type: string
+                    description: 刷新令牌
+  /cgi-bin/component/api_component_token:
+    post:
+      summary: 获取第三方平台component_access_token
+      description: 第三方平台component_access_token是第三方平台的下文中接口的调用凭据，也叫做令牌（component_access_token）。每个令牌是存在有效期（2小时）的，且令牌的调用不是无限制的，请第三方平台做好令牌的管理，在令牌快过期时（比如1小时50分）再进行刷新。 [官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1453779503)
+      operationId: cgi-bin/component/api_component_token
+      tags:
+        - 开放平台/第三方平台
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              component_appid:
+                type: string
+                description: 第三方平台appid
+              component_appsecret:
+                type: string
+                description: 第三方平台appsecret
+              component_verify_ticket:
+                type: string
+                description: 微信后台推送的ticket，此ticket会定时推送，微信服务器 每隔10分钟会向推送一次
+            required:
+              - component_appid
+              - component_appsecret
+              - component_verify_ticket
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  component_access_token:
+                    type: string
+                    description: 第三方平台access_token
+                  expires_in:
+                    type: integer
+                    format: int32
+                    description: 有效期
   /cgi-bin/component/api_confirm_authorization:
     post:
       summary: 确认授权
@@ -5381,15 +5720,51 @@ paths:
           description: ''
           schema:
             $ref: '#/definitions/base.ResponseBo'
+  /cgi-bin/component/api_create_preauthcode:
+    post:
+      summary: 获取预授权码pre_auth_code
+      description: 该API用于获取预授权码。预授权码用于公众号或小程序授权时的第三方平台方安全验证。 [官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1453779503)
+      operationId: cgi-bin/component/api_create_preauthcode
+      security:
+        - componentAccessToken: []
+      tags:
+        - 开放平台/第三方平台
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              component_appid:
+                type: string
+                description: 第三方平台appid
+            required:
+              - component_appid
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  pre_auth_code:
+                    type: string
+                    description: 预授权码
+                  expires_in:
+                    type: integer
+                    format: int32
+                    description: 有效期，为10分钟
   /cgi-bin/component/api_get_authorizer_info:
     post:
       summary: 获取授权方的账户信息
-      description: 该API用于获取授权方的公众号基本信息，包括头像、昵称、帐号类型、认证类型、微信号、原始ID和二维码图片URL。 需要特别记录授权方的帐号类型，在消息及事件推送时，对于不具备客服接口的公众号，需要在5秒内立即响应；而若有客服接口，则可以选择暂时不响应，而选择后续通过客服接口来发送消息触达粉丝。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
+      description: 该API用于获取授权方的公众号基本信息，包括头像、昵称、帐号类型、认证类型、微信号、原始ID和二维码图片URL。 需要特别记录授权方的帐号类型，在消息及事件推送时，对于不具备客服接口的公众号，需要在5秒内立即响应；而若有客服接口，则可以选择暂时不响应，而选择后续通过客服接口来发送消息触达粉丝。A->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)  B->[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1453779503)
       operationId: cgi-bin/component/api_get_authorizer_info
       security:
         - componentAccessToken: []
       tags:
         - 卡券/第三方模式/强授权
+        - 开放平台/第三方平台
       parameters:
         - in: body
           name: body
@@ -5485,15 +5860,114 @@ paths:
                                         type: integer
                                         format: int32
                                         description: 是否已经确认
+  /cgi-bin/component/api_get_authorizer_list:
+    post:
+      summary: 获取第三方平台的权限集
+      description: 第三方平台可以使用接口拉取当前所有已授权的帐号基本信息。 [官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419318459)
+      operationId: cgi-bin/component/api_get_authorizer_list
+      security:
+        - componentAccessToken: []
+      tags:
+        - 开放平台/第三方平台
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              component_appid:
+                type: string
+                description: 第三方平台appid
+              offset:
+                type: integer
+                format: int32
+                description: 偏移位置/起始位置
+              count:
+                type: integer
+                format: int32
+                description: 拉取数量，最大为500
+            required:
+              - component_appid
+              - offset
+              - count
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  total_count:
+                    type: integer
+                    format: int32
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        authorizer_appid:
+                          type: string
+                        refresh_token:
+                          type: string
+                        auth_time:
+                          type: integer
+                          format: int32
+  /cgi-bin/component/api_get_authorizer_option:
+    post:
+      summary: 获取授权方的选项设置信息
+      description: 该API用于获取授权方的公众号或小程序的选项设置信息，如：地理位置上报，语音识别开关，多客服开关。注意，获取各项选项设置信息，需要有授权方的授权，详见权限集说明。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1453779503)
+      operationId: cgi-bin/component/api_get_authorizer_option
+      security:
+        - componentAccessToken: []
+      tags:
+        - 开放平台/第三方平台
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              component_appid:
+                type: string
+                description: 第三方平台appid
+              authorizer_appid:
+                type: string
+                description: 授权公众号或小程序的appid
+              option_name:
+                type: string
+                description: 选项名称，location_report(地理位置上报选项) 0=无上报;1=进入会话时上报;2=每5s上报；voice_recognize（语音识别开关选项）0=关闭语音识别;1=开启语音识别；customer_service（多客服开关选项）0=关闭多客服;1=开启多客服
+            required:
+              - component_appid
+              - authorizer_appid
+              - option_name
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  authorizer_appid:
+                    type: string
+                    description: 授权公众号或小程序的appid
+                  option_name:
+                    type: string
+                    description: 选项名称
+                  option_value:
+                    type: string
+                    description: 选项值
   /cgi-bin/component/api_query_auth:
     post:
-      summary: 使用授权码换取公众号的授权信息
-      description: 该API用于使用授权码换取授权公众号的授权信息，并换取authorizer_access_token和authorizer_refresh_token。 授权码的获取，需要在用户在第三方平台授权页中完成授权流程后，在回调URI中通过URL参数提供给第三方平台方。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
+      summary: 使用授权码换取公众号的或小程序的接口调用凭据和授权信息
+      description: 该API用于使用授权码换取授权公众号的授权信息，并换取authorizer_access_token和authorizer_refresh_token。 授权码的获取，需要在用户在第三方平台授权页中完成授权流程后，在回调URI中通过URL参数提供给第三方平台方。A->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292) B->[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1453779503)
       operationId: cgi-bin/component/api_query_auth
       security:
         - componentAccessToken: []
       tags:
         - 卡券/第三方模式/强授权
+        - 开放平台/第三方平台
       parameters:
         - in: body
           name: body
@@ -5557,6 +6031,43 @@ paths:
                                     type: integer
                                     format: int32
                                     description: 是否已经确认
+  /cgi-bin/component/api_set_authorizer_option:
+    post:
+      summary: 设置授权方的选项信息
+      description: 该API用于设置授权方的公众号或小程序的选项信息，如：地理位置上报，语音识别开关，多客服开关。注意，设置各项选项设置信息，需要有授权方的授权，详见权限集说明。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1453779503)
+      operationId: cgi-bin/component/api_set_authorizer_option
+      security:
+        - componentAccessToken: []
+      tags:
+        - 开放平台/第三方平台
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              component_appid:
+                type: string
+                description: 第三方平台appid
+              authorizer_appid:
+                type: string
+                description: 授权公众号或小程序的appid
+              option_name:
+                type: string
+                description: 选项名称location_report(地理位置上报选项)  0=无上报;1=进入会话时上报;2=每5s上报；voice_recognize（语音识别开关选项）0=关闭语音识别;1=开启语音识别；customer_service（多客服开关选项）0=关闭多客服;1=开启多客服
+              option_value:
+                type: string
+                description: 选项值
+            required:
+              - component_appid
+              - authorizer_appid
+              - option_name
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/component/batchget_card_merchant:
     post:
       summary: 拉取单个子商户信息
@@ -5672,6 +6183,31 @@ paths:
                       - RESULT_NOT_PASS
                       - RESULT_CHECKING
                       - RESULT_NOTHING_TO_CHECK
+  /cgi-bin/component/clear_quota:
+    post:
+      summary: 第三方代公众号调用，实际上消耗的是公众号的清零quota
+      description: 第三方平台对其所有API调用次数清零（只与第三方平台相关，与公众号无关，接口如api_component_token）[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1453779503)
+      operationId: cgi-bin/component/clear_quota
+      security:
+        - componentAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代公众号
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              component_appid:
+                type: string
+                description: 第三方平台APPID
+            required:
+              - component_appid
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/component/get_card_merchant:
     post:
       summary: 拉取单个子商户信息
@@ -7219,6 +7755,128 @@ paths:
           description: ''
           schema:
             $ref: '#/definitions/base.ResponseBo'
+  /cgi-bin/open/bind:
+    post:
+      summary: 将公众号/小程序绑定到开放平台帐号下
+      description: 该API用于将一个尚未绑定开放平台帐号的公众号或小程序绑定至指定开放平台帐号上。二者须主体相同。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1498704804_iARAL)
+      operationId: cgi-bin/open/bind
+      security:
+        - accessToken: []
+      tags:
+        - 开放平台/帐号管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              appid:
+                type: string
+                description: 授权公众号或小程序的appid
+              open_appid:
+                type: string
+                description: 开放平台帐号appid
+            required:
+              - appid
+              - open_appid
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+  /cgi-bin/open/create:
+    post:
+      summary: 创建开放平台帐号并绑定公众号/小程序
+      description: 该API用于创建一个开放平台帐号，并将一个尚未绑定开放平台帐号的公众号/小程序绑定至该开放平台帐号上。新创建的开放平台帐号的主体信息将设置为与之绑定的公众号或小程序的主体。 [官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1498704804_iARAL)
+      operationId: cgi-bin/open/create
+      security:
+        - accessToken: []
+      tags:
+        - 开放平台/帐号管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              appid:
+                type: string
+                description: 第三方平台appid
+            required:
+              - appid
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  open_appid:
+                    type: string
+                    description: 所创建的开放平台帐号的appid
+  /cgi-bin/open/get:
+    post:
+      summary: 获取公众号/小程序所绑定的开放平台帐号
+      description: 该API用于获取公众号或小程序所绑定的开放平台帐号。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1498704804_iARAL)
+      operationId: cgi-bin/open/get
+      security:
+        - accessToken: []
+      tags:
+        - 开放平台/帐号管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              appid:
+                type: string
+                description: 授权公众号或小程序的appid
+            required:
+              - appid
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  open_appid:
+                    type: string
+                    description: 公众号或小程序所绑定的开放平台帐号的appid
+  /cgi-bin/open/unbind:
+    post:
+      summary: 将公众号/小程序从开放平台帐号下解绑
+      description: 该API用于将一个公众号或小程序与指定开放平台帐号解绑。开发者须确认所指定帐号与当前该公众号或小程序所绑定的开放平台帐号一致。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1498704804_iARAL)
+      operationId: cgi-bin/open/unbind
+      security:
+        - accessToken: []
+      tags:
+        - 开放平台/帐号管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              appid:
+                type: string
+                description: 授权公众号或小程序的appid
+              open_appid:
+                type: string
+                description: 开放平台帐号appid
+            required:
+              - appid
+              - open_appid
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/poi/addpoi:
     post:
       summary: 增加门店
@@ -8350,6 +9008,952 @@ paths:
                     type: array
                     items:
                       type: string
+  /cgi-bin/wxopen/addcategory:
+    post:
+      summary: 添加类目
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
+      operationId: cgi-bin/wxopen/addcategory
+      security:
+        - accessToken: []
+      tags:
+        - 开放平台/第三方平台/代公众号/小程序管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            required:
+              - categories
+            properties:
+              categories:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - first
+                    - second
+                    - certicates
+                  properties:
+                    first:
+                      type: integer
+                      format: int32
+                      description: 一级类目ID
+                    second:
+                      type: integer
+                      format: int32
+                      description: 二级类目ID
+                    certicates:
+                      type: array
+                      items:
+                        type: object
+                        required:
+                          - key
+                          - value
+                        properties:
+                          key:
+                            type: string
+                            description: 资质名称
+                          value:
+                            type: string
+                            description: 资质图片media_id
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+  /cgi-bin/wxopen/deletecategory:
+    post:
+      summary: 删除类目
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
+      operationId: cgi-bin/wxopen/deletecategory
+      security:
+        - accessToken: []
+      tags:
+        - 开放平台/第三方平台/代公众号/小程序管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            required:
+              - first
+              - second
+            properties:
+              first:
+                type: integer
+                format: int32
+                description: 一级类目ID
+              second:
+                type: integer
+                format: int32
+                description: 二级类目ID
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+  /cgi-bin/wxopen/getallcategories:
+    get:
+      summary: 获取账号可以设置的所有类目
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
+      operationId: cgi-bin/wxopen/getallcategories
+      security:
+        - accessToken: []
+      tags:
+        - 开放平台/第三方平台/代公众号/小程序管理
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  category_list:
+                    type: object
+                    propertes:
+                      categories:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              format: int32
+                              description: 类目id
+                            name:
+                              type: string
+                              description: 类目名称
+                            level:
+                              type: integer
+                              format: int32
+                              description: 类目层级
+                            father:
+                              type: integer
+                              format: int32
+                              description: 类目父级id
+                            children:
+                              type: array
+                              description: 子级类目id
+                              items:
+                                type: integer
+                                format: int32
+                            sensitive_type:
+                              type: integer
+                              format: int32
+                              description: 是否为敏感类目（1为敏感类目，需要提供相应资质审核；0为非敏感类目，无需审核）
+                              enum: [0, 1]
+                            qualify:
+                              type: object
+                              properties:
+                                exter_list:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      inner_list:
+                                        type: array
+                                        items:
+                                          type: object
+                                          properties:
+                                            name:
+                                              type: string
+                                              description: sensitive_type为1的类目需要提供的资质文件名称
+                                            url:
+                                              type: string
+                                              description: 资质文件示例
+  /cgi-bin/wxopen/getcategory:
+    get:
+      summary: 获取账号已经设置的所有类目
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
+      operationId: cgi-bin/wxopen/getcategory
+      security:
+        - accessToken: []
+      tags:
+        - 开放平台/第三方平台/代公众号/小程序管理
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                propertes:
+                  limit:
+                    type: integer
+                    format: int32
+                    description: 一个更改周期内可以设置类目的次数
+                  quota:
+                    type: integer
+                    format: int32
+                    description: 本更改周期内还可以设置类目的次数
+                  category_limit:
+                    type: integer
+                    format: int32
+                    description: 最多可以设置的类目数量
+                  categories:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        first:
+                          type: integer
+                          format: int32
+                          description: 一级类目ID
+                        first_name:
+                          type: string
+                          description: 一级类目名称
+                        second:
+                          type: integer
+                          format: int32
+                          description: 二级类目ID
+                        second_name:
+                          type: string
+                          description: 二级类目名称
+                        audit_status:
+                          type: integer
+                          format: int32
+                          description: 审核状态（1审核中 2审核不通过 3审核通过）
+                          enum: [1, 2, 3]
+                        audit_reason:
+                          type: string
+                          description: 审核不通过原因
+  /cgi-bin/wxopen/getweappsupportversion:
+    post:
+      summary: 查询当前设置的最低基础库版本及各版本用户占比 （仅供第三方代小程序调用）
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+      operationId: cgi-bin/wxopen/getweappsupportversion
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/代码管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  now_version:
+                    type: string
+                    description: 当前版本
+                  uv_info:
+                    type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            percentage:
+                              type: number
+                              format: float
+                              description: 受影响比例
+                            version:
+                              type: string
+                              description: 版本号
+  /cgi-bin/wxopen/modifycategory:
+    post:
+      summary: 修改类目
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
+      operationId: cgi-bin/wxopen/modifycategory
+      security:
+        - accessToken: []
+      tags:
+        - 开放平台/第三方平台/代公众号/小程序管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            required:
+              - first
+              - second
+              - certicates
+            properties:
+              first:
+                type: integer
+                format: int32
+                description: 一级类目ID
+              second:
+                type: integer
+                format: int32
+                description: 二级类目ID
+              certicates:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - key
+                    - value
+                  properties:
+                    key:
+                      type: string
+                      description: 资质名称
+                    value:
+                      type: string
+                      description: 资质图片media_id
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+  /cgi-bin/wxopen/qrcodejumpadd:
+    post:
+      summary: 设置小程序“扫普通链接二维码打开小程序”能力
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+      operationId: cgi-bin/wxopen/qrcodejumpadd
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/代码管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              prefix:
+                type: string
+                description: 二维码规则
+              permit_sub_rule:
+                type: integer
+                format: int32
+                description: '是否独占符合二维码前缀匹配规则的所有子规1为不占用，2为占用[详细说明](https://mp.weixin.qq.com/debug/wxadoc/introduction/qrcode.html#前缀占用规则)'
+                enum: [1, 2]
+              path:
+                type: string
+                description: 小程序功能页面
+              open_version:
+                type: integer
+                format: int32
+                description: 测试范围：1为开发版（配置只对开发者生效）2为体验版（配置对管理员、体验者生效）3为线上版本（配置对管理员、开发者和体验者生效）
+                enum: [0, 1, 2]
+              debug_url:
+                type: array
+                items:
+                  type: string
+                  description: 测试链接（选填）可填写不多于5个用于测试的二维码完整链接，此链接必须符合已填写的二维码规则。
+              is_edit:
+                type: integer
+                format: int32
+                description: 编辑标志位，0表示新增二维码规则，1表示修改已有二维码规则
+                enum: [0, 1]
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+  /cgi-bin/wxopen/qrcodejumpdelete:
+    post:
+      summary: 删除已设置的二维码规则
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+      operationId: cgi-bin/wxopen/qrcodejumpdelete
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/代码管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              prefix:
+                type: string
+                description: 二维码规则
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+  /cgi-bin/wxopen/qrcodejumpdownload:
+    post:
+      summary: 获取校验文件名称及内容
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+      operationId: cgi-bin/wxopen/qrcodejumpdownload
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/代码管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  file_name:
+                    type: string
+                    description: 文件名称
+                  file_content:
+                    type: string
+                    description: 文件内容
+  /cgi-bin/wxopen/qrcodejumpget:
+    post:
+      summary: 获取已设置的二维码规则
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+      operationId: cgi-bin/wxopen/qrcodejumpget
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/代码管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  qrcodejump_open:
+                    type: integer
+                    format: int32
+                    description: 是否已经打开二维码跳转链接设置
+                  qrcodejump_pub_quota:
+                    type: integer
+                    format: int32
+                    description: 本月还可发布的次数
+                  list_size:
+                    type: integer
+                    format: int32
+                    description: 二维码规则数量
+                  rule_list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        prefix:
+                          type: string
+                          description: 二维码规则
+                        permit_sub_rule:
+                          type: integer
+                          format: int32
+                          description: '是否独占符合二维码前缀匹配规则的所有子规1为不占用，2为占用[详细说明](https://mp.weixin.qq.com/debug/wxadoc/introduction/qrcode.html#前缀占用规则)'
+                          enum: [1, 2]
+                        path:
+                          type: string
+                          description: 小程序功能页面
+                        open_version:
+                          type: integer
+                          format: int32
+                          description: 测试范围：1为开发版（配置只对开发者生效）2为体验版（配置对管理员、体验者生效）3为线上版本（配置对管理员、开发者和体验者生效）
+                          enum: [1, 2, 3]
+                        debug_url:
+                          type: array
+                          items:
+                            type: string
+                            description: 测试链接（选填）可填写不多于5个用于测试的二维码完整链接，此链接必须符合已填写的二维码规则。
+                        state:
+                          type: integer
+                          format: int32
+                          description: 发布标志位，1表示未发布，2表示已发布
+                          enum: [1, 2]
+  /cgi-bin/wxopen/qrcodejumppublish:
+    post:
+      summary: 发布已设置的二维码规则
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+      operationId: cgi-bin/wxopen/qrcodejumppublish
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/代码管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              prefix:
+                type: string
+                description: 二维码规则
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+  /cgi-bin/wxopen/setweappsupportversion:
+    post:
+      summary: 设置最低基础库版本（仅供第三方代小程序调用）
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+      operationId: cgi-bin/wxopen/setweappsupportversion
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/代码管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              version:
+                type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+  /cgi-bin/wxopen/template/add:
+    post:
+      summary: 组合模板并添加至帐号下的个人模板库
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR)'
+      operationId: cgi-bin/wxopen/template/add
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/模板消息模板设置
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+                description: 模板标题id（获取模板标题下的关键词库时需要）
+              keyword_id_list:
+                type: array
+                description: 开发者自行组合好的模板关键词列表，关键词顺序可以自由搭配（例如[3,5,4]或[4,5,3]），最多支持10个关键词组合
+                items:
+                  type: integer
+                  format: int32
+            required:
+              - id
+              - keyword_id_list
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  template_id:
+                    type: string
+                    description: 添加至帐号下的模板id，发送小程序模板消息时所需
+  /cgi-bin/wxopen/template/del:
+    post:
+      summary: 删除帐号下的某个模板
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR)'
+      operationId: cgi-bin/wxopen/template/del
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/模板消息模板设置
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+                description: 模板标题id（获取模板标题下的关键词库时需要）
+              keyword_id_list:
+                type: array
+                description: 开发者自行组合好的模板关键词列表，关键词顺序可以自由搭配（例如[3,5,4]或[4,5,3]），最多支持10个关键词组合
+                items:
+                  type: integer
+                  format: int32
+            required:
+              - id
+              - keyword_id_list
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  template_id:
+                    type: string
+                    description: 添加至帐号下的模板id，发送小程序模板消息时所需
+  /cgi-bin/wxopen/template/library/get:
+    post:
+      summary: 获取模板库某个模板标题下关键词库
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR)'
+      operationId: cgi-bin/wxopen/template/library/get
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/模板消息模板设置
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+                description: 模板标题id（获取模板标题下的关键词库时需要）
+            required:
+              - id
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  id:
+                    type: string
+                    description: 模板标题id（获取模板标题下的关键词库时需要）
+                  title:
+                    type: string
+                    description: 模板标题内容
+                  keyword_list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        keyword_id:
+                          type: string
+                          description: 关键词id，添加模板时需要
+                        name:
+                          type: string
+                          description: 关键词内容
+                        example:
+                          type: string
+                          description: 关键词内容对应的示例
+  /cgi-bin/wxopen/template/library/list:
+    post:
+      summary: 获取小程序模板库标题列表
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR)'
+      operationId: cgi-bin/wxopen/template/library/list
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/模板消息模板设置
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              offset:
+                type: integer
+                format: int32
+                description: offset和count用于分页，表示从offset开始，拉取count条记录，offset从0开始，count最大为20。
+              count:
+                type: integer
+                format: int32
+                description: offset和count用于分页，表示从offset开始，拉取count条记录，offset从0开始，count最大为20。
+            required:
+              - offset
+              - count
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  total_count:
+                    type: integer
+                    format: int32
+                    description: 模板库标题总数
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: 模板标题id（获取模板标题下的关键词库时需要）
+                        title:
+                          type: string
+                          description: 模板标题内容
+  /cgi-bin/wxopen/template/list:
+    post:
+      summary: 获取帐号下已存在的模板列表
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR)'
+      operationId: cgi-bin/wxopen/template/list
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/模板消息模板设置
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              template_id:
+                type: string
+                description: 要删除的模板id
+            required:
+              - template_id
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+  /cgi-bin/wxopen/template/send:
+    post:
+      summary: 发送模版消息
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/notice.html)'
+      operationId: cgi-bin/wxopen/template/send
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/模板消息模板设置
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              touser:
+                type: string
+                description: 接收者openid
+              template_id:
+                type: string
+                description: 所需下发的模板消息的id
+              page:
+                type: string
+                description: 点击模板卡片后的跳转页面，仅限本小程序内的页面。支持带参数,（示例index?foo=bar）。该字段不填则模板无跳转。
+              form_id:
+                type: string
+                description: 表单提交场景下，为 submit 事件带上的formId；支付场景下，为本次支付的prepay_id
+              emphasis_keyword:
+                type: string
+                description: 模板需要放大的关键词，不填则默认无放大
+              data:
+                type: object
+                description: 模板数据
+                additionalProperties:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                      description: 模版数据值
+            example:
+              touser: OPENID
+              template_id: ngqIpbwh8bUfcSsECmogfXcV14J0tQlEpBO27izEYtY
+              page: index
+              form_id: FORMID
+              emphasis_keyword: keyword1.DATA
+              data:
+                first:
+                  value: 恭喜你购买成功！
+                keyword1:
+                  value: 巧克力
+                keyword2:
+                  value: 39.8元
+                keyword3:
+                  value: 2014年9月22日
+                remark:
+                  value: 欢迎再次购买！
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+  /cgi-bin/wxopen/wxamplink:
+    post:
+      summary: 关联小程序
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1513255108_gFkRI)'
+      operationId: cgi-bin/wxopen/wxamplink
+      security:
+        - accessToken: []
+      tags:
+        - 开放平台/第三方平台/代公众号/小程序管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              appid:
+                type: string
+                description: 小程序appid
+              notify_users:
+                type: integer
+                format: int32
+                description: 是否发送模板消息通知公众号粉丝
+                enum: [0, 1]
+              show_profile:
+                type: integer
+                format: int32
+                description: 是否展示公众号主页中
+                enum: [0, 1]
+            required:
+              - appid
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+  /cgi-bin/wxopen/wxamplinkget:
+    post:
+      summary: 获取公众号关联的小程序
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1513255108_gFkRI)'
+      operationId: cgi-bin/wxopen/wxamplinkget
+      security:
+        - accessToken: []
+      tags:
+        - 开放平台/第三方平台/代公众号/小程序管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  wxopens:
+                    type: object
+                    description: 关联的小程序列表
+                    propertes:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            status:
+                              type: integer
+                              format: int32
+                              description: 关联状态1：已关联；2：等待小程序管理员确认中；3：小程序管理员拒绝关联12：等待公众号管理员确认中；
+                              enum: [1, 2, 3, 12]
+                            username:
+                              type: string
+                              description: 小程序gh_id
+                            source:
+                              type: string
+                            nickname:
+                              type: string
+                              description: 小程序名称
+                            selected:
+                              type: integer
+                              format: int32
+                              description: 是否在公众号管理页展示中
+                              enum: [0, 1]
+                            nearby_display_status:
+                              type: integer
+                              format: int32
+                              description: 是否展示在附近的小程序中
+                              enum: [0, 1]
+                            released:
+                              type: integer
+                              format: int32
+                              description: 是否已经发布
+                              enum: [0, 1]
+                            headimg_url:
+                              type: string
+                              description: 头像url
+                            email:
+                              type: string
+                            copy_verify_status:
+                              type: integer
+                              format: int32
+                              enum: [0, 1]
+                            func_info:
+                              description: 微信认证及支付信息，0表示未开通，1表示开通
+                              type: array
+                              items: []
+  /cgi-bin/wxopen/wxampunlink:
+    post:
+      summary: 解除已关联的小程序
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1513255108_gFkRI)'
+      operationId: cgi-bin/wxopen/wxampunlink
+      security:
+        - accessToken: []
+      tags:
+        - 开放平台/第三方平台/代公众号/小程序管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              appid:
+                type: string
+                description: 小程序appid
+            required:
+              - appid
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+  /cgi-bin/wxverify/checkwxverifynickname:
+    post:
+      summary: 微信认证名称检测
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
+      operationId: cgi-bin/wxverify/checkwxverifynickname
+      security:
+        - accessToken: []
+      tags:
+        - 开放平台/第三方平台/代公众号/小程序管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              nick_name:
+                type: string
+                description: 名称（昵称）
+            required:
+              - nick_name
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  hit_condition:
+                    type: boolean
+                    description: 是否命中关键字策略。若命中，可以选填关键字材料
+                  wording:
+                    type: string
+                    description:  命中关键字的说明描述（给用户看的）
   /customservice/kfaccount/add:
     post:
       summary: 添加客服帐号
@@ -13010,6 +14614,54 @@ paths:
           description: ''
           schema:
             $ref: '#/definitions/base.ResponseBo'
+  /sns/component/jscode2session:
+    get:
+      summary: 微信登录/code换取session_key
+      description: 第三方平台代替小程序实现登录功能请参考一般小程序接口文档wx.login 部分内容。除了下述部分以外，其他接口的功能与一般小程序实现方式一致。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1492585163_FtTNA)
+      operationId: sns/component/jscode2session
+      security:
+        - componentAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序
+      parameters:
+        - in: query
+          name: appid
+          type: string
+          description: 小程序的AppID
+          required: true
+        - in: query
+          name: js_code
+          type: string
+          description: 登录时获取的 code
+          required: true
+        - in: query
+          name: grant_type
+          type: string
+          required: true
+          enum:
+            - authorization_code
+        - in: query
+          name: component_appid
+          type: string
+          description: 第三方平台appid
+          required: true
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  openid:
+                    type: string
+                    description: 用户唯一标识，请注意，在未关注公众号时，用户访问公众号的网页，也会产生一个用户和公众号唯一的OpenID
+                  session_key:
+                    type: string
+                    description: 会话密钥
+                  unionid:
+                    type: string
+                    description: 用户在开放平台的唯一标识符
   /sns/jscode2session:
     get:
       summary: 登录凭证校验
@@ -13084,6 +14736,116 @@ paths:
           name: code
           type: string
           description: 登录时获取的 code
+          required: true
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  access_token:
+                    type: string
+                    description: 网页授权接口调用凭证,注意：此access_token与基础支持的access_token不同
+                  expires_in:
+                    type: integer
+                    format: int32
+                    description: access_token接口调用凭证超时时间，单位（秒）
+                  refresh_token:
+                    type: string
+                    description: 用户刷新access_token
+                  openid:
+                    type: string
+                    description: 用户唯一标识，请注意，在未关注公众号时，用户访问公众号的网页，也会产生一个用户和公众号唯一的OpenID
+                  scope:
+                    type: string
+                    description: 用户授权的作用域，使用逗号（,）分隔
+  /sns/oauth2/component/access_token:
+    get:
+      summary: 通过code换取网页授权access_token
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419318590&token=&lang=zh_CN)'
+      operationId: sns/oauth2/component/access_token
+      security:
+        - componentAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代公众号/网页开发
+      parameters:
+        - in: query
+          name: grant_type
+          type: string
+          required: true
+          enum:
+            - authorization_code
+        - in: query
+          name: appid
+          type: string
+          description: 公众号的appid
+          required: true
+        - in: query
+          name: code
+          type: string
+          description: 登录时获取的 code
+          required: true
+        - in: query
+          name: component_appid
+          type: string
+          description: 服务开发方的appid
+          required: true
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  access_token:
+                    type: string
+                    description: 网页授权接口调用凭证,注意：此access_token与基础支持的access_token不同
+                  expires_in:
+                    type: integer
+                    format: int32
+                    description: access_token接口调用凭证超时时间，单位（秒）
+                  refresh_token:
+                    type: string
+                    description: 用户刷新access_token
+                  openid:
+                    type: string
+                    description: 用户唯一标识，请注意，在未关注公众号时，用户访问公众号的网页，也会产生一个用户和公众号唯一的OpenID
+                  scope:
+                    type: string
+                    description: 用户授权的作用域，使用逗号（,）分隔
+  /sns/oauth2/component/refresh_token:
+    get:
+      summary: 刷新access_token（如果需要）
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419318590&token=&lang=zh_CN)'
+      operationId: sns/oauth2/component/refresh_token
+      tags:
+        - 开放平台/第三方平台/代公众号/网页开发
+      security:
+        - componentAccessToken: []
+      parameters:
+        - in: query
+          name: appid
+          type: string
+          description: 公众号的唯一标识
+          required: true
+        - in: query
+          name: refresh_token
+          type: string
+          description: 填写通过access_token获取到的refresh_token参数
+          required: true
+        - in: query
+          name: grant_type
+          type: string
+          required: true
+          enum:
+            - refresh_token
+        - in: query
+          name: component_appid
+          type: string
+          description: 服务开发方的appid
           required: true
       responses:
         '200':
@@ -13233,6 +14995,81 @@ paths:
       responses:
         '200':
           description: ''
+  /wxa/addtotemplate:
+    post:
+      summary: 将草稿箱的草稿选为小程序代码模版
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1506504150_nMMh6)'
+      operationId: wxa/addtotemplate
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/代码模版库
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              draft_id:
+                type: integer
+                format: int32
+                description: 草稿ID，本字段可通过“ 获取草稿箱内的所有临时代码草稿 ”接口获得
+            required:
+              - draft_id
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+  /wxa/api_wxa_querynickname:
+    post:
+      summary: 小程序改名审核状态查询
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
+      operationId: wxa/api_wxa_querynickname
+      security:
+        - accessToken: []
+      tags:
+        - 开放平台/第三方平台/代公众号/小程序管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              audit_id:
+                type: integer
+                format: int32
+                description: 审核单id
+            required:
+              - audit_id
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  nickname:
+                    type: string
+                    description: 审核昵称
+                  audit_stat:
+                    type: integer
+                    format: int32
+                    description: 审核状态，1：审核中，2：审核失败，3：审核成功
+                    enum: [1, 2, 3]
+                  fail_reason:
+                    type: string
+                    description: 失败原因
+                  create_time:
+                    type: integer
+                    format: int32
+                    description: 审核提交时间
+                  audit_time:
+                    type: integer
+                    format: int32
+                    description: 审核完成时间
   /wxa/apply_merchant:
     post:
       summary: 创建门店小程序
@@ -13250,6 +15087,126 @@ paths:
       responses:
         '200':
           description: ''
+  /wxa/bind_tester:
+    post:
+      summary: 绑定微信用户为小程序体验者
+      description: 第三方平台在帮助旗下授权的小程序提交代码审核之前，可先让小程序运营者体验，体验之前需要将运营者的个人微信号添加到该小程序的体验者名单中。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140588_nVUgx)
+      operationId: wxa/bind_tester
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/成员管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              wechatid:
+                type: string
+                description: 微信号
+            required:
+              - wechatid
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  userstr:
+                    type: string
+                    description: 人员对应的唯一字符串
+  /wxa/change_visitstatus:
+    post:
+      summary: 修改小程序线上代码的可见状态（仅供第三方代小程序调用）
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+      operationId: wxa/change_visitstatus
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/代码管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              action:
+                type: string
+                description: 设置可访问状态，发布后默认可访问，close为不可见，open为可见
+                enum: ['close', 'open']
+            required:
+              - action
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+  /wxa/changewxasearchstatus:
+    post:
+      summary: 设置小程序隐私设置（是否可被搜索）
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+      operationId: wxa/changewxasearchstatus
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                format: int32
+                description: 1表示不可搜索，0表示可搜索
+                enum: [0, 1]
+            required:
+              - action
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+  /wxa/commit:
+    post:
+      summary: 为授权的小程序帐号上传小程序代码
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+      operationId: wxa/commit
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/代码管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              template_id:
+                type: integer
+                format: int32
+                description: 代码库中的代码模版ID
+              ext_json:
+                type: string
+                description: 第三方自定义的配置 [JSON string](https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html)
+              user_version:
+                type: string
+                description: 代码版本号，开发者可自定义
+              user_desc:
+                type: string
+                description: 代码描述，开发者可自定义
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
   /wxa/create_map_poi:
     post:
       summary: 在腾讯地图中创建门店
@@ -13284,6 +15241,112 @@ paths:
       responses:
         '200':
           description: ''
+  /wxa/deletetemplate:
+    post:
+      summary: 删除指定小程序代码模版
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1506504150_nMMh6)'
+      operationId: wxa/deletetemplate
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/代码模版库
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              template_id:
+                type: integer
+                format: int32
+                description: 要删除的模版ID
+            required:
+              - template_id
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+  /wxa/get_auditstatus:
+    post:
+      summary: 查询某个指定版本的审核状态（仅供第三方代小程序调用）
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+      operationId: wxa/get_auditstatus
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/代码管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              auditid:
+                type: integer
+                format: int32
+                description: 审核编号
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                    description: 审核状态，其中0为审核成功，1为审核失败，2为审核中
+                    enum: [0, 1, 2]
+                  reason:
+                    type: string
+                    description: 当status=1，审核被拒绝时，返回的拒绝原因
+  /wxa/get_category:
+    get:
+      summary: 获取体验小程序的体验二维码
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+      operationId: wxa/get_category
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/代码管理
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  category_list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        first_id:
+                          type: integer
+                          format: int32
+                          description: 一级类目的ID编号
+                        first_class:
+                          type: string
+                          description: 一级类目名称
+                        second_id:
+                          type: integer
+                          format: int32
+                          description: 二类目层级
+                        second_class:
+                          type: string
+                          description: 二级类目的ID编号
+                        third_id:
+                          type: integer
+                          format: int32
+                          description: 三级类目的ID编号
+                        third_class:
+                          type: string
+                          description: 三级类目名称
   /wxa/get_district:
     get:
       summary: 从腾讯地图拉取省市区信息
@@ -13296,6 +15359,32 @@ paths:
       responses:
         '200':
           description: ''
+  /wxa/get_latest_auditstatus:
+    get:
+      summary: 查询最新一次提交的审核状态（仅供第三方代小程序调用）
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+      operationId: wxa/get_latest_auditstatus
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/代码管理
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                    description: 审核状态，其中0为审核成功，1为审核失败，2为审核中
+                    enum: [0, 1, 2]
+                  reason:
+                    type: string
+                    description: 当status=1，审核被拒绝时，返回的拒绝原因
   /wxa/get_merchant_audit_info:
     get:
       summary: 查询门店小程序审核结果
@@ -13320,6 +15409,48 @@ paths:
       responses:
         '200':
           description: ''
+  /wxa/get_page:
+    get:
+      summary: 获取小程序的第三方提交代码的页面配置（仅供第三方开发者代小程序调用）
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+      operationId: wxa/get_page
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/代码管理
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  page_list:
+                    type: array
+                    items:
+                      type: string
+  /wxa/get_qrcode:
+    get:
+      summary: 获取体验小程序的体验二维码
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+      operationId: wxa/get_qrcode
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/代码管理
+      parameters:
+        - in: query
+          name: path
+          type: string
+          description: 指定体验版二维码跳转到某个具体页面（如果不需要的话，则不需要填path参数，可在路径后以“?参数”方式传入参数）
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
   /wxa/get_store_info:
     post:
       summary: 获取单个门店信息
@@ -13354,6 +15485,165 @@ paths:
       responses:
         '200':
           description: ''
+  /wxa/getgrayreleaseplan:
+    get:
+      summary: 查询当前分阶段发布详情
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+      operationId: wxa/getgrayreleaseplan
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/代码管理
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  gray_release_plan:
+                    type: object
+                    properties:
+                      status:
+                        type: integer
+                        format: int32
+                        description: 0:初始状态 1:执行中 2:暂停中 3:执行完毕 4:被删除
+                        enum: [0, 1, 2, 3, 4]
+                      create_timestamp:
+                        type: integer
+                        format: int32
+                        description: 创建时间
+                      gray_percentage:
+                        type: integer
+                        format: int32
+                        description: 灰度的百分比，1到100的整数
+  /wxa/gettemplatedraftlist:
+    get:
+      summary: 获取草稿箱内的所有临时代码草稿
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1506504150_nMMh6)'
+      operationId: wxa/gettemplatedraftlist
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/代码模版库
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  draft:
+                    type: object
+                    properties:
+                      template_list:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            create_time:
+                              type: integer
+                              format: int32
+                              description: 说开发者上传草稿时间
+                            user_version:
+                              type: string
+                              description: 模版版本号，开发者自定义字段
+                            user_desc:
+                              type: string
+                              description: 模版描述 开发者自定义字段
+                            draft_id:
+                              type: integer
+                              format: int32
+                              description: 草稿id
+  /wxa/gettemplatelist:
+    get:
+      summary: 获取草稿箱内的所有临时代码草稿
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1506504150_nMMh6)'
+      operationId: wxa/gettemplatelist
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/代码模版库
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  template_list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        create_time:
+                          type: integer
+                          format: int32
+                          description: 说开发者上传草稿时间
+                        user_version:
+                          type: string
+                          description: 模版版本号，开发者自定义字段
+                        user_desc:
+                          type: string
+                          description: 模版描述 开发者自定义字段
+                        draft_id:
+                          type: integer
+                          format: int32
+                          description: 草稿id
+  /wxa/getwxasearchstatus:
+    get:
+      summary: 查询小程序当前隐私设置（是否可被搜索）
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21517799059ZSEMr)'
+      operationId: wxa/getwxasearchstatus
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                    description: 1表示不可搜索，0表示可搜索
+                    enum: [0, 1]
+  /wxa/grayrelease:
+    post:
+      summary: 小程序分阶段发布
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+      operationId: wxa/grayrelease
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/代码管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              gray_percentage:
+                type: integer
+                format: int32
+                description: 灰度的百分比，1到100的整数
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
   /wxa/img_sec_check:
     post:
       summary: 校验一张图片是否含有违法违规内容
@@ -13373,6 +15663,111 @@ paths:
       responses:
         '200':
           description: ''
+  /wxa/memberauth:
+    post:
+      summary: 获取体验者列表
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140588_nVUgx)'
+      operationId: wxa/memberauth
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/成员管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              action:
+                type: string
+                enum: ['get_experiencer']
+            required:
+              - action
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  members:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        userstr:
+                          type: string
+                          description: 人员对应的唯一字符串
+  /wxa/modify_domain:
+    post:
+      summary: 设置小程序服务器域名
+      description: 授权给第三方的小程序，其服务器域名只可以为第三方的服务器，当小程序通过第三方发布代码上线后，小程序原先自己配置的服务器域名将被删除，只保留第三方平台的域名，所以第三方平台在代替小程序发布代码之前，需要调用接口为小程序添加第三方自身的域名。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489138143_WPbOO)
+      operationId: wxa/modify_domain
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              action:
+                type: string
+                description: add添加, delete删除, set覆盖, get获取。当参数是get时不需要填四个域名字段
+                enum: ['add', 'delete', 'set', 'get']
+              requestdomain:
+                type: array
+                description: request合法域名，当action参数是get时不需要此字段
+                items:
+                  type: string
+              wsrequestdomain:
+                type: array
+                description: socket合法域名，当action参数是get时不需要此字段
+                items:
+                  type: string
+              uploaddomain:
+                type: array
+                description: uploadFile合法域名，当action参数是get时不需要此字段
+                items:
+                  type: string
+              downloaddomain:
+                type: array
+                description: downloadFile合法域名，当action参数是get时不需要此字段
+                items:
+                  type: string
+            required:
+              - action
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  requestdomain:
+                    type: array
+                    description: request合法域名，当action参数是get时不需要此字段
+                    items:
+                      type: string
+                  wsrequestdomain:
+                    type: array
+                    description: socket合法域名，当action参数是get时不需要此字段
+                    items:
+                      type: string
+                  uploaddomain:
+                    type: array
+                    description: uploadFile合法域名，当action参数是get时不需要此字段
+                    items:
+                      type: string
+                  downloaddomain:
+                    type: array
+                    description: downloadFile合法域名，当action参数是get时不需要此字段
+                    items:
+                      type: string
   /wxa/modify_merchant:
     post:
       summary: 修改门店小程序信息
@@ -13410,6 +15805,111 @@ paths:
       responses:
         '200':
           description: ''
+  /wxa/plugin:
+    post:
+      summary: 小程序插件管理权限集
+      description: 插件管理权限集用于第三方代小程序管理插件，具体包括：添加插件、查询已添加的插件及删除插件。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521637082Sqi4M)
+      operationId: wxa/plugin
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              action:
+                type: string
+                description: apply=申请使用插件接口;list=查询已添加的插件;unbind=删除已添加的插件
+                enum: ['apply', 'list', 'unbind']
+              plugin_appid:
+                type: string
+                description: 插件appid
+            required:
+              - action
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                description: 查询已添加的插件时返回
+                properties:
+                  plugin_list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        appid:
+                          type: string
+                          description: 插件appid
+                        status:
+                          type: integer
+                          format: int32
+                          description: 插件状态（1：申请中，2：申请通过，3：被拒绝；4：已超时）
+                          enum: [1, 2, 3, 4]
+                        nickname:
+                          type: string
+                          description: 插件昵称
+                        headimgurl:
+                          type: string
+                          description: 插件头像
+  /wxa/release:
+    post:
+      summary: 发布已通过审核的小程序（仅供第三方代小程序调用）
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+      operationId: wxa/release
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/代码管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+  /wxa/revertcoderelease:
+    get:
+      summary: 小程序版本回退（仅供第三方代小程序调用）
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+      operationId: wxa/revertcoderelease
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/代码管理
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+  /wxa/revertgrayrelease:
+    get:
+      summary: 取消分阶段发布
+      description: '单个帐号每天审核撤回次数最多不超过1次，一个月不超过10次。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+      operationId: wxa/revertgrayrelease
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/代码管理
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
   /wxa/search_map_poi:
     post:
       summary: 在腾讯地图中搜索门店
@@ -13427,6 +15927,200 @@ paths:
       responses:
         '200':
           description: ''
+  /wxa/setnickname:
+    post:
+      summary: 小程序名称设置及改名
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
+      operationId: wxa/setnickname
+      security:
+        - accessToken: []
+      tags:
+        - 开放平台/第三方平台/代公众号/小程序管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              nick_name:
+                type: string
+                description: 昵称
+              id_card:
+                type: string
+                description: 身份证照片–临时素材mediaid(个人号必填)
+              license:
+                type: string
+                description: 组织机构代码证或营业执照–临时素材mediaid
+              naming_other_stuff_1:
+                type: string
+                description: 其他证明材料---临时素材 mediaid
+              naming_other_stuff_2:
+                type: string
+                description: 其他证明材料---临时素材 mediaid
+              naming_other_stuff_3:
+                type: string
+                description: 其他证明材料---临时素材 mediaid
+              naming_other_stuff_4:
+                type: string
+                description: 其他证明材料---临时素材 mediaid
+              naming_other_stuff_5:
+                type: string
+                description: 其他证明材料---临时素材 mediaid
+            required:
+              - nick_name
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  audit_id:
+                    type: integer
+                    format: int32
+                    description: 审核单id
+                  wording:
+                    type: string
+                    description: 材料说明
+  /wxa/setwebviewdomain:
+    post:
+      summary: 设置小程序业务域名（仅供第三方代小程序调用）
+      description: 授权给第三方的小程序，其业务域名只可以为第三方的服务器，当小程序通过第三方发布代码上线后，小程序原先自己配置的业务域名将被删除，只保留第三方平台的域名，所以第三方平台在代替小程序发布代码之前，需要调用接口为小程序添加业务域名。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489138143_WPbOO)
+      operationId: wxa/setwebviewdomain
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              action:
+                type: string
+                description: add添加, delete删除, set覆盖, get获取。当参数是get时不需要填webviewdomain字段。如果没有action字段参数，则默认将开放平台第三方登记的小程序业务域名全部添加到授权的小程序中
+                enum: ['add', 'delete', 'set', 'get']
+              webviewdomain:
+                type: array
+                description: 小程序业务域名，当action参数是get时不需要此字段
+                items:
+                  type: string
+            required:
+              - action
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+  /wxa/submit_audit:
+    post:
+      summary: 为授权的小程序帐号上传小程序代码
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+      operationId: wxa/submit_audit
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/代码管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              item_list:
+                type: array
+                description: 提交审核项的一个列表（至少填写1项，至多填写5项）
+                items:
+                  type: object
+                  properties:
+                    address:
+                      type: string
+                      description: 小程序的页面，可通过“获取小程序的第三方提交代码的页面配置”接口获得
+                    tag:
+                      type: string
+                      description: 小程序的标签，多个标签用空格分隔，标签不能多于10个，标签长度不超过20
+                    first_class:
+                      type: string
+                      description: 一级类目名称，可通过“获取授权小程序帐号的可选类目”接口获得
+                    second_class:
+                      type: string
+                      description: 二级类目(同上)
+                    third_class:
+                      type: string
+                      description: 三级类目(同上)
+                    first_id:
+                      type: integer
+                      format: int32
+                      description: 一级类目的ID，可通过“获取授权小程序帐号的可选类目”接口获得
+                    second_id:
+                      type: integer
+                      format: int32
+                      description: 二级类目的ID(同上)
+                    third_id:
+                      type: integer
+                      format: int32
+                      description: 三级类目的ID(同上)
+                    title:
+                      type: string
+                      description: 小程序页面的标题,标题长度不超过32
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  auditid:
+                    type: integer
+                    format: int32
+                    description: 审核编号
+  /wxa/unbind_tester:
+    post:
+      summary: 绑定微信用户为小程序体验者
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140588_nVUgx)'
+      operationId: wxa/unbind_tester
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/成员管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              wechatid:
+                type: string
+                description: 微信号
+              userstr:
+                type: string
+                description: 人员对应的唯一字符串（可通过获取体验者api获取已绑定人员的字符串，userstr和wechatid填写其中一个即可）
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+  /wxa/undocodeaudit:
+    get:
+      summary: 小程序审核撤回
+      description: '单个帐号每天审核撤回次数最多不超过1次，一个月不超过10次。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+      operationId: wxa/undocodeaudit
+      security:
+        - authorizerAccessToken: []
+      tags:
+        - 开放平台/第三方平台/代小程序/代码管理
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
   /wxa/update_store:
     post:
       summary: 更新门店信息

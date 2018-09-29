@@ -14,7 +14,7 @@ get:
         allOf:
           - $ref: '#/definitions/base.ResponseBo'
           - type: object
-            propertes:
+            properties:
               limit:
                 type: integer
                 format: int32

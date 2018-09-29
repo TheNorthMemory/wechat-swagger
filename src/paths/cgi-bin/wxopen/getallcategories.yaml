@@ -17,7 +17,7 @@ get:
             properties:
               category_list:
                 type: object
-                propertes:
+                properties:
                   categories:
                     type: array
                     items:

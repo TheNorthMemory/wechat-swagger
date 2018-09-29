@@ -9114,7 +9114,7 @@ paths:
                 properties:
                   category_list:
                     type: object
-                    propertes:
+                    properties:
                       categories:
                         type: array
                         items:
@@ -9182,7 +9182,7 @@ paths:
             allOf:
               - $ref: '#/definitions/base.ResponseBo'
               - type: object
-                propertes:
+                properties:
                   limit:
                     type: integer
                     format: int32
@@ -9847,7 +9847,7 @@ paths:
                   wxopens:
                     type: object
                     description: 关联的小程序列表
-                    propertes:
+                    properties:
                       items:
                         type: array
                         items:
@@ -9893,7 +9893,9 @@ paths:
                             func_info:
                               description: 微信认证及支付信息，0表示未开通，1表示开通
                               type: array
-                              items: []
+                              items:
+                                type: object
+                                properties: {}
   /cgi-bin/wxopen/wxampunlink:
     post:
       summary: 解除已关联的小程序

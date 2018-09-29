@@ -81,6 +81,7 @@ tags:
   - name: 连WI-FI/门店
   - name: 连WI-FI/设备
   - name: 连WI-FI/商家主页
+  - name: 扫一扫
   - name: 智能接口/语义理解
   - name: 智能接口/AI开放接口
   - name: 数据统计/用户分析
@@ -95,4 +96,5 @@ tags:
   - name: 小程序/数据/访问分析/访问页面
   - name: 小程序/数据/用户画像
   - name: 小程序/文件/内容安全
+  - name: 开放平台/第三方平台
 paths: {}

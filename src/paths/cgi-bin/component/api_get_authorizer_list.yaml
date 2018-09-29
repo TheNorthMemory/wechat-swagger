@@ -1,0 +1,52 @@
+post:
+  summary: 获取第三方平台的权限集
+  description: 第三方平台可以使用接口拉取当前所有已授权的帐号基本信息。 [官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419318459)
+  operationId: cgi-bin/component/api_get_authorizer_list
+  security:
+    - componentAccessToken: []
+  tags:
+    - 开放平台/第三方平台
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          component_appid:
+            type: string
+            description: 第三方平台appid
+          offset:
+            type: integer
+            format: int32
+            description: 偏移位置/起始位置
+          count:
+            type: integer
+            format: int32
+            description: 拉取数量，最大为500
+        required:
+          - component_appid
+          - offset
+          - count
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              total_count:
+                type: integer
+                format: int32
+              list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    authorizer_appid:
+                      type: string
+                    refresh_token:
+                      type: string
+                    auth_time:
+                      type: integer
+                      format: int32

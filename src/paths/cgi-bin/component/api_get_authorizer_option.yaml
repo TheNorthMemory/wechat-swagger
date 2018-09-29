@@ -1,0 +1,44 @@
+post:
+  summary: 获取授权方的选项设置信息
+  description: 该API用于获取授权方的公众号或小程序的选项设置信息，如：地理位置上报，语音识别开关，多客服开关。注意，获取各项选项设置信息，需要有授权方的授权，详见权限集说明。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1453779503)
+  operationId: cgi-bin/component/api_get_authorizer_option
+  security:
+    - componentAccessToken: []
+  tags:
+    - 开放平台/第三方平台
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          component_appid:
+            type: string
+            description: 第三方平台appid
+          authorizer_appid:
+            type: string
+            description: 授权公众号或小程序的appid
+          option_name:
+            type: string
+            description: 选项名称，location_report(地理位置上报选项) 0=无上报;1=进入会话时上报;2=每5s上报；voice_recognize（语音识别开关选项）0=关闭语音识别;1=开启语音识别；customer_service（多客服开关选项）0=关闭多客服;1=开启多客服
+        required:
+          - component_appid
+          - authorizer_appid
+          - option_name
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              authorizer_appid:
+                type: string
+                description: 授权公众号或小程序的appid
+              option_name:
+                type: string
+                description: 选项名称
+              option_value:
+                type: string
+                description: 选项值

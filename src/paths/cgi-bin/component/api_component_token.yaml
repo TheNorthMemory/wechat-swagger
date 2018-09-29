@@ -1,0 +1,40 @@
+post:
+  summary: 获取第三方平台component_access_token
+  description: 第三方平台component_access_token是第三方平台的下文中接口的调用凭据，也叫做令牌（component_access_token）。每个令牌是存在有效期（2小时）的，且令牌的调用不是无限制的，请第三方平台做好令牌的管理，在令牌快过期时（比如1小时50分）再进行刷新。 [官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1453779503)
+  operationId: cgi-bin/component/api_component_token
+  tags:
+    - 开放平台/第三方平台
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          component_appid:
+            type: string
+            description: 第三方平台appid
+          component_appsecret:
+            type: string
+            description: 第三方平台appsecret
+          component_verify_ticket:
+            type: string
+            description: 微信后台推送的ticket，此ticket会定时推送，微信服务器 每隔10分钟会向推送一次
+        required:
+          - component_appid
+          - component_appsecret
+          - component_verify_ticket
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              component_access_token:
+                type: string
+                description: 第三方平台access_token
+              expires_in:
+                type: integer
+                format: int32
+                description: 有效期

@@ -1,0 +1,37 @@
+post:
+  summary: 删除帐号下的某个模板
+  description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR)'
+  operationId: cgi-bin/wxopen/template/del
+  security:
+    - authorizerAccessToken: []
+  tags:
+    - 开放平台/第三方平台/代小程序/模板消息模板设置
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          id:
+            type: string
+            description: 模板标题id（获取模板标题下的关键词库时需要）
+          keyword_id_list:
+            type: array
+            description: 开发者自行组合好的模板关键词列表，关键词顺序可以自由搭配（例如[3,5,4]或[4,5,3]），最多支持10个关键词组合
+            items:
+              type: integer
+              format: int32
+        required:
+          - id
+          - keyword_id_list
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              template_id:
+                type: string
+                description: 添加至帐号下的模板id，发送小程序模板消息时所需

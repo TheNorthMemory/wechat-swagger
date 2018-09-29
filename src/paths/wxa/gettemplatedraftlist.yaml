@@ -1,0 +1,39 @@
+get:
+  summary: 获取草稿箱内的所有临时代码草稿
+  description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1506504150_nMMh6)'
+  operationId: wxa/gettemplatedraftlist
+  security:
+    - authorizerAccessToken: []
+  tags:
+    - 开放平台/第三方平台/代小程序/代码模版库
+  parameters: []
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              draft:
+                type: object
+                properties:
+                  template_list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        create_time:
+                          type: integer
+                          format: int32
+                          description: 说开发者上传草稿时间
+                        user_version:
+                          type: string
+                          description: 模版版本号，开发者自定义字段
+                        user_desc:
+                          type: string
+                          description: 模版描述 开发者自定义字段
+                        draft_id:
+                          type: integer
+                          format: int32
+                          description: 草稿id

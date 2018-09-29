@@ -1,0 +1,22 @@
+get:
+  summary: 查询小程序当前隐私设置（是否可被搜索）
+  description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21517799059ZSEMr)'
+  operationId: wxa/getwxasearchstatus
+  security:
+    - authorizerAccessToken: []
+  tags:
+    - 开放平台/第三方平台/代小程序
+  parameters: []
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              status:
+                type: integer
+                format: int32
+                description: 1表示不可搜索，0表示可搜索
+                enum: [0, 1]

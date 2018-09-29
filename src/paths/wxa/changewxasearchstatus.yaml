@@ -1,0 +1,27 @@
+post:
+  summary: 设置小程序隐私设置（是否可被搜索）
+  description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+  operationId: wxa/21517799059ZSEMr
+  security:
+    - authorizerAccessToken: []
+  tags:
+    - 开放平台/第三方平台/代小程序
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          status:
+            type: integer
+            format: int32
+            description: 1表示不可搜索，0表示可搜索
+            enum: [0, 1]
+        required:
+          - action
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'

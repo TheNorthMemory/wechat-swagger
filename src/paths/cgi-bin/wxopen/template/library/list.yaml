@@ -1,0 +1,48 @@
+post:
+  summary: 获取小程序模板库标题列表
+  description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR)'
+  operationId: cgi-bin/wxopen/template/library/list
+  security:
+    - authorizerAccessToken: []
+  tags:
+    - 开放平台/第三方平台/代小程序/模板消息模板设置
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          offset:
+            type: integer
+            format: int32
+            description: offset和count用于分页，表示从offset开始，拉取count条记录，offset从0开始，count最大为20。
+          count:
+            type: integer
+            format: int32
+            description: offset和count用于分页，表示从offset开始，拉取count条记录，offset从0开始，count最大为20。
+        required:
+          - offset
+          - count
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              total_count:
+                type: integer
+                format: int32
+                description: 模板库标题总数
+              list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: 模板标题id（获取模板标题下的关键词库时需要）
+                    title:
+                      type: string
+                      description: 模板标题内容

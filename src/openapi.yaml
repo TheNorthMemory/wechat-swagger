@@ -22,7 +22,7 @@ securityDefinitions:
     in: query
     type: apiKey
     name: component_access_token
-    description: 第三方代公众号调用API凭证
+    description: 第三方代公众号/小程序调用API凭证
   authorizerAccessToken:
     in: query
     type: apiKey
@@ -109,5 +109,8 @@ tags:
   - name: 开放平台/第三方平台/代公众号/网页开发
   - name: 开放平台/第三方平台/代公众号/小程序管理
   - name: 开放平台/第三方平台/代小程序
+  - name: 开放平台/第三方平台/代小程序/成员管理
   - name: 开放平台/第三方平台/代小程序/代码管理
+  - name: 开放平台/第三方平台/代小程序/代码模版库
+  - name: 开放平台/第三方平台/代小程序/模板消息模板设置
 paths: {}

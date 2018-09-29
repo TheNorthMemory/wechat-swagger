@@ -1,0 +1,25 @@
+post:
+  summary: 获取帐号下已存在的模板列表
+  description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR)'
+  operationId: cgi-bin/wxopen/template/list
+  security:
+    - authorizerAccessToken: []
+  tags:
+    - 开放平台/第三方平台/代小程序/模板消息模板设置
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          template_id:
+            type: string
+            description: 要删除的模板id
+        required:
+          - template_id
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'

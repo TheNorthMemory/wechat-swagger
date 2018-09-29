@@ -1,0 +1,40 @@
+post:
+  summary: 查询当前设置的最低基础库版本及各版本用户占比 （仅供第三方代小程序调用）
+  description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+  operationId: cgi-bin/wxopen/getweappsupportversion
+  security:
+    - authorizerAccessToken: []
+  tags:
+    - 开放平台/第三方平台/代小程序/代码管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              now_version:
+                type: string
+                description: 当前版本
+              uv_info:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        percentage:
+                          type: number
+                          format: float
+                          description: 受影响比例
+                        version:
+                          type: string
+                          description: 版本号

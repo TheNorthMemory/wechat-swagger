@@ -1,0 +1,33 @@
+get:
+  summary: 查询当前分阶段发布详情
+  description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+  operationId: wxa/getgrayreleaseplan
+  security:
+    - authorizerAccessToken: []
+  tags:
+    - 开放平台/第三方平台/代小程序/代码管理
+  parameters: []
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              gray_release_plan:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                    description: 0:初始状态 1:执行中 2:暂停中 3:执行完毕 4:被删除
+                    enum: [0, 1, 2, 3, 4]
+                  create_timestamp:
+                    type: integer
+                    format: int32
+                    description: 创建时间
+                  gray_percentage:
+                    type: integer
+                    format: int32
+                    description: 灰度的百分比，1到100的整数

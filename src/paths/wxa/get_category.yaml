@@ -1,0 +1,43 @@
+get:
+  summary: 获取体验小程序的体验二维码
+  description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+  operationId: wxa/get_category
+  security:
+    - authorizerAccessToken: []
+  tags:
+    - 开放平台/第三方平台/代小程序/代码管理
+  parameters: []
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              category_list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    first_id:
+                      type: integer
+                      format: int32
+                      description: 一级类目的ID编号
+                    first_class:
+                      type: string
+                      description: 一级类目名称
+                    second_id:
+                      type: integer
+                      format: int32
+                      description: 二类目层级
+                    second_class:
+                      type: string
+                      description: 二级类目的ID编号
+                    third_id:
+                      type: integer
+                      format: int32
+                      description: 三级类目的ID编号
+                    third_class:
+                      type: string
+                      description: 三级类目名称

@@ -23,6 +23,11 @@ securityDefinitions:
     type: apiKey
     name: component_access_token
     description: 第三方代公众号调用API凭证
+  authorizerAccessToken:
+    in: query
+    type: apiKey
+    name: access_token
+    description: 第三方平台获取到的授权的authorizer_access_token
 tags:
   - name: 基础支持
   - name: 自定义菜单
@@ -103,4 +108,6 @@ tags:
   - name: 开放平台/第三方平台/代公众号
   - name: 开放平台/第三方平台/代公众号/网页开发
   - name: 开放平台/第三方平台/代公众号/小程序管理
+  - name: 开放平台/第三方平台/代小程序
+  - name: 开放平台/第三方平台/代小程序/代码管理
 paths: {}

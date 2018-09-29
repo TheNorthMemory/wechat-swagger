@@ -1,0 +1,62 @@
+post:
+  summary: 为授权的小程序帐号上传小程序代码
+  description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+  operationId: wxa/submit_audit
+  security:
+    - authorizerAccessToken: []
+  tags:
+    - 开放平台/第三方平台/代小程序/代码管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          item_list:
+            type: array
+            description: 提交审核项的一个列表（至少填写1项，至多填写5项）
+            items:
+              type: object
+              properties:
+                address:
+                  type: string
+                  description: 小程序的页面，可通过“获取小程序的第三方提交代码的页面配置”接口获得
+                tag:
+                  type: string
+                  description: 小程序的标签，多个标签用空格分隔，标签不能多于10个，标签长度不超过20
+                first_class:
+                  type: string
+                  description: 一级类目名称，可通过“获取授权小程序帐号的可选类目”接口获得
+                second_class:
+                  type: string
+                  description: 二级类目(同上)
+                third_class:
+                  type: string
+                  description: 三级类目(同上)
+                first_id:
+                  type: integer
+                  format: int32
+                  description: 一级类目的ID，可通过“获取授权小程序帐号的可选类目”接口获得
+                second_id:
+                  type: integer
+                  format: int32
+                  description: 二级类目的ID(同上)
+                third_id:
+                  type: integer
+                  format: int32
+                  description: 三级类目的ID(同上)
+                title:
+                  type: string
+                  description: 小程序页面的标题,标题长度不超过32
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              auditid:
+                type: integer
+                format: int32
+                description: 审核编号

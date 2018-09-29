@@ -1,0 +1,35 @@
+post:
+  summary: 获取体验者列表
+  description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140588_nVUgx)'
+  operationId: wxa/memberauth
+  security:
+    - authorizerAccessToken: []
+  tags:
+    - 开放平台/第三方平台/代小程序
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          action:
+            type: string
+            enum: ['get_experiencer']
+        required:
+          - action
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              members:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    userstr:
+                      type: string
+                      description: 人员对应的唯一字符串

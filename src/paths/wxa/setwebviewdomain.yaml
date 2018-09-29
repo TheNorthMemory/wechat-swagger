@@ -1,0 +1,31 @@
+post:
+  summary: 设置小程序业务域名（仅供第三方代小程序调用）
+  description: 授权给第三方的小程序，其业务域名只可以为第三方的服务器，当小程序通过第三方发布代码上线后，小程序原先自己配置的业务域名将被删除，只保留第三方平台的域名，所以第三方平台在代替小程序发布代码之前，需要调用接口为小程序添加业务域名。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489138143_WPbOO)
+  operationId: wxa/setwebviewdomain
+  security:
+    - authorizerAccessToken: []
+  tags:
+    - 开放平台/第三方平台/代小程序
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          action:
+            type: string
+            description: add添加, delete删除, set覆盖, get获取。当参数是get时不需要填webviewdomain字段。如果没有action字段参数，则默认将开放平台第三方登记的小程序业务域名全部添加到授权的小程序中
+            enum: ['add', 'delete', 'set', 'get']
+          webviewdomain:
+            type: array
+            description: 小程序业务域名，当action参数是get时不需要此字段
+            items:
+              type: string
+        required:
+          - action
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'

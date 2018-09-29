@@ -1,0 +1,23 @@
+post:
+  summary: 删除已设置的二维码规则
+  description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+  operationId: cgi-bin/wxopen/qrcodejumpdelete
+  security:
+    - authorizerAccessToken: []
+  tags:
+    - 开放平台/第三方平台/代小程序/代码管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          prefix:
+            type: string
+            description: 二维码规则
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'

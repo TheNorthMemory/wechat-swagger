@@ -1,0 +1,94 @@
+get:
+  summary: 获取帐号基本信息
+  description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
+  operationId: cgi-bin/account/getaccountbasicinfo
+  security:
+    - accessToken: []
+  tags:
+    - 开放平台/第三方平台/代公众号/小程序管理
+  parameters: []
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              appid:
+                type: string
+                description: 帐号appid
+              account_type:
+                type: integer
+                format: int32
+                description: 帐号类型（1：订阅号，2：服务号，3：小程序）
+                enum: [1, 2, 3]
+              principal_type:
+                type: integer
+                format: int32
+                description: 主体类型（1：企业）
+              principal_name:
+                type: string
+                description: 主体名称
+              realname_status:
+                type: integer
+                format: int32
+                description: 实名验证状态（1：实名验证成功，2：实名验证中，3：实名验证失败）调用接口1.1创建帐号时，realname_status会初始化为2对于注册方式为微信认证的帐号，资质认证成功时，realname_status会更新为1
+                enum: [1, 2, 3]
+              wx_verify_info:
+                type: object
+                description: 微信认证信息
+                properties:
+                  qualification_verify:
+                    type: integer
+                    format: int32
+                    description: 是否资质认证（true：是，false：否）若是，拥有微信认证相关的权限。
+                    enum: [0, 1]
+                  naming_verify:
+                    type: integer
+                    format: int32
+                    description: 是否名称认证（true：是，false：否）对于公众号（订阅号、服务号），是名称认证，微信客户端才会有微信认证打勾的标识。
+                    enum: [0, 1]
+                  annual_review:
+                    type: integer
+                    format: int32
+                    description: 是否需要年审（true：是，false：否）（qualification_verify = true时才有该字段）
+                    enum: [0, 1]
+                  annual_review_begin_time:
+                    type: integer
+                    format: int32
+                    description: 年审开始时间，时间戳（qualification_verify = true时才有该字段）
+                  annual_review_end_time:
+                    type: integer
+                    format: int32
+                    description: 年审截止时间，时间戳（qualification_verify = true时才有该字段）
+              signature_info:
+                type: object
+                description: 功能介绍信息
+                properties:
+                  signature:
+                    type: string
+                    description: 功能介绍
+                  modify_used_count:
+                    type: integer
+                    format: int32
+                    description: 功能介绍已使用修改次数（本月）
+                  modify_quota:
+                    type: integer
+                    format: int32
+                    description: 功能介绍修改次数总额度（本月）
+              head_image_info:
+                type: object
+                description: 头像信息
+                properties:
+                  head_image_url:
+                    type: string
+                    description: 头像url
+                  modify_used_count:
+                    type: integer
+                    format: int32
+                    description: 头像已使用修改次数（本月）
+                  modify_quota:
+                    type: integer
+                    format: int32
+                    description: 头像修改次数总额度（本月）

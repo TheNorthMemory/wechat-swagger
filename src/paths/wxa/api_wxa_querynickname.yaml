@@ -1,0 +1,47 @@
+post:
+  summary: 小程序改名审核状态查询
+  description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
+  operationId: wxa/api_wxa_querynickname
+  security:
+    - accessToken: []
+  tags:
+    - 开放平台/第三方平台/代公众号/小程序管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          audit_id:
+            type: integer
+            format: int32
+            description: 审核单id
+        required:
+          - audit_id
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              nickname:
+                type: string
+                description: 审核昵称
+              audit_stat:
+                type: integer
+                format: int32
+                description: 审核状态，1：审核中，2：审核失败，3：审核成功
+                enum: [1, 2, 3]
+              fail_reason:
+                type: string
+                description: 失败原因
+              create_time:
+                type: integer
+                format: int32
+                description: 审核提交时间
+              audit_time:
+                type: integer
+                format: int32
+                description: 审核完成时间

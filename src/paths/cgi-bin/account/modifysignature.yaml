@@ -1,0 +1,25 @@
+post:
+  summary: 修改功能介绍
+  description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
+  operationId: cgi-bin/account/modifysignature
+  security:
+    - accessToken: []
+  tags:
+    - 开放平台/第三方平台/代公众号/小程序管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          signature:
+            type: string
+            description:  功能介绍（简介）
+        required:
+          - signature
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'

@@ -1,0 +1,46 @@
+post:
+  summary: 修改类目
+  description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
+  operationId: cgi-bin/wxopen/modifycategory
+  security:
+    - accessToken: []
+  tags:
+    - 开放平台/第三方平台/代公众号/小程序管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        required:
+          - first
+          - second
+          - certicates
+        properties:
+          first:
+            type: integer
+            format: int32
+            description: 一级类目ID
+          second:
+            type: integer
+            format: int32
+            description: 二级类目ID
+          certicates:
+            type: array
+            items:
+              type: object
+              required:
+                - key
+                - value
+              properties:
+                key:
+                  type: string
+                  description: 资质名称
+                value:
+                  type: string
+                  description: 资质图片media_id
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'

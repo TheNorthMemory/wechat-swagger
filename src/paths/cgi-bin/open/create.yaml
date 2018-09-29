@@ -1,0 +1,30 @@
+post:
+  summary: 创建开放平台帐号并绑定公众号/小程序
+  description: 该API用于创建一个开放平台帐号，并将一个尚未绑定开放平台帐号的公众号/小程序绑定至该开放平台帐号上。新创建的开放平台帐号的主体信息将设置为与之绑定的公众号或小程序的主体。 [官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1498704804_iARAL)
+  operationId: cgi-bin/open/create
+  security:
+    - accessToken: []
+  tags:
+    - 开放平台/帐号管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          appid:
+            type: string
+            description: 第三方平台appid
+        required:
+          - appid
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              open_appid:
+                type: string
+                description: 所创建的开放平台帐号的appid

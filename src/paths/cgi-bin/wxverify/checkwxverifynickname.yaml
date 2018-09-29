@@ -1,0 +1,33 @@
+post:
+  summary: 微信认证名称检测
+  description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
+  operationId: cgi-bin/wxverify/checkwxverifynickname
+  security:
+    - accessToken: []
+  tags:
+    - 开放平台/第三方平台/代公众号/小程序管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          nick_name:
+            type: string
+            description: 名称（昵称）
+        required:
+          - nick_name
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              hit_condition:
+                type: boolean
+                description: 是否命中关键字策略。若命中，可以选填关键字材料
+              wording:
+                type: string
+                description:  命中关键字的说明描述（给用户看的）

@@ -1,0 +1,72 @@
+post:
+  summary: 获取公众号关联的小程序
+  description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1513255108_gFkRI)'
+  operationId: cgi-bin/wxopen/wxamplinkget
+  security:
+    - accessToken: []
+  tags:
+    - 开放平台/第三方平台/代公众号/小程序管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties: {}
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              wxopens:
+                type: object
+                description: 关联的小程序列表
+                propertes:
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        status:
+                          type: integer
+                          format: int32
+                          description: 关联状态1：已关联；2：等待小程序管理员确认中；3：小程序管理员拒绝关联12：等待公众号管理员确认中；
+                          enum: [1, 2, 3, 12]
+                        username:
+                          type: string
+                          description: 小程序gh_id
+                        source:
+                          type: string
+                        nickname:
+                          type: string
+                          description: 小程序名称
+                        selected:
+                          type: integer
+                          format: int32
+                          description: 是否在公众号管理页展示中
+                          enum: [0, 1]
+                        nearby_display_status:
+                          type: integer
+                          format: int32
+                          description: 是否展示在附近的小程序中
+                          enum: [0, 1]
+                        released:
+                          type: integer
+                          format: int32
+                          description: 是否已经发布
+                          enum: [0, 1]
+                        headimg_url:
+                          type: string
+                          description: 头像url
+                        email:
+                          type: string
+                        copy_verify_status:
+                          type: integer
+                          format: int32
+                          enum: [0, 1]
+                        func_info:
+                          description: 微信认证及支付信息，0表示未开通，1表示开通
+                          type: array
+                          items: []

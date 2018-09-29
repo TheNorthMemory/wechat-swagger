@@ -1,0 +1,45 @@
+post:
+  summary: 修改头像
+  description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
+  operationId: cgi-bin/account/modifyheadimage
+  security:
+    - accessToken: []
+  tags:
+    - 开放平台/第三方平台/代公众号/小程序管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          head_img_media_id:
+            type: string
+            description: 头像素材media_id
+          x1:
+            type: number
+            format: float
+            description: 裁剪框左上角x坐标（取值范围：[0, 1]）
+          y1:
+            type: number
+            format: float
+            description: 裁剪框左上角y坐标（取值范围：[0, 1]）
+          x2:
+            type: number
+            format: float
+            description: 裁剪框右上角x坐标（取值范围：[0, 1]）
+          y2:
+            type: number
+            format: float
+            description: 裁剪框右上角y坐标（取值范围：[0, 1]）
+        required:
+          - head_img_media_id
+          - x1
+          - x2
+          - y1
+          - y2
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'

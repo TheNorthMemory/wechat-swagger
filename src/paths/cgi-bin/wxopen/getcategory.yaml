@@ -1,0 +1,56 @@
+get:
+  summary: 获取账号已经设置的所有类目
+  description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
+  operationId: cgi-bin/wxopen/getcategory
+  security:
+    - accessToken: []
+  tags:
+    - 开放平台/第三方平台/代公众号/小程序管理
+  parameters: []
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            propertes:
+              limit:
+                type: integer
+                format: int32
+                description: 一个更改周期内可以设置类目的次数
+              quota:
+                type: integer
+                format: int32
+                description: 本更改周期内还可以设置类目的次数
+              category_limit:
+                type: integer
+                format: int32
+                description: 最多可以设置的类目数量
+              categories:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    first:
+                      type: integer
+                      format: int32
+                      description: 一级类目ID
+                    first_name:
+                      type: string
+                      description: 一级类目名称
+                    second:
+                      type: integer
+                      format: int32
+                      description: 二级类目ID
+                    second_name:
+                      type: string
+                      description: 二级类目名称
+                    audit_status:
+                      type: integer
+                      format: int32
+                      description: 审核状态（1审核中 2审核不通过 3审核通过）
+                      enum: [1, 2, 3]
+                    audit_reason:
+                      type: string
+                      description: 审核不通过原因

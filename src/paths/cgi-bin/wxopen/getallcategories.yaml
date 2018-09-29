@@ -1,0 +1,70 @@
+get:
+  summary: 获取账号可以设置的所有类目
+  description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
+  operationId: cgi-bin/wxopen/getallcategories
+  security:
+    - accessToken: []
+  tags:
+    - 开放平台/第三方平台/代公众号/小程序管理
+  parameters: []
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              category_list:
+                type: object
+                propertes:
+                  categories:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int32
+                          description: 类目id
+                        name:
+                          type: string
+                          description: 类目名称
+                        level:
+                          type: integer
+                          format: int32
+                          description: 类目层级
+                        father:
+                          type: integer
+                          format: int32
+                          description: 类目父级id
+                        children:
+                          type: array
+                          description: 子级类目id
+                          items:
+                            type: integer
+                            format: int32
+                        sensitive_type:
+                          type: integer
+                          format: int32
+                          description: 是否为敏感类目（1为敏感类目，需要提供相应资质审核；0为非敏感类目，无需审核）
+                          enum: [0, 1]
+                        qualify:
+                          type: object
+                          properties:
+                            exter_list:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  inner_list:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        name:
+                                          type: string
+                                          description: sensitive_type为1的类目需要提供的资质文件名称
+                                        url:
+                                          type: string
+                                          description: 资质文件示例

@@ -1,0 +1,54 @@
+get:
+  summary: 刷新access_token（如果需要）
+  description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419318590&token=&lang=zh_CN)'
+  operationId: sns/oauth2/component/refresh_token
+  tags:
+    - 开放平台/第三方平台/代公众号/网页开发
+  security:
+    - componentAccessToken: []
+  parameters:
+    - in: query
+      name: appid
+      type: string
+      description: 公众号的唯一标识
+      required: true
+    - in: query
+      name: refresh_token
+      type: string
+      description: 填写通过access_token获取到的refresh_token参数
+      required: true
+    - in: query
+      name: grant_type
+      type: string
+      required: true
+      enum:
+        - refresh_token
+    - in: query
+      name: component_appid
+      type: string
+      description: 服务开发方的appid
+      required: true
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              access_token:
+                type: string
+                description: 网页授权接口调用凭证,注意：此access_token与基础支持的access_token不同
+              expires_in:
+                type: integer
+                format: int32
+                description: access_token接口调用凭证超时时间，单位（秒）
+              refresh_token:
+                type: string
+                description: 用户刷新access_token
+              openid:
+                type: string
+                description: 用户唯一标识，请注意，在未关注公众号时，用户访问公众号的网页，也会产生一个用户和公众号唯一的OpenID
+              scope:
+                type: string
+                description: 用户授权的作用域，使用逗号（,）分隔

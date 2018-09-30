@@ -1,0 +1,85 @@
+get:
+  summary: 查看地点列表
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/nearby.html#查看地点列表)'
+  operationId: wxa/getnearbypoilist
+  security:
+    - accessToken: []
+  tags:
+    - 小程序/附近
+  parameters:
+    - in: query
+      name: page
+      type: integer
+      format: int32
+      required: true
+      description: 起始页id（从1开始计数）
+    - in: query
+      name: page_rows
+      type: integer
+      format: int32
+      required: true
+      description: 每页展示个数（最多1000个）
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  left_apply_num:
+                    type: integer
+                    format: int32
+                    description: 剩余可添加地点个数
+                  max_apply_num:
+                    type: integer
+                    format: int32
+                    description: 最大可添加地点个数
+                  data:
+                    type: object
+                    description: 地址列表
+                    properties:
+                      poi_list:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            poi_id:
+                              type: string
+                              description: poi_id
+                            qualification_address:
+                              type: string
+                              description: 资质证件地址
+                            qualification_num:
+                              type: string
+                              description: 资质证件证件号
+                            audit_status:
+                              type: integer
+                              format: int32
+                              description: 地点审核状态（3：审核中，4：审核失败，5：审核通过）
+                              enum: [3, 4, 5]
+                            display_status:
+                              type: integer
+                              format: int32
+                              description: 地点展示在附近状态（0：未展示，1：展示中）
+                              enum: [0, 1]
+                            refuse_reason:
+                              type: string
+                              description: 审核失败原因;audit_status=4时返回
+        example:
+          errcode: 0
+          errmsg: ''
+          data:
+            left_apply_num: 9
+            max_apply_num: 10
+            data:
+              poi_list:
+                - poi_id: '123456'
+                  qualification_address: 广东省广州市海珠区新港中路123号
+                  qualification_num: 123456789-1
+                  audit_status: 3
+                  display_status: 0
+                  refuse_reason: ''

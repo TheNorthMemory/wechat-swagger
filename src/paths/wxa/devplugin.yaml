@@ -1,0 +1,71 @@
+post:
+  summary: 小程序插件(供插件开发者调用)
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/plugin.html)'
+  operationId: wxa/devplugin
+  security:
+    - accessToken: []
+  tags:
+    - 小程序/插件
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          action:
+            type: string
+            description: dev_apply_list=获取当前所有插件使用方；dev_agree=同意申请；dev_refuse=拒绝申请；dev_delete=删除已拒绝的申请者
+            enum: ['dev_apply_list', 'dev_agree', 'dev_refuse', 'dev_delete']
+          appid:
+            type: string
+            description: 使用者的appid(dev_agree,dev_refuse,dev_delete时必填)
+          page:
+            type: integer
+            format: int32
+            description: dev_apply_list时必填，page和num用于分页，表示每页num条记录，拉取第page页的数据。
+          num:
+            type: integer
+            format: int32
+            description: dev_apply_list时必填，page和num用于分页，表示每页num条记录，拉取第page页的数据。
+        required:
+          - action
+        example:
+          action: dev_apply_list
+          page: 1
+          num: 10
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            description: 查询已添加的插件时返回
+            properties:
+              plugin_list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    appid:
+                      type: string
+                      description: 插件appid
+                    status:
+                      type: integer
+                      format: int32
+                      description: 插件状态（1：申请中，2：申请通过，3：被拒绝；4：已超时）
+                      enum: [1, 2, 3, 4]
+                    nickname:
+                      type: string
+                      description: 插件昵称
+                    headimgurl:
+                      type: string
+                      description: 插件头像
+        example:
+          errcode: 0
+          errmsg: ok
+          apply_list:
+            - appid: aaaa
+              status: 1
+              nickname: 小程序昵称
+              headimgurl: 'http://weixin.qq.com'

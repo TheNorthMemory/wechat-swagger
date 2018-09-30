@@ -1,0 +1,28 @@
+post:
+  summary: 删除地点
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/nearby.html#删除地点)'
+  operationId: wxa/delnearbypoi
+  security:
+    - accessToken: []
+  tags:
+    - 小程序/附近
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          poi_id:
+            type: string
+            description: 附近地点ID
+        example:
+          poi_id: '469382092'
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+        example:
+          errcode: 92005
+          errmsg: 地点正在审核中

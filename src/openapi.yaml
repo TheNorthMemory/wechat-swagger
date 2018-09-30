@@ -101,6 +101,8 @@ tags:
   - name: 小程序/数据/访问分析/访问页面
   - name: 小程序/数据/用户画像
   - name: 小程序/文件/内容安全
+  - name: 小程序/插件
+  - name: 小程序/附近
   - name: 广告服务商接口
     description: '[接口文档](https://wximg.qq.com/wxp/pdftool/get.html?id=HJ2uqGgXW)'
   - name: 开放平台/帐号管理

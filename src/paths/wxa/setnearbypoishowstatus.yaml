@@ -1,0 +1,33 @@
+post:
+  summary: 展示/取消展示附近小程序
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/nearby.html#展示取消展示附近小程序)'
+  operationId: wxa/setnearbypoishowstatus
+  security:
+    - accessToken: []
+  tags:
+    - 小程序/附近
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          poi_id:
+            type: string
+            description: 附近地点ID
+          status:
+            type: integer
+            format: int32
+            description: 0：取消展示；1：展示
+        example:
+          poi_id: '469382092'
+          status: 0
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+        example:
+          errcode: 92008
+          errmsg: 小程序未展示在该地点

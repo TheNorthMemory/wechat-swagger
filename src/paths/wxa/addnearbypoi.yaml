@@ -1,0 +1,61 @@
+post:
+  summary: 添加地点
+  description: '添加请求暂不支持并发调用，建议使用时间隔1s进行串行调用。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/nearby.html#添加地点)'
+  operationId: wxa/addnearbypoi
+  security:
+    - accessToken: []
+  tags:
+    - 小程序/附近
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          related_name:
+            type: string
+            description: 经营资质主体
+          related_credential:
+            type: string
+            description: 经营资质证件号
+          related_address:
+            type: string
+            description: 经营资质地址
+          related_proof_material:
+            type: string
+            description: 相关证明材料照片临时素材mediaid，经营资质主体与小程序同主体--不填;经营资质主体与小程序非同主体--必填;
+        required:
+          - related_name
+          - related_credential
+          - related_address
+        example:
+          related_name: XXX公司
+          related_credential: 12345678-0
+          related_address: 广州市新港中路397号TIT创意园
+          related_proof_material: 3LaLzqiTrQcD20DlX_o-OV1-nlYMu7sdVAL7SV2PrxVyjZFZZmB3O6LPGaYXlZWq
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  audit_id:
+                    type: integer
+                    format: int32
+                    description: 审核单ID
+                  poi_id:
+                    type: string
+                    description: 附近地点ID
+                  related_credential:
+                    type: string
+                    description: 经营资质证件号
+        example:
+          errcode: 0
+          errmsg: ok
+          data:
+            audit_id: 416620525

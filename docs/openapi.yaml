@@ -101,6 +101,12 @@ tags:
   - name: 小程序/数据/访问分析/访问页面
   - name: 小程序/数据/用户画像
   - name: 小程序/文件/内容安全
+  - name: 小程序/插件
+  - name: 小程序/附近
+  - name: 小程序/二维码
+  - name: 小程序/客服消息
+  - name: 小程序/统一服务消息
+  - name: 小程序/模版消息
   - name: 广告服务商接口
     description: '[接口文档](https://wximg.qq.com/wxp/pdftool/get.html?id=HJ2uqGgXW)'
   - name: 开放平台/帐号管理
@@ -7093,11 +7099,13 @@ paths:
   /cgi-bin/message/custom/send:
     post:
       summary: 客服接口-发消息
+      description: 当用户和公众号产生特定动作的交互时（具体动作列表请见下方说明），微信将会把消息数据推送给开发者，开发者可以在一段时间内（目前修改为48小时）调用客服接口，通过POST一个JSON数据包来发送消息给普通用户。此接口主要用于客服等有人工消息处理环节的功能，方便开发者为用户提供更加优质的服务。[公众号->官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140547) [小程序->官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/custommsg/conversation.html)
       operationId: cgi-bin/message/custom/send
       security:
         - accessToken: []
       tags:
         - 多客服/客服消息
+        - 小程序/客服消息
       parameters:
         - in: body
           name: body
@@ -7107,9 +7115,16 @@ paths:
               touser:
                 type: string
                 description: 普通用户openid
+              customservice:
+                type: object
+                description: 选填：如果需要以某个客服帐号来发消息，（在微信6.0.2及以上版本中显示自定义头像）
+                properties:
+                  kf_account:
+                    type: string
+                    description: 客服帐号
               msgtype:
                 type: string
-                description: 消息类型，文本为text，图片为image，语音为voice，视频消息为video，音乐消息为music，图文消息（点击跳转到外链）为news，图文消息（点击跳转到图文消息页面）为mpnews，卡券为wxcard，小程序为miniprogrampage
+                description: 消息类型，文本为text，图片为image，语音为voice，视频消息为video，音乐消息为music，图文消息（点击跳转到外链）为news，图文消息（点击跳转到图文消息页面）为mpnews，卡券为wxcard，小程序为miniprogrampage，小程序客服消息出现link类型
                 enum:
                   - text
                   - image
@@ -7120,6 +7135,7 @@ paths:
                   - mpnews
                   - wxcard
                   - miniprogrampage
+                  - link
               text:
                 type: object
                 properties:
@@ -7206,6 +7222,17 @@ paths:
                   thumb_media_id:
                     type: string
                     description: 缩略图/小程序卡片图片的媒体ID，小程序卡片图片建议大小为520*416
+              link:
+                type: object
+                properties:
+                  title:
+                    type: string
+                  description:
+                    type: string
+                  url:
+                    type: string
+                  thumb_url:
+                    type: string
       responses:
         '200':
           description: ''
@@ -7755,6 +7782,127 @@ paths:
           description: ''
           schema:
             $ref: '#/definitions/base.ResponseBo'
+  /cgi-bin/message/wxopen/template/uniform_send:
+    post:
+      summary: 统一服务消息下发接口
+      description: 为便于开发者对用户进行服务消息触达，简化小程序和公众号模板消息下发流程，小程序提供统一的服务消息下发接口。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/notice-uniform.html)
+      operationId: cgi-bin/message/wxopen/template/uniform_send
+      security:
+        - accessToken: []
+      tags:
+        - 小程序/统一服务消息
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              touser:
+                type: string
+                description: 用户openid，可以是小程序的openid，也可以是mp_template_msg.appid对应的公众号的openid
+              weapp_template_msg:
+                type: object
+                description: 小程序模板消息相关的信息，可以参考小程序模板消息接口;有此节点则优先发送小程序模板消息
+                properties:
+                  template_id:
+                    type: string
+                    description: 小程序模板ID
+                  page:
+                    type: string
+                    description: 小程序页面路径
+                  form_id:
+                    type: string
+                    description: 小程序模板消息formid
+                  data:
+                    type: object
+                    description: 小程序模板数据
+                    additionalProperties:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                  emphasis_keyword:
+                    type: string
+                    description: 小程序模板放大关键词
+              mp_template_msg:
+                type: object
+                description: 公众号模板消息相关的信息，可以参考公众号模板消息接口；有此节点并且没有weapp_template_msg节点时，发送公众号模板消息
+                properties:
+                  appid:
+                    type: string
+                    description: 公众号appid，要求与小程序有绑定且同主体
+                  template_id:
+                    type: string
+                    description: 公众号模板id
+                  url:
+                    type: string
+                    description: 公众号模板消息所要跳转的url
+                  miniprogram:
+                    type: object
+                    description: 公众号模板消息所要跳转的小程序，小程序的必须与公众号具有绑定关系
+                    properties:
+                      appid:
+                        type: string
+                      pagepath:
+                        type: string
+                  data:
+                    type: object
+                    description: 公众号模板消息的数据
+                    additionalProperties:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                        color:
+                          type: string
+            example:
+              touser: OPENID
+              weapp_template_msg:
+                template_id: TEMPLATE_ID
+                page: page/page/index
+                form_id: FORMID
+                data:
+                  keyword1:
+                    value: '339208499'
+                  keyword2:
+                    value: '2015年01月05日 12:30'
+                  keyword3:
+                    value: 粤海喜来登酒店
+                  keyword4:
+                    value: 广州市天河区天河路208号
+                emphasis_keyword: keyword1.DATA
+              mp_template_msg:
+                appid: 'APPID '
+                template_id: TEMPLATE_ID
+                url: 'http://weixin.qq.com/download'
+                miniprogram:
+                  appid: xiaochengxuappid12345
+                  pagepath: index?foo=bar
+                data:
+                  first:
+                    value: 恭喜你购买成功！
+                    color: '#173177'
+                  keyword1:
+                    value: 巧克力
+                    color: '#173177'
+                  keyword2:
+                    value: 39.8元
+                    color: '#173177'
+                  keyword3:
+                    value: 2014年9月22日
+                    color: '#173177'
+                  remark:
+                    value: 欢迎再次购买！
+                    color: '#173177'
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+            example:
+              errcode: 0
+              errmsg: ok
   /cgi-bin/open/bind:
     post:
       summary: 将公众号/小程序绑定到开放平台帐号下
@@ -9008,6 +9156,35 @@ paths:
                     type: array
                     items:
                       type: string
+  /cgi-bin/wxaapp/createwxaqrcode:
+    post:
+      summary: 接口C:获取小程序码
+      description: '注意：通过该接口生成的小程序二维码，永久有效，数量限制见文末说明，请谨慎使用。用户扫描该码进入小程序后，将直接进入 path 对应的页面。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/qrcode.html)'
+      operationId: cgi-bin/wxaapp/createwxaqrcode
+      security:
+        - accessToken: []
+      tags:
+        - 小程序/二维码
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              path:
+                type: string
+                description: 必须是已经发布的小程序存在的页面（否则报错），例如 "pages/index/index" ,根路径前不要填加'/',不能携带参数（参数请放在scene字段里），如果不填写这个字段，默认跳主页面
+              width:
+                type: integer
+                format: int32
+                default: 430
+                description: 二维码的宽度
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/wxopen/addcategory:
     post:
       summary: 添加类目
@@ -9530,8 +9707,10 @@ paths:
       operationId: cgi-bin/wxopen/template/add
       security:
         - authorizerAccessToken: []
+        - accessToken: []
       tags:
         - 开放平台/第三方平台/代小程序/模板消息模板设置
+        - 小程序/模版消息
       parameters:
         - in: body
           name: body
@@ -9568,8 +9747,10 @@ paths:
       operationId: cgi-bin/wxopen/template/del
       security:
         - authorizerAccessToken: []
+        - accessToken: []
       tags:
         - 开放平台/第三方平台/代小程序/模板消息模板设置
+        - 小程序/模版消息
       parameters:
         - in: body
           name: body
@@ -9606,8 +9787,10 @@ paths:
       operationId: cgi-bin/wxopen/template/library/get
       security:
         - authorizerAccessToken: []
+        - accessToken: []
       tags:
         - 开放平台/第三方平台/代小程序/模板消息模板设置
+        - 小程序/模版消息
       parameters:
         - in: body
           name: body
@@ -9654,8 +9837,10 @@ paths:
       operationId: cgi-bin/wxopen/template/library/list
       security:
         - authorizerAccessToken: []
+        - accessToken: []
       tags:
         - 开放平台/第三方平台/代小程序/模板消息模板设置
+        - 小程序/模版消息
       parameters:
         - in: body
           name: body
@@ -9703,8 +9888,10 @@ paths:
       operationId: cgi-bin/wxopen/template/list
       security:
         - authorizerAccessToken: []
+        - accessToken: []
       tags:
         - 开放平台/第三方平台/代小程序/模板消息模板设置
+        - 小程序/模版消息
       parameters:
         - in: body
           name: body
@@ -9729,8 +9916,10 @@ paths:
       operationId: cgi-bin/wxopen/template/send
       security:
         - authorizerAccessToken: []
+        - accessToken: []
       tags:
         - 开放平台/第三方平台/代小程序/模板消息模板设置
+        - 小程序/模版消息
       parameters:
         - in: body
           name: body
@@ -14997,6 +15186,68 @@ paths:
       responses:
         '200':
           description: ''
+  /wxa/addnearbypoi:
+    post:
+      summary: 添加地点
+      description: '添加请求暂不支持并发调用，建议使用时间隔1s进行串行调用。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/nearby.html#添加地点)'
+      operationId: wxa/addnearbypoi
+      security:
+        - accessToken: []
+      tags:
+        - 小程序/附近
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              related_name:
+                type: string
+                description: 经营资质主体
+              related_credential:
+                type: string
+                description: 经营资质证件号
+              related_address:
+                type: string
+                description: 经营资质地址
+              related_proof_material:
+                type: string
+                description: 相关证明材料照片临时素材mediaid，经营资质主体与小程序同主体--不填;经营资质主体与小程序非同主体--必填;
+            required:
+              - related_name
+              - related_credential
+              - related_address
+            example:
+              related_name: XXX公司
+              related_credential: 12345678-0
+              related_address: 广州市新港中路397号TIT创意园
+              related_proof_material: 3LaLzqiTrQcD20DlX_o-OV1-nlYMu7sdVAL7SV2PrxVyjZFZZmB3O6LPGaYXlZWq
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      audit_id:
+                        type: integer
+                        format: int32
+                        description: 审核单ID
+                      poi_id:
+                        type: string
+                        description: 附近地点ID
+                      related_credential:
+                        type: string
+                        description: 经营资质证件号
+            example:
+              errcode: 0
+              errmsg: ok
+              data:
+                audit_id: 416620525
   /wxa/addtotemplate:
     post:
       summary: 将草稿箱的草稿选为小程序代码模版
@@ -15270,6 +15521,107 @@ paths:
           schema:
             allOf:
               - $ref: '#/definitions/base.ResponseBo'
+  /wxa/delnearbypoi:
+    post:
+      summary: 删除地点
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/nearby.html#删除地点)'
+      operationId: wxa/delnearbypoi
+      security:
+        - accessToken: []
+      tags:
+        - 小程序/附近
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              poi_id:
+                type: string
+                description: 附近地点ID
+            example:
+              poi_id: '469382092'
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+            example:
+              errcode: 92005
+              errmsg: 地点正在审核中
+  /wxa/devplugin:
+    post:
+      summary: 小程序插件(供插件开发者调用)
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/plugin.html)'
+      operationId: wxa/devplugin
+      security:
+        - accessToken: []
+      tags:
+        - 小程序/插件
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              action:
+                type: string
+                description: dev_apply_list=获取当前所有插件使用方；dev_agree=同意申请；dev_refuse=拒绝申请；dev_delete=删除已拒绝的申请者
+                enum: ['dev_apply_list', 'dev_agree', 'dev_refuse', 'dev_delete']
+              appid:
+                type: string
+                description: 使用者的appid(dev_agree,dev_refuse,dev_delete时必填)
+              page:
+                type: integer
+                format: int32
+                description: dev_apply_list时必填，page和num用于分页，表示每页num条记录，拉取第page页的数据。
+              num:
+                type: integer
+                format: int32
+                description: dev_apply_list时必填，page和num用于分页，表示每页num条记录，拉取第page页的数据。
+            required:
+              - action
+            example:
+              action: dev_apply_list
+              page: 1
+              num: 10
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                description: 查询已添加的插件时返回
+                properties:
+                  plugin_list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        appid:
+                          type: string
+                          description: 插件appid
+                        status:
+                          type: integer
+                          format: int32
+                          description: 插件状态（1：申请中，2：申请通过，3：被拒绝；4：已超时）
+                          enum: [1, 2, 3, 4]
+                        nickname:
+                          type: string
+                          description: 插件昵称
+                        headimgurl:
+                          type: string
+                          description: 插件头像
+            example:
+              errcode: 0
+              errmsg: ok
+              apply_list:
+                - appid: aaaa
+                  status: 1
+                  nickname: 小程序昵称
+                  headimgurl: 'http://weixin.qq.com'
   /wxa/get_auditstatus:
     post:
       summary: 查询某个指定版本的审核状态（仅供第三方代小程序调用）
@@ -15521,6 +15873,92 @@ paths:
                         type: integer
                         format: int32
                         description: 灰度的百分比，1到100的整数
+  /wxa/getnearbypoilist:
+    get:
+      summary: 查看地点列表
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/nearby.html#查看地点列表)'
+      operationId: wxa/getnearbypoilist
+      security:
+        - accessToken: []
+      tags:
+        - 小程序/附近
+      parameters:
+        - in: query
+          name: page
+          type: integer
+          format: int32
+          required: true
+          description: 起始页id（从1开始计数）
+        - in: query
+          name: page_rows
+          type: integer
+          format: int32
+          required: true
+          description: 每页展示个数（最多1000个）
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      left_apply_num:
+                        type: integer
+                        format: int32
+                        description: 剩余可添加地点个数
+                      max_apply_num:
+                        type: integer
+                        format: int32
+                        description: 最大可添加地点个数
+                      data:
+                        type: object
+                        description: 地址列表
+                        properties:
+                          poi_list:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                poi_id:
+                                  type: string
+                                  description: poi_id
+                                qualification_address:
+                                  type: string
+                                  description: 资质证件地址
+                                qualification_num:
+                                  type: string
+                                  description: 资质证件证件号
+                                audit_status:
+                                  type: integer
+                                  format: int32
+                                  description: 地点审核状态（3：审核中，4：审核失败，5：审核通过）
+                                  enum: [3, 4, 5]
+                                display_status:
+                                  type: integer
+                                  format: int32
+                                  description: 地点展示在附近状态（0：未展示，1：展示中）
+                                  enum: [0, 1]
+                                refuse_reason:
+                                  type: string
+                                  description: 审核失败原因;audit_status=4时返回
+            example:
+              errcode: 0
+              errmsg: ''
+              data:
+                left_apply_num: 9
+                max_apply_num: 10
+                data:
+                  poi_list:
+                    - poi_id: '123456'
+                      qualification_address: 广东省广州市海珠区新港中路123号
+                      qualification_num: 123456789-1
+                      audit_status: 3
+                      display_status: 0
+                      refuse_reason: ''
   /wxa/gettemplatedraftlist:
     get:
       summary: 获取草稿箱内的所有临时代码草稿
@@ -15598,6 +16036,109 @@ paths:
                           type: integer
                           format: int32
                           description: 草稿id
+  /wxa/getwxacode:
+    post:
+      summary: 接口A:获取小程序码
+      description: '适用于需要的码数量较少的业务场景，注意：通过该接口生成的小程序码，永久有效，数量限制见文末说明，请谨慎使用。用户扫描该码进入小程序后，将直接进入 path 对应的页面。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/qrcode.html)'
+      operationId: wxa/getwxacode
+      security:
+        - accessToken: []
+      tags:
+        - 小程序/二维码
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              path:
+                type: string
+                description: 不能为空，最大长度 128 字节
+              width:
+                type: integer
+                format: int32
+                default: 430
+                description: 二维码的宽度
+              auto_color:
+                type: boolean
+                default: false
+                description: 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
+              line_color:
+                type: object
+                description: 为 auto_color=false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"},十进制表示
+                properties:
+                  r:
+                    type: integer
+                    format: int32
+                  g:
+                    type: integer
+                    format: int32
+                  b:
+                    type: integer
+                    format: int32
+              is_hyaline:
+                type: boolean
+                default: false
+                description: 是否需要透明底色， is_hyaline 为true时，生成透明底色的小程序码
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+  /wxa/getwxacodeunlimit:
+    post:
+      summary: 接口B:获取小程序码
+      description: '适用于需要的码数量极多的业务场景，注意：通过该接口生成的小程序码，永久有效，数量暂无限制。用户扫描该码进入小程序后，开发者需在对应页面获取的码中 scene 字段的值，再做处理逻辑。使用如下代码可以获取到二维码中的 scene 字段的值。调试阶段可以使用开发工具的条件编译自定义参数 scene=xxxx 进行模拟，开发工具模拟时的 scene 的参数值需要进行 urlencode。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/qrcode.html)'
+      operationId: wxa/getwxacodeunlimit
+      security:
+        - accessToken: []
+      tags:
+        - 小程序/二维码
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              scene:
+                type: string
+                description: 最大32个可见字符，只支持数字，大小写英文以及部分特殊字符：!#$&'()*+,/:;=?@-._~，其它字符请自行编码为合法字符（因不支持%，中文无法使用 urlencode 处理，请使用其他编码方式）
+              path:
+                type: string
+                description: 必须是已经发布的小程序存在的页面（否则报错），例如 "pages/index/index" ,根路径前不要填加'/',不能携带参数（参数请放在scene字段里），如果不填写这个字段，默认跳主页面
+              width:
+                type: integer
+                format: int32
+                default: 430
+                description: 二维码的宽度
+              auto_color:
+                type: boolean
+                default: false
+                description: 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
+              line_color:
+                type: object
+                description: 为 auto_color=false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"},十进制表示
+                properties:
+                  r:
+                    type: integer
+                    format: int32
+                  g:
+                    type: integer
+                    format: int32
+                  b:
+                    type: integer
+                    format: int32
+              is_hyaline:
+                type: boolean
+                default: false
+                description: 是否需要透明底色， is_hyaline 为true时，生成透明底色的小程序码
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
   /wxa/getwxasearchstatus:
     get:
       summary: 查询小程序当前隐私设置（是否可被搜索）
@@ -15649,6 +16190,7 @@ paths:
   /wxa/img_sec_check:
     post:
       summary: 校验一张图片是否含有违法违规内容
+      description: 应用场景举例：1）图片智能鉴黄：涉及拍照的工具类应用(如美拍，识图类应用)用户拍照上传检测；电商类商品上架图片检测；媒体类用户文章里的图片检测等；2）敏感人脸识别：用户头像；媒体类用户文章里的图片检测；社交类用户上传的图片检测等。频率限制：单个 appId 调用上限为 1000 次/分钟，100,000 次/天。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/imgSecCheck.html)
       operationId: wxa/img_sec_check
       security:
         - accessToken: []
@@ -15790,6 +16332,7 @@ paths:
   /wxa/msg_sec_check:
     post:
       summary: 检查一段文本是否含有违法违规内容
+      description: 应用场景举例：用户个人资料违规文字检测；媒体新闻类用户发表文章，评论内容检测；游戏类用户编辑上传的素材(如答题类小游戏用户上传的问题及答案)检测等。频率限制：单个 appId 调用上限为 2000 次/分钟，1,000,000 次/天。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/msgSecCheck.html)
       operationId: wxa/msg_sec_check
       security:
         - accessToken: []
@@ -15816,6 +16359,7 @@ paths:
         - authorizerAccessToken: []
       tags:
         - 开放平台/第三方平台/代小程序
+        - 小程序/插件
       parameters:
         - in: body
           name: body
@@ -15929,6 +16473,40 @@ paths:
       responses:
         '200':
           description: ''
+  /wxa/setnearbypoishowstatus:
+    post:
+      summary: 展示/取消展示附近小程序
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/nearby.html#展示取消展示附近小程序)'
+      operationId: wxa/setnearbypoishowstatus
+      security:
+        - accessToken: []
+      tags:
+        - 小程序/附近
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              poi_id:
+                type: string
+                description: 附近地点ID
+              status:
+                type: integer
+                format: int32
+                description: 0：取消展示；1：展示
+            example:
+              poi_id: '469382092'
+              status: 0
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+            example:
+              errcode: 92008
+              errmsg: 小程序未展示在该地点
   /wxa/setnickname:
     post:
       summary: 小程序名称设置及改名

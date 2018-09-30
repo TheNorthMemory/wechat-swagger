@@ -1,10 +1,12 @@
 post:
   summary: 客服接口-发消息
+  description: 当用户和公众号产生特定动作的交互时（具体动作列表请见下方说明），微信将会把消息数据推送给开发者，开发者可以在一段时间内（目前修改为48小时）调用客服接口，通过POST一个JSON数据包来发送消息给普通用户。此接口主要用于客服等有人工消息处理环节的功能，方便开发者为用户提供更加优质的服务。[公众号->官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140547) [小程序->官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/custommsg/conversation.html)
   operationId: cgi-bin/message/custom/send
   security:
     - accessToken: []
   tags:
     - 多客服/客服消息
+    - 小程序/客服消息
   parameters:
     - in: body
       name: body
@@ -14,9 +16,16 @@ post:
           touser:
             type: string
             description: 普通用户openid
+          customservice:
+            type: object
+            description: 选填：如果需要以某个客服帐号来发消息，（在微信6.0.2及以上版本中显示自定义头像）
+            properties:
+              kf_account:
+                type: string
+                description: 客服帐号
           msgtype:
             type: string
-            description: 消息类型，文本为text，图片为image，语音为voice，视频消息为video，音乐消息为music，图文消息（点击跳转到外链）为news，图文消息（点击跳转到图文消息页面）为mpnews，卡券为wxcard，小程序为miniprogrampage
+            description: 消息类型，文本为text，图片为image，语音为voice，视频消息为video，音乐消息为music，图文消息（点击跳转到外链）为news，图文消息（点击跳转到图文消息页面）为mpnews，卡券为wxcard，小程序为miniprogrampage，小程序客服消息出现link类型
             enum:
               - text
               - image
@@ -27,6 +36,7 @@ post:
               - mpnews
               - wxcard
               - miniprogrampage
+              - link
           text:
             type: object
             properties:
@@ -113,6 +123,17 @@ post:
               thumb_media_id:
                 type: string
                 description: 缩略图/小程序卡片图片的媒体ID，小程序卡片图片建议大小为520*416
+          link:
+            type: object
+            properties:
+              title:
+                type: string
+              description:
+                type: string
+              url:
+                type: string
+              thumb_url:
+                type: string
   responses:
     '200':
       description: ''

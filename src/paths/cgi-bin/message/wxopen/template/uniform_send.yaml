@@ -1,0 +1,120 @@
+post:
+  summary: 统一服务消息下发接口
+  description: 为便于开发者对用户进行服务消息触达，简化小程序和公众号模板消息下发流程，小程序提供统一的服务消息下发接口。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/notice-uniform.html)
+  operationId: cgi-bin/message/wxopen/template/uniform_send
+  security:
+    - accessToken: []
+  tags:
+    - 小程序/统一服务消息
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          touser:
+            type: string
+            description: 用户openid，可以是小程序的openid，也可以是mp_template_msg.appid对应的公众号的openid
+          weapp_template_msg:
+            type: object
+            description: 小程序模板消息相关的信息，可以参考小程序模板消息接口;有此节点则优先发送小程序模板消息
+            properties:
+              template_id:
+                type: string
+                description: 小程序模板ID
+              page:
+                type: string
+                description: 小程序页面路径
+              form_id:
+                type: string
+                description: 小程序模板消息formid
+              data:
+                type: object
+                description: 小程序模板数据
+                additionalProperties:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+              emphasis_keyword:
+                type: string
+                description: 小程序模板放大关键词
+          mp_template_msg:
+            type: object
+            description: 公众号模板消息相关的信息，可以参考公众号模板消息接口；有此节点并且没有weapp_template_msg节点时，发送公众号模板消息
+            properties:
+              appid:
+                type: string
+                description: 公众号appid，要求与小程序有绑定且同主体
+              template_id:
+                type: string
+                description: 公众号模板id
+              url:
+                type: string
+                description: 公众号模板消息所要跳转的url
+              miniprogram:
+                type: object
+                description: 公众号模板消息所要跳转的小程序，小程序的必须与公众号具有绑定关系
+                properties:
+                  appid:
+                    type: string
+                  pagepath:
+                    type: string
+              data:
+                type: object
+                description: 公众号模板消息的数据
+                additionalProperties:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                    color:
+                      type: string
+        example:
+          touser: OPENID
+          weapp_template_msg:
+            template_id: TEMPLATE_ID
+            page: page/page/index
+            form_id: FORMID
+            data:
+              keyword1:
+                value: '339208499'
+              keyword2:
+                value: '2015年01月05日 12:30'
+              keyword3:
+                value: 粤海喜来登酒店
+              keyword4:
+                value: 广州市天河区天河路208号
+            emphasis_keyword: keyword1.DATA
+          mp_template_msg:
+            appid: 'APPID '
+            template_id: TEMPLATE_ID
+            url: 'http://weixin.qq.com/download'
+            miniprogram:
+              appid: xiaochengxuappid12345
+              pagepath: index?foo=bar
+            data:
+              first:
+                value: 恭喜你购买成功！
+                color: '#173177'
+              keyword1:
+                value: 巧克力
+                color: '#173177'
+              keyword2:
+                value: 39.8元
+                color: '#173177'
+              keyword3:
+                value: 2014年9月22日
+                color: '#173177'
+              remark:
+                value: 欢迎再次购买！
+                color: '#173177'
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+        example:
+          errcode: 0
+          errmsg: ok

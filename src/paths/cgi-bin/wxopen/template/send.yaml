@@ -4,8 +4,10 @@ post:
   operationId: cgi-bin/wxopen/template/send
   security:
     - authorizerAccessToken: []
+    - accessToken: []
   tags:
     - 开放平台/第三方平台/代小程序/模板消息模板设置
+    - 小程序/模版消息
   parameters:
     - in: body
       name: body

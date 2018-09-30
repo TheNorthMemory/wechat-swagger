@@ -1,0 +1,28 @@
+post:
+  summary: 接口C:获取小程序码
+  description: '注意：通过该接口生成的小程序二维码，永久有效，数量限制见文末说明，请谨慎使用。用户扫描该码进入小程序后，将直接进入 path 对应的页面。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/qrcode.html)'
+  operationId: wxa/getwxacodeunlimit
+  security:
+    - accessToken: []
+  tags:
+    - 小程序/二维码
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          path:
+            type: string
+            description: 必须是已经发布的小程序存在的页面（否则报错），例如 "pages/index/index" ,根路径前不要填加'/',不能携带参数（参数请放在scene字段里），如果不填写这个字段，默认跳主页面
+          width:
+            type: integer
+            format: int32
+            default: 430
+            description: 二维码的宽度
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'

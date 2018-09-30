@@ -1,0 +1,49 @@
+post:
+  summary: 接口A:获取小程序码
+  description: '适用于需要的码数量较少的业务场景，注意：通过该接口生成的小程序码，永久有效，数量限制见文末说明，请谨慎使用。用户扫描该码进入小程序后，将直接进入 path 对应的页面。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/qrcode.html)'
+  operationId: wxa/gewxacode
+  security:
+    - accessToken: []
+  tags:
+    - 小程序/二维码
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          path:
+            type: string
+            description: 不能为空，最大长度 128 字节
+          width:
+            type: integer
+            format: int32
+            default: 430
+            description: 二维码的宽度
+          auto_color:
+            type: boolean
+            default: false
+            description: 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
+          line_color:
+            type: object
+            description: 为 auto_color=false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"},十进制表示
+            properties:
+              r:
+                type: integer
+                format: int32
+              g:
+                type: integer
+                format: int32
+              b:
+                type: integer
+                format: int32
+          is_hyaline:
+            type: boolean
+            default: false
+            description: 是否需要透明底色， is_hyaline 为true时，生成透明底色的小程序码
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'

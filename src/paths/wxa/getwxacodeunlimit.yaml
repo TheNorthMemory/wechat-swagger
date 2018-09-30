@@ -1,0 +1,52 @@
+post:
+  summary: 接口B:获取小程序码
+  description: '适用于需要的码数量极多的业务场景，注意：通过该接口生成的小程序码，永久有效，数量暂无限制。用户扫描该码进入小程序后，开发者需在对应页面获取的码中 scene 字段的值，再做处理逻辑。使用如下代码可以获取到二维码中的 scene 字段的值。调试阶段可以使用开发工具的条件编译自定义参数 scene=xxxx 进行模拟，开发工具模拟时的 scene 的参数值需要进行 urlencode。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/qrcode.html)'
+  operationId: wxa/getwxacodeunlimit
+  security:
+    - accessToken: []
+  tags:
+    - 小程序/二维码
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          scene:
+            type: string
+            description: 最大32个可见字符，只支持数字，大小写英文以及部分特殊字符：!#$&'()*+,/:;=?@-._~，其它字符请自行编码为合法字符（因不支持%，中文无法使用 urlencode 处理，请使用其他编码方式）
+          path:
+            type: string
+            description: 必须是已经发布的小程序存在的页面（否则报错），例如 "pages/index/index" ,根路径前不要填加'/',不能携带参数（参数请放在scene字段里），如果不填写这个字段，默认跳主页面
+          width:
+            type: integer
+            format: int32
+            default: 430
+            description: 二维码的宽度
+          auto_color:
+            type: boolean
+            default: false
+            description: 自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调
+          line_color:
+            type: object
+            description: 为 auto_color=false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"},十进制表示
+            properties:
+              r:
+                type: integer
+                format: int32
+              g:
+                type: integer
+                format: int32
+              b:
+                type: integer
+                format: int32
+          is_hyaline:
+            type: boolean
+            default: false
+            description: 是否需要透明底色， is_hyaline 为true时，生成透明底色的小程序码
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'

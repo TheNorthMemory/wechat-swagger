@@ -1,0 +1,15 @@
+allOf:
+  - $ref: '#/definitions/notify.BaseEvent'
+  - type: object
+    required: [Event, EventKey]
+    properties:
+      Event:
+        type: string
+        description: 事件类型
+        enum: [VIEW]
+      EventKey:
+        type: string
+        description: 事件KEY值，设置的跳转URL
+      MenuId:
+        type: string
+        description: 指菜单ID，如果是个性化菜单，则可以通过这个字段，知道是哪个规则的菜单被点击了。

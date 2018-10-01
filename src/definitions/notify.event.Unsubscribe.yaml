@@ -1,0 +1,9 @@
+allOf:
+  - $ref: '#/definitions/notify.BaseEvent'
+  - type: object
+    required: [Event]
+    properties:
+      Event:
+        type: string
+        description: 事件类型
+        enum: [unsubscribe]

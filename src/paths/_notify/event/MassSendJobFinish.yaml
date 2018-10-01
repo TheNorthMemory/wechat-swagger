@@ -1,0 +1,18 @@
+post:
+  tags:
+    - 事件通知
+  summary: 群发任务结束时,是否送达状态通知
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277)'
+  consumes:
+    - application/xml
+  produces:
+    - text/plain
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/notify.event.MassSendJobFinish'
+  responses:
+    '200':
+      description: ''

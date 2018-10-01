@@ -1,0 +1,19 @@
+type: object
+xml:
+  name: xml
+required: [ToUserName, FromUserName, CreateTime]
+properties:
+  ToUserName:
+    type: string
+    description: 开发者微信号
+  FromUserName:
+    type: string
+    description: 发送方帐号（一个OpenID）
+  CreateTime:
+    type: integer
+    format: int32
+    description: 消息创建时间 （整型）
+example:
+  ToUserName: toUser
+  FromUserName: fromUser
+  CreateTime: 1357290913

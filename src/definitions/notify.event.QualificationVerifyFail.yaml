@@ -1,0 +1,16 @@
+allOf:
+  - $ref: '#/definitions/notify.BaseEvent'
+  - type: object
+    required: [Event, FailTime, FailReason]
+    properties:
+      Event:
+        type: string
+        description: 事件类型
+        enum: [qualification_verify_fail]
+      FailTime:
+        type: integer
+        format: int32
+        description: 失败发生时间 (整形)，时间戳
+      FailReason:
+        type: string
+        description: 认证失败的原因

@@ -1,0 +1,18 @@
+post:
+  tags:
+    - 消息通知
+  summary: 图片消息
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140453)'
+  consumes:
+    - application/xml
+  produces:
+    - text/plain
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/notify.message.Image'
+  responses:
+    '200':
+      description: ''

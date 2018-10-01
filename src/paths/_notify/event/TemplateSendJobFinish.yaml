@@ -1,0 +1,18 @@
+post:
+  tags:
+    - 事件通知
+  summary: 模版消息发送任务完成后,是否送达成功通知
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277)'
+  consumes:
+    - application/xml
+  produces:
+    - text/plain
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/notify.event.TemplateSendJobFinish'
+  responses:
+    '200':
+      description: ''

@@ -1,0 +1,18 @@
+post:
+  tags:
+    - 事件通知
+  summary: 弹出系统拍照发图的事件推送
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141016)'
+  consumes:
+    - application/xml
+  produces:
+    - text/plain
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/notify.event.PicSysPhoto'
+  responses:
+    '200':
+      description: ''

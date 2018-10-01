@@ -1,0 +1,11 @@
+allOf:
+  - $ref: '#/definitions/notify.Base'
+  - type: object
+    required: [MsgId]
+    properties:
+      MsgId:
+        type: integer
+        format: int64
+        description: 消息id，64位整型
+    example:
+      MsgId: 1234567890123456

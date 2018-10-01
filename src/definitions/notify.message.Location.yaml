@@ -1,0 +1,23 @@
+allOf:
+  - $ref: '#/definitions/notify.BaseMessage'
+  - type: object
+    required: [MsgType, Location_X, Location_Y, Scale, Label]
+    properties:
+      MsgType:
+        type: string
+        enum: [location]
+      Location_X:
+        type: number
+        format: float
+        description: 地理位置纬度
+      Location_Y:
+        type: number
+        format: float
+        description: 地理位置经度
+      Scale:
+        type: integer
+        format: int32
+        description: 地图缩放大小
+      Label:
+        type: string
+        description: 地理位置信息

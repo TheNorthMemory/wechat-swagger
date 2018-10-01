@@ -1,0 +1,18 @@
+allOf:
+  - $ref: '#/definitions/notify.BaseMessage'
+  - type: object
+    required: [MsgType, MediaId, Format]
+    properties:
+      MsgType:
+        type: string
+        enum: [voice]
+      MediaId:
+        type: string
+        description: 语音消息媒体id，可以调用多媒体文件下载接口拉取数据。
+      Format:
+        type: string
+        description: 语音格式：amr,speex
+        enum: [amr, speex]
+      Recognition:
+        type: string
+        description: 语音识别结果，UTF8编码(开通语音识别后有)

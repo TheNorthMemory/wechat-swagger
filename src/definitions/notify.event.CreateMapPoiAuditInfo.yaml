@@ -1,0 +1,38 @@
+allOf:
+  - $ref: '#/definitions/notify.BaseEvent'
+  - type: object
+    required: [Event, audit_id, status, map_poi_id, name, address, latitude, longitude, sh_remark]
+    properties:
+      Event:
+        type: string
+        description: 事件类型
+        enum: [create_map_poi_audit_info]
+      audit_id:
+        type: integer
+        format: int32
+        description: 审核单id
+      status:
+        type: integer
+        format: int32
+        description: 审核状态（0：审核通过，1：审核失败）
+        enum: [0, 1]
+      map_poi_id:
+        type: string
+        description: 从腾讯地图换取的位置点id
+      name:
+        type: string
+        description: 门店名字
+      address:
+        type: string
+        description: 详细地址
+      latitude:
+        type: number
+        format: float
+        description: 经度
+      longitude:
+        type: number
+        format: float
+        description: 纬度
+      sh_remark:
+        type: string
+        description: 备注

@@ -1,0 +1,18 @@
+post:
+  tags:
+    - 事件通知
+  summary: 门店/创建门店的审核结果
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496904104_cfEfT)'
+  consumes:
+    - application/xml
+  produces:
+    - text/xml
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/notify.event.AddStoreAuditInfo'
+  responses:
+    '200':
+      description: ''

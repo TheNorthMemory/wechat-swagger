@@ -1,0 +1,29 @@
+allOf:
+  - $ref: '#/definitions/notify.BaseEvent'
+  - type: object
+    required: [Event, audit_id, status, reason, is_upgrade]
+    properties:
+      Event:
+        type: string
+        description: 事件类型
+        enum: [add_store_audit_info]
+      audit_id:
+        type: integer
+        format: int32
+        description: 审核单id
+      status:
+        type: integer
+        format: int32
+        description: 审核状态（1：审核通过，3：审核失败）
+        enum: [1, 3]
+      reason:
+        type: string
+        description: 如果status为3，会返回审核失败的原因
+      is_upgrade:
+        type: integer
+        format: int32
+        description: 0=表示创建门店1=表示是补充门店
+      poiid:
+        type: integer
+        format: int32
+        description: 门店id(status=1的时候才有效)

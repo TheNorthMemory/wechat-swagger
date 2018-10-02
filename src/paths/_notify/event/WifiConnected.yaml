@@ -1,0 +1,18 @@
+post:
+  tags:
+    - 事件通知
+  summary: 连Wi-Fi/顾客到店并连接Wi-Fi后，会触发连网成功事件
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443448066)'
+  consumes:
+    - application/xml
+  produces:
+    - text/xml
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/notify.event.WifiConnected'
+  responses:
+    '200':
+      description: ''

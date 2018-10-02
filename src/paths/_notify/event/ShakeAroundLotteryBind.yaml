@@ -1,0 +1,18 @@
+post:
+  tags:
+    - 事件通知
+  summary: 摇一摇/用户进入红包页面时，红包ticket和用户openid绑定事件通知
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443448066)'
+  consumes:
+    - application/xml
+  produces:
+    - text/xml
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/notify.event.ShakeAroundLotteryBind'
+  responses:
+    '200':
+      description: ''

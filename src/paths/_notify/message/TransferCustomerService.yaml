@@ -1,0 +1,18 @@
+post:
+  tags:
+    - 消息通知
+  summary: 消息转发到客服
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1458557405)'
+  consumes:
+    - application/xml
+  produces:
+    - text/plain
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/notify.message.TransferCustomerService'
+  responses:
+    '200':
+      description: ''

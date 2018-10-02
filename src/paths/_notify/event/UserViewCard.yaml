@@ -1,0 +1,18 @@
+post:
+  tags:
+    - 事件通知
+  summary: 卡券/进入会员卡事件
+  description: '需要开发者在创建会员卡时填入need_push_on_view 字段并设置为true。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025274)'
+  consumes:
+    - application/xml
+  produces:
+    - text/plain
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/notify.event.UserViewCard'
+  responses:
+    '200':
+      description: ''

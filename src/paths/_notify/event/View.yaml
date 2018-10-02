@@ -1,7 +1,7 @@
 post:
   tags:
     - 事件通知
-  summary: 点击菜单跳转链接时的事件
+  summary: 菜单/点击菜单跳转链接时的事件
   description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140454)'
   consumes:
     - application/xml

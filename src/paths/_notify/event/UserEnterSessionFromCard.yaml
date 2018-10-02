@@ -1,0 +1,18 @@
+post:
+  tags:
+    - 事件通知
+  summary: 卡券/用户从卡券进入公众号会话事件
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025274)'
+  consumes:
+    - application/xml
+  produces:
+    - text/plain
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/notify.event.UserEnterSessionFromCard'
+  responses:
+    '200':
+      description: ''

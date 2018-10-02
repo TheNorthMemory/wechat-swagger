@@ -1,7 +1,7 @@
 post:
   tags:
     - 事件通知
-  summary: 扫码推事件且弹出“消息接收中”提示框的事件推送
+  summary: 菜单/扫码推事件且弹出“消息接收中”提示框的事件推送
   description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141016)'
   consumes:
     - application/xml

@@ -1,0 +1,27 @@
+allOf:
+  - $ref: '#/definitions/notify.BaseEvent'
+  - type: object
+    required: [Event, CardId, IsGiveByFriend, UserCardCode, OuterStr]
+    properties:
+      Event:
+        type: string
+        description: 事件类型
+        enum: [user_gifting_card]
+      CardId:
+        type: string
+        description: 卡券ID。
+      FriendUserName:
+        type: string
+        description: 接收卡券用户的openid
+      UserCardCode:
+        type: string
+        description: code序列号。
+      IsReturnBack:
+        type: integer
+        format: int32
+        description: 是否转赠退回，0代表不是，1代表是。
+        enum: [0, 1]
+      IsChatRoom:
+        type: integer
+        format: int32
+        description: 是否是群转赠

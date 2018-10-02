@@ -1,0 +1,15 @@
+allOf:
+  - $ref: '#/definitions/notify.BaseEvent'
+  - type: object
+    required: [Event, CardId, Detail]
+    properties:
+      Event:
+        type: string
+        description: 事件类型
+        enum: [card_sku_remind]
+      CardId:
+        type: string
+        description: 卡券ID。
+      Detail:
+        type: string
+        description: 报警详细信息

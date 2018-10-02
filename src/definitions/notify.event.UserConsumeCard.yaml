@@ -1,0 +1,34 @@
+allOf:
+  - $ref: '#/definitions/notify.BaseEvent'
+  - type: object
+    required: [Event, CardId, UserCardCode, ConsumeSource, OuterStr]
+    properties:
+      Event:
+        type: string
+        description: 事件类型
+        enum: [user_consume_card]
+      CardId:
+        type: string
+        description: 卡券ID。
+      UserCardCode:
+        type: string
+        description: code序列号。
+      ConsumeSource:
+        type: string
+        description: 核销来源。支持开发者统计API核销（FROM_API）、公众平台核销（FROM_MP）、卡券商户助手核销（FROM_MOBILE_HELPER）（核销员微信号）
+        enum: [FROM_API, FROM_MP, FROM_MOBILE_HELPER]
+      LocationName:
+        type: string
+        description: 门店名称，当前卡券核销的门店名称（只有通过自助核销和买单核销时才会出现该字段）
+      StaffOpenId:
+        type: string
+        description: 核销该卡券核销员的openid（只有通过卡券商户助手核销时才会出现）
+      VerifyCode:
+        type: string
+        description: 自助核销时，用户输入的验证码
+      RemarkAmount:
+        type: string
+        description: 自助核销时，用户输入的备注金额
+      OuterStr:
+        type: string
+        description: 开发者发起核销时传入的自定义参数，用于进行核销渠道统计

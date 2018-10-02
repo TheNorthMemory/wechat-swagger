@@ -1,8 +1,8 @@
 post:
   tags:
     - 事件通知
-  summary: 消息/取消关注事件
-  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140454)'
+  summary: 卡券/用户删除事件
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025274)'
   consumes:
     - application/xml
   produces:
@@ -12,7 +12,7 @@ post:
       in: body
       required: true
       schema:
-        $ref: '#/definitions/notify.event.Unsubscribe'
+        $ref: '#/definitions/notify.event.UserDelCard'
   responses:
     '200':
       description: ''

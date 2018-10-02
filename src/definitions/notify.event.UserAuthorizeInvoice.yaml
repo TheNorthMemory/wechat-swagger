@@ -1,7 +1,7 @@
 allOf:
   - $ref: '#/definitions/notify.BaseEvent'
   - type: object
-    required: [Event, SuccOrderId, FailOrderId, AppId, Source]
+    required: [Event, AuthorizeAppId, AppId, Source]
     properties:
       Event:
         type: string
@@ -16,7 +16,10 @@ allOf:
       AppId:
         type: string
         description: 用于接收事件推送的公众号的AppId
+      AuthorizeAppId:
+        type: string
+        description: 获取授权页链接的AppId
       Source:
         type: string
-        description: 授权来源，web表示来自微信内H5，app标识来自app
-        enum: [web, app]
+        description: 授权来源，web表示来自微信内H5，app标识来自ap，pwxa：小程序开票，wap：h5开票
+        enum: [web, app, wxa, wap]

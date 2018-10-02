@@ -1,0 +1,18 @@
+post:
+  tags:
+    - 事件通知
+  summary: 发票/统一开票接口-异步通知开票结果
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455872179)'
+  consumes:
+    - application/xml
+  produces:
+    - text/xml
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/notify.event.CloudInvoiceInvoiceResultEvent'
+  responses:
+    '200':
+      description: ''

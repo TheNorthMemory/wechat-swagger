@@ -1,0 +1,18 @@
+post:
+  tags:
+    - 事件通知
+  summary: 小程序/审核通过结果通知
+  description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+  consumes:
+    - application/xml
+  produces:
+    - text/plain
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/notify.event.WeappAuditSuccess'
+  responses:
+    '200':
+      description: ''

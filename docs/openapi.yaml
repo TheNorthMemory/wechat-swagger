@@ -1147,6 +1147,44 @@ paths:
       responses:
         '200':
           description: ''
+  /_notify/event/WeappAuditFail:
+    post:
+      tags:
+        - 事件通知
+      summary: 小程序/审核失败结果通知
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+      consumes:
+        - application/xml
+      produces:
+        - text/plain
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/notify.event.WeappAuditFail'
+      responses:
+        '200':
+          description: ''
+  /_notify/event/WeappAuditSuccess:
+    post:
+      tags:
+        - 事件通知
+      summary: 小程序/审核通过结果通知
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+      consumes:
+        - application/xml
+      produces:
+        - text/plain
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/notify.event.WeappAuditSuccess'
+      responses:
+        '200':
+          description: ''
   /_notify/event/WifiConnected:
     post:
       tags:
@@ -21317,6 +21355,37 @@ definitions:
           MenuId:
             type: string
             description: 指菜单ID，如果是个性化菜单，则可以通过这个字段，知道是哪个规则的菜单被点击了。
+  notify.event.WeappAuditFail:
+    allOf:
+      - $ref: '#/definitions/notify.BaseEvent'
+      - type: object
+        required: [Event, EventKey]
+        properties:
+          Event:
+            type: string
+            description: 事件类型
+            enum: [weapp_audit_fail]
+          Reason:
+            type: string
+            description: 审核失败的原因
+          FailTime:
+            type: integer
+            format: int32
+            description: 审核失败时的时间（整形），时间戳
+  notify.event.WeappAuditSuccess:
+    allOf:
+      - $ref: '#/definitions/notify.BaseEvent'
+      - type: object
+        required: [Event, EventKey]
+        properties:
+          Event:
+            type: string
+            description: 事件类型
+            enum: [weapp_audit_success]
+          SuccTime:
+            type: integer
+            format: int32
+            description: 审核成功时的时间（整形），时间戳
   notify.event.WifiConnected:
     allOf:
       - $ref: '#/definitions/notify.BaseEvent'

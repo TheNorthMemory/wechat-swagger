@@ -1,0 +1,23 @@
+post:
+  tags:
+    - 事件通知
+  summary: 礼品卡/接收开票事件
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)'
+  consumes:
+    - application/xml
+  produces:
+    - text/xml
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/notify.event.UserAuthorizeInvoice'
+  responses:
+    '200':
+      description: ''
+      schema:
+        xml:
+          name: xml
+        type: string
+        enum: [ok]

@@ -1,0 +1,18 @@
+allOf:
+  - $ref: '#/definitions/notify.BaseEvent'
+  - type: object
+    required: [Event, KeyStandard, KeyStr, Country, Province, City, Sex, Scene, ExtInfo]
+    properties:
+      Event:
+        type: string
+        description: 事件类型
+        enum: [user_scan_product_enter_session]
+      KeyStandard:
+        type: string
+        description: 商品编码标准。
+      KeyStr:
+        type: string
+        description: 商品编码内容。
+      ExtInfo:
+        type: string
+        description: 调用“获取商品二维码接口”时传入的extinfo，为标识参数。

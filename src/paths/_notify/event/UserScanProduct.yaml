@@ -1,0 +1,18 @@
+post:
+  tags:
+    - 事件通知
+  summary: 扫一扫/打开商品主页事件
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455872179)'
+  consumes:
+    - application/xml
+  produces:
+    - text/xml
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/notify.event.UserScanProduct'
+  responses:
+    '200':
+      description: ''

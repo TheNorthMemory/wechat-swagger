@@ -1,0 +1,22 @@
+allOf:
+  - $ref: '#/definitions/notify.BaseEvent'
+  - type: object
+    required: [Event, KeyStandard, KeyStr, ExtInfo, Result, ReasonMsg]
+    properties:
+      Event:
+        type: string
+        description: 事件类型
+        enum: [user_scan_product_async]
+      KeyStandard:
+        type: string
+        description: 商品编码标准。
+      KeyStr:
+        type: string
+        description: 商品编码内容。
+      Result:
+        type: string
+        description: 审核结果。verify_ok表示审核通过，verify_not_pass表示审核未通过。
+        enum: [verify_ok, verify_not_pass]
+      ReasonMsg:
+        type: string
+        description: 审核未通过的原因。

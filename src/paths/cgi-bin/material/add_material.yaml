@@ -1,7 +1,6 @@
 post:
   summary: 新增其他类型永久素材
   description: 图片素材将进入公众平台官网素材管理模块中的默认分组。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738729)
-  operationId: cgi-bin/material/add_material
   security:
     - accessToken: []
   tags:

@@ -1,7 +1,6 @@
 post:
   summary: 查询分组详情
   description: 查询分组详情，包括分组名，分组id，分组里的设备列表。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459330212)
-  operationId: shakearound/device/group/getlist
   security:
     - accessToken: []
   tags:

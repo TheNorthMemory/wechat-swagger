@@ -1,7 +1,6 @@
 post:
   summary: 获取体验者列表
   description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140588_nVUgx)'
-  operationId: wxa/memberauth
   security:
     - authorizerAccessToken: []
   tags:

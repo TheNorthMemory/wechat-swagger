@@ -1,7 +1,6 @@
 post:
   summary: 退款
   description: 对某一笔订单操作退款，注意该接口比较隐私，请开发者提高操作该功能的权限等级，退款后，对应的礼品卡将会在用户卡包消失。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
-  operationId: card/giftcard/order/refund
   security:
     - accessToken: []
   tags:

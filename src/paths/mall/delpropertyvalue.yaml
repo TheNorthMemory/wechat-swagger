@@ -1,6 +1,5 @@
 post:
   summary: 删除属性值
-  operationId: mall/delpropertyvalue
   security:
     - accessToken: []
   tags:

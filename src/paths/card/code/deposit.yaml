@@ -1,7 +1,6 @@
 post:
   summary: 导入code接口
   description: 须将自定义code按照与发券方的约定数量调用导入code接口导入。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025062)
-  operationId: card/code/deposit
   security:
     - accessToken: []
   tags:

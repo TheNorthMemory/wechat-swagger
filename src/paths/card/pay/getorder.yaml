@@ -1,7 +1,6 @@
 post:
   summary: 查询订单详情
   description: 查询充值订单的状态。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481033345_5cGrc)
-  operationId: card/pay/getorder
   security:
     - accessToken: []
   tags:

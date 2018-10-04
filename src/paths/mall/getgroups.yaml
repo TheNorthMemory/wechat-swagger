@@ -1,6 +1,5 @@
 post:
   summary: 查询分组
-  operationId: mall/getgroups
   security:
     - accessToken: []
   tags:

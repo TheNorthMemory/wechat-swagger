@@ -1,7 +1,6 @@
 post:
   summary: 获取公众号/小程序所绑定的开放平台帐号
   description: 该API用于获取公众号或小程序所绑定的开放平台帐号。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1498704804_iARAL)
-  operationId: cgi-bin/open/get
   security:
     - accessToken: []
   tags:

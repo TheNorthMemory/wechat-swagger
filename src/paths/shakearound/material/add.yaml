@@ -1,7 +1,6 @@
 post:
   summary: 上传图片素材
   description: 上传在摇一摇功能中需使用到的图片素材，素材保存在微信侧服务器上。图片格式限定为：jpg,jpeg,png,gif。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738726)
-  operationId: shakearound/material/add
   security:
     - accessToken: []
   tags:

@@ -1,7 +1,6 @@
 post:
   summary: 小程序改名审核状态查询
   description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
-  operationId: wxa/api_wxa_querynickname
   security:
     - accessToken: []
   tags:

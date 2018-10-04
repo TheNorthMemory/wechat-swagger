@@ -1,6 +1,5 @@
 post:
   summary: 月留存
-  operationId: datacube/getweanalysisappidmonthlyretaininfo
   security:
     - accessToken: []
   tags:

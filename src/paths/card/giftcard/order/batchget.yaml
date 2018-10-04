@@ -1,7 +1,6 @@
 post:
   summary: 查询-批量查询礼品卡订单信息接口
   description: 查询该商户某个时间段内创建的所有订单详情。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
-  operationId: card/giftcard/order/batchget
   security:
     - accessToken: []
   tags:

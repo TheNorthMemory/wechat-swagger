@@ -1,6 +1,5 @@
 post:
   summary: 根据分组ID获取分组信息
-  operationId: merchant/group/getbyid
   security:
     - accessToken: []
   tags:

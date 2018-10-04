@@ -1,6 +1,5 @@
 post:
   summary: 获取累计用户数据
-  operationId: datacube/getusercumulate
   security:
     - accessToken: []
   tags:

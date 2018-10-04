@@ -1,7 +1,6 @@
 post:
   summary: 录入红包信息
   description: 在调用"创建红包活动"接口之后，调用此接口录入红包信息。注意，此接口每次调用，都会向某个活动新增一批红包信息，如果红包数少于100个，请通过一次调用添加所有红包信息。如果红包数大于100，可以多次调用接口添加。请注意确保多次录入的红包ticket总的数目不大于创建该红包活动时设置的total值。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459327196)
-  operationId: shakearound/lottery/setprizebucket
   deprecated: true
   security:
     - accessToken: []

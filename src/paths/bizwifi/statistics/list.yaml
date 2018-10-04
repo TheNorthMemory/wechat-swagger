@@ -1,7 +1,6 @@
 post:
   summary: Wi-Fi数据统计
   description: 查询一定时间范围内的WiFi连接总人数、微信方式连Wi-Fi人数、商家主页访问人数、连网后消息发送人数、新增公众号关注人数和累计公众号关注人数。查询的最长时间跨度为30天。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444894129)
-  operationId: bizwifi/statistics/list
   security:
     - accessToken: []
   tags:

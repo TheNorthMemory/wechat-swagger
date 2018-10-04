@@ -1,6 +1,5 @@
 post:
   summary: 获取消息发送周数据
-  operationId: datacube/getupstreammsgweek
   security:
     - accessToken: []
   tags:

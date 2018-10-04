@@ -1,6 +1,5 @@
 post:
   summary: 设置测试人员白名单
-  operationId: scan/testwhitelist/set
   security:
     - accessToken: []
   tags:

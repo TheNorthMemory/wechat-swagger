@@ -1,6 +1,5 @@
 post:
   summary: 删除分组
-  operationId: merchant/group/del
   security:
     - accessToken: []
   tags:

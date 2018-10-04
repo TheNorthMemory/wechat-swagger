@@ -1,7 +1,6 @@
 get:
   summary: 通过code换取网页授权access_token
   description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419318590&token=&lang=zh_CN)'
-  operationId: sns/oauth2/component/access_token
   security:
     - componentAccessToken: []
   tags:

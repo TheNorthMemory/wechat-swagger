@@ -1,7 +1,6 @@
 post:
   summary: 获取用户列表
   description: 一次拉取调用最多拉取10000个关注者的OpenID。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140840)
-  operationId: cgi-bin/user/get
   security:
     - accessToken: []
   tags:

@@ -1,6 +1,5 @@
 post:
   summary: 周留存
-  operationId: datacube/getweanalysisappidweeklyretaininfo
   security:
     - accessToken: []
   tags:

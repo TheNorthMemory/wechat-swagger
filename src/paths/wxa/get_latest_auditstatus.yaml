@@ -1,7 +1,6 @@
 get:
   summary: 查询最新一次提交的审核状态（仅供第三方代小程序调用）
   description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
-  operationId: wxa/get_latest_auditstatus
   security:
     - authorizerAccessToken: []
   tags:

@@ -1,6 +1,5 @@
 post:
   summary: 微信翻译
-  operationId: cgi-bin/media/voice/translatecontent
   security:
     - accessToken: []
   tags:

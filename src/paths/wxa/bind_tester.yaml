@@ -1,7 +1,6 @@
 post:
   summary: 绑定微信用户为小程序体验者
   description: 第三方平台在帮助旗下授权的小程序提交代码审核之前，可先让小程序运营者体验，体验之前需要将运营者的个人微信号添加到该小程序的体验者名单中。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140588_nVUgx)
-  operationId: wxa/bind_tester
   security:
     - authorizerAccessToken: []
   tags:

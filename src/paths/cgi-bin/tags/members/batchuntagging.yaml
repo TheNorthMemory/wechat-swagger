@@ -1,6 +1,5 @@
 post:
   summary: 批量为用户取消标签
-  operationId: cgi-bin/tags/members/batchuntagging
   security:
     - accessToken: []
   tags:

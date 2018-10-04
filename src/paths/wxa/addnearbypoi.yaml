@@ -1,7 +1,6 @@
 post:
   summary: 添加地点
   description: '添加请求暂不支持并发调用，建议使用时间隔1s进行串行调用。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/nearby.html#添加地点)'
-  operationId: wxa/addnearbypoi
   security:
     - accessToken: []
   tags:

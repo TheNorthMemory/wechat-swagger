@@ -1,6 +1,5 @@
 get:
   summary: 获取access_token
-  operationId: cgi-bin/token
   tags:
     - 基础支持
   parameters:

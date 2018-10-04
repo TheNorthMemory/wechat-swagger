@@ -1,7 +1,6 @@
 get:
   summary: 设置红包活动抽奖开关
   description: 在调用"创建红包活动"开发者实时控制红包活动抽奖的开启和关闭。注意活动抽奖开关只在红包活动有效期之内才能生效，如果不能确定红包活动有效期，请尽量将红包活动有效期的范围设置大。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459327198)
-  operationId: shakearound/lottery/setlotteryswitch
   deprecated: true
   security:
     - accessToken: []

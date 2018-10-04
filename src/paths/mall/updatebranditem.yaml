@@ -1,6 +1,5 @@
 post:
   summary: 更新下架中的商品信息（暂不支持）
-  operationId: mall/updatebranditem
   deprecated: true
   security:
     - accessToken: []

@@ -1,7 +1,6 @@
 post:
   summary: 创建发票卡券模板
   description: 通过本接口可以为创建一个商户的发票卡券模板，为该商户配置发票卡券模板上的自定义栏位。创建发票卡券模板生成的card_id将在创建发票卡券时被引用，故创建发票卡券模板是创建发票卡券的基础。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918915Cvo2k)
-  operationId: card/invoice/platform/createcard
   security:
     - accessToken: []
   tags:

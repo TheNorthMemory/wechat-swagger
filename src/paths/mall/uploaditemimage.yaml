@@ -1,6 +1,5 @@
 post:
   summary: 上传商品图片到商品管理后台
-  operationId: mall/uploaditemimage
   consumes:
     - multipart/form-data
   security:

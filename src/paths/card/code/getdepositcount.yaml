@@ -1,7 +1,6 @@
 post:
   summary: 查询导入code数目接口
   description: 查询code导入微信后台成功的数目。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025062)
-  operationId: card/code/getdepositcount
   security:
     - accessToken: []
   tags:

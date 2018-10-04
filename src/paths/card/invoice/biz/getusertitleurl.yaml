@@ -1,7 +1,6 @@
 post:
   summary: 将发票抬头信息录入到用户微信中
   description: 调用接口，获取添加存储发票抬头信息的链接，将链接发给微信用户，用户确认后将保存该信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496554912_vfWU0)
-  operationId: card/invoice/biz/getusertitleurl
   security:
     - accessToken: []
   tags:

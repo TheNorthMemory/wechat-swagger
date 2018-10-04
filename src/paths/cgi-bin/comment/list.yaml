@@ -1,7 +1,6 @@
 post:
   summary: 查看指定文章的评论数据
   description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1494572718_WzHIY)'
-  operationId: cgi-bin/comment/list
   security:
     - accessToken: []
   tags:

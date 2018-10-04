@@ -1,7 +1,6 @@
 post:
   summary: 批量查询页面统计数据
   description: 查询指定时间商家帐号下的每个页面进行摇周边操作的人数、次数，点击摇周边消息的人数、次数。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443448005)
-  operationId: shakearound/statistics/pagelist
   security:
     - accessToken: []
   tags:

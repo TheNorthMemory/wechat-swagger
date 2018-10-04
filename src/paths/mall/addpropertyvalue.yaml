@@ -1,6 +1,5 @@
 post:
   summary: 类目下已有属性新增商户自定义属性值
-  operationId: mall/addpropertyvalue
   security:
     - accessToken: []
   tags:

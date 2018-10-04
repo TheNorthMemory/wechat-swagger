@@ -1,7 +1,6 @@
 post:
   summary: 删除页面
   description: 删除已有的页面，包括在摇一摇页面出现的主标题、副标题、图片和点击进去的超链接。只有页面与设备没有关联关系时，才可被删除。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443447798)
-  operationId: shakearound/page/delete
   security:
     - accessToken: []
   tags:

@@ -1,6 +1,5 @@
 post:
   summary: 上传门店列表
-  operationId: card/location/batchadd
   security:
     - accessToken: []
   tags:

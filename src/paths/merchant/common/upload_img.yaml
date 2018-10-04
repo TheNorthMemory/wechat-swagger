@@ -1,6 +1,5 @@
 post:
   summary: 上传图片
-  operationId: merchant/common/upload_img
   security:
     - accessToken: []
   consumes:

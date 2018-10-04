@@ -1,7 +1,6 @@
 post:
   summary: 设置顶部banner跳转小程序接口/设置商家主页
   description: 用户连Wi-Fi后长期逗留在场所内，可以在连接Wi-Fi后进入微信点击微信聊首页欢迎语，即可进入预先设置的小程序中获得资讯或服务。注：只能跳转与公众号关联的小程序。A->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215135855720FBA0) B->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444894127)
-  operationId: bizwifi/homepage/set
   security:
     - accessToken: []
   tags:

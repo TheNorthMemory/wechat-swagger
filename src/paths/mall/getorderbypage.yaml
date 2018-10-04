@@ -1,6 +1,5 @@
 post:
   summary: 拉取订单列表
-  operationId: mall/getorderbypage
   security:
     - accessToken: []
   tags:

@@ -1,6 +1,5 @@
 post:
   summary: 获取图文统计分时数据
-  operationId: datacube/getuserreadhour
   security:
     - accessToken: []
   tags:

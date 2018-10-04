@@ -1,7 +1,6 @@
 post:
   summary: 批量获取用户基本信息
   description: 批量获取用户基本信息。最多支持一次拉取100条。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140839)
-  operationId: cgi-bin/user/info/batchget
   security:
     - accessToken: []
   tags:

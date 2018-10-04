@@ -1,6 +1,5 @@
 post:
   summary: 获取语音识别结果
-  operationId: cgi-bin/media/voice/queryrecoresultfortext
   security:
     - accessToken: []
   tags:

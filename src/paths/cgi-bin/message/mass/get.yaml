@@ -1,7 +1,6 @@
 post:
   summary: 查询群发消息发送状态
   description: 【订阅号与服务号认证后均可用】[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481187827_i0l21)
-  operationId: cgi-bin/message/mass/get
   security:
     - accessToken: []
   tags:

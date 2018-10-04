@@ -1,7 +1,6 @@
 post:
   summary: 创建
   description: 自定义菜单最多包括3个一级菜单，每个一级菜单最多包含5个二级菜单。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141013)
-  operationId: cgi-bin/menu/create
   security:
     - accessToken: []
   tags:

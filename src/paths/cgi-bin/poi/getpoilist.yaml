@@ -1,6 +1,5 @@
 post:
   summary: 查询门店列表
-  operationId: cgi-bin/poi/getpoilist
   security:
     - accessToken: []
   tags:

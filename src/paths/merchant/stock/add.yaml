@@ -1,6 +1,5 @@
 post:
   summary: 增加库存
-  operationId: merchant/stock/add
   security:
     - accessToken: []
   tags:

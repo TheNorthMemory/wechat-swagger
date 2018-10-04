@@ -1,7 +1,6 @@
 post:
   summary: 设置买单
   description: 设置买单的card_id必须已经配置了门店，否则会报错。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025056)
-  operationId: card/paycell/set
   security:
     - accessToken: []
   tags:

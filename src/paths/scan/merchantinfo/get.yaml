@@ -1,6 +1,5 @@
 get:
   summary: 获取商户信息
-  operationId: scan/merchantinfo/get
   security:
     - accessToken: []
   tags:

@@ -1,6 +1,5 @@
 post:
   summary: 检查wxticket参数/清除扫码记录
-  operationId: scan/scanticket/check
   security:
     - accessToken: []
   tags:

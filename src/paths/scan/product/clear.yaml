@@ -1,6 +1,5 @@
 post:
   summary: 清除商品信息
-  operationId: scan/product/clear
   security:
     - accessToken: []
   tags:

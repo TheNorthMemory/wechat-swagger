@@ -1,7 +1,6 @@
 post:
   summary: 添加设备到分组
   description: 添加设备到分组，每个分组能够持有的设备上限为10000，并且每次添加操作的添加上限为1000。只有在摇周边申请的设备才能添加到分组。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459330215)
-  operationId: shakearound/device/group/adddevice
   security:
     - accessToken: []
   tags:

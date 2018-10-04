@@ -1,6 +1,5 @@
 post:
   summary: 增加货架
-  operationId: merchant/shelf/add
   security:
     - accessToken: []
   tags:

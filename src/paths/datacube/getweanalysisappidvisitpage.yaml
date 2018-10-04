@@ -1,6 +1,5 @@
 post:
   summary: 访问页面
-  operationId: datacube/getweanalysisappidvisitpage
   security:
     - accessToken: []
   tags:

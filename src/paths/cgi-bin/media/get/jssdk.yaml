@@ -1,6 +1,5 @@
 get:
   summary: 高清语音素材获取接口
-  operationId: cgi-bin/media/get/jssdk
   security:
     - accessToken: []
   tags:

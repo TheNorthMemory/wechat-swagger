@@ -1,7 +1,6 @@
 post:
   summary: 查询页面列表
   description: 查询已有的页面，包括在摇一摇页面出现的主标题、副标题、图片和点击进去的超链接。提供两种查询方式，可指定页面ID查询，也可批量拉取页面列表。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459246754)
-  operationId: shakearound/page/search
   security:
     - accessToken: []
   tags:

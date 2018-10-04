@@ -1,6 +1,5 @@
 post:
   summary: 增加商品
-  operationId: merchant/create
   security:
     - accessToken: []
   tags:

@@ -1,7 +1,6 @@
 post:
   summary: 核查code接口
   description: 强烈建议开发者在查询完code数目的时候核查code接口校验code导入微信后台的情况。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025062)
-  operationId: card/code/checkcode
   security:
     - accessToken: []
   tags:

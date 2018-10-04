@@ -1,6 +1,5 @@
 post:
   summary: 关闭订单
-  operationId: merchant/order/close
   security:
     - accessToken: []
   tags:

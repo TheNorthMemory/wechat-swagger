@@ -1,6 +1,5 @@
 post:
   summary: 获取指定分类的所有属性
-  operationId: merchant/category/getproperty
   security:
     - accessToken: []
   tags:

@@ -1,7 +1,6 @@
 post:
   summary: 核销 Code
   description: 将用户的优惠券进行核销，该过程不可逆。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025239)
-  operationId: card/code/consume
   security:
     - accessToken: []
   tags:

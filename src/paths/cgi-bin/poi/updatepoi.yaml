@@ -1,6 +1,5 @@
 post:
   summary: 修改门店服务信息
-  operationId: cgi-bin/poi/updatepoi
   security:
     - accessToken: []
   tags:

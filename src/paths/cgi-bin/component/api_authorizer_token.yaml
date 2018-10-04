@@ -1,7 +1,6 @@
 post:
   summary: 获取（刷新）授权公众号或小程序的接口调用凭据（令牌）
   description: 该API用于在授权方令牌（authorizer_access_token）失效时，可用刷新令牌（authorizer_refresh_token）获取新的令牌。请注意，此处token是2小时刷新一次，开发者需要自行进行token的缓存，避免token的获取次数达到每日的限定额度。 [官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1453779503)
-  operationId: cgi-bin/component/api_authorizer_token
   security:
     - componentAccessToken: []
   tags:

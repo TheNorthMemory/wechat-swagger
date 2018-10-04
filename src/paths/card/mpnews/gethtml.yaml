@@ -1,7 +1,6 @@
 post:
   summary: 获取卡券嵌入图文消息文本
   description: 特别注意：目前该接口仅支持填入非自定义code的卡券,自定义code的卡券需先进行code导入后调用。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025062)
-  operationId: card/mpnews/gethtml
   security:
     - accessToken: []
   tags:

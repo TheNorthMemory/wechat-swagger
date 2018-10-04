@@ -1,7 +1,6 @@
 post:
   summary: 将公众号/小程序从开放平台帐号下解绑
   description: 该API用于将一个公众号或小程序与指定开放平台帐号解绑。开发者须确认所指定帐号与当前该公众号或小程序所绑定的开放平台帐号一致。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1498704804_iARAL)
-  operationId: cgi-bin/open/unbind
   security:
     - accessToken: []
   tags:

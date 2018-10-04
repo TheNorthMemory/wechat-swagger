@@ -1,7 +1,6 @@
 post:
   summary: 更新飞机票信息接口
   description: 机票生成后无需经过微信审核，即时生效。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025288)
-  operationId: card/boardingpass/checkin
   security:
     - accessToken: []
   tags:

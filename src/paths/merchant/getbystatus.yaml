@@ -1,6 +1,5 @@
 post:
   summary: 获取指定状态的所有商品
-  operationId: merchant/getbystatus
   security:
     - accessToken: []
   tags:

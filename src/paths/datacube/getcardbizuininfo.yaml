@@ -1,7 +1,6 @@
 post:
   summary: 拉取卡券概况数据
   description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)'
-  operationId: datacube/getcardbizuininfo
   security:
     - accessToken: []
   tags:

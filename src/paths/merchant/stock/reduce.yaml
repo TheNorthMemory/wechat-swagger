@@ -1,6 +1,5 @@
 post:
   summary: 减少库存
-  operationId: merchant/stock/reduce
   security:
     - accessToken: []
   tags:

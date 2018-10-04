@@ -1,6 +1,5 @@
 get:
   summary: 从腾讯地图拉取省市区信息
-  operationId: wxa/get_district
   security:
     - accessToken: []
   tags:

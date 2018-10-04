@@ -1,7 +1,6 @@
 post:
   summary: 新增永久图文素材
   description: 素材库保存总数量有上限：图文消息素材、图片素材上限为5000，其他类型为1000。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738729)
-  operationId: cgi-bin/material/add_news
   security:
     - accessToken: []
   tags:

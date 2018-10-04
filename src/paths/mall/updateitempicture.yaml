@@ -1,6 +1,5 @@
 post:
   summary: 批量修改商品主图片
-  operationId: mall/updateitempicture
   security:
     - accessToken: []
   tags:

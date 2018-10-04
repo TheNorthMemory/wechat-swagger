@@ -1,7 +1,6 @@
 post:
   summary: 创建货架
   description: 创建货架时需填写投放路径的场景字段。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025062)
-  operationId: card/landingpage/create
   security:
     - accessToken: []
   tags:

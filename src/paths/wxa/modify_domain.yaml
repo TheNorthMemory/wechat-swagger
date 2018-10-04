@@ -1,7 +1,6 @@
 post:
   summary: 设置小程序服务器域名
   description: 授权给第三方的小程序，其服务器域名只可以为第三方的服务器，当小程序通过第三方发布代码上线后，小程序原先自己配置的服务器域名将被删除，只保留第三方平台的域名，所以第三方平台在代替小程序发布代码之前，需要调用接口为小程序添加第三方自身的域名。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489138143_WPbOO)
-  operationId: wxa/modify_domain
   security:
     - authorizerAccessToken: []
   tags:

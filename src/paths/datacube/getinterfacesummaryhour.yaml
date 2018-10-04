@@ -1,6 +1,5 @@
 post:
   summary: 获取接口分析分时数据
-  operationId: datacube/getinterfacesummaryhour
   security:
     - accessToken: []
   tags:

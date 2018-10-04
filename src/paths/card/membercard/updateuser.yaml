@@ -1,7 +1,6 @@
 post:
   summary: 更新会员信息
   description: 当会员持卡消费后，支持开发者调用该接口更新会员信息。会员卡交易后的每次信息变更需通过该接口通知微信，便于后续消息通知及其他扩展功能。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025283)
-  operationId: card/membercard/updateuser
   security:
     - accessToken: []
   tags:

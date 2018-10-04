@@ -1,7 +1,6 @@
 post:
   summary: 获取会员卡开卡组件链接
   description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1499332673_Unm7V)'
-  operationId: card/membercard/activate/geturl
   security:
     - accessToken: []
   tags:

@@ -1,6 +1,5 @@
 post:
   summary: 删除门店
-  operationId: wxa/del_store
   security:
     - accessToken: []
   tags:

@@ -1,6 +1,5 @@
 post:
   summary: 拉取商品详情
-  operationId: mall/getbranditemdetail
   security:
     - accessToken: []
   tags:

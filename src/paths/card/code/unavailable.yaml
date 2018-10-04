@@ -1,7 +1,6 @@
 post:
   summary: 设置卡券失效
   description: 为满足改票、退款等异常情况，可调用卡券失效接口将用户的卡券设置为失效状态。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)
-  operationId: card/code/unavailable
   security:
     - accessToken: []
   tags:

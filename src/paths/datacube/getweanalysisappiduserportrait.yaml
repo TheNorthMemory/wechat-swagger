@@ -1,6 +1,5 @@
 post:
   summary: 用户画像
-  operationId: datacube/getweanalysisappiduserportrait
   security:
     - accessToken: []
   tags:

@@ -1,7 +1,6 @@
 post:
   summary: 创建
   description: 一个公众号，最多可以创建100个标签。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140837)
-  operationId: cgi-bin/tags/create
   security:
     - accessToken: []
   tags:

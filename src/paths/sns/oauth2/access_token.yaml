@@ -1,7 +1,6 @@
 get:
   summary: 通过code换取网页授权access_token
   description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842)'
-  operationId: sns/oauth2/access_token
   tags:
     - 网页开发
   parameters:

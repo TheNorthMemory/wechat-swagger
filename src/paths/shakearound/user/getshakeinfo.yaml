@@ -1,7 +1,6 @@
 post:
   summary: 获取设备及用户信息
   description: 获取设备信息，包括UUID、major、minor，以及距离、openID等信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443447963)
-  operationId: shakearound/user/getshakeinfo
   security:
     - accessToken: []
   tags:

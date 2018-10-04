@@ -1,7 +1,6 @@
 get:
   summary: 查询审核状态
   description: 查询已经提交的开通摇一摇周边功能申请的审核状态。在申请提交后，工作人员会在三个工作日内完成审核。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443447487)
-  operationId: shakearound/account/auditstatus
   security:
     - accessToken: []
   tags:

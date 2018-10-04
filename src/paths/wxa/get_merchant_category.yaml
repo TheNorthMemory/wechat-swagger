@@ -1,6 +1,5 @@
 get:
   summary: 拉取门店小程序类目
-  operationId: wxa/get_merchant_category
   security:
     - accessToken: []
   tags:

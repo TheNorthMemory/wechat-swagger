@@ -1,6 +1,5 @@
 post:
   summary: 在腾讯地图中搜索门店
-  operationId: wxa/search_map_poi
   security:
     - accessToken: []
   tags:

@@ -1,7 +1,6 @@
 post:
   summary: 小程序分阶段发布
   description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
-  operationId: wxa/grayrelease
   security:
     - authorizerAccessToken: []
   tags:

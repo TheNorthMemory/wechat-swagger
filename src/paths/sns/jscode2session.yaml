@@ -1,7 +1,6 @@
 get:
   summary: 登录凭证校验
   description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/api-login.html#wxloginobject)'
-  operationId: sns/jscode2session
   tags:
     - 网页开发
   parameters:

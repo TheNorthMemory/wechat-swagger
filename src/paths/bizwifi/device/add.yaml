@@ -1,7 +1,6 @@
 post:
   summary: 添加密码型设备
   description: 调用此接口向指定门店添加密码型设备的Wi-Fi信息。为保证门店下多台设备无缝漫游。一个门店只能拥有一种设备类型，只要调用此接口添加一个ssid后，该门店即为密码型设备，不能再添加portal型设备。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444894120)
-  operationId: bizwifi/device/add
   security:
     - accessToken: []
   tags:

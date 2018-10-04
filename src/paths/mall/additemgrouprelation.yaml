@@ -1,6 +1,5 @@
 post:
   summary: 商品批量加入分组
-  operationId: mall/additemgrouprelation
   security:
     - accessToken: []
   tags:

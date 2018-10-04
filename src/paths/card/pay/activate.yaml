@@ -1,7 +1,6 @@
 get:
   summary: 开通券点账户
   description: 为当前appid开通券点账户并获得免费券点奖励。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481033345_5cGrc)
-  operationId: card/pay/activate
   security:
     - accessToken: []
   tags:

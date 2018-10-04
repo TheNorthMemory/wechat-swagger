@@ -1,7 +1,6 @@
 post:
   summary: 将电子发票卡券插入用户卡包
   description: 本接口由开票平台或自建平台商户调用。对用户已经授权过的开票请求，开票平台可以使用本接口将发票制成发票卡券放入用户的微信卡包中。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918915Cvo2k)
-  operationId: card/invoice/insert
   security:
     - accessToken: []
   tags:

@@ -1,6 +1,5 @@
 post:
   summary: 创建商品
-  operationId: scan/product/create
   security:
     - accessToken: []
   tags:

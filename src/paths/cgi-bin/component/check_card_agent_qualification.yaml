@@ -1,7 +1,6 @@
 get:
   summary: 母商户资质审核查询
   description: 查询母商户资质审核的结果，审核通过后才能用接口继续提交子商户资质。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
-  operationId: cgi-bin/component/check_card_agent_qualification
   security:
     - accessToken: []
   tags:

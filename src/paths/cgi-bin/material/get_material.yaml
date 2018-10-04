@@ -1,7 +1,6 @@
 post:
   summary: 获取永久素材
   description: 临时素材无法通过本接口获取。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738730)
-  operationId: cgi-bin/material/get_material
   security:
     - accessToken: []
   tags:

@@ -1,6 +1,5 @@
 post:
   summary: ''
-  operationId: card/luckymonkey/updateuserbalance
   security:
     - accessToken: []
   tags:

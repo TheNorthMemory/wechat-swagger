@@ -1,7 +1,6 @@
 post:
   summary: 设置授权方的选项信息
   description: 该API用于设置授权方的公众号或小程序的选项信息，如：地理位置上报，语音识别开关，多客服开关。注意，设置各项选项设置信息，需要有授权方的授权，详见权限集说明。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1453779503)
-  operationId: cgi-bin/component/api_set_authorizer_option
   security:
     - componentAccessToken: []
   tags:

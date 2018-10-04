@@ -1,7 +1,6 @@
 post:
   summary: 创建子商户
   description: 支持母商户调用该接口传入子商户的相关资料，并获取子商户ID，用于子商户的卡券功能管理。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
-  operationId: card/submerchant/submit
   security:
     - accessToken: []
   tags:

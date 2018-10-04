@@ -1,7 +1,6 @@
 post:
   summary: 连Wi-Fi完成页跳转小程序/设置连网完成页
   description: 设置需要跳转的小程序，连网完成点击“完成”按钮，即可进入设置的小程序。注：只能跳转与公众号关联的小程序。A->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215135855720FBA0) B->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457505542)
-  operationId: bizwifi/finishpage/set
   security:
     - accessToken: []
   tags:

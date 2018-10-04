@@ -1,6 +1,5 @@
 post:
   summary: 周趋势
-  operationId: datacube/getweanalysisappidweeklyvisittrend
   security:
     - accessToken: []
   tags:

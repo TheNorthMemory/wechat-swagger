@@ -1,7 +1,6 @@
 post:
   summary: 查询券点流水详情
   description: 查询券点的流水详情。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481033345_5cGrc)
-  operationId: card/pay/getorderlist
   security:
     - accessToken: []
   tags:

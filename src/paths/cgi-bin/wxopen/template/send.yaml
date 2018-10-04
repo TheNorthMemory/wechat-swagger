@@ -1,7 +1,6 @@
 post:
   summary: 发送模版消息
   description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/notice.html)'
-  operationId: cgi-bin/wxopen/template/send
   security:
     - authorizerAccessToken: []
     - accessToken: []

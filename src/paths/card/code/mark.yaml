@@ -1,7 +1,6 @@
 post:
   summary: Mark(占用)Code
   description: 朋友的券由于共享的特性，会出现多个消费者同时进入某一个卡券的自定义H5网页的情况，若该网页涉及线上下单、核销、支付等行为，会造成两个消费者同时使用同一张券，会有一个消费者使用失败的情况，为此我们设计了mark（占用）code接口。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025239)
-  operationId: card/code/mark
   security:
     - accessToken: []
   tags:

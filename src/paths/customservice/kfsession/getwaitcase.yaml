@@ -1,7 +1,6 @@
 get:
   summary: 获取未接入会话列表
   description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1458044820)'
-  operationId: customservice/kfsession/getwaitcase
   security:
     - accessToken: []
   tags:

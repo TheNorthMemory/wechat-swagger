@@ -1,6 +1,5 @@
 post:
   summary: 获取指定ID的邮费模板
-  operationId: merchant/express/getbyid
   security:
     - accessToken: []
   tags:

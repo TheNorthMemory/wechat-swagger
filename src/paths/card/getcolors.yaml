@@ -1,7 +1,6 @@
 get:
   summary: 获取卡券背景颜色
   description: 制卡预制颜色。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025056)
-  operationId: card/getcolors
   security:
     - accessToken: []
   tags:

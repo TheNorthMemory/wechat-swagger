@@ -1,7 +1,6 @@
 post:
   summary: 发送模板消息
   description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277)'
-  operationId: cgi-bin/template/send
   security:
     - accessToken: []
   tags:

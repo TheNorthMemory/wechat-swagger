@@ -1,6 +1,5 @@
 post:
   summary: 公众号粉丝迁移
-  operationId: cgi-bin/changeopenid
   security:
     - accessToken: []
   tags:

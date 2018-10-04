@@ -1,7 +1,6 @@
 post:
   summary: 解除已关联的小程序
   description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1513255108_gFkRI)'
-  operationId: cgi-bin/wxopen/wxampunlink
   security:
     - accessToken: []
   tags:

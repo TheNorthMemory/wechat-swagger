@@ -1,7 +1,6 @@
 post:
   summary: 接口C:获取小程序码
   description: '注意：通过该接口生成的小程序二维码，永久有效，数量限制见文末说明，请谨慎使用。用户扫描该码进入小程序后，将直接进入 path 对应的页面。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/qrcode.html)'
-  operationId: wxa/getwxacodeunlimit
   security:
     - accessToken: []
   tags:

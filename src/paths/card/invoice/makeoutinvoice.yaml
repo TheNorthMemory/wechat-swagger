@@ -1,7 +1,6 @@
 post:
   summary: 开具蓝票
   description: 对于使用微信电子发票开票接入能力的商户，在公众号后台选择任何一家开票平台的套餐，都可以使用本接口实现电子发票的开具。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918906Epe65)
-  operationId: card/invoice/makeoutinvoice
   security:
     - accessToken: []
   tags:

@@ -1,7 +1,6 @@
 post:
   summary: 查询设备列表
   description: 查询已有的设备ID、UUID、Major、Minor、激活状态、备注信息、关联门店、关联页面等信息。查询所返回的设备列表按设备ID正序排序。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443447624)
-  operationId: shakearound/device/search
   security:
     - accessToken: []
   tags:

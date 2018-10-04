@@ -1,6 +1,5 @@
 post:
   summary: 访问分布
-  operationId: datacube/getweanalysisappidvisitdistribution
   security:
     - accessToken: []
   tags:

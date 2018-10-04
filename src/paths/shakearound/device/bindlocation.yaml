@@ -1,7 +1,6 @@
 post:
   summary: 配置设备与门店的关联关系
   description: 支持创建门店后直接关联在设备上，无需为审核通过状态，摇周边后台自动更新门店的最新信息和状态。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459246245)支持设备关联其他公众账号的门店，门店需为审核通过状态。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459246251)
-  operationId: shakearound/device/bindlocation
   security:
     - accessToken: []
   tags:

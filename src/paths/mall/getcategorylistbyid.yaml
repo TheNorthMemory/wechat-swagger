@@ -1,6 +1,5 @@
 post:
   summary: 获取类目信息
-  operationId: mall/getcategorylistbyid
   security:
     - accessToken: []
   tags:

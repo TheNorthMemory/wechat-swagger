@@ -1,7 +1,6 @@
 get:
   summary: 查询小程序当前隐私设置（是否可被搜索）
   description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21517799059ZSEMr)'
-  operationId: wxa/getwxasearchstatus
   security:
     - authorizerAccessToken: []
   tags:

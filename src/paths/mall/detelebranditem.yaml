@@ -1,6 +1,5 @@
 post:
   summary: 删除未上架过的商品（暂不支持）
-  operationId: mall/detelebranditem
   deprecated: true
   security:
     - accessToken: []

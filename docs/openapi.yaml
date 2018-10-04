@@ -1360,7 +1360,6 @@ paths:
     post:
       summary: 添加portal型设备
       description: 调用下述接口可以添加portal型设备的网络信息，并获得secretkey。secretkey为加密字符串参数，是portal设备改造流程中的重要参数。为防止secretkey泄露，可通过此接口重置刷新，重置后之前生成的secretkey将会失效。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457443857)
-      operationId: bizwifi/apportal/register
       security:
         - accessToken: []
       tags:
@@ -1402,7 +1401,6 @@ paths:
     post:
       summary: 设置微信首页欢迎语
       description: 设置微信首页欢迎语，可选择“欢迎光临XXX”或“已连接XXXWiFi”，XXX为公众号名称或门店名称。注：设置微信首页欢迎语的接口，未审核的门店不能设置包含门店名称（bar_type为1、3）的欢迎语内容。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457505524)
-      operationId: bizwifi/bar/set
       security:
         - accessToken: []
       tags:
@@ -1435,7 +1433,6 @@ paths:
     post:
       summary: 查询门店卡券投放信息
       description: 通过此接口查询某一门店的详细卡券投放信息，包括卡券投放状态，卡券ID，卡券的投放时间等信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457427203)
-      operationId: bizwifi/couponput/get
       security:
         - accessToken: []
       tags:
@@ -1486,7 +1483,6 @@ paths:
     post:
       summary: 设置门店卡券投放信息
       description: 调用设置门店卡劵投放信息接口后，用户可在连网流程中关注商家公众号之后，领取配置的卡券。需设置卡劵ID，投放的有效时间等。注：需要先创建卡劵后，才能获取卡劵ID。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457425371)
-      operationId: bizwifi/couponput/set
       security:
         - accessToken: []
       tags:
@@ -1532,7 +1528,6 @@ paths:
     post:
       summary: 添加密码型设备
       description: 调用此接口向指定门店添加密码型设备的Wi-Fi信息。为保证门店下多台设备无缝漫游。一个门店只能拥有一种设备类型，只要调用此接口添加一个ssid后，该门店即为密码型设备，不能再添加portal型设备。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444894120)
-      operationId: bizwifi/device/add
       security:
         - accessToken: []
       tags:
@@ -1566,7 +1561,6 @@ paths:
     post:
       summary: 删除设备
       description: 根据bssid删除门店下的单个设备。删除后请尽快修改设备的网络名称和密码，或停止使用设备，否则设备会自动重新添加进来。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457443872)
-      operationId: bizwifi/device/delete
       security:
         - accessToken: []
       tags:
@@ -1589,7 +1583,6 @@ paths:
     post:
       summary: 查询设备
       description: 可通过指定分页或具体门店ID的方式，查询当前MP账号下指定门店连网成功的设备信息。一次最多能查询20个门店的设备信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457443871)
-      operationId: bizwifi/device/list
       security:
         - accessToken: []
       tags:
@@ -1660,7 +1653,6 @@ paths:
     post:
       summary: 连Wi-Fi完成页跳转小程序/设置连网完成页
       description: 设置需要跳转的小程序，连网完成点击“完成”按钮，即可进入设置的小程序。注：只能跳转与公众号关联的小程序。A->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215135855720FBA0) B->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457505542)
-      operationId: bizwifi/finishpage/set
       security:
         - accessToken: []
       tags:
@@ -1701,7 +1693,6 @@ paths:
     post:
       summary: 查询商家主页
       description: 通过门店ID查询商户主页的信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457505498)
-      operationId: bizwifi/homepage/get
       security:
         - accessToken: []
       tags:
@@ -1741,7 +1732,6 @@ paths:
     post:
       summary: 设置顶部banner跳转小程序接口/设置商家主页
       description: 用户连Wi-Fi后长期逗留在场所内，可以在连接Wi-Fi后进入微信点击微信聊首页欢迎语，即可进入预先设置的小程序中获得资讯或服务。注：只能跳转与公众号关联的小程序。A->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215135855720FBA0) B->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444894127)
-      operationId: bizwifi/homepage/set
       security:
         - accessToken: []
       tags:
@@ -1790,7 +1780,6 @@ paths:
     post:
       summary: 第三方平台获取开插件wifi_token
       description: 开通插件接口只支持公众号第三方平台调用，公众账号开发者请在微信公众平台自行开通。第三方平台接入，请参考微信开放平台。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455869988)
-      operationId: bizwifi/openplugin/token
       security:
         - accessToken: []
       tags:
@@ -1827,7 +1816,6 @@ paths:
     post:
       summary: 获取物料二维码
       description: 添加设备后，通过此接口可以获取物料，包括二维码和桌贴两种样式。将物料铺设在线下门店里，可供用户扫码上网。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444894125)
-      operationId: bizwifi/qrcode/get
       security:
         - accessToken: []
       tags:
@@ -1872,7 +1860,6 @@ paths:
     post:
       summary: 清空门店网络及设备
       description: 通过此接口清空门店的网络配置及所有设备，恢复空门店状态。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457435430)
-      operationId: bizwifi/shop/clean
       security:
         - accessToken: []
       tags:
@@ -1898,7 +1885,6 @@ paths:
     post:
       summary: 查询门店WiFi信息接口
       description: 通过此接口查询某一门店的详细Wi-Fi信息，包括门店内的设备类型、ssid、密码、设备数量、商家主页URL、顶部常驻入口文案。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457435331)
-      operationId: bizwifi/shop/get
       security:
         - accessToken: []
       tags:
@@ -2001,7 +1987,6 @@ paths:
     post:
       summary: 获取Wi-Fi门店列表
       description: 通过此接口获取WiFi的门店列表，该列表包括公众平台的门店信息、以及添加设备后的WiFi相关信息。注：微信连Wi-Fi下的所有接口中的shop_id，必需先通过此接口获取。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444894115)
-      operationId: bizwifi/shop/list
       security:
         - accessToken: []
       tags:
@@ -2094,7 +2079,6 @@ paths:
     post:
       summary: 修改门店网络信息
       description: 通过此接口修改门店的网络信息，包括网络名称（ssid）或密码。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457435413)
-      operationId: bizwifi/shop/update
       security:
         - accessToken: []
       tags:
@@ -2130,7 +2114,6 @@ paths:
     post:
       summary: Wi-Fi数据统计
       description: 查询一定时间范围内的WiFi连接总人数、微信方式连Wi-Fi人数、商家主页访问人数、连网后消息发送人数、新增公众号关注人数和累计公众号关注人数。查询的最长时间跨度为30天。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444894129)
-      operationId: bizwifi/statistics/list
       security:
         - accessToken: []
       tags:
@@ -2205,7 +2188,6 @@ paths:
     post:
       summary: 批量查询
       description: 未传入筛选条件时，该接口默认传回该商户名下所有状态的卡券。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)
-      operationId: card/batchget
       security:
         - accessToken: []
       tags:
@@ -2250,7 +2232,6 @@ paths:
     post:
       summary: 更新飞机票信息接口
       description: 机票生成后无需经过微信审核，即时生效。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025288)
-      operationId: card/boardingpass/checkin
       security:
         - accessToken: []
       tags:
@@ -2307,7 +2288,6 @@ paths:
     post:
       summary: 核查code接口
       description: 强烈建议开发者在查询完code数目的时候核查code接口校验code导入微信后台的情况。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025062)
-      operationId: card/code/checkcode
       security:
         - accessToken: []
       tags:
@@ -2360,7 +2340,6 @@ paths:
     post:
       summary: 核销 Code
       description: 将用户的优惠券进行核销，该过程不可逆。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025239)
-      operationId: card/code/consume
       security:
         - accessToken: []
       tags:
@@ -2407,7 +2386,6 @@ paths:
     post:
       summary: Code解码
       description: 只能解码本公众号卡券获取的加密code。A->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025239) B->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918915Cvo2k)
-      operationId: card/code/decrypt
       security:
         - accessToken: []
       tags:
@@ -2443,7 +2421,6 @@ paths:
     post:
       summary: 导入code接口
       description: 须将自定义code按照与发券方的约定数量调用导入code接口导入。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025062)
-      operationId: card/code/deposit
       security:
         - accessToken: []
       tags:
@@ -2497,7 +2474,6 @@ paths:
     post:
       summary: 查询Code/获取用户开卡时提交的信息（非跳转型开卡组件）
       description: 建议在调用核销code接口之前调用查询code接口，并在核销之前对非法状态的code(如转赠中、已删除、已核销等)做出处理。A->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025239) B->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1499332673_Unm7V)
-      operationId: card/code/get
       security:
         - accessToken: []
       tags:
@@ -2567,7 +2543,6 @@ paths:
     post:
       summary: 查询导入code数目接口
       description: 查询code导入微信后台成功的数目。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025062)
-      operationId: card/code/getdepositcount
       security:
         - accessToken: []
       tags:
@@ -2603,7 +2578,6 @@ paths:
     post:
       summary: Mark(占用)Code
       description: 朋友的券由于共享的特性，会出现多个消费者同时进入某一个卡券的自定义H5网页的情况，若该网页涉及线上下单、核销、支付等行为，会造成两个消费者同时使用同一张券，会有一个消费者使用失败的情况，为此我们设计了mark（占用）code接口。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025239)
-      operationId: card/code/mark
       security:
         - accessToken: []
       tags:
@@ -2643,7 +2617,6 @@ paths:
     post:
       summary: 设置卡券失效
       description: 为满足改票、退款等异常情况，可调用卡券失效接口将用户的卡券设置为失效状态。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)
-      operationId: card/code/unavailable
       security:
         - accessToken: []
       tags:
@@ -2679,7 +2652,6 @@ paths:
     post:
       summary: 更改Code
       description: 为确保转赠后的安全性，微信允许自定义Code的商户对已下发的code进行更改。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)
-      operationId: card/code/update
       security:
         - accessToken: []
       tags:
@@ -2715,7 +2687,6 @@ paths:
     post:
       summary: 创建卡券
       description: 编码方式仅支持使用UTF-8，须根据card_type不同传入不同Bo对象。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025056)
-      operationId: card/create
       security:
         - accessToken: []
       tags:
@@ -2784,7 +2755,6 @@ paths:
     post:
       summary: 删除
       description: 删除卡券不能删除已被用户领取，保存在微信客户端中的卡券。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)
-      operationId: card/delete
       security:
         - accessToken: []
       tags:
@@ -2812,7 +2782,6 @@ paths:
     post:
       summary: 更新用户礼品卡信息接口
       description: 当礼品卡被使用后，开发者可以通过该接口变更某个礼品卡的余额信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
-      operationId: card/generalcard/updateuser
       security:
         - accessToken: []
       tags:
@@ -2901,7 +2870,6 @@ paths:
     post:
       summary: 查看卡券详情
       description: 查询某个card_id的创建信息、审核状态以及库存数量。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)
-      operationId: card/get
       security:
         - accessToken: []
       tags:
@@ -2969,7 +2937,6 @@ paths:
     get:
       summary: 卡券开放类目查询
       description: 查询卡券开放的一级、二级类目ID，类目会随业务发展变更，请及时用接口去查询获取实时卡券类目。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1444460487&token=&lang=zh_CN)
-      operationId: card/getapplyprotocol
       security:
         - accessToken: []
       tags:
@@ -3021,7 +2988,6 @@ paths:
     get:
       summary: 获取卡券背景颜色
       description: 制卡预制颜色。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025056)
-      operationId: card/getcolors
       security:
         - accessToken: []
       tags:
@@ -3050,7 +3016,6 @@ paths:
     post:
       summary: 下架-礼品卡货架接口
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)'
-      operationId: card/giftcard/maintain/set
       security:
         - accessToken: []
       tags:
@@ -3118,7 +3083,6 @@ paths:
     post:
       summary: 查询-批量查询礼品卡订单信息接口
       description: 查询该商户某个时间段内创建的所有订单详情。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
-      operationId: card/giftcard/order/batchget
       security:
         - accessToken: []
       tags:
@@ -3172,7 +3136,6 @@ paths:
     post:
       summary: 查询-单个礼品卡订单信息接口
       description: 查询某个订单号对应的订单详情。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
-      operationId: card/giftcard/order/get
       security:
         - accessToken: []
       tags:
@@ -3197,7 +3160,6 @@ paths:
     post:
       summary: 退款
       description: 对某一笔订单操作退款，注意该接口比较隐私，请开发者提高操作该功能的权限等级，退款后，对应的礼品卡将会在用户卡包消失。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
-      operationId: card/giftcard/order/refund
       security:
         - accessToken: []
       tags:
@@ -3220,7 +3182,6 @@ paths:
     post:
       summary: 创建-礼品卡货架接口
       description: 创建一个礼品卡货架并且用于公众号、门店的礼品卡售卖。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
-      operationId: card/giftcard/page/add
       security:
         - accessToken: []
       tags:
@@ -3248,7 +3209,6 @@ paths:
     post:
       summary: 查询-礼品卡货架列表接口
       description: 查询当前商户下所有的礼品卡货架id。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
-      operationId: card/giftcard/page/batchget
       security:
         - accessToken: []
       tags:
@@ -3284,7 +3244,6 @@ paths:
     post:
       summary: 查询-礼品卡货架信息接口
       description: 查询某个礼品卡货架信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
-      operationId: card/giftcard/page/get
       security:
         - accessToken: []
       tags:
@@ -3312,7 +3271,6 @@ paths:
     post:
       summary: 修改-礼品卡货架信息接口
       description: 更新礼品卡货架信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
-      operationId: card/giftcard/page/update
       security:
         - accessToken: []
       tags:
@@ -3340,7 +3298,6 @@ paths:
     post:
       summary: 绑定商户号到礼品卡小程序接口
       description: 传入的商户号须为普通服务商模式或者直连商户号，建议为礼品卡专用商户号；商户号必须为公众号申请的商户号。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
-      operationId: card/giftcard/pay/submch/bind
       security:
         - accessToken: []
       tags:
@@ -3366,7 +3323,6 @@ paths:
     post:
       summary: 开通微信支付礼品卡权限
       description: 传入的商户号须为普通服务商模式或者直连商户号，建议为礼品卡专用商户号。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
-      operationId: card/giftcard/pay/whitelist/add
       security:
         - accessToken: []
       tags:
@@ -3398,7 +3354,6 @@ paths:
     post:
       summary: 上传小程序代码
       description: 公众号须与小程序有绑定关系；小程序代码上传后须登录小程序后台进行提交审核；[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
-      operationId: card/giftcard/wxa/set
       security:
         - accessToken: []
       tags:
@@ -3424,7 +3379,6 @@ paths:
     post:
       summary: 获取用户抬头（方式一）:获取商户专属二维码，立在收银台
       description: 商户调用接口，获取链接，将链接转成二维码，用户扫码，可以选择抬头发给商户。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496554912_vfWU0)
-      operationId: card/invoice/biz/getselecttitleurl
       security:
         - accessToken: []
       tags:
@@ -3457,7 +3411,6 @@ paths:
     post:
       summary: 将发票抬头信息录入到用户微信中
       description: 调用接口，获取添加存储发票抬头信息的链接，将链接发给微信用户，用户确认后将保存该信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496554912_vfWU0)
-      operationId: card/invoice/biz/getusertitleurl
       security:
         - accessToken: []
       tags:
@@ -3510,7 +3463,6 @@ paths:
     post:
       summary: 发票冲红
       description: 对于使用微信电子发票开票接入能力的商户，在公众号后台选择任何一家开票平台的套餐，都可以使用本接口实现电子发票的冲红。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918906Epe65)
-      operationId: card/invoice/clearoutinvoice
       security:
         - accessToken: []
       tags:
@@ -3549,7 +3501,6 @@ paths:
     post:
       summary: 查询开票信息/查询授权完成状态
       description: 商户可以调用该接口查询某一个订单的开票信息。A->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y) B->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918906Epe65) C->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21530623533CgUdj)
-      operationId: card/invoice/getauthdata
       security:
         - accessToken: []
       tags:
@@ -3650,7 +3601,6 @@ paths:
     post:
       summary: 获取授权页链接
       description: 本接口供商户调用。商户通过本接口传入订单号、开票平台标识等参数，获取授权页的链接。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918906Epe65)
-      operationId: card/invoice/getauthurl
       security:
         - accessToken: []
       tags:
@@ -3717,7 +3667,6 @@ paths:
     post:
       summary: 将电子发票卡券插入用户卡包
       description: 本接口由开票平台或自建平台商户调用。对用户已经授权过的开票请求，开票平台可以使用本接口将发票制成发票卡券放入用户的微信卡包中。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918915Cvo2k)
-      operationId: card/invoice/insert
       security:
         - accessToken: []
       tags:
@@ -3788,7 +3737,6 @@ paths:
     post:
       summary: 开具蓝票
       description: 对于使用微信电子发票开票接入能力的商户，在公众号后台选择任何一家开票平台的套餐，都可以使用本接口实现电子发票的开具。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918906Epe65)
-      operationId: card/invoice/makeoutinvoice
       security:
         - accessToken: []
       tags:
@@ -3911,7 +3859,6 @@ paths:
     post:
       summary: 创建发票卡券模板
       description: 通过本接口可以为创建一个商户的发票卡券模板，为该商户配置发票卡券模板上的自定义栏位。创建发票卡券模板生成的card_id将在创建发票卡券时被引用，故创建发票卡券模板是创建发票卡券的基础。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918915Cvo2k)
-      operationId: card/invoice/platform/createcard
       security:
         - accessToken: []
       tags:
@@ -3975,7 +3922,6 @@ paths:
     post:
       summary: 查询已上传的PDF文件
       description: 用于供发票PDF的上传方查询已经上传的发票或消费凭证PDF。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918915Cvo2k)
-      operationId: card/invoice/platform/getpdf
       security:
         - accessToken: []
       tags:
@@ -4016,7 +3962,6 @@ paths:
     post:
       summary: 上传PDF
       description: 商户或开票平台可以通过该接口上传PDF。PDF上传成功后将获得发票文件的标识，后续可以通过插卡接口将PDF关联到用户的发票卡券上，一并插入到收票用户的卡包中。注意：若上传成功的PDF在三天内没有被关联到发票卡券发送到用户卡包上，将会被清理。若商户或开票平台需要在三天后再关联发票卡券的话，需要重新上传。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918915Cvo2k)
-      operationId: card/invoice/platform/setpdf
       security:
         - accessToken: []
       tags:
@@ -4045,7 +3990,6 @@ paths:
     post:
       summary: 更新发票卡券状态
       description: 发票平台在获知发票状态变化（如被冲红、被报销）时，需更新在用户卡包中发票卡券的状态。确保发票卡券可用性，避免无效报销、重复报销。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918915Cvo2k)
-      operationId: card/invoice/platform/updatestatus
       security:
         - accessToken: []
       tags:
@@ -4078,7 +4022,6 @@ paths:
     post:
       summary: 查询已开发票
       description: 对于使用微信电子发票开票接入能力的商户，在公众号后台选择任何一家开票平台的套餐，都可以使用本接口实现已开具电子发票的查询。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918906Epe65)
-      operationId: card/invoice/queryinvoceinfo
       security:
         - accessToken: []
       tags:
@@ -4129,7 +4072,6 @@ paths:
     post:
       summary: 批量查询报销发票信息
       description: 通过该接口批量查询电子发票的结构化信息，并获取发票PDF文件。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918939oae3U)
-      operationId: card/invoice/reimburse/getinvoicebatch
       security:
         - accessToken: []
       tags:
@@ -4211,7 +4153,6 @@ paths:
     post:
       summary: 查询报销发票信息
       description: 通过该接口查询电子发票的结构化信息，并获取发票PDF文件。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918939oae3U)
-      operationId: card/invoice/reimburse/getinvoiceinfo
       security:
         - accessToken: []
       tags:
@@ -4283,7 +4224,6 @@ paths:
     post:
       summary: 报销方更新发票状态
       description: 报销企业和报销服务商可以通过该接口对某一张发票进行锁定、解锁和报销操作。注意，报销状态为不可逆状态，请开发者慎重调用。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918939oae3U)
-      operationId: card/invoice/reimburse/updateinvoicestatus
       security:
         - accessToken: []
       tags:
@@ -4321,7 +4261,6 @@ paths:
     post:
       summary: 报销方批量更新发票状态
       description: 批量更新发票状态接口为事务性操作，如果其中一张发票更新失败，列表中的其它发票状态更新也会无法执行，恢复到接口调用前的状态。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918939oae3U)
-      operationId: card/invoice/reimburse/updatestatusbatch
       security:
         - accessToken: []
       tags:
@@ -4365,7 +4304,6 @@ paths:
     post:
       summary: 拒绝开票
       description: 用户完成授权后，商户若发现用户提交信息错误、或者发生了退款时，可以调用该接口拒绝开票并告知用户。拒绝开票后，该订单无法向用户再次开票。已经拒绝开票的订单，无法再次使用，如果要重新开票，需使用新的order_id，获取授权链接，让用户再次授权。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918906Epe65)
-      operationId: card/invoice/rejectinsert
       security:
         - accessToken: []
       tags:
@@ -4403,7 +4341,6 @@ paths:
     post:
       summary: 获取用户抬头（方式二）:商户扫描用户的发票抬头二维码
       description: 商户扫用户“我的—个人信息—我的发票抬头”里面的抬头二维码后，通过调用本接口，可以获取用户抬头信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496554912_vfWU0)
-      operationId: card/invoice/scantitle
       security:
         - accessToken: []
       tags:
@@ -4458,7 +4395,6 @@ paths:
     post:
       summary: 设置/查询支付后开票/页面信息,设置/查询商户联系方式
       description: 六大杂烩接口。A->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y) B->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918906Epe65)
-      operationId: card/invoice/setbizattr
       security:
         - accessToken: []
       tags:
@@ -4507,7 +4443,6 @@ paths:
     post:
       summary: 获取自身的开票平台识别码
       description: 开票平台可以通过此接口获得本开票平台的预开票url，进而获取s_pappid。开票平台将该s_pappid并透传给商户，商户可以通过该s_pappid参数在微信电子发票方案中标识出为自身提供开票服务的开票平台。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918915Cvo2k)
-      operationId: card/invoice/seturl
       security:
         - accessToken: []
       tags:
@@ -4534,7 +4469,6 @@ paths:
     post:
       summary: 创建货架
       description: 创建货架时需填写投放路径的场景字段。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025062)
-      operationId: card/landingpage/create
       security:
         - accessToken: []
       tags:
@@ -4599,7 +4533,6 @@ paths:
   /card/location/batchadd:
     post:
       summary: 上传门店列表
-      operationId: card/location/batchadd
       security:
         - accessToken: []
       tags:
@@ -4642,7 +4575,6 @@ paths:
   /card/location/batchget:
     post:
       summary: 拉取门店列表
-      operationId: card/location/batchget
       security:
         - accessToken: []
       tags:
@@ -4687,7 +4619,6 @@ paths:
   /card/luckymonkey/updateuserbalance:
     post:
       summary: ''
-      operationId: card/luckymonkey/updateuserbalance
       security:
         - accessToken: []
       tags:
@@ -4700,7 +4631,6 @@ paths:
     post:
       summary: 更新会议门票
       description: 更新会议入场时间、区域、座位等信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025288)
-      operationId: card/meetingticket/updateuser
       security:
         - accessToken: []
       tags:
@@ -4752,7 +4682,6 @@ paths:
     post:
       summary: 激活会员卡
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025283)'
-      operationId: card/membercard/activate
       security:
         - accessToken: []
       tags:
@@ -4819,7 +4748,6 @@ paths:
     post:
       summary: 获取会员卡开卡组件链接
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1499332673_Unm7V)'
-      operationId: card/membercard/activate/geturl
       security:
         - accessToken: []
       tags:
@@ -4858,7 +4786,6 @@ paths:
     post:
       summary: 获取用户开卡时提交的信息（跳转型开卡组件）
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1499332673_Unm7V)'
-      operationId: card/membercard/activatetempinfo/get
       security:
         - accessToken: []
       tags:
@@ -4917,7 +4844,6 @@ paths:
     post:
       summary: 设置开卡字段接口
       description: 开发者在创建时填入wx_activate字段后，需要调用该接口设置用户激活时需要填写的选项，否则一键开卡设置不生效。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025283)
-      operationId: card/membercard/activateuserform/set
       security:
         - accessToken: []
       tags:
@@ -5037,7 +4963,6 @@ paths:
     post:
       summary: 更新会员信息
       description: 当会员持卡消费后，支持开发者调用该接口更新会员信息。会员卡交易后的每次信息变更需通过该接口通知微信，便于后续消息通知及其他扩展功能。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025283)
-      operationId: card/membercard/updateuser
       security:
         - accessToken: []
       tags:
@@ -5152,7 +5077,6 @@ paths:
     post:
       summary: 拉取会员信息接口
       description: 根据CardID和Code查询会员信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025283)
-      operationId: card/membercard/userinfo/get
       security:
         - accessToken: []
       tags:
@@ -5246,7 +5170,6 @@ paths:
     post:
       summary: 创建支付后领取立减金活动
       description: 将已创建的代金券cardid、跳转小程序appid、发起支付的商户号等信息通过此接口创建立减金活动，成功返回活动id即为创建成功。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21515658940X5pIn)
-      operationId: card/mkt/activity/create
       security:
         - accessToken: []
       tags:
@@ -5336,7 +5259,6 @@ paths:
     post:
       summary: 修改库存
       description: 增减某张卡券的库存。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)
-      operationId: card/modifystock
       security:
         - accessToken: []
       tags:
@@ -5374,7 +5296,6 @@ paths:
     post:
       summary: 更新电影票
       description: 更新电影及用户选座信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025288)
-      operationId: card/movieticket/updateuser
       security:
         - accessToken: []
       tags:
@@ -5426,7 +5347,6 @@ paths:
     post:
       summary: 获取卡券嵌入图文消息文本
       description: 特别注意：目前该接口仅支持填入非自定义code的卡券,自定义code的卡券需先进行code导入后调用。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025062)
-      operationId: card/mpnews/gethtml
       security:
         - accessToken: []
       tags:
@@ -5459,7 +5379,6 @@ paths:
     get:
       summary: 开通券点账户
       description: 为当前appid开通券点账户并获得免费券点奖励。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481033345_5cGrc)
-      operationId: card/pay/activate
       security:
         - accessToken: []
       tags:
@@ -5481,7 +5400,6 @@ paths:
     post:
       summary: 确认兑换库存
       description: 确认兑换库存，确认后券点兑换为库存，过程不可逆。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481033345_5cGrc)
-      operationId: card/pay/confirm
       security:
         - accessToken: []
       tags:
@@ -5511,7 +5429,6 @@ paths:
     get:
       summary: 查询券点余额
       description: 查询当前券点账户中的免费券点/付费券点数目以及总额。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481033345_5cGrc)
-      operationId: card/pay/getcoinsinfo
       security:
         - accessToken: []
       tags:
@@ -5541,7 +5458,6 @@ paths:
     post:
       summary: 查询订单详情
       description: 查询充值订单的状态。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481033345_5cGrc)
-      operationId: card/pay/getorder
       security:
         - accessToken: []
       tags:
@@ -5571,7 +5487,6 @@ paths:
     post:
       summary: 查询券点流水详情
       description: 查询券点的流水详情。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481033345_5cGrc)
-      operationId: card/pay/getorderlist
       security:
         - accessToken: []
       tags:
@@ -5654,7 +5569,6 @@ paths:
     post:
       summary: 对优惠券批价
       description: 用于提前查询本次新增库存需要多少券点。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481033345_5cGrc)
-      operationId: card/pay/getpayprice
       security:
         - accessToken: []
       tags:
@@ -5699,7 +5613,6 @@ paths:
     post:
       summary: 充值券点
       description: 通过此接口为券点账户充值券点，1元等于1点。开发者调用接口后可以获得一个微信支付的支付二维码链接， 开发者可以将链接转化为二维码扫码支付。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481033345_5cGrc)
-      operationId: card/pay/recharge
       security:
         - accessToken: []
       tags:
@@ -5735,7 +5648,6 @@ paths:
     post:
       summary: 设置买单
       description: 设置买单的card_id必须已经配置了门店，否则会报错。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025056)
-      operationId: card/paycell/set
       security:
         - accessToken: []
       tags:
@@ -5764,7 +5676,6 @@ paths:
     post:
       summary: 创建卡券二维码
       description: 可调用该接口生成一张卡券二维码供用户扫码后添加卡券到卡包，领取多张的二维码一次最多填入5个card_id。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025062)
-      operationId: card/qrcode/create
       security:
         - accessToken: []
       tags:
@@ -5828,7 +5739,6 @@ paths:
     post:
       summary: 设置自助核销
       description: 设置自助核销的card_id必须已经配置了门店，否则会报错。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025056)
-      operationId: card/selfconsumecell/set
       security:
         - accessToken: []
       tags:
@@ -5866,7 +5776,6 @@ paths:
     post:
       summary: 获取门店小程序配置的卡券
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496904104_cfEfT)'
-      operationId: card/storewxa/get
       security:
         - accessToken: []
       tags:
@@ -5901,7 +5810,6 @@ paths:
     post:
       summary: 设置门店小程序配置的卡券
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496904104_cfEfT)'
-      operationId: card/storewxa/set
       security:
         - accessToken: []
       tags:
@@ -5932,7 +5840,6 @@ paths:
     post:
       summary: 批量拉取子商户信息
       description: 母商户可以通过该接口批量拉取子商户的相关信息，一次调用最多拉取100个子商户的信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
-      operationId: card/submerchant/batchget
       security:
         - accessToken: []
       tags:
@@ -5970,7 +5877,6 @@ paths:
     post:
       summary: 拉取单个子商户信息
       description: 通过指定的子商户appid，拉取该子商户的基础信息。 注意，用母商户去调用接口，但接口内传入的是子商户的appid。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
-      operationId: card/submerchant/get
       security:
         - accessToken: []
       tags:
@@ -6001,7 +5907,6 @@ paths:
     post:
       summary: 创建子商户
       description: 支持母商户调用该接口传入子商户的相关资料，并获取子商户ID，用于子商户的卡券功能管理。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
-      operationId: card/submerchant/submit
       security:
         - accessToken: []
       tags:
@@ -6028,7 +5933,6 @@ paths:
     post:
       summary: 更新子商户
       description: 更新子商户信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
-      operationId: card/submerchant/update
       security:
         - accessToken: []
       tags:
@@ -6062,7 +5966,6 @@ paths:
     post:
       summary: 设置测试白名单
       description: 同时支持`openid`、`username`两种字段设置白名单，总数上限为10个。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025062)
-      operationId: card/testwhitelist/set
       security:
         - accessToken: []
       tags:
@@ -6095,7 +5998,6 @@ paths:
     post:
       summary: 更改卡券信息
       description: 支持更新所有卡券类型的部分通用字段及特殊卡券（会员卡、飞机票、电影票、会议门票）中特定字段的信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)
-      operationId: card/update
       security:
         - accessToken: []
       tags:
@@ -6150,7 +6052,6 @@ paths:
     post:
       summary: 获取用户已领取卡券
       description: 获取用户卡包里的，属于该appid下所有可用卡券，包括正常状态和异常状态。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)
-      operationId: card/user/getcardlist
       security:
         - accessToken: []
       tags:
@@ -6206,7 +6107,6 @@ paths:
     post:
       summary: 小程序新旧管理员换绑
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
-      operationId: cgi-bin/account/componentrebindadmin
       security:
         - accessToken: []
       tags:
@@ -6232,7 +6132,6 @@ paths:
     post:
       summary: 跳转至第三方平台，第三方平台调用快速注册API完成注册
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
-      operationId: cgi-bin/account/fastregister
       security:
         - accessToken: []
       tags:
@@ -6273,7 +6172,6 @@ paths:
     get:
       summary: 获取帐号基本信息
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
-      operationId: cgi-bin/account/getaccountbasicinfo
       security:
         - accessToken: []
       tags:
@@ -6368,7 +6266,6 @@ paths:
     post:
       summary: 修改头像
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
-      operationId: cgi-bin/account/modifyheadimage
       security:
         - accessToken: []
       tags:
@@ -6414,7 +6311,6 @@ paths:
     post:
       summary: 修改功能介绍
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
-      operationId: cgi-bin/account/modifysignature
       security:
         - accessToken: []
       tags:
@@ -6439,7 +6335,6 @@ paths:
   /cgi-bin/changeopenid:
     post:
       summary: 公众号粉丝迁移
-      operationId: cgi-bin/changeopenid
       security:
         - accessToken: []
       tags:
@@ -6498,7 +6393,6 @@ paths:
     post:
       summary: 对公众号的所有API调用次数进行清零
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419318587&token=&lang=zh_CN)'
-      operationId: cgi-bin/clear_quota
       security:
         - accessToken: []
       tags:
@@ -6521,7 +6415,6 @@ paths:
     post:
       summary: 关闭已群发文章评论
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1494572718_WzHIY)'
-      operationId: cgi-bin/comment/close
       security:
         - accessToken: []
       tags:
@@ -6549,7 +6442,6 @@ paths:
     post:
       summary: 删除评论
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1494572718_WzHIY)'
-      operationId: cgi-bin/comment/delete
       security:
         - accessToken: []
       tags:
@@ -6584,7 +6476,6 @@ paths:
     post:
       summary: 查看指定文章的评论数据
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1494572718_WzHIY)'
-      operationId: cgi-bin/comment/list
       security:
         - accessToken: []
       tags:
@@ -6668,7 +6559,6 @@ paths:
     post:
       summary: 将评论标记精选
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1494572718_WzHIY)'
-      operationId: cgi-bin/comment/markelect
       security:
         - accessToken: []
       tags:
@@ -6703,7 +6593,6 @@ paths:
     post:
       summary: 打开已群发文章评论
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1494572718_WzHIY)'
-      operationId: cgi-bin/comment/open
       security:
         - accessToken: []
       tags:
@@ -6731,7 +6620,6 @@ paths:
     post:
       summary: 回复评论
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1494572718_WzHIY)'
-      operationId: cgi-bin/comment/reply/add
       security:
         - accessToken: []
       tags:
@@ -6770,7 +6658,6 @@ paths:
     post:
       summary: 删除回复
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1494572718_WzHIY)'
-      operationId: cgi-bin/comment/reply/delete
       security:
         - accessToken: []
       tags:
@@ -6805,7 +6692,6 @@ paths:
     post:
       summary: 将评论取消精选
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1494572718_WzHIY)'
-      operationId: cgi-bin/comment/unmarkelect
       security:
         - accessToken: []
       tags:
@@ -6840,7 +6726,6 @@ paths:
     post:
       summary: 获取（刷新）授权公众号或小程序的接口调用凭据（令牌）
       description: 该API用于在授权方令牌（authorizer_access_token）失效时，可用刷新令牌（authorizer_refresh_token）获取新的令牌。请注意，此处token是2小时刷新一次，开发者需要自行进行token的缓存，避免token的获取次数达到每日的限定额度。 [官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1453779503)
-      operationId: cgi-bin/component/api_authorizer_token
       security:
         - componentAccessToken: []
       tags:
@@ -6886,7 +6771,6 @@ paths:
     post:
       summary: 获取第三方平台component_access_token
       description: 第三方平台component_access_token是第三方平台的下文中接口的调用凭据，也叫做令牌（component_access_token）。每个令牌是存在有效期（2小时）的，且令牌的调用不是无限制的，请第三方平台做好令牌的管理，在令牌快过期时（比如1小时50分）再进行刷新。 [官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1453779503)
-      operationId: cgi-bin/component/api_component_token
       tags:
         - 开放平台/第三方平台
       parameters:
@@ -6927,7 +6811,6 @@ paths:
     post:
       summary: 确认授权
       description: 该API用于使用授权码换取授权公众号的授权信息，并换取authorizer_access_token和authorizer_refresh_token。 授权码的获取，需要在用户在第三方平台授权页中完成授权流程后，在回调URI中通过URL参数提供给第三方平台方。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
-      operationId: cgi-bin/component/api_confirm_authorization
       security:
         - componentAccessToken: []
       tags:
@@ -6966,7 +6849,6 @@ paths:
     post:
       summary: 获取预授权码pre_auth_code
       description: 该API用于获取预授权码。预授权码用于公众号或小程序授权时的第三方平台方安全验证。 [官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1453779503)
-      operationId: cgi-bin/component/api_create_preauthcode
       security:
         - componentAccessToken: []
       tags:
@@ -7001,7 +6883,6 @@ paths:
     post:
       summary: 获取授权方的账户信息
       description: 该API用于获取授权方的公众号基本信息，包括头像、昵称、帐号类型、认证类型、微信号、原始ID和二维码图片URL。 需要特别记录授权方的帐号类型，在消息及事件推送时，对于不具备客服接口的公众号，需要在5秒内立即响应；而若有客服接口，则可以选择暂时不响应，而选择后续通过客服接口来发送消息触达粉丝。A->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)  B->[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1453779503)
-      operationId: cgi-bin/component/api_get_authorizer_info
       security:
         - componentAccessToken: []
       tags:
@@ -7106,7 +6987,6 @@ paths:
     post:
       summary: 获取第三方平台的权限集
       description: 第三方平台可以使用接口拉取当前所有已授权的帐号基本信息。 [官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419318459)
-      operationId: cgi-bin/component/api_get_authorizer_list
       security:
         - componentAccessToken: []
       tags:
@@ -7159,7 +7039,6 @@ paths:
     post:
       summary: 获取授权方的选项设置信息
       description: 该API用于获取授权方的公众号或小程序的选项设置信息，如：地理位置上报，语音识别开关，多客服开关。注意，获取各项选项设置信息，需要有授权方的授权，详见权限集说明。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1453779503)
-      operationId: cgi-bin/component/api_get_authorizer_option
       security:
         - componentAccessToken: []
       tags:
@@ -7204,7 +7083,6 @@ paths:
     post:
       summary: 使用授权码换取公众号的或小程序的接口调用凭据和授权信息
       description: 该API用于使用授权码换取授权公众号的授权信息，并换取authorizer_access_token和authorizer_refresh_token。 授权码的获取，需要在用户在第三方平台授权页中完成授权流程后，在回调URI中通过URL参数提供给第三方平台方。A->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292) B->[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1453779503)
-      operationId: cgi-bin/component/api_query_auth
       security:
         - componentAccessToken: []
       tags:
@@ -7277,7 +7155,6 @@ paths:
     post:
       summary: 设置授权方的选项信息
       description: 该API用于设置授权方的公众号或小程序的选项信息，如：地理位置上报，语音识别开关，多客服开关。注意，设置各项选项设置信息，需要有授权方的授权，详见权限集说明。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1453779503)
-      operationId: cgi-bin/component/api_set_authorizer_option
       security:
         - componentAccessToken: []
       tags:
@@ -7314,7 +7191,6 @@ paths:
     post:
       summary: 拉取单个子商户信息
       description: 通过指定的子商户appid，拉取该子商户的基础信息。 注意，用母商户去调用接口，但接口内传入的是子商户的appid。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
-      operationId: cgi-bin/component/batchget_card_merchant
       security:
         - componentAccessToken: []
       tags:
@@ -7368,7 +7244,6 @@ paths:
     get:
       summary: 母商户资质审核查询
       description: 查询母商户资质审核的结果，审核通过后才能用接口继续提交子商户资质。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
-      operationId: cgi-bin/component/check_card_agent_qualification
       security:
         - accessToken: []
       tags:
@@ -7394,7 +7269,6 @@ paths:
     post:
       summary: 子商户资质审核查询
       description: 该接口用于查询子商户资质审核的结果，审核通过后才能进行后续授权流程。 注意，用母商户去调用接口，但接口内传入的是子商户的appid。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
-      operationId: cgi-bin/component/check_card_merchant_qualification
       security:
         - accessToken: []
       tags:
@@ -7429,7 +7303,6 @@ paths:
     post:
       summary: 第三方代公众号调用，实际上消耗的是公众号的清零quota
       description: 第三方平台对其所有API调用次数清零（只与第三方平台相关，与公众号无关，接口如api_component_token）[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1453779503)
-      operationId: cgi-bin/component/clear_quota
       security:
         - componentAccessToken: []
       tags:
@@ -7454,7 +7327,6 @@ paths:
     post:
       summary: 拉取单个子商户信息
       description: 通过指定的子商户appid，拉取该子商户的基础信息。 注意，用母商户去调用接口，但接口内传入的是子商户的appid。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
-      operationId: cgi-bin/component/get_card_merchant
       security:
         - accessToken: []
       tags:
@@ -7502,7 +7374,6 @@ paths:
     post:
       summary: 母商户资质申请
       description: 母商户资质申请接口是第三方平台用以申请第三方强授权能力，并提交自身资质资料的上传接口，只有上传相关资质，并审核通过后才可代名下子商户提交资质。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
-      operationId: cgi-bin/component/upload_card_agent_qualification
       security:
         - accessToken: []
       tags:
@@ -7539,7 +7410,6 @@ paths:
     post:
       summary: 母商户资质申请
       description: 母商户资质申请接口是第三方平台用以申请第三方强授权能力，并提交自身资质资料的上传接口，只有上传相关资质，并审核通过后才可代名下子商户提交资质。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
-      operationId: cgi-bin/component/upload_card_merchant_qualification
       security:
         - accessToken: []
       tags:
@@ -7575,7 +7445,6 @@ paths:
   /cgi-bin/customservice/getkflist:
     get:
       summary: 获取所有客服账号
-      operationId: cgi-bin/customservice/getkflist
       security:
         - accessToken: []
       tags:
@@ -7587,7 +7456,6 @@ paths:
   /cgi-bin/customservice/getonlinekflist:
     get:
       summary: 获取在线客服列表
-      operationId: cgi-bin/customservice/getonlinekflist
       security:
         - accessToken: []
       tags:
@@ -7600,7 +7468,6 @@ paths:
     get:
       summary: 获取自定义配置
       description: 返回API开发配置或者MP运营后台配置。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1434698695)
-      operationId: cgi-bin/get_current_selfmenu_info
       security:
         - accessToken: []
       tags:
@@ -7632,7 +7499,6 @@ paths:
   /cgi-bin/getcallbackip:
     get:
       summary: 获取微信服务器IP地址
-      operationId: cgi-bin/getcallbackip
       security:
         - accessToken: []
       tags:
@@ -7645,7 +7511,6 @@ paths:
     post:
       summary: 新增其他类型永久素材
       description: 图片素材将进入公众平台官网素材管理模块中的默认分组。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738729)
-      operationId: cgi-bin/material/add_material
       security:
         - accessToken: []
       tags:
@@ -7695,7 +7560,6 @@ paths:
     post:
       summary: 新增永久图文素材
       description: 素材库保存总数量有上限：图文消息素材、图片素材上限为5000，其他类型为1000。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738729)
-      operationId: cgi-bin/material/add_news
       security:
         - accessToken: []
       tags:
@@ -7718,82 +7582,80 @@ paths:
                 type: string
                 description: 新增的图文消息素材的media_id
   /cgi-bin/material/batchget_material:
-        post:
-          summary: 获取素材列表
-          description: 获取永久素材的列表。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738734)
-          operationId: cgi-bin/material/batchget_material
-          security:
-            - accessToken: []
-          tags:
-            - 素材管理
-          parameters:
-            - in: body
-              name: body
-              schema:
-                type: object
-                properties:
-                  type:
-                    type: string
-                    description: 素材的类型，图片（image）、视频（video）、语音 （voice）、图文（news）
-                    enum:
-                      - image
-                      - video
-                      - voice
-                      - news
-                  offset:
-                    type: integer
-                    format: int32
-                    description: 从全部素材的该偏移位置开始返回，0表示从第一个素材 返回
-                  count:
-                    type: integer
-                    format: int32
-                    description: 返回素材的数量，取值在1到20之间
-          responses:
-            '200':
-              description: ''
-              schema:
-                type: object
-                properties:
-                  total_count:
-                    type: integer
-                    format: int32
-                    description: 该类型的素材的总数
-                  item_count:
-                    type: integer
-                    format: int32
-                    description: 本次调用获取的素材的数量
-                  items:
-                    type: array
-                    items:
-                      allOf:
-                        - type: object
+    post:
+      summary: 获取素材列表
+      description: 获取永久素材的列表。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738734)
+      security:
+        - accessToken: []
+      tags:
+        - 素材管理
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+                description: 素材的类型，图片（image）、视频（video）、语音 （voice）、图文（news）
+                enum:
+                  - image
+                  - video
+                  - voice
+                  - news
+              offset:
+                type: integer
+                format: int32
+                description: 从全部素材的该偏移位置开始返回，0表示从第一个素材 返回
+              count:
+                type: integer
+                format: int32
+                description: 返回素材的数量，取值在1到20之间
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              total_count:
+                type: integer
+                format: int32
+                description: 该类型的素材的总数
+              item_count:
+                type: integer
+                format: int32
+                description: 本次调用获取的素材的数量
+              items:
+                type: array
+                items:
+                  allOf:
+                    - type: object
+                      properties:
+                        media_id:
+                          type: string
+                        content:
+                          type: object
                           properties:
-                            media_id:
-                              type: string
-                            content:
-                              type: object
-                              properties:
-                                news_item:
-                                  $ref: '#/definitions/base.ArticlesBo'
-                            update_time:
-                              type: integer
-                              format: int32
-                        - type: object
-                          properties:
-                            media_id:
-                              type: string
-                            name:
-                              type: string
-                            url:
-                              type: string
-                            update_time:
-                              type: integer
-                              format: int32
+                            news_item:
+                              $ref: '#/definitions/base.ArticlesBo'
+                        update_time:
+                          type: integer
+                          format: int32
+                    - type: object
+                      properties:
+                        media_id:
+                          type: string
+                        name:
+                          type: string
+                        url:
+                          type: string
+                        update_time:
+                          type: integer
+                          format: int32
   /cgi-bin/material/del_material:
     post:
       summary: 删除永久素材
       description: 请谨慎操作，临时素材无法通过本接口删除。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738731)
-      operationId: cgi-bin/material/del_material
       security:
         - accessToken: []
       tags:
@@ -7816,7 +7678,6 @@ paths:
     post:
       summary: 获取永久素材
       description: 临时素材无法通过本接口获取。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738730)
-      operationId: cgi-bin/material/get_material
       security:
         - accessToken: []
       tags:
@@ -7857,7 +7718,6 @@ paths:
     get:
       summary: 获取素材总数
       description: 永久素材的总数，也会计算公众平台官网素材管理中的素材。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738733)
-      operationId: cgi-bin/material/get_materialcount
       security:
         - accessToken: []
       tags:
@@ -7889,7 +7749,6 @@ paths:
     post:
       summary: 修改永久图文素材
       description: 对永久图文素材进行修改。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738729)
-      operationId: cgi-bin/material/update_news
       security:
         - accessToken: []
       tags:
@@ -7918,7 +7777,6 @@ paths:
     get:
       summary: 获取临时素材
       description: 请注意，视频文件不支持https下载，调用该接口需http协议。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738727)
-      operationId: cgi-bin/media/get
       security:
         - accessToken: []
       tags:
@@ -7936,7 +7794,6 @@ paths:
   /cgi-bin/media/get/jssdk:
     get:
       summary: 高清语音素材获取接口
-      operationId: cgi-bin/media/get/jssdk
       security:
         - accessToken: []
       tags:
@@ -7954,7 +7811,6 @@ paths:
     post:
       summary: 新增临时素材/多媒体文件上传接口
       description: 临时素材media_id是可复用的，媒体文件在微信后台保存时间为3天，即3天后media_id失效。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738726)
-      operationId: cgi-bin/media/upload
       security:
         - accessToken: []
       tags:
@@ -7998,7 +7854,6 @@ paths:
     post:
       summary: 上传logo接口/上传图文消息内的图片
       description: 官方文档有两处,A->[POI新建门店上传logo](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444378120)，B->[上传图文消息内的图片](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738729)
-      operationId: cgi-bin/media/uploadimg
       security:
         - accessToken: []
       tags:
@@ -8030,7 +7885,6 @@ paths:
     post:
       summary: 上传图文消息素材
       description: 【订阅号与服务号认证后均可用】[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481187827_i0l21)
-      operationId: cgi-bin/media/uploadnews
       security:
         - accessToken: []
       tags:
@@ -8106,7 +7960,6 @@ paths:
     post:
       summary: 上传群发消息时的视频素材
       description: 群发视频消息时，须换算源素材视频media_id为群发media_id。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481187827_i0l21)
-      operationId: cgi-bin/media/uploadvideo
       security:
         - accessToken: []
       tags:
@@ -8154,7 +8007,6 @@ paths:
   /cgi-bin/media/voice/addvoicetorecofortext:
     post:
       summary: 提交语音
-      operationId: cgi-bin/media/voice/addvoicetorecofortext
       security:
         - accessToken: []
       tags:
@@ -8171,7 +8023,6 @@ paths:
   /cgi-bin/media/voice/queryrecoresultfortext:
     post:
       summary: 获取语音识别结果
-      operationId: cgi-bin/media/voice/queryrecoresultfortext
       security:
         - accessToken: []
       tags:
@@ -8188,7 +8039,6 @@ paths:
   /cgi-bin/media/voice/translatecontent:
     post:
       summary: 微信翻译
-      operationId: cgi-bin/media/voice/translatecontent
       security:
         - accessToken: []
       tags:
@@ -8206,7 +8056,6 @@ paths:
     post:
       summary: 创建个性化
       description: 自定义菜单最多包括3个一级菜单，每个一级菜单最多包含5个二级菜单。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455782296)
-      operationId: cgi-bin/menu/addconditional
       security:
         - accessToken: []
       tags:
@@ -8227,7 +8076,6 @@ paths:
     post:
       summary: 创建
       description: 自定义菜单最多包括3个一级菜单，每个一级菜单最多包含5个二级菜单。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141013)
-      operationId: cgi-bin/menu/create
       security:
         - accessToken: []
       tags:
@@ -8246,7 +8094,6 @@ paths:
     post:
       summary: 删除个性化
       description: menuid为菜单id，可以通过自定义菜单查询接口获取。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455782296)
-      operationId: cgi-bin/menu/delconditional
       security:
         - accessToken: []
       tags:
@@ -8270,7 +8117,6 @@ paths:
     get:
       summary: 删除
       description: 删除当前使用的自定义菜单。另请注意，在个性化菜单时，调用此接口会删除默认菜单及全部个性化菜单。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141015)
-      operationId: cgi-bin/menu/delete
       security:
         - accessToken: []
       tags:
@@ -8285,7 +8131,6 @@ paths:
     get:
       summary: 查询
       description: 查询自定义菜单。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141014)
-      operationId: cgi-bin/menu/get
       security:
         - accessToken: []
       tags:
@@ -8313,7 +8158,6 @@ paths:
     post:
       summary: 测试个性化匹配结果
       description: user_id可以是粉丝的OpenID，也可以是粉丝的微信号。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455782296)
-      operationId: cgi-bin/menu/trymatch
       security:
         - accessToken: []
       tags:
@@ -8336,7 +8180,6 @@ paths:
     post:
       summary: 客服接口-发消息
       description: 当用户和公众号产生特定动作的交互时（具体动作列表请见下方说明），微信将会把消息数据推送给开发者，开发者可以在一段时间内（目前修改为48小时）调用客服接口，通过POST一个JSON数据包来发送消息给普通用户。此接口主要用于客服等有人工消息处理环节的功能，方便开发者为用户提供更加优质的服务。[公众号->官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140547) [小程序->官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/custommsg/conversation.html)
-      operationId: cgi-bin/message/custom/send
       security:
         - accessToken: []
       tags:
@@ -8475,7 +8318,6 @@ paths:
   /cgi-bin/message/custom/typing:
     post:
       summary: 客服输入状态
-      operationId: cgi-bin/message/custom/typing
       security:
         - accessToken: []
       tags:
@@ -8502,7 +8344,6 @@ paths:
     post:
       summary: 删除群发
       description: 群发之后，随时可以通过该接口删除群发。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481187827_i0l21)
-      operationId: cgi-bin/message/mass/delete
       security:
         - accessToken: []
       tags:
@@ -8534,7 +8375,6 @@ paths:
     post:
       summary: 查询群发消息发送状态
       description: 【订阅号与服务号认证后均可用】[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481187827_i0l21)
-      operationId: cgi-bin/message/mass/get
       security:
         - accessToken: []
       tags:
@@ -8572,7 +8412,6 @@ paths:
     post:
       summary: 预览接口
       description: 开发者可通过该接口发送消息给指定用户，在手机端查看消息的样式和排版。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481187827_i0l21)
-      operationId: cgi-bin/message/mass/preview
       security:
         - accessToken: []
       tags:
@@ -8687,7 +8526,6 @@ paths:
     post:
       summary: 根据OpenID列表群发
       description: 【订阅号与服务号认证后均可用】。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481187827_i0l21)
-      operationId: cgi-bin/message/mass/send
       security:
         - accessToken: []
       tags:
@@ -8820,7 +8658,6 @@ paths:
     post:
       summary: 根据标签进行群发
       description: 【订阅号与服务号认证后均可用】。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481187827_i0l21)
-      operationId: cgi-bin/message/mass/sendall
       security:
         - accessToken: []
       tags:
@@ -8958,7 +8795,6 @@ paths:
     post:
       summary: 获取群发速度
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481187827_i0l21)'
-      operationId: cgi-bin/message/mass/speed/get
       security:
         - accessToken: []
       tags:
@@ -8991,7 +8827,6 @@ paths:
     post:
       summary: 设置群发速度
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481187827_i0l21)'
-      operationId: cgi-bin/message/mass/speed/set
       security:
         - accessToken: []
       tags:
@@ -9022,7 +8857,6 @@ paths:
     post:
       summary: 统一服务消息下发接口
       description: 为便于开发者对用户进行服务消息触达，简化小程序和公众号模板消息下发流程，小程序提供统一的服务消息下发接口。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/notice-uniform.html)
-      operationId: cgi-bin/message/wxopen/template/uniform_send
       security:
         - accessToken: []
       tags:
@@ -9143,7 +8977,6 @@ paths:
     post:
       summary: 将公众号/小程序绑定到开放平台帐号下
       description: 该API用于将一个尚未绑定开放平台帐号的公众号或小程序绑定至指定开放平台帐号上。二者须主体相同。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1498704804_iARAL)
-      operationId: cgi-bin/open/bind
       security:
         - accessToken: []
       tags:
@@ -9173,7 +9006,6 @@ paths:
     post:
       summary: 创建开放平台帐号并绑定公众号/小程序
       description: 该API用于创建一个开放平台帐号，并将一个尚未绑定开放平台帐号的公众号/小程序绑定至该开放平台帐号上。新创建的开放平台帐号的主体信息将设置为与之绑定的公众号或小程序的主体。 [官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1498704804_iARAL)
-      operationId: cgi-bin/open/create
       security:
         - accessToken: []
       tags:
@@ -9204,7 +9036,6 @@ paths:
     post:
       summary: 获取公众号/小程序所绑定的开放平台帐号
       description: 该API用于获取公众号或小程序所绑定的开放平台帐号。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1498704804_iARAL)
-      operationId: cgi-bin/open/get
       security:
         - accessToken: []
       tags:
@@ -9235,7 +9066,6 @@ paths:
     post:
       summary: 将公众号/小程序从开放平台帐号下解绑
       description: 该API用于将一个公众号或小程序与指定开放平台帐号解绑。开发者须确认所指定帐号与当前该公众号或小程序所绑定的开放平台帐号一致。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1498704804_iARAL)
-      operationId: cgi-bin/open/unbind
       security:
         - accessToken: []
       tags:
@@ -9264,7 +9094,6 @@ paths:
   /cgi-bin/poi/addpoi:
     post:
       summary: 增加门店
-      operationId: cgi-bin/poi/addpoi
       security:
         - accessToken: []
       tags:
@@ -9281,7 +9110,6 @@ paths:
   /cgi-bin/poi/delpoi:
     post:
       summary: 删除门店
-      operationId: cgi-bin/poi/delpoi
       security:
         - accessToken: []
       tags:
@@ -9298,7 +9126,6 @@ paths:
   /cgi-bin/poi/getpoi:
     post:
       summary: 查询门店信息
-      operationId: cgi-bin/poi/getpoi
       security:
         - accessToken: []
       tags:
@@ -9315,7 +9142,6 @@ paths:
   /cgi-bin/poi/getpoilist:
     post:
       summary: 查询门店列表
-      operationId: cgi-bin/poi/getpoilist
       security:
         - accessToken: []
       tags:
@@ -9332,7 +9158,6 @@ paths:
   /cgi-bin/poi/getwxcategory:
     get:
       summary: 门店类目表
-      operationId: cgi-bin/poi/getwxcategory
       security:
         - accessToken: []
       tags:
@@ -9344,7 +9169,6 @@ paths:
   /cgi-bin/poi/updatepoi:
     post:
       summary: 修改门店服务信息
-      operationId: cgi-bin/poi/updatepoi
       security:
         - accessToken: []
       tags:
@@ -9362,7 +9186,6 @@ paths:
     post:
       summary: 创建二维码ticket
       description: 每次创建二维码ticket需要提供一个开发者自行设定的参数（scene_id），分别介绍临时二维码和永久二维码的创建二维码ticket过程。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443433542)
-      operationId: cgi-bin/qrcode/create
       security:
         - accessToken: []
       tags:
@@ -9430,7 +9253,6 @@ paths:
     post:
       summary: 长链接转短链接
       description: 开发者用于生成二维码的原链接（商品、支付二维码等）太长导致扫码速度和成功率下降，将原长链接通过此接口转成短链接再生成二维码将大大提升扫码速度和成功率。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443433600)
-      operationId: cgi-bin/shorturl
       security:
         - accessToken: []
       tags:
@@ -9469,7 +9291,6 @@ paths:
     get:
       summary: 通过ticket换取二维码
       description: 获取二维码ticket后，开发者可用ticket换取二维码图片。请注意，本接口无须登录态即可调用。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443433542)
-      operationId: cgi-bin/showqrcode
       tags:
         - 帐号管理/二维码
       parameters:
@@ -9484,7 +9305,6 @@ paths:
     post:
       summary: 创建
       description: 一个公众号，最多可以创建100个标签。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140837)
-      operationId: cgi-bin/tags/create
       security:
         - accessToken: []
       tags:
@@ -9521,7 +9341,6 @@ paths:
     post:
       summary: 删除
       description: 请注意，当某个标签下的粉丝超过10w时，后台不可直接删除标签。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140837)
-      operationId: cgi-bin/tags/delete
       security:
         - accessToken: []
       tags:
@@ -9548,7 +9367,6 @@ paths:
     get:
       summary: 获取
       description: 获取公众号已创建的标签。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140837)
-      operationId: cgi-bin/tags/get
       security:
         - accessToken: []
       tags:
@@ -9575,7 +9393,6 @@ paths:
   /cgi-bin/tags/getidlist:
     post:
       summary: 获取用户身上的标签列表
-      operationId: cgi-bin/tags/getidlist
       security:
         - accessToken: []
       tags:
@@ -9608,7 +9425,6 @@ paths:
     post:
       summary: 拉黑用户
       description: 一次拉黑最多允许20个。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1471422259_pJMWA)
-      operationId: cgi-bin/tags/members/batchblacklist
       security:
         - accessToken: []
       tags:
@@ -9635,7 +9451,6 @@ paths:
   /cgi-bin/tags/members/batchtagging:
     post:
       summary: 批量为用户打标签
-      operationId: cgi-bin/tags/members/batchtagging
       security:
         - accessToken: []
       tags:
@@ -9662,7 +9477,6 @@ paths:
     post:
       summary: 取消拉黑用户
       description: 一次最多允许20个。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1471422259_pJMWA)
-      operationId: cgi-bin/tags/members/batchunblacklist
       security:
         - accessToken: []
       tags:
@@ -9689,7 +9503,6 @@ paths:
   /cgi-bin/tags/members/batchuntagging:
     post:
       summary: 批量为用户取消标签
-      operationId: cgi-bin/tags/members/batchuntagging
       security:
         - accessToken: []
       tags:
@@ -9716,7 +9529,6 @@ paths:
     post:
       summary: 获取公众号的黑名单列表
       description: 每次调用最多可拉取 10000 个OpenID。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1471422259_pJMWA)
-      operationId: cgi-bin/tags/members/getblacklist
       security:
         - accessToken: []
       tags:
@@ -9765,7 +9577,6 @@ paths:
     post:
       summary: 编辑
       description: 单个编辑。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140837)
-      operationId: cgi-bin/tags/update
       security:
         - accessToken: []
       tags:
@@ -9806,7 +9617,6 @@ paths:
     post:
       summary: 获得模板ID
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277)'
-      operationId: cgi-bin/template/api_add_template
       security:
         - accessToken: []
       tags:
@@ -9836,7 +9646,6 @@ paths:
     post:
       summary: 设置所属行业
       description: 每月可修改行业1次，帐号仅可使用所属行业中相关的模板。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277)
-      operationId: cgi-bin/template/api_set_industry
       security:
         - accessToken: []
       tags:
@@ -9863,7 +9672,6 @@ paths:
     post:
       summary: 删除模板
       description: 通过接口调用的方式来删除某帐号下的模板。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277)
-      operationId: cgi-bin/template/del_private_template
       security:
         - accessToken: []
       tags:
@@ -9887,7 +9695,6 @@ paths:
     get:
       summary: 获取模板列表
       description: 获取已添加至帐号下所有模板列表。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277)
-      operationId: cgi-bin/template/get_all_private_template
       security:
         - accessToken: []
       tags:
@@ -9926,7 +9733,6 @@ paths:
     get:
       summary: 获取设置的行业信息
       description: 获取帐号设置的行业信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277)
-      operationId: cgi-bin/template/get_industry
       security:
         - accessToken: []
       tags:
@@ -9965,7 +9771,6 @@ paths:
     post:
       summary: 发送模板消息
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277)'
-      operationId: cgi-bin/template/send
       security:
         - accessToken: []
       tags:
@@ -10047,7 +9852,6 @@ paths:
     post:
       summary: 推送订阅模板消息给到授权微信用户
       description: 对于已关注公众号的，消息将下发到公众号会话里；未关注公众号的，将下发到服务通知。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1500374289_66bvB)
-      operationId: cgi-bin/template/subscribe
       security:
         - accessToken: []
       tags:
@@ -10121,7 +9925,6 @@ paths:
     get:
       summary: 获取卡券api_ticket/jsapi_ticket
       description: 商户在调用授权页前需要先获取一个7200s过期的授权页ticket，在获取授权页接口中，该ticket作为参数传入，加强安全性。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918906Epe65)
-      operationId: cgi-bin/ticket/getticket
       security:
         - accessToken: []
       tags:
@@ -10157,7 +9960,6 @@ paths:
   /cgi-bin/token:
     get:
       summary: 获取access_token
-      operationId: cgi-bin/token
       tags:
         - 基础支持
       parameters:
@@ -10185,7 +9987,6 @@ paths:
     post:
       summary: 获取用户列表
       description: 一次拉取调用最多拉取10000个关注者的OpenID。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140840)
-      operationId: cgi-bin/user/get
       security:
         - accessToken: []
       tags:
@@ -10225,7 +10026,6 @@ paths:
     get:
       summary: 获取用户基本信息
       description: 获取用户基本信息，包括昵称、头像、性别、所在城市、语言和关注时间。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140839)
-      operationId: cgi-bin/user/info
       security:
         - accessToken: []
       tags:
@@ -10270,7 +10070,6 @@ paths:
     post:
       summary: 批量获取用户基本信息
       description: 批量获取用户基本信息。最多支持一次拉取100条。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140839)
-      operationId: cgi-bin/user/info/batchget
       security:
         - accessToken: []
       tags:
@@ -10328,7 +10127,6 @@ paths:
     post:
       summary: 设置用户备注名
       description: 对指定用户设置备注名，该接口暂时开放给微信认证的服务号。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140838)
-      operationId: cgi-bin/user/info/updateremark
       security:
         - accessToken: []
       tags:
@@ -10353,7 +10151,6 @@ paths:
   /cgi-bin/user/tag/get:
     post:
       summary: 获取标签下粉丝列表
-      operationId: cgi-bin/user/tag/get
       security:
         - accessToken: []
       tags:
@@ -10396,7 +10193,6 @@ paths:
     post:
       summary: 接口C:获取小程序码
       description: '注意：通过该接口生成的小程序二维码，永久有效，数量限制见文末说明，请谨慎使用。用户扫描该码进入小程序后，将直接进入 path 对应的页面。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/qrcode.html)'
-      operationId: cgi-bin/wxaapp/createwxaqrcode
       security:
         - accessToken: []
       tags:
@@ -10425,7 +10221,6 @@ paths:
     post:
       summary: 添加类目
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
-      operationId: cgi-bin/wxopen/addcategory
       security:
         - accessToken: []
       tags:
@@ -10479,7 +10274,6 @@ paths:
     post:
       summary: 删除类目
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
-      operationId: cgi-bin/wxopen/deletecategory
       security:
         - accessToken: []
       tags:
@@ -10511,7 +10305,6 @@ paths:
     get:
       summary: 获取账号可以设置的所有类目
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
-      operationId: cgi-bin/wxopen/getallcategories
       security:
         - accessToken: []
       tags:
@@ -10582,7 +10375,6 @@ paths:
     get:
       summary: 获取账号已经设置的所有类目
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
-      operationId: cgi-bin/wxopen/getcategory
       security:
         - accessToken: []
       tags:
@@ -10639,7 +10431,6 @@ paths:
     post:
       summary: 查询当前设置的最低基础库版本及各版本用户占比 （仅供第三方代小程序调用）
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
-      operationId: cgi-bin/wxopen/getweappsupportversion
       security:
         - authorizerAccessToken: []
       tags:
@@ -10680,7 +10471,6 @@ paths:
     post:
       summary: 修改类目
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
-      operationId: cgi-bin/wxopen/modifycategory
       security:
         - accessToken: []
       tags:
@@ -10727,7 +10517,6 @@ paths:
     post:
       summary: 设置小程序“扫普通链接二维码打开小程序”能力
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
-      operationId: cgi-bin/wxopen/qrcodejumpadd
       security:
         - authorizerAccessToken: []
       tags:
@@ -10774,7 +10563,6 @@ paths:
     post:
       summary: 删除已设置的二维码规则
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
-      operationId: cgi-bin/wxopen/qrcodejumpdelete
       security:
         - authorizerAccessToken: []
       tags:
@@ -10798,7 +10586,6 @@ paths:
     post:
       summary: 获取校验文件名称及内容
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
-      operationId: cgi-bin/wxopen/qrcodejumpdownload
       security:
         - authorizerAccessToken: []
       tags:
@@ -10827,7 +10614,6 @@ paths:
     post:
       summary: 获取已设置的二维码规则
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
-      operationId: cgi-bin/wxopen/qrcodejumpget
       security:
         - authorizerAccessToken: []
       tags:
@@ -10893,7 +10679,6 @@ paths:
     post:
       summary: 发布已设置的二维码规则
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
-      operationId: cgi-bin/wxopen/qrcodejumppublish
       security:
         - authorizerAccessToken: []
       tags:
@@ -10917,7 +10702,6 @@ paths:
     post:
       summary: 设置最低基础库版本（仅供第三方代小程序调用）
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
-      operationId: cgi-bin/wxopen/setweappsupportversion
       security:
         - authorizerAccessToken: []
       tags:
@@ -10940,7 +10724,6 @@ paths:
     post:
       summary: 组合模板并添加至帐号下的个人模板库
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR)'
-      operationId: cgi-bin/wxopen/template/add
       security:
         - authorizerAccessToken: []
         - accessToken: []
@@ -10980,7 +10763,6 @@ paths:
     post:
       summary: 删除帐号下的某个模板
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR)'
-      operationId: cgi-bin/wxopen/template/del
       security:
         - authorizerAccessToken: []
         - accessToken: []
@@ -11020,7 +10802,6 @@ paths:
     post:
       summary: 获取模板库某个模板标题下关键词库
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR)'
-      operationId: cgi-bin/wxopen/template/library/get
       security:
         - authorizerAccessToken: []
         - accessToken: []
@@ -11070,7 +10851,6 @@ paths:
     post:
       summary: 获取小程序模板库标题列表
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR)'
-      operationId: cgi-bin/wxopen/template/library/list
       security:
         - authorizerAccessToken: []
         - accessToken: []
@@ -11121,7 +10901,6 @@ paths:
     post:
       summary: 获取帐号下已存在的模板列表
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR)'
-      operationId: cgi-bin/wxopen/template/list
       security:
         - authorizerAccessToken: []
         - accessToken: []
@@ -11149,7 +10928,6 @@ paths:
     post:
       summary: 发送模版消息
       description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/notice.html)'
-      operationId: cgi-bin/wxopen/template/send
       security:
         - authorizerAccessToken: []
         - accessToken: []
@@ -11214,7 +10992,6 @@ paths:
     post:
       summary: 关联小程序
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1513255108_gFkRI)'
-      operationId: cgi-bin/wxopen/wxamplink
       security:
         - accessToken: []
       tags:
@@ -11250,7 +11027,6 @@ paths:
     post:
       summary: 获取公众号关联的小程序
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1513255108_gFkRI)'
-      operationId: cgi-bin/wxopen/wxamplinkget
       security:
         - accessToken: []
       tags:
@@ -11325,7 +11101,6 @@ paths:
     post:
       summary: 解除已关联的小程序
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1513255108_gFkRI)'
-      operationId: cgi-bin/wxopen/wxampunlink
       security:
         - accessToken: []
       tags:
@@ -11351,7 +11126,6 @@ paths:
     post:
       summary: 微信认证名称检测
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
-      operationId: cgi-bin/wxverify/checkwxverifynickname
       security:
         - accessToken: []
       tags:
@@ -11385,7 +11159,6 @@ paths:
     post:
       summary: 添加客服帐号
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1458044813)'
-      operationId: customservice/kfaccount/add
       security:
         - accessToken: []
       tags:
@@ -11410,7 +11183,6 @@ paths:
   /customservice/kfaccount/del:
     get:
       summary: 删除客服帐号
-      operationId: customservice/kfaccount/del
       security:
         - accessToken: []
       tags:
@@ -11428,7 +11200,6 @@ paths:
     post:
       summary: 邀请绑定客服帐号
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1458044813)'
-      operationId: customservice/kfaccount/inviteworker
       security:
         - accessToken: []
       tags:
@@ -11454,7 +11225,6 @@ paths:
     post:
       summary: 设置客服信息
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1458044813)'
-      operationId: customservice/kfaccount/update
       security:
         - accessToken: []
       tags:
@@ -11479,7 +11249,6 @@ paths:
   /customservice/kfaccount/uploadheadimg:
     post:
       summary: 上传客服头像
-      operationId: customservice/kfaccount/uploadheadimg
       security:
         - accessToken: []
       tags:
@@ -11504,7 +11273,6 @@ paths:
     post:
       summary: 关闭会话
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1458044820)'
-      operationId: customservice/kfsession/close
       security:
         - accessToken: []
       tags:
@@ -11530,7 +11298,6 @@ paths:
     post:
       summary: 创建会话
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1458044820)'
-      operationId: customservice/kfsession/create
       security:
         - accessToken: []
       tags:
@@ -11556,7 +11323,6 @@ paths:
     get:
       summary: 获取客户会话状态
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1458044820)'
-      operationId: customservice/kfsession/getsession
       security:
         - accessToken: []
       tags:
@@ -11583,7 +11349,6 @@ paths:
     get:
       summary: 获取客服会话列表
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1458044820)'
-      operationId: customservice/kfsession/getsessionlist
       security:
         - accessToken: []
       tags:
@@ -11615,7 +11380,6 @@ paths:
     get:
       summary: 获取未接入会话列表
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1458044820)'
-      operationId: customservice/kfsession/getwaitcase
       security:
         - accessToken: []
       tags:
@@ -11648,7 +11412,6 @@ paths:
     post:
       summary: 获取聊天记录
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1464937269_mUtmK)'
-      operationId: customservice/msgrecord/getmsglist
       security:
         - accessToken: []
       tags:
@@ -11716,7 +11479,6 @@ paths:
   /datacube/getarticlesummary:
     post:
       summary: 获取图文群发每日数据
-      operationId: datacube/getarticlesummary
       security:
         - accessToken: []
       tags:
@@ -11733,7 +11495,6 @@ paths:
   /datacube/getarticletotal:
     post:
       summary: 获取图文群发总数据
-      operationId: datacube/getarticletotal
       security:
         - accessToken: []
       tags:
@@ -11751,7 +11512,6 @@ paths:
     post:
       summary: 拉取卡券概况数据
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)'
-      operationId: datacube/getcardbizuininfo
       security:
         - accessToken: []
       tags:
@@ -11769,7 +11529,6 @@ paths:
     post:
       summary: 获取免费券数据
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)'
-      operationId: datacube/getcardcardinfo
       security:
         - accessToken: []
       tags:
@@ -11787,7 +11546,6 @@ paths:
     post:
       summary: 拉取单张会员卡数据
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)'
-      operationId: datacube/getcardmembercarddetail
       security:
         - accessToken: []
       tags:
@@ -11805,7 +11563,6 @@ paths:
     post:
       summary: 拉取会员卡概况数据
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)'
-      operationId: datacube/getcardmembercardinfo
       security:
         - accessToken: []
       tags:
@@ -11822,7 +11579,6 @@ paths:
   /datacube/getinterfacesummary:
     post:
       summary: 获取接口分析数据
-      operationId: datacube/getinterfacesummary
       security:
         - accessToken: []
       tags:
@@ -11839,7 +11595,6 @@ paths:
   /datacube/getinterfacesummaryhour:
     post:
       summary: 获取接口分析分时数据
-      operationId: datacube/getinterfacesummaryhour
       security:
         - accessToken: []
       tags:
@@ -11856,7 +11611,6 @@ paths:
   /datacube/getupstreammsg:
     post:
       summary: 获取消息发送概况数据
-      operationId: datacube/getupstreammsg
       security:
         - accessToken: []
       tags:
@@ -11873,7 +11627,6 @@ paths:
   /datacube/getupstreammsgdist:
     post:
       summary: 获取消息发送分布数据
-      operationId: datacube/getupstreammsgdist
       security:
         - accessToken: []
       tags:
@@ -11890,7 +11643,6 @@ paths:
   /datacube/getupstreammsgdistmonth:
     post:
       summary: 获取消息发送分布月数据
-      operationId: datacube/getupstreammsgdistmonth
       security:
         - accessToken: []
       tags:
@@ -11907,7 +11659,6 @@ paths:
   /datacube/getupstreammsgdistweek:
     post:
       summary: 获取消息发送分布周数据
-      operationId: datacube/getupstreammsgdistweek
       security:
         - accessToken: []
       tags:
@@ -11924,7 +11675,6 @@ paths:
   /datacube/getupstreammsghour:
     post:
       summary: 获取消息分送分时数据
-      operationId: datacube/getupstreammsghour
       security:
         - accessToken: []
       tags:
@@ -11941,7 +11691,6 @@ paths:
   /datacube/getupstreammsgmonth:
     post:
       summary: 获取消息发送月数据
-      operationId: datacube/getupstreammsgmonth
       security:
         - accessToken: []
       tags:
@@ -11958,7 +11707,6 @@ paths:
   /datacube/getupstreammsgweek:
     post:
       summary: 获取消息发送周数据
-      operationId: datacube/getupstreammsgweek
       security:
         - accessToken: []
       tags:
@@ -11975,7 +11723,6 @@ paths:
   /datacube/getusercumulate:
     post:
       summary: 获取累计用户数据
-      operationId: datacube/getusercumulate
       security:
         - accessToken: []
       tags:
@@ -11992,7 +11739,6 @@ paths:
   /datacube/getuserread:
     post:
       summary: 获取图文统计数据
-      operationId: datacube/getuserread
       security:
         - accessToken: []
       tags:
@@ -12009,7 +11755,6 @@ paths:
   /datacube/getuserreadhour:
     post:
       summary: 获取图文统计分时数据
-      operationId: datacube/getuserreadhour
       security:
         - accessToken: []
       tags:
@@ -12026,7 +11771,6 @@ paths:
   /datacube/getusershare:
     post:
       summary: 获取图文分享转发数据
-      operationId: datacube/getusershare
       security:
         - accessToken: []
       tags:
@@ -12043,7 +11787,6 @@ paths:
   /datacube/getusersharehour:
     post:
       summary: 获取图文分享转发分时数据
-      operationId: datacube/getusersharehour
       security:
         - accessToken: []
       tags:
@@ -12060,7 +11803,6 @@ paths:
   /datacube/getusersummary:
     post:
       summary: 获取用户增减数据
-      operationId: datacube/getusersummary
       security:
         - accessToken: []
       tags:
@@ -12077,7 +11819,6 @@ paths:
   /datacube/getweanalysisappiddailyretaininfo:
     post:
       summary: 日留存
-      operationId: datacube/getweanalysisappiddailyretaininfo
       security:
         - accessToken: []
       tags:
@@ -12094,7 +11835,6 @@ paths:
   /datacube/getweanalysisappiddailysummarytrend:
     post:
       summary: 获取用户增减数据
-      operationId: datacube/getweanalysisappiddailysummarytrend
       security:
         - accessToken: []
       tags:
@@ -12111,7 +11851,6 @@ paths:
   /datacube/getweanalysisappiddailyvisittrend:
     post:
       summary: 日趋势
-      operationId: datacube/getweanalysisappiddailyvisittrend
       security:
         - accessToken: []
       tags:
@@ -12128,7 +11867,6 @@ paths:
   /datacube/getweanalysisappidmonthlyretaininfo:
     post:
       summary: 月留存
-      operationId: datacube/getweanalysisappidmonthlyretaininfo
       security:
         - accessToken: []
       tags:
@@ -12145,7 +11883,6 @@ paths:
   /datacube/getweanalysisappidmonthlyvisittrend:
     post:
       summary: 月趋势
-      operationId: datacube/getweanalysisappidmonthlyvisittrend
       security:
         - accessToken: []
       tags:
@@ -12162,7 +11899,6 @@ paths:
   /datacube/getweanalysisappiduserportrait:
     post:
       summary: 用户画像
-      operationId: datacube/getweanalysisappiduserportrait
       security:
         - accessToken: []
       tags:
@@ -12179,7 +11915,6 @@ paths:
   /datacube/getweanalysisappidvisitdistribution:
     post:
       summary: 访问分布
-      operationId: datacube/getweanalysisappidvisitdistribution
       security:
         - accessToken: []
       tags:
@@ -12196,7 +11931,6 @@ paths:
   /datacube/getweanalysisappidvisitpage:
     post:
       summary: 访问页面
-      operationId: datacube/getweanalysisappidvisitpage
       security:
         - accessToken: []
       tags:
@@ -12213,7 +11947,6 @@ paths:
   /datacube/getweanalysisappidweeklyretaininfo:
     post:
       summary: 周留存
-      operationId: datacube/getweanalysisappidweeklyretaininfo
       security:
         - accessToken: []
       tags:
@@ -12230,7 +11963,6 @@ paths:
   /datacube/getweanalysisappidweeklyvisittrend:
     post:
       summary: 周趋势
-      operationId: datacube/getweanalysisappidweeklyvisittrend
       security:
         - accessToken: []
       tags:
@@ -12247,7 +11979,6 @@ paths:
   /mall/addbranditem:
     post:
       summary: 新增商品
-      operationId: mall/addbranditem
       security:
         - accessToken: []
       tags:
@@ -12272,7 +12003,6 @@ paths:
   /mall/addgroup:
     post:
       summary: 新增分组
-      operationId: mall/addgroup
       security:
         - accessToken: []
       tags:
@@ -12301,7 +12031,6 @@ paths:
   /mall/additemgrouprelation:
     post:
       summary: 商品批量加入分组
-      operationId: mall/additemgrouprelation
       security:
         - accessToken: []
       tags:
@@ -12335,7 +12064,6 @@ paths:
   /mall/addpropertyandpropertyvalue:
     post:
       summary: 类目下新增商户自定义属性和属性值
-      operationId: mall/addpropertyandpropertyvalue
       security:
         - accessToken: []
       tags:
@@ -12389,7 +12117,6 @@ paths:
   /mall/addpropertyvalue:
     post:
       summary: 类目下已有属性新增商户自定义属性值
-      operationId: mall/addpropertyvalue
       security:
         - accessToken: []
       tags:
@@ -12431,7 +12158,6 @@ paths:
   /mall/addstockinfobyitemcode:
     post:
       summary: 增加商品库存信息（暂不支持）
-      operationId: mall/addstockinfobyitemcode
       deprecated: true
       security:
         - accessToken: []
@@ -12467,7 +12193,6 @@ paths:
   /mall/changebranditemstatus:
     post:
       summary: 商品的上架和下架操作
-      operationId: mall/changebranditemstatus
       security:
         - accessToken: []
       tags:
@@ -12528,7 +12253,6 @@ paths:
   /mall/deleteitemgrouprelation:
     post:
       summary: 商品批量移出分组
-      operationId: mall/deleteitemgrouprelation
       security:
         - accessToken: []
       tags:
@@ -12562,7 +12286,6 @@ paths:
   /mall/delproperty:
     post:
       summary: 删除类目下的属性
-      operationId: mall/delproperty
       security:
         - accessToken: []
       tags:
@@ -12588,7 +12311,6 @@ paths:
   /mall/delpropertyvalue:
     post:
       summary: 删除属性值
-      operationId: mall/delpropertyvalue
       security:
         - accessToken: []
       tags:
@@ -12614,7 +12336,6 @@ paths:
   /mall/detelebranditem:
     post:
       summary: 删除未上架过的商品（暂不支持）
-      operationId: mall/detelebranditem
       deprecated: true
       security:
         - accessToken: []
@@ -12640,7 +12361,6 @@ paths:
   /mall/getbranditemdetail:
     post:
       summary: 拉取商品详情
-      operationId: mall/getbranditemdetail
       security:
         - accessToken: []
       tags:
@@ -12687,7 +12407,6 @@ paths:
   /mall/getcategorylistbyid:
     post:
       summary: 获取类目信息
-      operationId: mall/getcategorylistbyid
       security:
         - accessToken: []
       tags:
@@ -12720,7 +12439,6 @@ paths:
   /mall/getgroups:
     post:
       summary: 查询分组
-      operationId: mall/getgroups
       security:
         - accessToken: []
       tags:
@@ -12747,7 +12465,6 @@ paths:
   /mall/getorderbyid:
     post:
       summary: 拉取单个订单
-      operationId: mall/getorderbyid
       security:
         - accessToken: []
       tags:
@@ -12779,7 +12496,6 @@ paths:
   /mall/getorderbypage:
     post:
       summary: 拉取订单列表
-      operationId: mall/getorderbypage
       security:
         - accessToken: []
       tags:
@@ -12837,7 +12553,6 @@ paths:
   /mall/getpropertybycategoryid:
     post:
       summary: 使用类目 ID 查询属性信息
-      operationId: mall/getpropertybycategoryid
       security:
         - accessToken: []
       tags:
@@ -12868,7 +12583,6 @@ paths:
   /mall/getstockinfobyitemcode:
     post:
       summary: 获取单个商品下的所有库存信息
-      operationId: mall/getstockinfobyitemcode
       security:
         - accessToken: []
       tags:
@@ -12901,7 +12615,6 @@ paths:
   /mall/selectbranditemlistbyuin:
     post:
       summary: 拉取商品列表
-      operationId: mall/selectbranditemlistbyuin
       security:
         - accessToken: []
       tags:
@@ -12958,7 +12671,6 @@ paths:
   /mall/shipgoods:
     post:
       summary: 发货
-      operationId: mall/shipgoods
       security:
         - accessToken: []
       tags:
@@ -13029,7 +12741,6 @@ paths:
   /mall/updatebranditem:
     post:
       summary: 更新下架中的商品信息（暂不支持）
-      operationId: mall/updatebranditem
       deprecated: true
       security:
         - accessToken: []
@@ -13055,7 +12766,6 @@ paths:
   /mall/updategroup:
     post:
       summary: 修改分组
-      operationId: mall/updategroup
       security:
         - accessToken: []
       tags:
@@ -13083,7 +12793,6 @@ paths:
   /mall/updateitempicture:
     post:
       summary: 批量修改商品主图片
-      operationId: mall/updateitempicture
       security:
         - accessToken: []
       tags:
@@ -13111,7 +12820,6 @@ paths:
   /mall/updatestockinfo:
     post:
       summary: 更新商品库存或价格
-      operationId: mall/updatestockinfo
       security:
         - accessToken: []
       tags:
@@ -13152,7 +12860,6 @@ paths:
   /mall/updatestockpicture:
     post:
       summary: 批量修改商品库存图片
-      operationId: mall/updatestockpicture
       security:
         - accessToken: []
       tags:
@@ -13180,7 +12887,6 @@ paths:
   /mall/uploaditemimage:
     post:
       summary: 上传商品图片到商品管理后台
-      operationId: mall/uploaditemimage
       consumes:
         - multipart/form-data
       security:
@@ -13210,7 +12916,6 @@ paths:
   /merchant/category/getproperty:
     post:
       summary: 获取指定分类的所有属性
-      operationId: merchant/category/getproperty
       security:
         - accessToken: []
       tags:
@@ -13233,7 +12938,6 @@ paths:
   /merchant/category/getsku:
     post:
       summary: 获取指定子分类的所有SKU
-      operationId: merchant/category/getsku
       security:
         - accessToken: []
       tags:
@@ -13256,7 +12960,6 @@ paths:
   /merchant/category/getsub:
     post:
       summary: 获取指定分类的所有子分类
-      operationId: merchant/category/getsub
       security:
         - accessToken: []
       tags:
@@ -13279,7 +12982,6 @@ paths:
   /merchant/common/upload_img:
     post:
       summary: 上传图片
-      operationId: merchant/common/upload_img
       security:
         - accessToken: []
       consumes:
@@ -13301,7 +13003,6 @@ paths:
   /merchant/create:
     post:
       summary: 增加商品
-      operationId: merchant/create
       security:
         - accessToken: []
       tags:
@@ -13317,7 +13018,6 @@ paths:
   /merchant/del:
     post:
       summary: 删除商品
-      operationId: merchant/del
       security:
         - accessToken: []
       tags:
@@ -13339,7 +13039,6 @@ paths:
   /merchant/express/add:
     post:
       summary: 增加邮费模板
-      operationId: merchant/express/add
       security:
         - accessToken: []
       tags:
@@ -13351,7 +13050,6 @@ paths:
   /merchant/express/del:
     post:
       summary: 删除邮费模板
-      operationId: merchant/express/del
       security:
         - accessToken: []
       tags:
@@ -13371,7 +13069,6 @@ paths:
   /merchant/express/getall:
     get:
       summary: 获取所有邮费模板
-      operationId: merchant/express/getall
       security:
         - accessToken: []
       tags:
@@ -13383,7 +13080,6 @@ paths:
   /merchant/express/getbyid:
     post:
       summary: 获取指定ID的邮费模板
-      operationId: merchant/express/getbyid
       security:
         - accessToken: []
       tags:
@@ -13403,7 +13099,6 @@ paths:
   /merchant/express/update:
     post:
       summary: 修改邮费模板
-      operationId: merchant/express/update
       security:
         - accessToken: []
       tags:
@@ -13415,7 +13110,6 @@ paths:
   /merchant/get:
     post:
       summary: 查询商品
-      operationId: merchant/get
       security:
         - accessToken: []
       tags:
@@ -13437,7 +13131,6 @@ paths:
   /merchant/getbystatus:
     post:
       summary: 获取指定状态的所有商品
-      operationId: merchant/getbystatus
       security:
         - accessToken: []
       tags:
@@ -13460,7 +13153,6 @@ paths:
   /merchant/group/add:
     post:
       summary: 增加分组
-      operationId: merchant/group/add
       security:
         - accessToken: []
       tags:
@@ -13488,7 +13180,6 @@ paths:
   /merchant/group/del:
     post:
       summary: 删除分组
-      operationId: merchant/group/del
       security:
         - accessToken: []
       tags:
@@ -13508,7 +13199,6 @@ paths:
   /merchant/group/getall:
     get:
       summary: 获取所有分组
-      operationId: merchant/group/getall
       security:
         - accessToken: []
       tags:
@@ -13520,7 +13210,6 @@ paths:
   /merchant/group/getbyid:
     post:
       summary: 根据分组ID获取分组信息
-      operationId: merchant/group/getbyid
       security:
         - accessToken: []
       tags:
@@ -13540,7 +13229,6 @@ paths:
   /merchant/group/productmod:
     post:
       summary: 修改分组商品
-      operationId: merchant/group/productmod
       security:
         - accessToken: []
       tags:
@@ -13575,7 +13263,6 @@ paths:
   /merchant/group/propertymod:
     post:
       summary: 修改分组属性
-      operationId: merchant/group/propertymod
       security:
         - accessToken: []
       tags:
@@ -13598,7 +13285,6 @@ paths:
   /merchant/modproductstatus:
     post:
       summary: 商品上下架
-      operationId: merchant/modproductstatus
       security:
         - accessToken: []
       tags:
@@ -13625,7 +13311,6 @@ paths:
   /merchant/order/close:
     post:
       summary: 关闭订单
-      operationId: merchant/order/close
       security:
         - accessToken: []
       tags:
@@ -13645,7 +13330,6 @@ paths:
   /merchant/order/getbyfilter:
     post:
       summary: 根据订单状态/创建时间获取订单详情
-      operationId: merchant/order/getbyfilter
       security:
         - accessToken: []
       tags:
@@ -13675,7 +13359,6 @@ paths:
   /merchant/order/getbyid:
     post:
       summary: 根据订单 ID 获取订单详情
-      operationId: merchant/order/getbyid
       security:
         - accessToken: []
       tags:
@@ -13695,7 +13378,6 @@ paths:
   /merchant/order/setdelivery:
     post:
       summary: 设置订单发货信息
-      operationId: merchant/order/setdelivery
       security:
         - accessToken: []
       tags:
@@ -13750,7 +13432,6 @@ paths:
   /merchant/shelf/add:
     post:
       summary: 增加货架
-      operationId: merchant/shelf/add
       security:
         - accessToken: []
       tags:
@@ -13767,7 +13448,6 @@ paths:
   /merchant/shelf/del:
     post:
       summary: 删除货架
-      operationId: merchant/shelf/del
       security:
         - accessToken: []
       tags:
@@ -13784,7 +13464,6 @@ paths:
   /merchant/shelf/getall:
     get:
       summary: 获取所有货架
-      operationId: merchant/shelf/getall
       security:
         - accessToken: []
       tags:
@@ -13796,7 +13475,6 @@ paths:
   /merchant/shelf/getbyid:
     post:
       summary: 根据货架ID获取货架信息
-      operationId: merchant/shelf/getbyid
       security:
         - accessToken: []
       tags:
@@ -13813,7 +13491,6 @@ paths:
   /merchant/shelf/mod:
     post:
       summary: 修改货架
-      operationId: merchant/shelf/mod
       security:
         - accessToken: []
       tags:
@@ -13830,7 +13507,6 @@ paths:
   /merchant/stock/add:
     post:
       summary: 增加库存
-      operationId: merchant/stock/add
       security:
         - accessToken: []
       tags:
@@ -13857,7 +13533,6 @@ paths:
   /merchant/stock/reduce:
     post:
       summary: 减少库存
-      operationId: merchant/stock/reduce
       security:
         - accessToken: []
       tags:
@@ -13884,7 +13559,6 @@ paths:
   /merchant/update:
     post:
       summary: 修改商品
-      operationId: merchant/update
       security:
         - accessToken: []
       tags:
@@ -13908,7 +13582,6 @@ paths:
     post:
       summary: 创建财政电子票据接口
       description: 财政局可以通过这个接口帮助执收单位创建一张财政电子票据模板。同一个财政局可以对应多个执收单位，同一个执收单位，使用同一个card_id，不同的执收单位，使用不同的card_id。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21530623533CgUdj)
-      operationId: nontax/createbillcard
       security:
         - accessToken: []
       tags:
@@ -13950,7 +13623,6 @@ paths:
     post:
       summary: 获取授权页链接
       description: 通过此接口，获取授权页链接，让用户跳转到授权页。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21530623533CgUdj)
-      operationId: nontax/getbillauthurl
       security:
         - accessToken: []
       tags:
@@ -14012,7 +13684,6 @@ paths:
     post:
       summary: 将财政电子票据添加到用户微信卡包
       description: 执收单位完成用户插卡授权后，向财政局请求给某一个订单号进行领取财政电子票据，财政局须调用该接口对用户进行开票。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21530623533CgUdj)
-      operationId: nontax/insertbill
       security:
         - accessToken: []
       tags:
@@ -14088,7 +13759,6 @@ paths:
   /scan/merchantinfo/get:
     get:
       summary: 获取商户信息
-      operationId: scan/merchantinfo/get
       security:
         - accessToken: []
       tags:
@@ -14100,7 +13770,6 @@ paths:
   /scan/product/clear:
     post:
       summary: 清除商品信息
-      operationId: scan/product/clear
       security:
         - accessToken: []
       tags:
@@ -14117,7 +13786,6 @@ paths:
   /scan/product/create:
     post:
       summary: 创建商品
-      operationId: scan/product/create
       security:
         - accessToken: []
       tags:
@@ -14134,7 +13802,6 @@ paths:
   /scan/product/get:
     post:
       summary: 查询商品信息
-      operationId: scan/product/get
       security:
         - accessToken: []
       tags:
@@ -14151,7 +13818,6 @@ paths:
   /scan/product/getlist:
     post:
       summary: 批量查询商品信息
-      operationId: scan/product/getlist
       security:
         - accessToken: []
       tags:
@@ -14168,7 +13834,6 @@ paths:
   /scan/product/getqrcode:
     post:
       summary: 获取商品二维码
-      operationId: scan/product/getqrcode
       security:
         - accessToken: []
       tags:
@@ -14185,7 +13850,6 @@ paths:
   /scan/product/modstatus:
     post:
       summary: 商品发布
-      operationId: scan/product/modstatus
       security:
         - accessToken: []
       tags:
@@ -14202,7 +13866,6 @@ paths:
   /scan/product/update:
     post:
       summary: 更新商品信息
-      operationId: scan/product/update
       security:
         - accessToken: []
       tags:
@@ -14219,7 +13882,6 @@ paths:
   /scan/scanticket/check:
     post:
       summary: 检查wxticket参数/清除扫码记录
-      operationId: scan/scanticket/check
       security:
         - accessToken: []
       tags:
@@ -14236,7 +13898,6 @@ paths:
   /scan/testwhitelist/set:
     post:
       summary: 设置测试人员白名单
-      operationId: scan/testwhitelist/set
       security:
         - accessToken: []
       tags:
@@ -14254,7 +13915,6 @@ paths:
     post:
       summary: 语义理解
       description: 微信开放平台语义理解接口调用（http请求）简单方便，用户无需掌握语义理解及相关技术，只需根据自己的产品特点，选择相应的服务即可搭建一套智能语义服务。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457443857) [详细内容与协议说明语义理解接口协议文档](https://open.weixin.qq.com/zh_CN/htmledition/res/assets/smart_lang_protocol.pdf)
-      operationId: semantic/semproxy/search
       security:
         - accessToken: []
       tags:
@@ -14317,7 +13977,6 @@ paths:
     get:
       summary: 查询审核状态
       description: 查询已经提交的开通摇一摇周边功能申请的审核状态。在申请提交后，工作人员会在三个工作日内完成审核。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443447487)
-      operationId: shakearound/account/auditstatus
       security:
         - accessToken: []
       tags:
@@ -14353,7 +14012,6 @@ paths:
     post:
       summary: 申请开通功能
       description: 申请开通摇一摇周边功能。成功提交申请请求后，工作人员会在三个工作日内完成审核。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443447487)
-      operationId: shakearound/account/register
       security:
         - accessToken: []
       tags:
@@ -14416,7 +14074,6 @@ paths:
     post:
       summary: 申请设备ID
       description: 申请配置设备所需的UUID、Major、Minor。申请成功后返回批次ID，可用返回的批次ID通过“查询设备ID申请状态”接口查询目前申请的审核状态。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459246241)
-      operationId: shakearound/device/applyid
       security:
         - accessToken: []
       tags:
@@ -14468,7 +14125,6 @@ paths:
     post:
       summary: 查询设备ID申请审核状态
       description: 查询设备ID申请的审核状态。若单次申请的设备ID数量小于等于500个，系统会进行快速审核；若单次申请的设备ID数量大于500个，则在三个工作日内完成审核。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459246243)
-      operationId: shakearound/device/applystatus
       security:
         - accessToken: []
       tags:
@@ -14514,7 +14170,6 @@ paths:
     post:
       summary: 配置设备与门店的关联关系
       description: 支持创建门店后直接关联在设备上，无需为审核通过状态，摇周边后台自动更新门店的最新信息和状态。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459246245)支持设备关联其他公众账号的门店，门店需为审核通过状态。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459246251)
-      operationId: shakearound/device/bindlocation
       security:
         - accessToken: []
       tags:
@@ -14567,7 +14222,6 @@ paths:
     post:
       summary: 配置设备与页面的关联关系
       description: 若设备配置多个页面，则随机出现页面信息。一个设备最多可配置30个关联页面。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443447914)
-      operationId: shakearound/device/bindpage
       security:
         - accessToken: []
       tags:
@@ -14614,7 +14268,6 @@ paths:
     post:
       summary: 新增分组
       description: 新建设备分组，每个帐号下最多只有1000个分组。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459330208)
-      operationId: shakearound/device/group/add
       security:
         - accessToken: []
       tags:
@@ -14651,7 +14304,6 @@ paths:
     post:
       summary: 添加设备到分组
       description: 添加设备到分组，每个分组能够持有的设备上限为10000，并且每次添加操作的添加上限为1000。只有在摇周边申请的设备才能添加到分组。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459330215)
-      operationId: shakearound/device/group/adddevice
       security:
         - accessToken: []
       tags:
@@ -14696,7 +14348,6 @@ paths:
     post:
       summary: 删除分组
       description: 删除设备分组，若分组中还存在设备，则不能删除成功。需把设备移除以后，才能删除。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459330212)
-      operationId: shakearound/device/group/delete
       security:
         - accessToken: []
       tags:
@@ -14727,7 +14378,6 @@ paths:
     post:
       summary: 从分组中移除设备
       description: 从分组中移除设备，每次删除操作的上限为1000。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459330217)
-      operationId: shakearound/device/group/deletedevice
       security:
         - accessToken: []
       tags:
@@ -14774,7 +14424,6 @@ paths:
     post:
       summary: 查询分组详情
       description: 查询分组详情，包括分组名，分组id，分组里的设备列表。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459330212)
-      operationId: shakearound/device/group/getdetail
       security:
         - accessToken: []
       tags:
@@ -14847,7 +14496,6 @@ paths:
     post:
       summary: 查询分组列表
       description: 查询账号下所有的分组。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459330214)
-      operationId: shakearound/device/group/getlist
       security:
         - accessToken: []
       tags:
@@ -14898,7 +14546,6 @@ paths:
     post:
       summary: 编辑分组信息
       description: 编辑设备分组信息，目前只能修改分组名。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459330210)
-      operationId: shakearound/device/group/update
       security:
         - accessToken: []
       tags:
@@ -14932,7 +14579,6 @@ paths:
     post:
       summary: 查询设备列表
       description: 查询已有的设备ID、UUID、Major、Minor、激活状态、备注信息、关联门店、关联页面等信息。查询所返回的设备列表按设备ID正序排序。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443447624)
-      operationId: shakearound/device/search
       security:
         - accessToken: []
       tags:
@@ -15030,7 +14676,6 @@ paths:
     post:
       summary: 编辑设备信息
       description: 编辑设备的备注信息。可用设备ID或完整的UUID、Major、Minor指定设备，二者选其一。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459246245)
-      operationId: shakearound/device/update
       security:
         - accessToken: []
       tags:
@@ -15074,7 +14719,6 @@ paths:
     post:
       summary: 创建红包活动
       description: 创建红包活动，设置红包活动有效期，红包活动开关等基本信息，返回活动id。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459327195)
-      operationId: shakearound/lottery/addlotteryinfo
       deprecated: true
       security:
         - accessToken: []
@@ -15148,7 +14792,6 @@ paths:
     get:
       summary: 红包查询接口
       description: 查询红包活动信息。注意：调用SetPrizeBucket录入红包次数超过3000次的，或红包总数超过1万个的活动，目前暂不支持expired_prizes, drawed_prizes, available_prizes, expired_value, drawed_value, available_value这6个字段的查询。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443448105)
-      operationId: shakearound/lottery/querylottery
       deprecated: true
       security:
         - accessToken: []
@@ -15235,7 +14878,6 @@ paths:
     get:
       summary: 设置红包活动抽奖开关
       description: 在调用"创建红包活动"开发者实时控制红包活动抽奖的开启和关闭。注意活动抽奖开关只在红包活动有效期之内才能生效，如果不能确定红包活动有效期，请尽量将红包活动有效期的范围设置大。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459327198)
-      operationId: shakearound/lottery/setlotteryswitch
       deprecated: true
       security:
         - accessToken: []
@@ -15263,7 +14905,6 @@ paths:
     post:
       summary: 录入红包信息
       description: 在调用"创建红包活动"接口之后，调用此接口录入红包信息。注意，此接口每次调用，都会向某个活动新增一批红包信息，如果红包数少于100个，请通过一次调用添加所有红包信息。如果红包数大于100，可以多次调用接口添加。请注意确保多次录入的红包ticket总的数目不大于创建该红包活动时设置的total值。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459327196)
-      operationId: shakearound/lottery/setprizebucket
       deprecated: true
       security:
         - accessToken: []
@@ -15355,7 +14996,6 @@ paths:
     post:
       summary: 上传图片素材
       description: 上传在摇一摇功能中需使用到的图片素材，素材保存在微信侧服务器上。图片格式限定为：jpg,jpeg,png,gif。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738726)
-      operationId: shakearound/material/add
       security:
         - accessToken: []
       tags:
@@ -15394,7 +15034,6 @@ paths:
     post:
       summary: 新增摇一摇出来的页面信息
       description: 包括在摇一摇页面出现的主标题、副标题、图片和点击进去的超链接。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459246752)
-      operationId: shakearound/page/add
       security:
         - accessToken: []
       tags:
@@ -15441,7 +15080,6 @@ paths:
     post:
       summary: 删除页面
       description: 删除已有的页面，包括在摇一摇页面出现的主标题、副标题、图片和点击进去的超链接。只有页面与设备没有关联关系时，才可被删除。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443447798)
-      operationId: shakearound/page/delete
       security:
         - accessToken: []
       tags:
@@ -15474,7 +15112,6 @@ paths:
     post:
       summary: 查询页面列表
       description: 查询已有的页面，包括在摇一摇页面出现的主标题、副标题、图片和点击进去的超链接。提供两种查询方式，可指定页面ID查询，也可批量拉取页面列表。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459246754)
-      operationId: shakearound/page/search
       security:
         - accessToken: []
       tags:
@@ -15550,7 +15187,6 @@ paths:
     post:
       summary: 编辑摇一摇出来的页面信息
       description: 包括在摇一摇页面出现的主标题、副标题、图片和点击进去的超链接。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459246753)
-      operationId: shakearound/page/update
       security:
         - accessToken: []
       tags:
@@ -15602,7 +15238,6 @@ paths:
     post:
       summary: 查询设备与页面的关联关系
       description: 查询设备与页面的关联关系。提供两种查询方式，可指定页面ID分页查询该页面所关联的所有的设备信息；也可根据设备ID或完整的UUID、Major、Minor查询该设备所关联的所有页面信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443447914)
-      operationId: shakearound/relation/search
       security:
         - accessToken: []
       tags:
@@ -15684,7 +15319,6 @@ paths:
     post:
       summary: 以设备为维度的数据统计
       description: 查询单个设备进行摇周边操作的人数、次数，点击摇周边消息的人数、次数；查询的最长时间跨度为30天。只能查询最近90天的数据。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459302173)
-      operationId: shakearound/statistics/device
       security:
         - accessToken: []
       tags:
@@ -15755,7 +15389,6 @@ paths:
     post:
       summary: 批量查询设备统计数据
       description: 查询指定时间商家帐号下的每个设备进行摇周边操作的人数、次数，点击摇周边消息的人数、次数。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459302175)
-      operationId: shakearound/statistics/devicelist
       security:
         - accessToken: []
       tags:
@@ -15833,7 +15466,6 @@ paths:
     post:
       summary: 以页面为维度的数据统计
       description: 查询单个页面通过摇周边摇出来的人数、次数，点击摇周边页面的人数、次数；查询的最长时间跨度为30天。只能查询最近90天的数据。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459302176)
-      operationId: shakearound/statistics/page
       security:
         - accessToken: []
       tags:
@@ -15894,7 +15526,6 @@ paths:
     post:
       summary: 批量查询页面统计数据
       description: 查询指定时间商家帐号下的每个页面进行摇周边操作的人数、次数，点击摇周边消息的人数、次数。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443448005)
-      operationId: shakearound/statistics/pagelist
       security:
         - accessToken: []
       tags:
@@ -15966,7 +15597,6 @@ paths:
     post:
       summary: 获取设备及用户信息
       description: 获取设备信息，包括UUID、major、minor，以及距离、openID等信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443447963)
-      operationId: shakearound/user/getshakeinfo
       security:
         - accessToken: []
       tags:
@@ -16025,7 +15655,6 @@ paths:
     get:
       summary: 检验授权凭证（access_token）是否有效
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842)'
-      operationId: sns/auth
       tags:
         - 网页开发
       security:
@@ -16045,7 +15674,6 @@ paths:
     get:
       summary: 微信登录/code换取session_key
       description: 第三方平台代替小程序实现登录功能请参考一般小程序接口文档wx.login 部分内容。除了下述部分以外，其他接口的功能与一般小程序实现方式一致。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1492585163_FtTNA)
-      operationId: sns/component/jscode2session
       security:
         - componentAccessToken: []
       tags:
@@ -16093,7 +15721,6 @@ paths:
     get:
       summary: 登录凭证校验
       description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/api-login.html#wxloginobject)'
-      operationId: sns/jscode2session
       tags:
         - 网页开发
       parameters:
@@ -16139,7 +15766,6 @@ paths:
     get:
       summary: 通过code换取网页授权access_token
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842)'
-      operationId: sns/oauth2/access_token
       tags:
         - 网页开发
       parameters:
@@ -16192,7 +15818,6 @@ paths:
     get:
       summary: 通过code换取网页授权access_token
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419318590&token=&lang=zh_CN)'
-      operationId: sns/oauth2/component/access_token
       security:
         - componentAccessToken: []
       tags:
@@ -16247,7 +15872,6 @@ paths:
     get:
       summary: 刷新access_token（如果需要）
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419318590&token=&lang=zh_CN)'
-      operationId: sns/oauth2/component/refresh_token
       tags:
         - 开放平台/第三方平台/代公众号/网页开发
       security:
@@ -16302,7 +15926,6 @@ paths:
     get:
       summary: 刷新access_token（如果需要）
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842)'
-      operationId: sns/oauth2/refresh_token
       tags:
         - 网页开发
       security:
@@ -16352,7 +15975,6 @@ paths:
     get:
       summary: 拉取用户信息
       description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842)'
-      operationId: sns/userinfo
       tags:
         - 网页开发
       security:
@@ -16408,7 +16030,6 @@ paths:
   /wxa/add_store:
     post:
       summary: 添加门店
-      operationId: wxa/add_store
       security:
         - accessToken: []
       tags:
@@ -16426,7 +16047,6 @@ paths:
     post:
       summary: 添加地点
       description: '添加请求暂不支持并发调用，建议使用时间隔1s进行串行调用。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/nearby.html#添加地点)'
-      operationId: wxa/addnearbypoi
       security:
         - accessToken: []
       tags:
@@ -16488,7 +16108,6 @@ paths:
     post:
       summary: 将草稿箱的草稿选为小程序代码模版
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1506504150_nMMh6)'
-      operationId: wxa/addtotemplate
       security:
         - authorizerAccessToken: []
       tags:
@@ -16515,7 +16134,6 @@ paths:
     post:
       summary: 小程序改名审核状态查询
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
-      operationId: wxa/api_wxa_querynickname
       security:
         - accessToken: []
       tags:
@@ -16562,7 +16180,6 @@ paths:
   /wxa/apply_merchant:
     post:
       summary: 创建门店小程序
-      operationId: wxa/apply_merchant
       security:
         - accessToken: []
       tags:
@@ -16580,7 +16197,6 @@ paths:
     post:
       summary: 绑定微信用户为小程序体验者
       description: 第三方平台在帮助旗下授权的小程序提交代码审核之前，可先让小程序运营者体验，体验之前需要将运营者的个人微信号添加到该小程序的体验者名单中。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140588_nVUgx)
-      operationId: wxa/bind_tester
       security:
         - authorizerAccessToken: []
       tags:
@@ -16611,7 +16227,6 @@ paths:
     post:
       summary: 修改小程序线上代码的可见状态（仅供第三方代小程序调用）
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
-      operationId: wxa/change_visitstatus
       security:
         - authorizerAccessToken: []
       tags:
@@ -16638,7 +16253,6 @@ paths:
     post:
       summary: 设置小程序隐私设置（是否可被搜索）
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
-      operationId: wxa/changewxasearchstatus
       security:
         - authorizerAccessToken: []
       tags:
@@ -16666,7 +16280,6 @@ paths:
     post:
       summary: 为授权的小程序帐号上传小程序代码
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
-      operationId: wxa/commit
       security:
         - authorizerAccessToken: []
       tags:
@@ -16699,7 +16312,6 @@ paths:
   /wxa/create_map_poi:
     post:
       summary: 在腾讯地图中创建门店
-      operationId: wxa/create_map_poi
       security:
         - accessToken: []
       tags:
@@ -16716,7 +16328,6 @@ paths:
   /wxa/del_store:
     post:
       summary: 删除门店
-      operationId: wxa/del_store
       security:
         - accessToken: []
       tags:
@@ -16734,7 +16345,6 @@ paths:
     post:
       summary: 删除指定小程序代码模版
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1506504150_nMMh6)'
-      operationId: wxa/deletetemplate
       security:
         - authorizerAccessToken: []
       tags:
@@ -16761,7 +16371,6 @@ paths:
     post:
       summary: 删除地点
       description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/nearby.html#删除地点)'
-      operationId: wxa/delnearbypoi
       security:
         - accessToken: []
       tags:
@@ -16790,7 +16399,6 @@ paths:
     post:
       summary: 小程序插件(供插件开发者调用)
       description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/plugin.html)'
-      operationId: wxa/devplugin
       security:
         - accessToken: []
       tags:
@@ -16862,7 +16470,6 @@ paths:
     post:
       summary: 查询某个指定版本的审核状态（仅供第三方代小程序调用）
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
-      operationId: wxa/get_auditstatus
       security:
         - authorizerAccessToken: []
       tags:
@@ -16897,7 +16504,6 @@ paths:
     get:
       summary: 获取体验小程序的体验二维码
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
-      operationId: wxa/get_category
       security:
         - authorizerAccessToken: []
       tags:
@@ -16940,7 +16546,6 @@ paths:
   /wxa/get_district:
     get:
       summary: 从腾讯地图拉取省市区信息
-      operationId: wxa/get_district
       security:
         - accessToken: []
       tags:
@@ -16953,7 +16558,6 @@ paths:
     get:
       summary: 查询最新一次提交的审核状态（仅供第三方代小程序调用）
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
-      operationId: wxa/get_latest_auditstatus
       security:
         - authorizerAccessToken: []
       tags:
@@ -16978,7 +16582,6 @@ paths:
   /wxa/get_merchant_audit_info:
     get:
       summary: 查询门店小程序审核结果
-      operationId: wxa/get_merchant_audit_info
       security:
         - accessToken: []
       tags:
@@ -16990,7 +16593,6 @@ paths:
   /wxa/get_merchant_category:
     get:
       summary: 拉取门店小程序类目
-      operationId: wxa/get_merchant_category
       security:
         - accessToken: []
       tags:
@@ -17003,7 +16605,6 @@ paths:
     get:
       summary: 获取小程序的第三方提交代码的页面配置（仅供第三方开发者代小程序调用）
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
-      operationId: wxa/get_page
       security:
         - authorizerAccessToken: []
       tags:
@@ -17025,7 +16626,6 @@ paths:
     get:
       summary: 获取体验小程序的体验二维码
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
-      operationId: wxa/get_qrcode
       security:
         - authorizerAccessToken: []
       tags:
@@ -17044,7 +16644,6 @@ paths:
   /wxa/get_store_info:
     post:
       summary: 获取单个门店信息
-      operationId: wxa/get_store_info
       security:
         - accessToken: []
       tags:
@@ -17061,7 +16660,6 @@ paths:
   /wxa/get_store_list:
     post:
       summary: 获取门店信息列表
-      operationId: wxa/get_store_list
       security:
         - accessToken: []
       tags:
@@ -17079,7 +16677,6 @@ paths:
     get:
       summary: 查询当前分阶段发布详情
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
-      operationId: wxa/getgrayreleaseplan
       security:
         - authorizerAccessToken: []
       tags:
@@ -17113,7 +16710,6 @@ paths:
     get:
       summary: 查看地点列表
       description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/nearby.html#查看地点列表)'
-      operationId: wxa/getnearbypoilist
       security:
         - accessToken: []
       tags:
@@ -17199,7 +16795,6 @@ paths:
     get:
       summary: 获取草稿箱内的所有临时代码草稿
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1506504150_nMMh6)'
-      operationId: wxa/gettemplatedraftlist
       security:
         - authorizerAccessToken: []
       tags:
@@ -17239,7 +16834,6 @@ paths:
     get:
       summary: 获取草稿箱内的所有临时代码草稿
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1506504150_nMMh6)'
-      operationId: wxa/gettemplatelist
       security:
         - authorizerAccessToken: []
       tags:
@@ -17276,7 +16870,6 @@ paths:
     post:
       summary: 接口A:获取小程序码
       description: '适用于需要的码数量较少的业务场景，注意：通过该接口生成的小程序码，永久有效，数量限制见文末说明，请谨慎使用。用户扫描该码进入小程序后，将直接进入 path 对应的页面。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/qrcode.html)'
-      operationId: wxa/getwxacode
       security:
         - accessToken: []
       tags:
@@ -17326,7 +16919,6 @@ paths:
     post:
       summary: 接口B:获取小程序码
       description: '适用于需要的码数量极多的业务场景，注意：通过该接口生成的小程序码，永久有效，数量暂无限制。用户扫描该码进入小程序后，开发者需在对应页面获取的码中 scene 字段的值，再做处理逻辑。使用如下代码可以获取到二维码中的 scene 字段的值。调试阶段可以使用开发工具的条件编译自定义参数 scene=xxxx 进行模拟，开发工具模拟时的 scene 的参数值需要进行 urlencode。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/qrcode.html)'
-      operationId: wxa/getwxacodeunlimit
       security:
         - accessToken: []
       tags:
@@ -17379,7 +16971,6 @@ paths:
     get:
       summary: 查询小程序当前隐私设置（是否可被搜索）
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21517799059ZSEMr)'
-      operationId: wxa/getwxasearchstatus
       security:
         - authorizerAccessToken: []
       tags:
@@ -17402,7 +16993,6 @@ paths:
     post:
       summary: 小程序分阶段发布
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
-      operationId: wxa/grayrelease
       security:
         - authorizerAccessToken: []
       tags:
@@ -17427,7 +17017,6 @@ paths:
     post:
       summary: 校验一张图片是否含有违法违规内容
       description: 应用场景举例：1）图片智能鉴黄：涉及拍照的工具类应用(如美拍，识图类应用)用户拍照上传检测；电商类商品上架图片检测；媒体类用户文章里的图片检测等；2）敏感人脸识别：用户头像；媒体类用户文章里的图片检测；社交类用户上传的图片检测等。频率限制：单个 appId 调用上限为 1000 次/分钟，100,000 次/天。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/imgSecCheck.html)
-      operationId: wxa/img_sec_check
       security:
         - accessToken: []
       tags:
@@ -17447,7 +17036,6 @@ paths:
     post:
       summary: 获取体验者列表
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140588_nVUgx)'
-      operationId: wxa/memberauth
       security:
         - authorizerAccessToken: []
       tags:
@@ -17483,7 +17071,6 @@ paths:
     post:
       summary: 设置小程序服务器域名
       description: 授权给第三方的小程序，其服务器域名只可以为第三方的服务器，当小程序通过第三方发布代码上线后，小程序原先自己配置的服务器域名将被删除，只保留第三方平台的域名，所以第三方平台在代替小程序发布代码之前，需要调用接口为小程序添加第三方自身的域名。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489138143_WPbOO)
-      operationId: wxa/modify_domain
       security:
         - authorizerAccessToken: []
       tags:
@@ -17551,7 +17138,6 @@ paths:
   /wxa/modify_merchant:
     post:
       summary: 修改门店小程序信息
-      operationId: wxa/modify_merchant
       security:
         - accessToken: []
       tags:
@@ -17569,7 +17155,6 @@ paths:
     post:
       summary: 检查一段文本是否含有违法违规内容
       description: 应用场景举例：用户个人资料违规文字检测；媒体新闻类用户发表文章，评论内容检测；游戏类用户编辑上传的素材(如答题类小游戏用户上传的问题及答案)检测等。频率限制：单个 appId 调用上限为 2000 次/分钟，1,000,000 次/天。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/msgSecCheck.html)
-      operationId: wxa/msg_sec_check
       security:
         - accessToken: []
       tags:
@@ -17590,7 +17175,6 @@ paths:
     post:
       summary: 小程序插件管理权限集
       description: 插件管理权限集用于第三方代小程序管理插件，具体包括：添加插件、查询已添加的插件及删除插件。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521637082Sqi4M)
-      operationId: wxa/plugin
       security:
         - authorizerAccessToken: []
       tags:
@@ -17643,7 +17227,6 @@ paths:
     post:
       summary: 发布已通过审核的小程序（仅供第三方代小程序调用）
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
-      operationId: wxa/release
       security:
         - authorizerAccessToken: []
       tags:
@@ -17664,7 +17247,6 @@ paths:
     get:
       summary: 小程序版本回退（仅供第三方代小程序调用）
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
-      operationId: wxa/revertcoderelease
       security:
         - authorizerAccessToken: []
       tags:
@@ -17680,7 +17262,6 @@ paths:
     get:
       summary: 取消分阶段发布
       description: '单个帐号每天审核撤回次数最多不超过1次，一个月不超过10次。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
-      operationId: wxa/revertgrayrelease
       security:
         - authorizerAccessToken: []
       tags:
@@ -17695,7 +17276,6 @@ paths:
   /wxa/search_map_poi:
     post:
       summary: 在腾讯地图中搜索门店
-      operationId: wxa/search_map_poi
       security:
         - accessToken: []
       tags:
@@ -17713,7 +17293,6 @@ paths:
     post:
       summary: 展示/取消展示附近小程序
       description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/nearby.html#展示取消展示附近小程序)'
-      operationId: wxa/setnearbypoishowstatus
       security:
         - accessToken: []
       tags:
@@ -17747,7 +17326,6 @@ paths:
     post:
       summary: 小程序名称设置及改名
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
-      operationId: wxa/setnickname
       security:
         - accessToken: []
       tags:
@@ -17803,7 +17381,6 @@ paths:
     post:
       summary: 设置小程序业务域名（仅供第三方代小程序调用）
       description: 授权给第三方的小程序，其业务域名只可以为第三方的服务器，当小程序通过第三方发布代码上线后，小程序原先自己配置的业务域名将被删除，只保留第三方平台的域名，所以第三方平台在代替小程序发布代码之前，需要调用接口为小程序添加业务域名。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489138143_WPbOO)
-      operationId: wxa/setwebviewdomain
       security:
         - authorizerAccessToken: []
       tags:
@@ -17835,7 +17412,6 @@ paths:
     post:
       summary: 为授权的小程序帐号上传小程序代码
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
-      operationId: wxa/submit_audit
       security:
         - authorizerAccessToken: []
       tags:
@@ -17898,7 +17474,6 @@ paths:
     post:
       summary: 绑定微信用户为小程序体验者
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140588_nVUgx)'
-      operationId: wxa/unbind_tester
       security:
         - authorizerAccessToken: []
       tags:
@@ -17925,7 +17500,6 @@ paths:
     get:
       summary: 小程序审核撤回
       description: '单个帐号每天审核撤回次数最多不超过1次，一个月不超过10次。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
-      operationId: wxa/undocodeaudit
       security:
         - authorizerAccessToken: []
       tags:
@@ -17940,7 +17514,6 @@ paths:
   /wxa/update_store:
     post:
       summary: 更新门店信息
-      operationId: wxa/update_store
       security:
         - accessToken: []
       tags:

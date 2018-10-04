@@ -1,7 +1,6 @@
 post:
   summary: 报销方批量更新发票状态
   description: 批量更新发票状态接口为事务性操作，如果其中一张发票更新失败，列表中的其它发票状态更新也会无法执行，恢复到接口调用前的状态。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918939oae3U)
-  operationId: card/invoice/reimburse/updateinvoicestatus
   security:
     - accessToken: []
   tags:

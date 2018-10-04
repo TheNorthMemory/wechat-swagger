@@ -1,6 +1,5 @@
 post:
   summary: 获取商品二维码
-  operationId: scan/product/getqrcode
   security:
     - accessToken: []
   tags:

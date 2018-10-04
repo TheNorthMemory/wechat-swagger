@@ -1,6 +1,5 @@
 post:
   summary: 删除货架
-  operationId: merchant/shelf/del
   security:
     - accessToken: []
   tags:

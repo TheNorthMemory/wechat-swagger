@@ -1,7 +1,6 @@
 post:
   summary: 拉取单个子商户信息
   description: 通过指定的子商户appid，拉取该子商户的基础信息。 注意，用母商户去调用接口，但接口内传入的是子商户的appid。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
-  operationId: cgi-bin/component/batchget_card_merchant
   security:
     - componentAccessToken: []
   tags:

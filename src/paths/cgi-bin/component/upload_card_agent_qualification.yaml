@@ -1,7 +1,6 @@
 post:
   summary: 母商户资质申请
   description: 母商户资质申请接口是第三方平台用以申请第三方强授权能力，并提交自身资质资料的上传接口，只有上传相关资质，并审核通过后才可代名下子商户提交资质。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
-  operationId: cgi-bin/component/upload_card_agent_qualification
   security:
     - accessToken: []
   tags:

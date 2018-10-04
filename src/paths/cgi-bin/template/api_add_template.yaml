@@ -1,7 +1,6 @@
 post:
   summary: 获得模板ID
   description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277)'
-  operationId: cgi-bin/template/api_add_template
   security:
     - accessToken: []
   tags:

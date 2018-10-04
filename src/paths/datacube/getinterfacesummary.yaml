@@ -1,6 +1,5 @@
 post:
   summary: 获取接口分析数据
-  operationId: datacube/getinterfacesummary
   security:
     - accessToken: []
   tags:

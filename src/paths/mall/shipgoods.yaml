@@ -1,6 +1,5 @@
 post:
   summary: 发货
-  operationId: mall/shipgoods
   security:
     - accessToken: []
   tags:

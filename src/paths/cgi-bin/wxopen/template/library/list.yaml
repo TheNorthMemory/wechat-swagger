@@ -1,7 +1,6 @@
 post:
   summary: 获取小程序模板库标题列表
   description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR)'
-  operationId: cgi-bin/wxopen/template/library/list
   security:
     - authorizerAccessToken: []
     - accessToken: []

@@ -1,7 +1,6 @@
 post:
   summary: 查询已上传的PDF文件
   description: 用于供发票PDF的上传方查询已经上传的发票或消费凭证PDF。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918915Cvo2k)
-  operationId: card/invoice/getpdf
   security:
     - accessToken: []
   tags:

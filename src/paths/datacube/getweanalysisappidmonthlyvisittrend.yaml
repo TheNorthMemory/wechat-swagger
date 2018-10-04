@@ -1,6 +1,5 @@
 post:
   summary: 月趋势
-  operationId: datacube/getweanalysisappidmonthlyvisittrend
   security:
     - accessToken: []
   tags:

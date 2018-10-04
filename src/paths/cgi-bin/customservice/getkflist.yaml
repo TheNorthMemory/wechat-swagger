@@ -1,6 +1,5 @@
 get:
   summary: 获取所有客服账号
-  operationId: cgi-bin/customservice/getkflist
   security:
     - accessToken: []
   tags:

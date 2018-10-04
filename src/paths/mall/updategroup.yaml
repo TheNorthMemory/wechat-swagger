@@ -1,6 +1,5 @@
 post:
   summary: 修改分组
-  operationId: mall/updategroup
   security:
     - accessToken: []
   tags:

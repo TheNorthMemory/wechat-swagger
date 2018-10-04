@@ -1,7 +1,6 @@
 post:
   summary: 下架-礼品卡货架接口
   description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)'
-  operationId: card/giftcard/maintain/set
   security:
     - accessToken: []
   tags:

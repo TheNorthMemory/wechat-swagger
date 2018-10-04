@@ -1,7 +1,6 @@
 post:
   summary: 创建-礼品卡货架接口
   description: 创建一个礼品卡货架并且用于公众号、门店的礼品卡售卖。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
-  operationId: card/giftcard/page/add
   security:
     - accessToken: []
   tags:

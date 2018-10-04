@@ -1,6 +1,5 @@
 post:
   summary: 拉取商品列表
-  operationId: mall/selectbranditemlistbyuin
   security:
     - accessToken: []
   tags:

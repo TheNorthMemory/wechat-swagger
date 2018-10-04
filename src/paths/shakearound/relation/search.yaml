@@ -1,7 +1,6 @@
 post:
   summary: 查询设备与页面的关联关系
   description: 查询设备与页面的关联关系。提供两种查询方式，可指定页面ID分页查询该页面所关联的所有的设备信息；也可根据设备ID或完整的UUID、Major、Minor查询该设备所关联的所有页面信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443447914)
-  operationId: shakearound/relation/search
   security:
     - accessToken: []
   tags:

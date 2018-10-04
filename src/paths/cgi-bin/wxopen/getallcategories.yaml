@@ -1,7 +1,6 @@
 get:
   summary: 获取账号可以设置的所有类目
   description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521706765hLoMO)'
-  operationId: cgi-bin/wxopen/getallcategories
   security:
     - accessToken: []
   tags:

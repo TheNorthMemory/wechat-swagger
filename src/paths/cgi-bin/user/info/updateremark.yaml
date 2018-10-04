@@ -1,7 +1,6 @@
 post:
   summary: 设置用户备注名
   description: 对指定用户设置备注名，该接口暂时开放给微信认证的服务号。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140838)
-  operationId: cgi-bin/user/info/updateremark
   security:
     - accessToken: []
   tags:

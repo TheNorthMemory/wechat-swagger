@@ -1,6 +1,5 @@
 post:
   summary: 获取标签下粉丝列表
-  operationId: cgi-bin/user/tag/get
   security:
     - accessToken: []
   tags:

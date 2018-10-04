@@ -1,6 +1,5 @@
 post:
   summary: 删除商品
-  operationId: merchant/del
   security:
     - accessToken: []
   tags:

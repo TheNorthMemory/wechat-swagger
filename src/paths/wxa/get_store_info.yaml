@@ -1,6 +1,5 @@
 post:
   summary: 获取单个门店信息
-  operationId: wxa/get_store_info
   security:
     - accessToken: []
   tags:

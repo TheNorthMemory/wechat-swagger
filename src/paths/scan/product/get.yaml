@@ -1,6 +1,5 @@
 post:
   summary: 查询商品信息
-  operationId: scan/product/get
   security:
     - accessToken: []
   tags:

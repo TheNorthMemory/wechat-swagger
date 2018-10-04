@@ -1,7 +1,6 @@
 post:
   summary: 确认兑换库存
   description: 确认兑换库存，确认后券点兑换为库存，过程不可逆。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481033345_5cGrc)
-  operationId: card/pay/confirm
   security:
     - accessToken: []
   tags:

@@ -1,6 +1,5 @@
 post:
   summary: 创建门店小程序
-  operationId: wxa/apply_merchant
   security:
     - accessToken: []
   tags:

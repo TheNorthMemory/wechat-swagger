@@ -1,7 +1,6 @@
 post:
   summary: 获取用户抬头（方式二）:商户扫描用户的发票抬头二维码
   description: 商户扫用户“我的—个人信息—我的发票抬头”里面的抬头二维码后，通过调用本接口，可以获取用户抬头信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496554912_vfWU0)
-  operationId: card/invoice/scantitle
   security:
     - accessToken: []
   tags:

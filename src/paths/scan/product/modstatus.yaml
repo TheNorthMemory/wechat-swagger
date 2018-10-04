@@ -1,6 +1,5 @@
 post:
   summary: 商品发布
-  operationId: scan/product/modstatus
   security:
     - accessToken: []
   tags:

@@ -1,6 +1,5 @@
 post:
   summary: 根据货架ID获取货架信息
-  operationId: merchant/shelf/getbyid
   security:
     - accessToken: []
   tags:

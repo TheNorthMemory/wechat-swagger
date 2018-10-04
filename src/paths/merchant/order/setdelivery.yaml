@@ -1,6 +1,5 @@
 post:
   summary: 设置订单发货信息
-  operationId: merchant/order/setdelivery
   security:
     - accessToken: []
   tags:

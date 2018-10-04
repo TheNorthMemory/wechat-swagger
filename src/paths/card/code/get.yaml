@@ -1,7 +1,6 @@
 post:
   summary: 查询Code/获取用户开卡时提交的信息（非跳转型开卡组件）
   description: 建议在调用核销code接口之前调用查询code接口，并在核销之前对非法状态的code(如转赠中、已删除、已核销等)做出处理。A->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025239) B->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1499332673_Unm7V)
-  operationId: card/code/get
   security:
     - accessToken: []
   tags:

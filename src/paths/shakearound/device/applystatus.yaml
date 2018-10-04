@@ -1,7 +1,6 @@
 post:
   summary: 查询设备ID申请审核状态
   description: 查询设备ID申请的审核状态。若单次申请的设备ID数量小于等于500个，系统会进行快速审核；若单次申请的设备ID数量大于500个，则在三个工作日内完成审核。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459246243)
-  operationId: shakearound/device/applystatus
   security:
     - accessToken: []
   tags:

@@ -1,7 +1,6 @@
 post:
   summary: 查询商家主页
   description: 通过门店ID查询商户主页的信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457505498)
-  operationId: bizwifi/homepage/get
   security:
     - accessToken: []
   tags:

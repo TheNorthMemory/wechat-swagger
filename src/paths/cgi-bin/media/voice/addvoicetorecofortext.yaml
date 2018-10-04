@@ -1,6 +1,5 @@
 post:
   summary: 提交语音
-  operationId: cgi-bin/media/voice/addvoicetorecofortext
   security:
     - accessToken: []
   tags:

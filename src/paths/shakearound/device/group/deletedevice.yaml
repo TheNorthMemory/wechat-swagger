@@ -1,7 +1,6 @@
 post:
   summary: 从分组中移除设备
   description: 从分组中移除设备，每次删除操作的上限为1000。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459330217)
-  operationId: shakearound/device/group/deletedevice
   security:
     - accessToken: []
   tags:

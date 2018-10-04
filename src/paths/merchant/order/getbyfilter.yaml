@@ -1,6 +1,5 @@
 post:
   summary: 根据订单状态/创建时间获取订单详情
-  operationId: merchant/order/getbyfilter
   security:
     - accessToken: []
   tags:

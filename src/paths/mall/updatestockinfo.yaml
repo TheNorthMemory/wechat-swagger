@@ -1,6 +1,5 @@
 post:
   summary: 更新商品库存或价格
-  operationId: mall/updatestockinfo
   security:
     - accessToken: []
   tags:

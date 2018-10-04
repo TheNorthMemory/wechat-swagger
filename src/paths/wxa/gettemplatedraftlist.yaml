@@ -1,7 +1,6 @@
 get:
   summary: 获取草稿箱内的所有临时代码草稿
   description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1506504150_nMMh6)'
-  operationId: wxa/gettemplatedraftlist
   security:
     - authorizerAccessToken: []
   tags:

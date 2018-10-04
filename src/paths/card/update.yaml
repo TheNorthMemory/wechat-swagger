@@ -1,7 +1,6 @@
 post:
   summary: 更改卡券信息
   description: 支持更新所有卡券类型的部分通用字段及特殊卡券（会员卡、飞机票、电影票、会议门票）中特定字段的信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)
-  operationId: card/update
   security:
     - accessToken: []
   tags:

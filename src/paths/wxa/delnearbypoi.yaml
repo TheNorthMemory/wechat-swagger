@@ -1,7 +1,6 @@
 post:
   summary: 删除地点
   description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/nearby.html#删除地点)'
-  operationId: wxa/delnearbypoi
   security:
     - accessToken: []
   tags:

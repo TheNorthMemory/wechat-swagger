@@ -1,6 +1,5 @@
 post:
   summary: 更新门店信息
-  operationId: wxa/update_store
   security:
     - accessToken: []
   tags:

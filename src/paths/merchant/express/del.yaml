@@ -1,6 +1,5 @@
 post:
   summary: 删除邮费模板
-  operationId: merchant/express/del
   security:
     - accessToken: []
   tags:

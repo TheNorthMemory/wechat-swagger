@@ -1,7 +1,6 @@
 post:
   summary: 上传PDF
   description: 商户或开票平台可以通过该接口上传PDF。PDF上传成功后将获得发票文件的标识，后续可以通过插卡接口将PDF关联到用户的发票卡券上，一并插入到收票用户的卡包中。注意：若上传成功的PDF在三天内没有被关联到发票卡券发送到用户卡包上，将会被清理。若商户或开票平台需要在三天后再关联发票卡券的话，需要重新上传。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918915Cvo2k)
-  operationId: card/invoice/platform/setpdf
   security:
     - accessToken: []
   tags:

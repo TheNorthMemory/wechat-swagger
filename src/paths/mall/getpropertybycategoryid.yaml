@@ -1,6 +1,5 @@
 post:
   summary: 使用类目 ID 查询属性信息
-  operationId: mall/getpropertybycategoryid
   security:
     - accessToken: []
   tags:

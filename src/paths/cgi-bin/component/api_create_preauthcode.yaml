@@ -1,7 +1,6 @@
 post:
   summary: 获取预授权码pre_auth_code
   description: 该API用于获取预授权码。预授权码用于公众号或小程序授权时的第三方平台方安全验证。 [官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1453779503)
-  operationId: cgi-bin/component/api_create_preauthcode
   security:
     - componentAccessToken: []
   tags:

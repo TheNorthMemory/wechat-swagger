@@ -1,6 +1,5 @@
 post:
   summary: 批量查询商品信息
-  operationId: scan/product/getlist
   security:
     - accessToken: []
   tags:

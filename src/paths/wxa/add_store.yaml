@@ -1,6 +1,5 @@
 post:
   summary: 添加门店
-  operationId: wxa/add_store
   security:
     - accessToken: []
   tags:

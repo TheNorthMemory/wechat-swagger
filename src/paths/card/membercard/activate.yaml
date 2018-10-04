@@ -1,7 +1,6 @@
 post:
   summary: 激活会员卡
   description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025283)'
-  operationId: card/membercard/activate
   security:
     - accessToken: []
   tags:

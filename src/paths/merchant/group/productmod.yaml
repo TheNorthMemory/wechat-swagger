@@ -1,6 +1,5 @@
 post:
   summary: 修改分组商品
-  operationId: merchant/group/productmod
   security:
     - accessToken: []
   tags:

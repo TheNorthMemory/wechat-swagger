@@ -1,7 +1,6 @@
 post:
   summary: 拒绝开票
   description: 用户完成授权后，商户若发现用户提交信息错误、或者发生了退款时，可以调用该接口拒绝开票并告知用户。拒绝开票后，该订单无法向用户再次开票。已经拒绝开票的订单，无法再次使用，如果要重新开票，需使用新的order_id，获取授权链接，让用户再次授权。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918906Epe65)
-  operationId: card/invoice/rejectinsert
   security:
     - accessToken: []
   tags:

@@ -1,7 +1,6 @@
 post:
   summary: 更新发票卡券状态
   description: 发票平台在获知发票状态变化（如被冲红、被报销）时，需更新在用户卡包中发票卡券的状态。确保发票卡券可用性，避免无效报销、重复报销。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918915Cvo2k)
-  operationId: card/invoice/platform/updatestatus
   security:
     - accessToken: []
   tags:

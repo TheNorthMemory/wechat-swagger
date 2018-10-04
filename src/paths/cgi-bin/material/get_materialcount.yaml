@@ -1,7 +1,6 @@
 get:
   summary: 获取素材总数
   description: 永久素材的总数，也会计算公众平台官网素材管理中的素材。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738733)
-  operationId: cgi-bin/material/get_materialcount
   security:
     - accessToken: []
   tags:

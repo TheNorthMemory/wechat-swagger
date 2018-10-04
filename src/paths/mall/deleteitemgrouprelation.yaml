@@ -1,6 +1,5 @@
 post:
   summary: 商品批量移出分组
-  operationId: mall/deleteitemgrouprelation
   security:
     - accessToken: []
   tags:

@@ -1,7 +1,6 @@
 post:
   summary: 关闭已群发文章评论
   description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1494572718_WzHIY)'
-  operationId: cgi-bin/comment/close
   security:
     - accessToken: []
   tags:

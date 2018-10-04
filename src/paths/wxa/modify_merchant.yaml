@@ -1,6 +1,5 @@
 post:
   summary: 修改门店小程序信息
-  operationId: wxa/modify_merchant
   security:
     - accessToken: []
   tags:

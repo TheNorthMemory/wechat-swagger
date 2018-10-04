@@ -1,6 +1,5 @@
 post:
   summary: 日趋势
-  operationId: datacube/getweanalysisappiddailyvisittrend
   security:
     - accessToken: []
   tags:

@@ -1,7 +1,6 @@
 post:
   summary: 创建卡券二维码
   description: 可调用该接口生成一张卡券二维码供用户扫码后添加卡券到卡包，领取多张的二维码一次最多填入5个card_id。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025062)
-  operationId: card/qrcode/create
   security:
     - accessToken: []
   tags:

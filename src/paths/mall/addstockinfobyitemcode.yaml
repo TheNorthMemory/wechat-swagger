@@ -1,6 +1,5 @@
 post:
   summary: 增加商品库存信息（暂不支持）
-  operationId: mall/addstockinfobyitemcode
   deprecated: true
   security:
     - accessToken: []

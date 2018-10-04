@@ -1,6 +1,5 @@
 post:
   summary: 获取用户增减数据
-  operationId: datacube/getweanalysisappiddailysummarytrend
   security:
     - accessToken: []
   tags:

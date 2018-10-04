@@ -1,7 +1,6 @@
 get:
   summary: 红包查询接口
   description: 查询红包活动信息。注意：调用SetPrizeBucket录入红包次数超过3000次的，或红包总数超过1万个的活动，目前暂不支持expired_prizes, drawed_prizes, available_prizes, expired_value, drawed_value, available_value这6个字段的查询。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443448105)
-  operationId: shakearound/lottery/querylottery
   deprecated: true
   security:
     - accessToken: []

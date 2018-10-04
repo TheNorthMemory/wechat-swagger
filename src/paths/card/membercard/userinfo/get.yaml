@@ -1,7 +1,6 @@
 post:
   summary: 拉取会员信息接口
   description: 根据CardID和Code查询会员信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025283)
-  operationId: card/membercard/userinfo/get
   security:
     - accessToken: []
   tags:

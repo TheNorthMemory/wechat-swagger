@@ -1,6 +1,5 @@
 post:
   summary: 获取指定子分类的所有SKU
-  operationId: merchant/category/getsku
   security:
     - accessToken: []
   tags:

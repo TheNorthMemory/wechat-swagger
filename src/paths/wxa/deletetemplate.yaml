@@ -1,7 +1,6 @@
 post:
   summary: 删除指定小程序代码模版
   description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1506504150_nMMh6)'
-  operationId: wxa/deletetemplate
   security:
     - authorizerAccessToken: []
   tags:

@@ -1,7 +1,6 @@
 post:
   summary: 设置测试白名单
   description: 同时支持`openid`、`username`两种字段设置白名单，总数上限为10个。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025062)
-  operationId: card/testwhitelist/set
   security:
     - accessToken: []
   tags:

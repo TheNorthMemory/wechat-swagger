@@ -1,6 +1,5 @@
 post:
   summary: 增加邮费模板
-  operationId: merchant/express/add
   security:
     - accessToken: []
   tags:

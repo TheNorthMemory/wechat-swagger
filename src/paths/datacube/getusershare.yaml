@@ -1,6 +1,5 @@
 post:
   summary: 获取图文分享转发数据
-  operationId: datacube/getusershare
   security:
     - accessToken: []
   tags:

@@ -1,6 +1,5 @@
 post:
   summary: 客服输入状态
-  operationId: cgi-bin/message/custom/typing
   security:
     - accessToken: []
   tags:

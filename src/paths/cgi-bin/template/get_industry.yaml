@@ -1,7 +1,6 @@
 get:
   summary: 获取设置的行业信息
   description: 获取帐号设置的行业信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277)
-  operationId: cgi-bin/template/get_industry
   security:
     - accessToken: []
   tags:

@@ -1,7 +1,6 @@
 post:
   summary: 上传logo接口/上传图文消息内的图片
   description: 官方文档有两处,A->[POI新建门店上传logo](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444378120)，B->[上传图文消息内的图片](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738729)
-  operationId: cgi-bin/media/uploadimg
   security:
     - accessToken: []
   tags:

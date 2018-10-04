@@ -1,6 +1,5 @@
 post:
   summary: 修改商品
-  operationId: merchant/update
   security:
     - accessToken: []
   tags:

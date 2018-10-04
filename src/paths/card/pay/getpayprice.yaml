@@ -1,7 +1,6 @@
 post:
   summary: 对优惠券批价
   description: 用于提前查询本次新增库存需要多少券点。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481033345_5cGrc)
-  operationId: card/pay/getpayprice
   security:
     - accessToken: []
   tags:

@@ -1,7 +1,6 @@
 post:
   summary: 获取授权页链接
   description: 通过此接口，获取授权页链接，让用户跳转到授权页。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21530623533CgUdj)
-  operationId: nontax/getbillauthurl
   security:
     - accessToken: []
   tags:

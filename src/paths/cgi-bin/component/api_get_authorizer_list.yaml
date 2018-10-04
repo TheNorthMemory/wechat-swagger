@@ -1,7 +1,6 @@
 post:
   summary: 获取第三方平台的权限集
   description: 第三方平台可以使用接口拉取当前所有已授权的帐号基本信息。 [官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419318459)
-  operationId: cgi-bin/component/api_get_authorizer_list
   security:
     - componentAccessToken: []
   tags:

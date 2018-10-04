@@ -1,7 +1,6 @@
 post:
   summary: 将公众号/小程序绑定到开放平台帐号下
   description: 该API用于将一个尚未绑定开放平台帐号的公众号或小程序绑定至指定开放平台帐号上。二者须主体相同。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1498704804_iARAL)
-  operationId: cgi-bin/open/bind
   security:
     - accessToken: []
   tags:

@@ -1,7 +1,6 @@
 post:
   summary: 第三方平台获取开插件wifi_token
   description: 开通插件接口只支持公众号第三方平台调用，公众账号开发者请在微信公众平台自行开通。第三方平台接入，请参考微信开放平台。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455869988)
-  operationId: bizwifi/openplugin/token
   security:
     - accessToken: []
   tags:

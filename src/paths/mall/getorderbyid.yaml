@@ -1,6 +1,5 @@
 post:
   summary: 拉取单个订单
-  operationId: mall/getorderbyid
   security:
     - accessToken: []
   tags:

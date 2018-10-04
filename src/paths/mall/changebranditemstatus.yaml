@@ -1,6 +1,5 @@
 post:
   summary: 商品的上架和下架操作
-  operationId: mall/changebranditemstatus
   security:
     - accessToken: []
   tags:

@@ -1,7 +1,6 @@
 post:
   summary: 测试个性化匹配结果
   description: user_id可以是粉丝的OpenID，也可以是粉丝的微信号。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455782296)
-  operationId: cgi-bin/menu/trymatch
   security:
     - accessToken: []
   tags:

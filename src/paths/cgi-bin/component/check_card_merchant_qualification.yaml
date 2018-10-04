@@ -1,7 +1,6 @@
 post:
   summary: 子商户资质审核查询
   description: 该接口用于查询子商户资质审核的结果，审核通过后才能进行后续授权流程。 注意，用母商户去调用接口，但接口内传入的是子商户的appid。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
-  operationId: cgi-bin/component/check_card_merchant_qualification
   security:
     - accessToken: []
   tags:

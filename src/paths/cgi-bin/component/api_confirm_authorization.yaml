@@ -1,7 +1,6 @@
 post:
   summary: 确认授权
   description: 该API用于使用授权码换取授权公众号的授权信息，并换取authorizer_access_token和authorizer_refresh_token。 授权码的获取，需要在用户在第三方平台授权页中完成授权流程后，在回调URI中通过URL参数提供给第三方平台方。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025292)
-  operationId: cgi-bin/component/api_confirm_authorization
   security:
     - componentAccessToken: []
   tags:

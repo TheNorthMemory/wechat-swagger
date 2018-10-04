@@ -1,7 +1,6 @@
 get:
   summary: 获取体验小程序的体验二维码
   description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
-  operationId: wxa/get_category
   security:
     - authorizerAccessToken: []
   tags:

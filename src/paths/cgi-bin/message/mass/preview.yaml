@@ -1,7 +1,6 @@
 post:
   summary: 预览接口
   description: 开发者可通过该接口发送消息给指定用户，在手机端查看消息的样式和排版。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1481187827_i0l21)
-  operationId: cgi-bin/message/mass/preview
   security:
     - accessToken: []
   tags:

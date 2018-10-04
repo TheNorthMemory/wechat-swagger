@@ -1,6 +1,5 @@
 post:
   summary: 商品上下架
-  operationId: merchant/modproductstatus
   security:
     - accessToken: []
   tags:

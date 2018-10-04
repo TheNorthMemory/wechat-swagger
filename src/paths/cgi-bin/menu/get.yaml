@@ -1,7 +1,6 @@
 get:
   summary: 查询
   description: 查询自定义菜单。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141014)
-  operationId: cgi-bin/menu/get
   security:
     - accessToken: []
   tags:

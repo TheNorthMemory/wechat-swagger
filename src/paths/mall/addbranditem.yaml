@@ -1,6 +1,5 @@
 post:
   summary: 新增商品
-  operationId: mall/addbranditem
   security:
     - accessToken: []
   tags:

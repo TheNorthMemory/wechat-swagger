@@ -1,7 +1,6 @@
 post:
   summary: 设置开卡字段接口
   description: 开发者在创建时填入wx_activate字段后，需要调用该接口设置用户激活时需要填写的选项，否则一键开卡设置不生效。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025283)
-  operationId: card/membercard/activateuserform/set
   security:
     - accessToken: []
   tags:

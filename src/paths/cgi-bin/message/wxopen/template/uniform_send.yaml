@@ -1,7 +1,6 @@
 post:
   summary: 统一服务消息下发接口
   description: 为便于开发者对用户进行服务消息触达，简化小程序和公众号模板消息下发流程，小程序提供统一的服务消息下发接口。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/notice-uniform.html)
-  operationId: cgi-bin/message/wxopen/template/uniform_send
   security:
     - accessToken: []
   tags:

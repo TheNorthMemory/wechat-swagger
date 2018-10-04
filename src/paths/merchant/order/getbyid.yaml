@@ -1,6 +1,5 @@
 post:
   summary: 根据订单 ID 获取订单详情
-  operationId: merchant/order/getbyid
   security:
     - accessToken: []
   tags:

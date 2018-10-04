@@ -1,7 +1,6 @@
 post:
   summary: 邀请绑定客服帐号
   description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1458044813)'
-  operationId: customservice/kfaccount/inviteworker
   security:
     - accessToken: []
   tags:

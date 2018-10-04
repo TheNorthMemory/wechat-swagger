@@ -1,7 +1,6 @@
 get:
   summary: 获取自定义配置
   description: 返回API开发配置或者MP运营后台配置。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1434698695)
-  operationId: cgi-bin/get_current_selfmenu_info
   security:
     - accessToken: []
   tags:

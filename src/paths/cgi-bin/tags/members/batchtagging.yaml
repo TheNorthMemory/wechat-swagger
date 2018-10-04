@@ -1,6 +1,5 @@
 post:
   summary: 批量为用户打标签
-  operationId: cgi-bin/tags/members/batchtagging
   security:
     - accessToken: []
   tags:

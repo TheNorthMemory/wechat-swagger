@@ -1,7 +1,6 @@
 post:
   summary: 接口A:获取小程序码
   description: '适用于需要的码数量较少的业务场景，注意：通过该接口生成的小程序码，永久有效，数量限制见文末说明，请谨慎使用。用户扫描该码进入小程序后，将直接进入 path 对应的页面。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/qrcode.html)'
-  operationId: wxa/gewxacode
   security:
     - accessToken: []
   tags:

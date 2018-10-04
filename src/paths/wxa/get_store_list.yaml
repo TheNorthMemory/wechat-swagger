@@ -1,6 +1,5 @@
 post:
   summary: 获取门店信息列表
-  operationId: wxa/get_store_list
   security:
     - accessToken: []
   tags:

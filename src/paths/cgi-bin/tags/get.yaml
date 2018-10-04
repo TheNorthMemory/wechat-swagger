@@ -1,7 +1,6 @@
 get:
   summary: 获取
   description: 获取公众号已创建的标签。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140837)
-  operationId: cgi-bin/tags/get
   security:
     - accessToken: []
   tags:

@@ -1,7 +1,6 @@
 get:
   summary: 获取客户会话状态
   description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1458044820)'
-  operationId: customservice/kfsession/getsession
   security:
     - accessToken: []
   tags:

@@ -1,7 +1,6 @@
 post:
   summary: 新增临时素材/多媒体文件上传接口
   description: 临时素材media_id是可复用的，媒体文件在微信后台保存时间为3天，即3天后media_id失效。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738726)
-  operationId: cgi-bin/media/upload
   security:
     - accessToken: []
   tags:

@@ -1,6 +1,5 @@
 post:
   summary: 更新商品信息
-  operationId: scan/product/update
   security:
     - accessToken: []
   tags:

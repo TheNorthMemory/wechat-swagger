@@ -1,6 +1,5 @@
 post:
   summary: 获取用户身上的标签列表
-  operationId: cgi-bin/tags/getidlist
   security:
     - accessToken: []
   tags:

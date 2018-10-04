@@ -1,7 +1,6 @@
 post:
   summary: 编辑
   description: 单个编辑。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140837)
-  operationId: cgi-bin/tags/update
   security:
     - accessToken: []
   tags:

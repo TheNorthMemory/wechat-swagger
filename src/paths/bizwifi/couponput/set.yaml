@@ -1,7 +1,6 @@
 post:
   summary: 设置门店卡券投放信息
   description: 调用设置门店卡劵投放信息接口后，用户可在连网流程中关注商家公众号之后，领取配置的卡券。需设置卡劵ID，投放的有效时间等。注：需要先创建卡劵后，才能获取卡劵ID。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457425371)
-  operationId: bizwifi/couponput/set
   security:
     - accessToken: []
   tags:

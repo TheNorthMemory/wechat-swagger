@@ -1,7 +1,6 @@
 post:
   summary: 推送订阅模板消息给到授权微信用户
   description: 对于已关注公众号的，消息将下发到公众号会话里；未关注公众号的，将下发到服务通知。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1500374289_66bvB)
-  operationId: cgi-bin/template/send
   security:
     - accessToken: []
   tags:

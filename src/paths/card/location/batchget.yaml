@@ -1,6 +1,5 @@
 post:
   summary: 拉取门店列表
-  operationId: card/location/batchget
   security:
     - accessToken: []
   tags:

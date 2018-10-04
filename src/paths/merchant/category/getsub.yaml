@@ -1,6 +1,5 @@
 post:
   summary: 获取指定分类的所有子分类
-  operationId: merchant/category/getsub
   security:
     - accessToken: []
   tags:

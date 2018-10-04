@@ -1,6 +1,5 @@
 post:
   summary: 新增分组
-  operationId: mall/addgroup
   security:
     - accessToken: []
   tags:

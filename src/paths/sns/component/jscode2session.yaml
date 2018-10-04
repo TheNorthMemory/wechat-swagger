@@ -1,7 +1,6 @@
 get:
   summary: 微信登录/code换取session_key
   description: 第三方平台代替小程序实现登录功能请参考一般小程序接口文档wx.login 部分内容。除了下述部分以外，其他接口的功能与一般小程序实现方式一致。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1492585163_FtTNA)
-  operationId: sns/component/jscode2session
   security:
     - componentAccessToken: []
   tags:

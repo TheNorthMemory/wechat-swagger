@@ -1,7 +1,6 @@
 post:
   summary: 获取聊天记录
   description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1464937269_mUtmK)'
-  operationId: customservice/msgrecord/getmsglist
   security:
     - accessToken: []
   tags:

@@ -1,7 +1,6 @@
 post:
   summary: 以设备为维度的数据统计
   description: 查询单个设备进行摇周边操作的人数、次数，点击摇周边消息的人数、次数；查询的最长时间跨度为30天。只能查询最近90天的数据。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459302173)
-  operationId: shakearound/statistics/device
   security:
     - accessToken: []
   tags:

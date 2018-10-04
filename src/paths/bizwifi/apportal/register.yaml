@@ -1,7 +1,6 @@
 post:
   summary: 添加portal型设备
   description: 调用下述接口可以添加portal型设备的网络信息，并获得secretkey。secretkey为加密字符串参数，是portal设备改造流程中的重要参数。为防止secretkey泄露，可通过此接口重置刷新，重置后之前生成的secretkey将会失效。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457443857)
-  operationId: bizwifi/apportal/register
   security:
     - accessToken: []
   tags:

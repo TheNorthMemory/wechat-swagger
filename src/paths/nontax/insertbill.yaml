@@ -1,7 +1,6 @@
 post:
   summary: 将财政电子票据添加到用户微信卡包
   description: 执收单位完成用户插卡授权后，向财政局请求给某一个订单号进行领取财政电子票据，财政局须调用该接口对用户进行开票。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21530623533CgUdj)
-  operationId: nontax/createbillcard
   security:
     - accessToken: []
   tags:

@@ -1,7 +1,6 @@
 post:
   summary: 查询设备
   description: 可通过指定分页或具体门店ID的方式，查询当前MP账号下指定门店连网成功的设备信息。一次最多能查询20个门店的设备信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457443871)
-  operationId: bizwifi/device/list
   security:
     - accessToken: []
   tags:

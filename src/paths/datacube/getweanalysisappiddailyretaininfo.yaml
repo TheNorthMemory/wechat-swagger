@@ -1,6 +1,5 @@
 post:
   summary: 日留存
-  operationId: datacube/getweanalysisappiddailyretaininfo
   security:
     - accessToken: []
   tags:

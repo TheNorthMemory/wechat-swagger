@@ -1,6 +1,5 @@
 post:
   summary: 查询商品
-  operationId: merchant/get
   security:
     - accessToken: []
   tags:

@@ -1,7 +1,6 @@
 post:
   summary: 绑定商户号到礼品卡小程序接口
   description: 传入的商户号须为普通服务商模式或者直连商户号，建议为礼品卡专用商户号；商户号必须为公众号申请的商户号。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
-  operationId: card/giftcard/pay/submch/bind
   security:
     - accessToken: []
   tags:

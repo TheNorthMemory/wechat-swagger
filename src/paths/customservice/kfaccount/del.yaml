@@ -1,6 +1,5 @@
 get:
   summary: 删除客服帐号
-  operationId: customservice/kfaccount/del
   security:
     - accessToken: []
   tags:

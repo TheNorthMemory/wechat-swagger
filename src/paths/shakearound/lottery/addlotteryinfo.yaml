@@ -1,7 +1,6 @@
 post:
   summary: 创建红包活动
   description: 创建红包活动，设置红包活动有效期，红包活动开关等基本信息，返回活动id。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1459327195)
-  operationId: shakearound/lottery/addlotteryinfo
   deprecated: true
   security:
     - accessToken: []

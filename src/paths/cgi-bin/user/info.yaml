@@ -1,7 +1,6 @@
 get:
   summary: 获取用户基本信息
   description: 获取用户基本信息，包括昵称、头像、性别、所在城市、语言和关注时间。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140839)
-  operationId: cgi-bin/user/info
   security:
     - accessToken: []
   tags:

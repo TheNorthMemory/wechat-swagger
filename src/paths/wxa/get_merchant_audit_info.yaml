@@ -1,6 +1,5 @@
 get:
   summary: 查询门店小程序审核结果
-  operationId: wxa/get_merchant_audit_info
   security:
     - accessToken: []
   tags:

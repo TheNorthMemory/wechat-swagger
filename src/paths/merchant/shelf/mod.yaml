@@ -1,6 +1,5 @@
 post:
   summary: 修改货架
-  operationId: merchant/shelf/mod
   security:
     - accessToken: []
   tags:

@@ -1,6 +1,5 @@
 post:
   summary: 获取单个商品下的所有库存信息
-  operationId: mall/getstockinfobyitemcode
   security:
     - accessToken: []
   tags:

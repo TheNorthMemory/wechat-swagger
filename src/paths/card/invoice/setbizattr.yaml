@@ -1,7 +1,6 @@
 post:
   summary: 设置/查询支付后开票/页面信息,设置/查询商户联系方式
   description: 六大杂烩接口。A->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y) B->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21517918906Epe65)
-  operationId: card/invoice/setbizattr
   security:
     - accessToken: []
   tags:

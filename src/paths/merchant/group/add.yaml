@@ -1,6 +1,5 @@
 post:
   summary: 增加分组
-  operationId: merchant/group/add
   security:
     - accessToken: []
   tags:

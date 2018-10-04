@@ -1,6 +1,5 @@
 post:
   summary: 删除类目下的属性
-  operationId: mall/delproperty
   security:
     - accessToken: []
   tags:

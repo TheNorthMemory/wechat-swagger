@@ -1,6 +1,5 @@
 post:
   summary: 修改邮费模板
-  operationId: merchant/express/update
   security:
     - accessToken: []
   tags:

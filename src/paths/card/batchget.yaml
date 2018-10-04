@@ -1,7 +1,6 @@
 post:
   summary: 批量查询
   description: 未传入筛选条件时，该接口默认传回该商户名下所有状态的卡券。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)
-  operationId: car/batchget
   security:
     - accessToken: []
   tags:

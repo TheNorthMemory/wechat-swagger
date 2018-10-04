@@ -1,6 +1,5 @@
 post:
   summary: 在腾讯地图中创建门店
-  operationId: wxa/create_map_poi
   security:
     - accessToken: []
   tags:

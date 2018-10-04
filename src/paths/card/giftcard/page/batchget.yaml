@@ -1,7 +1,6 @@
 post:
   summary: 查询-礼品卡货架列表接口
   description: 查询当前商户下所有的礼品卡货架id。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215143440770UT7Y)
-  operationId: card/giftcard/page/batchget
   security:
     - accessToken: []
   tags:

@@ -1,7 +1,6 @@
 get:
   summary: 获取模板列表
   description: 获取已添加至帐号下所有模板列表。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277)
-  operationId: cgi-bin/template/get_all_private_template
   security:
     - accessToken: []
   tags:

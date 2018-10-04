@@ -1,7 +1,6 @@
 post:
   summary: 获取用户已领取卡券
   description: 获取用户卡包里的，属于该appid下所有可用卡券，包括正常状态和异常状态。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)
-  operationId: card/user/getcardlist
   security:
     - accessToken: []
   tags:

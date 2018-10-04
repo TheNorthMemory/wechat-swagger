@@ -1,71 +1,70 @@
-    post:
-      summary: 获取素材列表
-      description: 获取永久素材的列表。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738734)
-      operationId: cgi-bin/material/batchget_material
-      security:
-        - accessToken: []
-      tags:
-        - 素材管理
-      parameters:
-        - in: body
-          name: body
-          schema:
-            type: object
-            properties:
-              type:
-                type: string
-                description: 素材的类型，图片（image）、视频（video）、语音 （voice）、图文（news）
-                enum:
-                  - image
-                  - video
-                  - voice
-                  - news
-              offset:
-                type: integer
-                format: int32
-                description: 从全部素材的该偏移位置开始返回，0表示从第一个素材 返回
-              count:
-                type: integer
-                format: int32
-                description: 返回素材的数量，取值在1到20之间
-      responses:
-        '200':
-          description: ''
-          schema:
-            type: object
-            properties:
-              total_count:
-                type: integer
-                format: int32
-                description: 该类型的素材的总数
-              item_count:
-                type: integer
-                format: int32
-                description: 本次调用获取的素材的数量
-              items:
-                type: array
-                items:
-                  allOf:
-                    - type: object
+post:
+  summary: 获取素材列表
+  description: 获取永久素材的列表。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738734)
+  security:
+    - accessToken: []
+  tags:
+    - 素材管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          type:
+            type: string
+            description: 素材的类型，图片（image）、视频（video）、语音 （voice）、图文（news）
+            enum:
+              - image
+              - video
+              - voice
+              - news
+          offset:
+            type: integer
+            format: int32
+            description: 从全部素材的该偏移位置开始返回，0表示从第一个素材 返回
+          count:
+            type: integer
+            format: int32
+            description: 返回素材的数量，取值在1到20之间
+  responses:
+    '200':
+      description: ''
+      schema:
+        type: object
+        properties:
+          total_count:
+            type: integer
+            format: int32
+            description: 该类型的素材的总数
+          item_count:
+            type: integer
+            format: int32
+            description: 本次调用获取的素材的数量
+          items:
+            type: array
+            items:
+              allOf:
+                - type: object
+                  properties:
+                    media_id:
+                      type: string
+                    content:
+                      type: object
                       properties:
-                        media_id:
-                          type: string
-                        content:
-                          type: object
-                          properties:
-                            news_item:
-                              $ref: '#/definitions/base.ArticlesBo'
-                        update_time:
-                          type: integer
-                          format: int32
-                    - type: object
-                      properties:
-                        media_id:
-                          type: string
-                        name:
-                          type: string
-                        url:
-                          type: string
-                        update_time:
-                          type: integer
-                          format: int32
+                        news_item:
+                          $ref: '#/definitions/base.ArticlesBo'
+                    update_time:
+                      type: integer
+                      format: int32
+                - type: object
+                  properties:
+                    media_id:
+                      type: string
+                    name:
+                      type: string
+                    url:
+                      type: string
+                    update_time:
+                      type: integer
+                      format: int32

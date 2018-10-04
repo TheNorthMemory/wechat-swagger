@@ -1,6 +1,5 @@
 post:
   summary: 获取图文群发总数据
-  operationId: datacube/getarticletotal
   security:
     - accessToken: []
   tags:

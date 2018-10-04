@@ -9094,6 +9094,7 @@ paths:
   /cgi-bin/poi/addpoi:
     post:
       summary: 增加门店
+      description: 创建门店接口是为商户提供创建自己门店数据的接口，门店数据字段越完整，商户页面展示越丰富，越能够吸引更多用户，并提高曝光度。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444378120)
       security:
         - accessToken: []
       tags:
@@ -9103,13 +9104,34 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              business:
+                type: object
+                properties:
+                  base_info:
+                    allOf:
+                      - $ref: '#/definitions/poi.BaseInfoBo'
+                      - $ref: '#/definitions/poi.ServiceInfoBo'
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  poi_id:
+                    type: integer
+                    format: int32
+                    description: 门店ID
+            example:
+              errcode: 0
+              errmsg: ok
+              poi_id: 460123456
   /cgi-bin/poi/delpoi:
     post:
       summary: 删除门店
+      description: 商户可以通过该接口，删除已经成功创建的门店。请商户慎重调用该接口。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444378120)
       security:
         - accessToken: []
       tags:
@@ -9119,13 +9141,21 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              poi_id:
+                type: integer
+                format: int32
+                description: 门店ID
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/poi/getpoi:
     post:
       summary: 查询门店信息
+      description: 在查询时，update_status 字段为1，表明在5 个工作日内曾用update 接口修改过门店扩展字段，该扩展字段为最新的修改字段，尚未经过审核采纳，因此不是最终结果。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444378120)
       security:
         - accessToken: []
       tags:
@@ -9135,13 +9165,46 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              poi_id:
+                type: integer
+                format: int32
+                description: 门店ID
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  business:
+                    type: object
+                    properties:
+                      base_info:
+                        allOf:
+                          - $ref: '#/definitions/poi.BaseInfoBo'
+                          - $ref: '#/definitions/poi.ServiceInfoBo'
+                          - type: object
+                            properties:
+                              poi_id:
+                                type: integer
+                                format: int32
+                                description: 门店ID
+                              available_state:
+                                type: integer
+                                format: int32
+                                description: 门店是否可用状态。1 表示系统错误、2 表示审核中、3 审核通过、4 审核驳回。当该字段为1、2、4 状态时，poi_id 为空
+                                enum: [1, 2, 3, 4]
+                              update_status:
+                                type: integer
+                                format: int32
+                                description: 扩展字段是否正在更新中。1 表示扩展字段正在更新中，尚未生效，不允许再次更新； 0 表示扩展字段 没有在更新中或更新已生效 ，可以再次更新
+                                enum: [0, 1]
   /cgi-bin/poi/getpoilist:
     post:
       summary: 查询门店列表
+      description: 商户可以通过该接口，批量查询自己名下的门店list，并获取已审核通过的poiid、商户自身sid 用于对应、商户名、分店名、地址字段。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444378120)
       security:
         - accessToken: []
       tags:
@@ -9151,13 +9214,56 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              begin:
+                type: integer
+                format: int32
+                description: 开始位置，0 即为从第一条开始查询
+              limit:
+                type: integer
+                format: int32
+                description: 返回数据条数，最大允许50，默认为20
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  total_count:
+                    type: integer
+                    format: int32
+                    description: 门店总数量
+                  business_list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        base_info:
+                          allOf:
+                            - $ref: '#/definitions/poi.BaseInfoBo'
+                            - $ref: '#/definitions/poi.ServiceInfoBo'
+                            - type: object
+                              properties:
+                                poi_id:
+                                  type: integer
+                                  format: int32
+                                  description: 门店ID
+                                available_state:
+                                  type: integer
+                                  format: int32
+                                  description: 门店是否可用状态。1 表示系统错误、2 表示审核中、3 审核通过、4 审核驳回。当该字段为1、2、4 状态时，poi_id 为空
+                                  enum: [1, 2, 3, 4]
+                                update_status:
+                                  type: integer
+                                  format: int32
+                                  description: 扩展字段是否正在更新中。1 表示扩展字段正在更新中，尚未生效，不允许再次更新； 0 表示扩展字段 没有在更新中或更新已生效 ，可以再次更新
+                                  enum: [0, 1]
   /cgi-bin/poi/getwxcategory:
     get:
       summary: 门店类目表
+      description: 类目名称接口是为商户提供自己门店类型信息的接口。门店类目定位的越规范，能够精准的吸引更多用户，提高曝光率。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444378120)
       security:
         - accessToken: []
       tags:
@@ -9166,9 +9272,17 @@ paths:
       responses:
         '200':
           description: ''
+          schema:
+            type: object
+            properties:
+              category_list:
+                type: array
+                items:
+                  type: string
   /cgi-bin/poi/updatepoi:
     post:
       summary: 修改门店服务信息
+      description: 商户可以通过该接口，修改门店的服务信息，包括：sid、图片列表、营业时间、推荐、特色服务、简介、人均价格、电话8个字段（名称、坐标、地址等不可修改）修改后需要人工审核。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444378120)
       security:
         - accessToken: []
       tags:
@@ -9178,10 +9292,31 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              business:
+                type: object
+                properties:
+                  base_info:
+                    allOf:
+                      - type: object
+                        properties:
+                          poi_id:
+                            type: integer
+                            format: int32
+                            description: 门店ID
+                          sid:
+                            type: string
+                            description: 商户自己的id，用于后续审核通过收到poi_id 的通知时，做对应关系。请商户自己保证唯一识别性
+                          telephone:
+                            type: string
+                            description: 门店的电话（纯数字，区号、分机号均由“-”隔开）
+                      - $ref: '#/definitions/poi.ServiceInfoBo'
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/qrcode/create:
     post:
       summary: 创建二维码ticket
@@ -21119,3 +21254,86 @@ definitions:
           Recognition:
             type: string
             description: 语音识别结果，UTF8编码(开通语音识别后有)
+  poi.BaseInfoBo:
+    type: object
+    description: 门店基础信息字段
+    properties:
+      sid:
+        type: string
+        description: 商户自己的id，用于后续审核通过收到poi_id 的通知时，做对应关系。请商户自己保证唯一识别性
+      business_name:
+        type: string
+        description: 门店名称（仅为商户名，如：国美、麦当劳，不应包含地区、地址、分店名等信息，错误示例：北京国美）不能为空，15个汉字或30个英文字符内
+      branch_name:
+        type: string
+        description: 分店名称（不应包含地区信息，不应与门店名有重复，错误示例：北京王府井店） 20个字以内
+      province:
+        type: string
+        description: 门店所在的省份（直辖市填城市名,如：北京市） 10个字 以内
+      city:
+        type: string
+        description: 门店所在的城市 10个字 以内
+      district:
+        type: string
+        description: 门店所在地区 10个字 以内
+      address:
+        type: string
+        description: 门店所在的详细街道地址（不要填写省市信息） （东莞等没有“区”行政区划的城市，该字段可不必填写。其余城市必填。）
+      telephone:
+        type: string
+        description: 门店的电话（纯数字，区号、分机号均由“-”隔开）
+      categories:
+        type: string
+        description: 门店的类型（不同级分类用“,”隔开，如：美食，川菜，火锅。详细分类参见附件：微信门店类目表）
+      offset_type:
+        type: integer
+        format: int32
+        description: 坐标类型： 1 为火星坐标 2 为sogou经纬度 3 为百度经纬度 4 为mapbar经纬度 5 为GPS坐标 6 为sogou墨卡托坐标 注：高德经纬度无需转换可直接使用
+        enum: [1, 2, 3, 4, 5, 6]
+      longitude:
+        type: number
+        format: float
+        description: 门店所在地理位置的经度
+      latitude:
+        type: number
+        format: float
+        description: 门店所在地理位置的纬度（经纬度均为火星坐标，最好选用腾讯地图标记的坐标）
+    required:
+      - business_name
+      - branch_name
+      - province
+      - city
+      - district
+      - address
+      - telephone
+      - categories
+      - offset_type
+      - longitude
+      - latitude
+  poi.ServiceInfoBo:
+    type: object
+    properties:
+      photo_list:
+        type: array
+        description: 图片列表，url 形式，可以有多张图片，尺寸为 640*340px。必须为上一接口生成的url。图片内容不允许与门店不相关，不允许为二维码、员工合照（或模特肖像）、营业执照、无门店正门的街景、地图截图、公交地铁站牌、菜单截图等
+        items:
+          type: object
+          properties:
+            photo_url:
+              type: string
+      recommend:
+        type: string
+        description: 推荐品，餐厅可为推荐菜；酒店为推荐套房；景点为推荐游玩景点等，针对自己行业的推荐内容 200字以内
+      special:
+        type: string
+        description: 特色服务，如免费wifi，免费停车，送货上门等商户能提供的特色功能或服务
+      introduction:
+        type: string
+        description: 商户简介，主要介绍商户信息等 300字以内
+      open_time:
+        type: string
+        description: 营业时间，24 小时制表示，用“-”连接，如 8:00-20:00
+      avg_price:
+        type: integer
+        format: int32
+        description: 人均价格，大于0 的整数

@@ -1,0 +1,55 @@
+type: object
+description: 门店基础信息字段
+properties:
+  sid:
+    type: string
+    description: 商户自己的id，用于后续审核通过收到poi_id 的通知时，做对应关系。请商户自己保证唯一识别性
+  business_name:
+    type: string
+    description: 门店名称（仅为商户名，如：国美、麦当劳，不应包含地区、地址、分店名等信息，错误示例：北京国美）不能为空，15个汉字或30个英文字符内
+  branch_name:
+    type: string
+    description: 分店名称（不应包含地区信息，不应与门店名有重复，错误示例：北京王府井店） 20个字以内
+  province:
+    type: string
+    description: 门店所在的省份（直辖市填城市名,如：北京市） 10个字 以内
+  city:
+    type: string
+    description: 门店所在的城市 10个字 以内
+  district:
+    type: string
+    description: 门店所在地区 10个字 以内
+  address:
+    type: string
+    description: 门店所在的详细街道地址（不要填写省市信息） （东莞等没有“区”行政区划的城市，该字段可不必填写。其余城市必填。）
+  telephone:
+    type: string
+    description: 门店的电话（纯数字，区号、分机号均由“-”隔开）
+  categories:
+    type: string
+    description: 门店的类型（不同级分类用“,”隔开，如：美食，川菜，火锅。详细分类参见附件：微信门店类目表）
+  offset_type:
+    type: integer
+    format: int32
+    description: 坐标类型： 1 为火星坐标 2 为sogou经纬度 3 为百度经纬度 4 为mapbar经纬度 5 为GPS坐标 6 为sogou墨卡托坐标 注：高德经纬度无需转换可直接使用
+    enum: [1, 2, 3, 4, 5, 6]
+  longitude:
+    type: number
+    format: float
+    description: 门店所在地理位置的经度
+  latitude:
+    type: number
+    format: float
+    description: 门店所在地理位置的纬度（经纬度均为火星坐标，最好选用腾讯地图标记的坐标）
+required:
+  - business_name
+  - branch_name
+  - province
+  - city
+  - district
+  - address
+  - telephone
+  - categories
+  - offset_type
+  - longitude
+  - latitude

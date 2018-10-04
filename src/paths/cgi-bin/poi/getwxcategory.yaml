@@ -1,5 +1,6 @@
 get:
   summary: 门店类目表
+  description: 类目名称接口是为商户提供自己门店类型信息的接口。门店类目定位的越规范，能够精准的吸引更多用户，提高曝光率。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444378120)
   security:
     - accessToken: []
   tags:
@@ -8,3 +9,10 @@ get:
   responses:
     '200':
       description: ''
+      schema:
+        type: object
+        properties:
+          category_list:
+            type: array
+            items:
+              type: string

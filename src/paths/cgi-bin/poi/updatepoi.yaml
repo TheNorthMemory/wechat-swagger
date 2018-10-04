@@ -1,5 +1,6 @@
 post:
   summary: 修改门店服务信息
+  description: 商户可以通过该接口，修改门店的服务信息，包括：sid、图片列表、营业时间、推荐、特色服务、简介、人均价格、电话8个字段（名称、坐标、地址等不可修改）修改后需要人工审核。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444378120)
   security:
     - accessToken: []
   tags:
@@ -9,7 +10,28 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          business:
+            type: object
+            properties:
+              base_info:
+                allOf:
+                  - type: object
+                    properties:
+                      poi_id:
+                        type: integer
+                        format: int32
+                        description: 门店ID
+                      sid:
+                        type: string
+                        description: 商户自己的id，用于后续审核通过收到poi_id 的通知时，做对应关系。请商户自己保证唯一识别性
+                      telephone:
+                        type: string
+                        description: 门店的电话（纯数字，区号、分机号均由“-”隔开）
+                  - $ref: '#/definitions/poi.ServiceInfoBo'
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'

@@ -1,5 +1,6 @@
 post:
   summary: 删除门店
+  description: 商户可以通过该接口，删除已经成功创建的门店。请商户慎重调用该接口。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444378120)
   security:
     - accessToken: []
   tags:
@@ -9,7 +10,14 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          poi_id:
+            type: integer
+            format: int32
+            description: 门店ID
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'

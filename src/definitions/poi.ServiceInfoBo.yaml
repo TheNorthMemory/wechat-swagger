@@ -1,0 +1,26 @@
+type: object
+properties:
+  photo_list:
+    type: array
+    description: 图片列表，url 形式，可以有多张图片，尺寸为 640*340px。必须为上一接口生成的url。图片内容不允许与门店不相关，不允许为二维码、员工合照（或模特肖像）、营业执照、无门店正门的街景、地图截图、公交地铁站牌、菜单截图等
+    items:
+      type: object
+      properties:
+        photo_url:
+          type: string
+  recommend:
+    type: string
+    description: 推荐品，餐厅可为推荐菜；酒店为推荐套房；景点为推荐游玩景点等，针对自己行业的推荐内容 200字以内
+  special:
+    type: string
+    description: 特色服务，如免费wifi，免费停车，送货上门等商户能提供的特色功能或服务
+  introduction:
+    type: string
+    description: 商户简介，主要介绍商户信息等 300字以内
+  open_time:
+    type: string
+    description: 营业时间，24 小时制表示，用“-”连接，如 8:00-20:00
+  avg_price:
+    type: integer
+    format: int32
+    description: 人均价格，大于0 的整数

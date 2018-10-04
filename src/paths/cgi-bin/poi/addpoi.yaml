@@ -1,5 +1,6 @@
 post:
   summary: 增加门店
+  description: 创建门店接口是为商户提供创建自己门店数据的接口，门店数据字段越完整，商户页面展示越丰富，越能够吸引更多用户，并提高曝光度。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444378120)
   security:
     - accessToken: []
   tags:
@@ -9,7 +10,27 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          business:
+            type: object
+            properties:
+              base_info:
+                allOf:
+                  - $ref: '#/definitions/poi.BaseInfoBo'
+                  - $ref: '#/definitions/poi.ServiceInfoBo'
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              poi_id:
+                type: integer
+                format: int32
+                description: 门店ID
+        example:
+          errcode: 0
+          errmsg: ok
+          poi_id: 460123456

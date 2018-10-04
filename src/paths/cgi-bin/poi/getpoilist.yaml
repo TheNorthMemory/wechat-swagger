@@ -1,5 +1,6 @@
 post:
   summary: 查询门店列表
+  description: 商户可以通过该接口，批量查询自己名下的门店list，并获取已审核通过的poiid、商户自身sid 用于对应、商户名、分店名、地址字段。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444378120)
   security:
     - accessToken: []
   tags:
@@ -9,7 +10,49 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          begin:
+            type: integer
+            format: int32
+            description: 开始位置，0 即为从第一条开始查询
+          limit:
+            type: integer
+            format: int32
+            description: 返回数据条数，最大允许50，默认为20
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              total_count:
+                type: integer
+                format: int32
+                description: 门店总数量
+              business_list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    base_info:
+                      allOf:
+                        - $ref: '#/definitions/poi.BaseInfoBo'
+                        - $ref: '#/definitions/poi.ServiceInfoBo'
+                        - type: object
+                          properties:
+                            poi_id:
+                              type: integer
+                              format: int32
+                              description: 门店ID
+                            available_state:
+                              type: integer
+                              format: int32
+                              description: 门店是否可用状态。1 表示系统错误、2 表示审核中、3 审核通过、4 审核驳回。当该字段为1、2、4 状态时，poi_id 为空
+                              enum: [1, 2, 3, 4]
+                            update_status:
+                              type: integer
+                              format: int32
+                              description: 扩展字段是否正在更新中。1 表示扩展字段正在更新中，尚未生效，不允许再次更新； 0 表示扩展字段 没有在更新中或更新已生效 ，可以再次更新
+                              enum: [0, 1]

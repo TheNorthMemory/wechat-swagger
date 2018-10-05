@@ -1,5 +1,6 @@
 get:
   summary: 查询门店小程序审核结果
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496904104_cfEfT)'
   security:
     - accessToken: []
   tags:
@@ -8,3 +9,23 @@ get:
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  audit_id:
+                    type: integer
+                    format: int32
+                    description: 审核单id
+                  status:
+                    type: integer
+                    format: int32
+                    description: 审核状态，0：未提交审核，1：审核成功，2：审核中，3：审核失败，4：管理员拒绝
+                    enum: [0, 1, 2, 3, 4]
+                  reason:
+                    type: string
+                    description: 审核状态为3或者4时，reason列出审核失败的原因

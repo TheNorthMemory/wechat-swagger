@@ -1,5 +1,6 @@
 get:
   summary: 拉取门店小程序类目
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496904104_cfEfT)'
   security:
     - accessToken: []
   tags:
@@ -8,3 +9,62 @@ get:
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  all_category_info:
+                    type: object
+                    properties:
+                      categories:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              format: int32
+                              description: 类目id
+                            name:
+                              type: string
+                            level:
+                              type: integer
+                              format: int32
+                              description: 类目的级别，一级或者二级类目
+                            father:
+                              type: integer
+                              format: int32
+                            children:
+                              type: array
+                              description: 子节点列表
+                              items:
+                                type: integer
+                                format: int32
+                            qualify:
+                              type: object
+                              properties:
+                                exter_list:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      inner_list:
+                                        type: array
+                                        items:
+                                          type: object
+                                          properties:
+                                            name:
+                                              type: string
+                                              description: 相关证件的名字
+                            scene:
+                              type: integer
+                              format: int32
+                            sensitive_type:
+                              type: integer
+                              format: int32
+                              description: 0或者1， 0表示不用特殊处理 1表示创建该类目的门店小程序时，需要添加相关证件
+                              enum: [0, 1]

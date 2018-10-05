@@ -8,3 +8,45 @@ get:
   responses:
     '200':
       description: ''
+      schema:
+        type: object
+        properties:
+          status:
+            type: integer
+            format: int32
+          message:
+            type: string
+          data_version:
+            type: string
+          result:
+            type: array
+            items:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  fullname:
+                    type: string
+                    description: 省市区的名字
+                  pinyin:
+                    type: array
+                    items:
+                      type: string
+                  location:
+                    type: object
+                    properties:
+                      lat:
+                        type: number
+                        format: float
+                      lng:
+                        type: number
+                        format: float
+                  cidx:
+                    type: array
+                    items:
+                      type: integer
+                      format: int32

@@ -1,5 +1,6 @@
 post:
   summary: 更新门店信息
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496904104_cfEfT)'
   security:
     - accessToken: []
   tags:
@@ -9,7 +10,51 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        required:
+          - poi_id
+          - hour
+          - contract_phone
+          - pic_list
+        properties:
+          poi_id:
+            type: string
+            description: 为门店小程序添加门店，审核成功后返回的门店id
+          hour:
+            type: string
+            description: 自定义营业时间，格式为10:00-12:00
+          contract_phone:
+            type: string
+            description: 自定义联系电话
+          pic_list:
+            type: array
+            description: 门店图片，可传多张图片 pic_list 字段是一个 json
+            items:
+              type: object
+              properties:
+                list:
+                  type: array
+                  items:
+                    type: string
+          card_id:
+            type: string
+            description: 卡券id，如果不想修改的话，设置为空
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  has_audit_id:
+                    type: integer
+                    format: int32
+                    description: 是否需要审核(1表示需要，0表示不需要)
+                    enum: [0, 1]
+                  audit_id:
+                    type: integer
+                    format: int32
+                    description: 审核单id

@@ -1,5 +1,6 @@
 post:
   summary: 获取门店信息列表
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496904104_cfEfT)'
   security:
     - accessToken: []
   tags:
@@ -9,7 +10,69 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          offset:
+            type: integer
+            format: int32
+            description: 获取门店列表的初始偏移位置，从0开始计数
+          limit:
+            type: integer
+            format: int32
+            description: 获取门店个数
+            default: 20
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              business_list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    base_info:
+                      type: object
+                      properties:
+                        business_name:
+                          type: string
+                        address:
+                          type: string
+                        telephone:
+                          type: string
+                        city:
+                          type: string
+                        province:
+                          type: string
+                        district:
+                          type: string
+                        longitude:
+                          type: number
+                          format: float
+                          description: 经度
+                        latitude:
+                          type: number
+                          format: float
+                          description: 纬度
+                        open_time:
+                          type: string
+                        poi_id:
+                          type: string
+                        photo_list:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              photo_url:
+                                type: string
+                        status:
+                          type: integer
+                          format: int32
+                          description: 1=审核通过,2=审核中,3=审核失败
+                          enum: [1, 2, 3]
+                        qualification_num:
+                          type: string
+                        qualification_name:
+                          type: string

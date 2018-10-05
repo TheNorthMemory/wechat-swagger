@@ -1,5 +1,6 @@
 post:
   summary: 删除门店
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496904104_cfEfT)'
   security:
     - accessToken: []
   tags:
@@ -9,7 +10,14 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          poi_id:
+            type: integer
+            format: int32
+            description: 为门店小程序添加门店，审核成功后返回的门店id
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'

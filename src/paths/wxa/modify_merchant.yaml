@@ -1,5 +1,6 @@
 post:
   summary: 修改门店小程序信息
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496904104_cfEfT)'
   security:
     - accessToken: []
   tags:
@@ -9,7 +10,16 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          headimg_mediaid:
+            type: string
+            description: 门店头像的临时素材mediaid，如果不想改，参数传空值
+          intro:
+            type: string
+            description: 门店小程序的介绍,如果不想改，参数传空值
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'

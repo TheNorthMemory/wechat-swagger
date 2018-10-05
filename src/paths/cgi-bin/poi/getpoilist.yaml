@@ -56,3 +56,16 @@ post:
                               format: int32
                               description: 扩展字段是否正在更新中。1 表示扩展字段正在更新中，尚未生效，不允许再次更新； 0 表示扩展字段 没有在更新中或更新已生效 ，可以再次更新
                               enum: [0, 1]
+                            upgrade_status:
+                              type: integer
+                              format: int32
+                              description: 迁移状态 0 待迁移 1 失败 2 迁移中 3 成功 4 禁止迁移
+                              enum: [0, 1, 2, 3, 4]
+                            upgrade_comment:
+                              type: integer
+                              format: int32
+                              description: 迁移驳回的理由（upgrade_status=1）
+                            mapid:
+                              type: integer
+                              format: int32
+                              description: 腾讯地图的map_poi_id

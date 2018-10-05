@@ -1,5 +1,6 @@
 post:
   summary: 添加门店
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496904104_cfEfT)'
   security:
     - accessToken: []
   tags:
@@ -9,7 +10,56 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        required:
+          - map_poi_id
+          - pic_list
+          - contract_phone
+          - hour
+          - credential
+        properties:
+          map_poi_id:
+            type: string
+            description: 从腾讯地图换取的位置点id， 即search_map_poi接口返回的sosomap_poi_uid字段
+          pic_list:
+            type: object
+            description: 门店图片，可传多张图片 pic_list 字段是一个 json
+            properties:
+              list:
+                type: array
+                items:
+                  type: string
+          contract_phone:
+            type: string
+            description: 联系电话
+          hour:
+            type: string
+            description: 营业时间，格式11:11-12:12
+          credential:
+            type: string
+            description: 经营资质证件号
+          company_name:
+            type: string
+            description: 主体名字 临时素材mediaid 如果复用公众号主体，则company_name为空 如果不复用公众号主体，则company_name为具体的主体名字
+          qualification_list:
+            type: string
+            description: 相关证明材料 临时素材mediaid 不复用公众号主体时，才需要填 支持0~5个mediaid，例如mediaid1 mediaid2
+          card_id:
+            type: string
+            description: 卡券id，如果不需要添加卡券，该参数可为空 目前仅开放支持会员卡、买单和刷卡支付券，不支持自定义code，需要先去公众平台卡券后台创建cardid
+          poi_id:
+            type: string
+            description: 如果是从门店管理迁移门店到门店小程序，则需要填该字段
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  audit_id:
+                    type: integer
+                    format: int32

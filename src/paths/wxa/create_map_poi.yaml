@@ -1,5 +1,6 @@
 post:
   summary: 在腾讯地图中创建门店
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496904104_cfEfT)'
   security:
     - accessToken: []
   tags:
@@ -9,7 +10,82 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          name:
+            type: string
+            description: 名字
+          longitude:
+            type: number
+            format: float
+            description: 经度
+          latitude:
+            type: number
+            format: float
+            description: 纬度
+          province:
+            type: string
+            description: 省份
+          city:
+            type: string
+            description: 城市
+          district:
+            type: string
+            description: 区
+          address:
+            type: string
+            description: 详细地址
+          category:
+            type: string
+            description: 类目，比如美食:中餐厅
+          telephone:
+            type: string
+            description: 电话，可多个，使用英文分号间隔 010-6666666-111;010-6666666;010-6666666-222
+          photo:
+            type: string
+            description: 门店图片url
+          license:
+            type: string
+            description: 营业执照url
+          introduct:
+            type: string
+            description: 介绍
+          districtid:
+            type: string
+            description: 腾讯地图拉取省市区信息接口返回的id
+          poi_id:
+            type: string
+            description: 如果是迁移门店， 必须填 poi_id字段
+          access_token:
+            type: string
+            description: 调用接口凭证
+        required:
+          - name
+          - longitude
+          - latitude
+          - province
+          - city
+          - district
+          - address
+          - category
+          - telephone
+          - photo
+          - license
+          - introduct
+          - districtid
   responses:
     '200':
       description: ''
+      schema:
+        type: object
+        properties:
+          error:
+            type: string
+          data:
+            type: object
+            properties:
+              base_id:
+                type: integer
+                format: int32
+              rich_id:
+                type: integer
+                format: int32

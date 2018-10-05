@@ -1,5 +1,6 @@
 post:
   summary: 在腾讯地图中搜索门店
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496904104_cfEfT)'
   security:
     - accessToken: []
   tags:
@@ -9,7 +10,61 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          districtid:
+            type: string
+            description: 对应 拉取省市区信息接口 中的id字段
+          keyword:
+            type: string
+            description: 搜索的关键词
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  ret_code:
+                    type: integer
+                    format: int32
+                  total_count:
+                    type: integer
+                    format: int32
+                  item:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        branch_name:
+                          type: string
+                        address:
+                          type: string
+                          description: 详细地址
+                        longitude:
+                          type: number
+                          format: float
+                        latitude:
+                          type: number
+                          format: float
+                        telephone:
+                          type: string
+                        category:
+                          type: string
+                        sosomap_poi_uid:
+                          type: string
+                          description: 从腾讯地图换取的位置点id， 即后面创建门店接口中的map_poi_id参数
+                        data_supply:
+                          type: integer
+                          format: int32
+                        pic_urls:
+                          type: array
+                          items:
+                            type: string
+                        card_id_list:
+                          type: array
+                          items:
+                            type: string

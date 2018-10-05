@@ -12,7 +12,27 @@ post:
       in: body
       required: true
       schema:
-        $ref: '#/definitions/notify.event.GiftCardSendToFriend'
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [Event, PageId, OrderId, IsChatRoom, IsReturnBack]
+            properties:
+              Event:
+                type: string
+                description: 事件类型
+                enum: [giftcard_send_to_friend]
+              PageId:
+                type: string
+                description: 货架的id
+              OrderId:
+                type: string
+                description: 订单号
+              IsChatRoom:
+                type: boolean
+                description: 礼品卡是否发送至群，true为是
+              IsReturnBack:
+                type: boolean
+                description: 标识礼品卡是否因超过24小时未被领取，退回卡包。True时表明超时退回卡包。
   responses:
     '200':
       description: ''

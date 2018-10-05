@@ -12,7 +12,29 @@ post:
       in: body
       required: true
       schema:
-        $ref: '#/definitions/notify.event.ShakeAroundLotteryBind'
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [Event, LotteryId, Ticket, Money, BindTime]
+            properties:
+              Event:
+                type: string
+                description: 事件类型
+                enum: [ShakearoundLotteryBind]
+              LotteryId:
+                type: string
+                description: 红包活动id
+              Ticket:
+                type: string
+                description: 红包ticket
+              Money:
+                type: integer
+                format: int32
+                description: 红包金额
+              BindTime:
+                type: integer
+                format: int32
+                description: 红包绑定时间
   responses:
     '200':
       description: ''

@@ -12,7 +12,39 @@ post:
       in: body
       required: true
       schema:
-        $ref: '#/definitions/notify.event.PicWeixin'
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [Event, EventKey, SendPicsInfo]
+            properties:
+              Event:
+                type: string
+                description: 事件类型
+                enum: [pic_weixin]
+              EventKey:
+                type: string
+                description: 事件KEY值，由开发者在创建菜单时设定
+              SendPicsInfo:
+                type: object
+                required: [Count, PicList]
+                description: 发送的图片信息
+                properties:
+                  Count:
+                    type: integer
+                    format: int32
+                    description: 发送的图片数量
+                  PicList:
+                    xml:
+                      wrapped: true
+                    type: array
+                    items:
+                      xml:
+                        name: item
+                      type: object
+                      properties:
+                        PicMd5Sum:
+                          type: string
+                          description: 图片的MD5值，开发者若需要，可用于验证接收到图片
   responses:
     '200':
       description: ''

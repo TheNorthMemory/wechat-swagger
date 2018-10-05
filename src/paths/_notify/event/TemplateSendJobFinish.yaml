@@ -12,7 +12,23 @@ post:
       in: body
       required: true
       schema:
-        $ref: '#/definitions/notify.event.TemplateSendJobFinish'
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [Event, MsgID, Status]
+            properties:
+              Event:
+                type: string
+                description: 事件类型
+                enum: [TEMPLATESENDJOBFINISH]
+              MsgID:
+                type: integer
+                format: int32
+                description: 消息id
+              Status:
+                type: string
+                description: 发送状态
+                enum: ['success', 'failed:user block', 'failed: system failed']
   responses:
     '200':
       description: ''

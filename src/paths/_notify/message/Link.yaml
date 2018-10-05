@@ -12,7 +12,23 @@ post:
       in: body
       required: true
       schema:
-        $ref: '#/definitions/notify.message.Link'
+        allOf:
+          - $ref: '#/definitions/notify.BaseMessage'
+          - type: object
+            required: [MsgType, Title, Description, Url]
+            properties:
+              MsgType:
+                type: string
+                enum: [link]
+              Title:
+                type: string
+                description: 消息标题
+              Description:
+                type: string
+                description: 消息描述
+              Url:
+                type: string
+                description: 消息链接
   responses:
     '200':
       description: ''

@@ -12,7 +12,21 @@ post:
       in: body
       required: true
       schema:
-        $ref: '#/definitions/notify.event.UserEnterSessionFromCard'
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [Event, CardId, UserCardCode, ConsumeSource, OuterStr]
+            properties:
+              Event:
+                type: string
+                description: 事件类型
+                enum: [user_enter_session_from_card]
+              CardId:
+                type: string
+                description: 卡券ID。
+              UserCardCode:
+                type: string
+                description: code序列号。
   responses:
     '200':
       description: ''

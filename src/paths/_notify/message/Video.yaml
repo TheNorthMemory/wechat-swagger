@@ -12,7 +12,20 @@ post:
       in: body
       required: true
       schema:
-        $ref: '#/definitions/notify.message.Video'
+        allOf:
+          - $ref: '#/definitions/notify.BaseMessage'
+          - type: object
+            required: [MsgType, MediaId, ThumbMediaId]
+            properties:
+              MsgType:
+                type: string
+                enum: [video]
+              MediaId:
+                type: string
+                description: 视频消息媒体id，可以调用多媒体文件下载接口拉取数据。
+              ThumbMediaId:
+                type: string
+                description: 视频消息缩略图的媒体id，可以调用多媒体文件下载接口拉取数据。
   responses:
     '200':
       description: ''

@@ -12,7 +12,17 @@ post:
       in: body
       required: true
       schema:
-        $ref: '#/definitions/notify.message.Text'
+        allOf:
+          - $ref: '#/definitions/notify.BaseMessage'
+          - type: object
+            required: [MsgType, Content]
+            properties:
+              MsgType:
+                type: string
+                enum: [text]
+              Content:
+                type: string
+                description: 文本消息内容
   responses:
     '200':
       description: ''

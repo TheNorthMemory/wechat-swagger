@@ -12,7 +12,28 @@ post:
       in: body
       required: true
       schema:
-        $ref: '#/definitions/notify.event.PoiCheckNotify'
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [Event, UniqId, PoiId, Result, msg]
+            properties:
+              Event:
+                type: string
+                description: 事件类型
+                enum: [poi_check_notify]
+              UniqId:
+                type: string
+                description: 商户自己内部ID，即字段中的sid
+              PoiId:
+                type: string
+                description: 微信的门店ID，微信内门店唯一标示ID
+              Result:
+                type: string
+                description: 审核结果，成功succ 或失败fail
+                enum: [succ, fail]
+              msg:
+                type: string
+                description: 成功的通知信息，或审核失败的驳回理由
   responses:
     '200':
       description: ''

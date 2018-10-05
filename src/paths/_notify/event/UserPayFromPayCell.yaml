@@ -12,7 +12,35 @@ post:
       in: body
       required: true
       schema:
-        $ref: '#/definitions/notify.event.UserPayFromPayCell'
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [Event, CardId, UserCardCode]
+            properties:
+              Event:
+                type: string
+                description: 事件类型
+                enum: [user_pay_from_pay_cell]
+              CardId:
+                type: string
+                description: 卡券ID。
+              UserCardCode:
+                type: string
+                description: code序列号。
+              TransId:
+                type: string
+                description: 微信支付交易订单号（只有使用买单功能核销的卡券才会出现）
+              LocationId:
+                type: string
+                description: 门店ID，当前卡券核销的门店ID（只有通过卡券商户助手和买单核销时才会出现）
+              Fee:
+                type: integer
+                format: int32
+                description: 实付金额，单位为分
+              OriginalFee:
+                type: integer
+                format: int32
+                description: 应付金额，单位为分
   responses:
     '200':
       description: ''

@@ -12,7 +12,28 @@ post:
       in: body
       required: true
       schema:
-        $ref: '#/definitions/notify.event.CardMerchantAuthCheckResult'
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [InfoType, AppId, SubMerchantAppId, IsPass, Reason]
+            properties:
+              InfoType:
+                type: string
+                description: 事件类型
+                enum: [card_merchant_check_result]
+              AppId:
+                type: string
+                description: “公众号第三方平台”账号（即母商户）的AppID。
+              SubMerchantAppId:
+                type: string
+                description: 子商户账号的AppID。
+              IsPass:
+                type: integer
+                format: int32
+                description: 是否通过，为1时审核通过。
+              Reason:
+                type: string
+                description: 驳回的原因
   responses:
     '200':
       description: ''

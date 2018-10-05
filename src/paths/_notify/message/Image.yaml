@@ -12,7 +12,20 @@ post:
       in: body
       required: true
       schema:
-        $ref: '#/definitions/notify.message.Image'
+        allOf:
+          - $ref: '#/definitions/notify.BaseMessage'
+          - type: object
+            required: [MsgType, PicUrl, MediaId]
+            properties:
+              MsgType:
+                type: string
+                enum: [image]
+              PicUrl:
+                type: string
+                description: 图片链接（由系统生成）
+              MediaId:
+                type: string
+                description: 图片消息媒体id，可以调用多媒体文件下载接口拉取数据。
   responses:
     '200':
       description: ''

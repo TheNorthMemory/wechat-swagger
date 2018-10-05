@@ -12,7 +12,29 @@ post:
       in: body
       required: true
       schema:
-        $ref: '#/definitions/notify.event.ScanCodePush'
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [Event, EventKey, ScanCodeInfo]
+            properties:
+              Event:
+                type: string
+                description: 事件类型
+                enum: [scancode_push]
+              EventKey:
+                type: string
+                description: 事件KEY值，由开发者在创建菜单时设定
+              ScanCodeInfo:
+                type: object
+                required: [ScanType, ScanResult]
+                description: 扫描信息
+                properties:
+                  ScanType:
+                    type: string
+                    description: 扫描类型，一般是qrcode
+                  ScanResult:
+                    type: string
+                    description: 扫描结果，即二维码对应的字符串信息
   responses:
     '200':
       description: ''

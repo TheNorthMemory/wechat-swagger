@@ -12,7 +12,21 @@ post:
       in: body
       required: true
       schema:
-        $ref: '#/definitions/notify.event.GiftCardPayDone'
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [Event, PageId, OrderId]
+            properties:
+              Event:
+                type: string
+                description: 事件类型
+                enum: [giftcard_pay_done]
+              PageId:
+                type: string
+                description: 货架的id
+              OrderId:
+                type: string
+                description: 订单号
   responses:
     '200':
       description: ''

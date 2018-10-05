@@ -135,7 +135,35 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.AddStoreAuditInfo'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, audit_id, status, reason, is_upgrade]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [add_store_audit_info]
+                  audit_id:
+                    type: integer
+                    format: int32
+                    description: 审核单id
+                  status:
+                    type: integer
+                    format: int32
+                    description: 审核状态（1：审核通过，3：审核失败）
+                    enum: [1, 3]
+                  reason:
+                    type: string
+                    description: 如果status为3，会返回审核失败的原因
+                  is_upgrade:
+                    type: integer
+                    format: int32
+                    description: 0=表示创建门店1=表示是补充门店
+                  poiid:
+                    type: integer
+                    format: int32
+                    description: 门店id(status=1的时候才有效)
       responses:
         '200':
           description: ''
@@ -154,7 +182,19 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.AnnualRenew'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, ExpiredTime]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [annual_renew]
+                  ExpiredTime:
+                    type: integer
+                    format: int32
+                    description: 有效期 (整形)，指的是时间戳，将于该时间戳认证过期，需尽快年审
       responses:
         '200':
           description: ''
@@ -173,7 +213,27 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.ApplyMerchantAuditInfo'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, audit_id, status, reason]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [apply_merchant_audit_info]
+                  audit_id:
+                    type: integer
+                    format: int32
+                    description: 审核单id
+                  status:
+                    type: integer
+                    format: int32
+                    description: 审核状态（1：审核通过，3：审核失败，4：管理员拒绝）
+                    enum: [1, 3, 4]
+                  reason:
+                    type: string
+                    description: 如果status为3或者4，会返回审核失败的原因
       responses:
         '200':
           description: ''
@@ -192,7 +252,28 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.CardMerchantAuthCheckResult'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [InfoType, AppId, SubMerchantAppId, IsPass, Reason]
+                properties:
+                  InfoType:
+                    type: string
+                    description: 事件类型
+                    enum: [card_merchant_check_result]
+                  AppId:
+                    type: string
+                    description: “公众号第三方平台”账号（即母商户）的AppID。
+                  SubMerchantAppId:
+                    type: string
+                    description: 子商户账号的AppID。
+                  IsPass:
+                    type: integer
+                    format: int32
+                    description: 是否通过，为1时审核通过。
+                  Reason:
+                    type: string
+                    description: 驳回的原因
       responses:
         '200':
           description: ''
@@ -211,7 +292,26 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.CardMerchantCheckResult'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, MerchantId, IsPass, Reason]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [card_merchant_check_result]
+                  MerchantId:
+                    type: integer
+                    format: int32
+                    description: 子商户ID。
+                  IsPass:
+                    type: integer
+                    format: int32
+                    description: 是否通过，为1时审核通过。
+                  Reason:
+                    type: string
+                    description: 驳回的原因
       responses:
         '200':
           description: ''
@@ -230,7 +330,21 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.CardNotPassCheck'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, CardId, IsGiveByFriend, UserCardCode, OuterStr]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [card_not_pass_check]
+                  CardId:
+                    type: string
+                    description: 卡券ID。
+                  RefuseReason:
+                    type: string
+                    description: 审核不通过原因
       responses:
         '200':
           description: ''
@@ -249,7 +363,21 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.CardPassCheck'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, CardId, IsGiveByFriend, UserCardCode, OuterStr]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [card_pass_check]
+                  CardId:
+                    type: string
+                    description: 卡券ID。
+                  RefuseReason:
+                    type: string
+                    description: 审核不通过原因
       responses:
         '200':
           description: ''
@@ -268,7 +396,72 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.CardPayOrder'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, CardId, Detail]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [card_pay_order]
+                  OrderId:
+                    type: string
+                    description: 本次推送对应的订单号
+                  Status:
+                    type: string
+                    description: 本次订单号的状态,ORDER_STATUS_WAITING 等待支付 ORDER_STATUS_SUCC 支付成功 ORDER_STATUS_FINANCE_SUCC 加代币成功 ORDER_STATUS_QUANTITY_SUCC 加库存成功 ORDER_STATUS_HAS_REFUND 已退币 ORDER_STATUS_REFUND_WAITING 等待退币确认 ORDER_STATUS_ROLLBACK 已回退,系统失败 ORDER_STATUS_HAS_RECEIPT 已开发票
+                    enum:
+                      - ORDER_STATUS_WAITING
+                      - ORDER_STATUS_SUCC
+                      - ORDER_STATUS_FINANCE_SUCC
+                      - ORDER_STATUS_QUANTITY_SUCC
+                      - ORDER_STATUS_HAS_REFUND
+                      - ORDER_STATUS_REFUND_WAITING
+                      - ORDER_STATUS_ROLLBACK
+                      - ORDER_STATUS_HAS_RECEIPT
+                  CreateOrderTime:
+                    type: integer
+                    format: int32
+                    description: 购买券点时，支付二维码的生成时间
+                  PayFinishTime:
+                    type: integer
+                    format: int32
+                    description: 购买券点时，实际支付成功的时间
+                  Desc:
+                    type: string
+                    description: 支付方式，一般为微信支付充值
+                  FreeCoinCount:
+                    type: integer
+                    format: int32
+                    description: 剩余免费券点数量
+                  PayCoinCount:
+                    type: integer
+                    format: int32
+                    description: 剩余付费券点数量
+                  RefundFreeCoinCount:
+                    type: integer
+                    format: int32
+                    description: 本次变动的免费券点数量
+                  RefundPayCoinCount:
+                    type: integer
+                    format: int32
+                    description: 本次变动的付费券点数量
+                  OrderType:
+                    type: string
+                    description: 所要拉取的订单类型 ORDER_TYPE_SYS_ADD 平台赠送券点 ORDER_TYPE_WXPAY 充值券点 ORDER_TYPE_REFUND 库存未使用回退券点 ORDER_TYPE_REDUCE 券点兑换库存 ORDER_TYPE_SYS_REDUCE 平台扣减
+                    enum:
+                      - ORDER_TYPE_SYS_ADD
+                      - ORDER_TYPE_WXPAY
+                      - ORDER_TYPE_REFUND
+                      - ORDER_TYPE_REDUCE
+                      - ORDER_TYPE_SYS_REDUCE
+                  Memo:
+                    type: string
+                    description: 系统备注，说明此次变动的缘由，如开通账户奖励、门店奖励、核销奖励以及充值、扣减。
+                  ReceiptInfo:
+                    type: string
+                    description: 所开发票的详情
       responses:
         '200':
           description: ''
@@ -287,7 +480,21 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.CardSkuRemind'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, CardId, Detail]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [card_sku_remind]
+                  CardId:
+                    type: string
+                    description: 卡券ID。
+                  Detail:
+                    type: string
+                    description: 报警详细信息
       responses:
         '200':
           description: ''
@@ -306,7 +513,18 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.Click'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, EventKey]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [CLICK]
+                  EventKey:
+                    type: string
+                    description: 事件KEY值，与自定义菜单接口中KEY值对应
       responses:
         '200':
           description: ''
@@ -325,7 +543,26 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.CloudInvoiceInvoiceResultEvent'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, fpqqlsh, nsrsbh, status]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [cloud_invoice_invoiceresult_event]
+                  fpqqlsh:
+                    type: string
+                    description: 发票请求流水号，唯一识别发票请求的流水号
+                  nsrsbh:
+                    type: string
+                    description: 纳税人识别码
+                  status:
+                    type: integer
+                    format: int32
+                    description: 开票结果：2失败 100成功
+                    enum: [100, 2]
       responses:
         '200':
           description: ''
@@ -344,7 +581,44 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.CreateMapPoiAuditInfo'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, audit_id, status, map_poi_id, name, address, latitude, longitude, sh_remark]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [create_map_poi_audit_info]
+                  audit_id:
+                    type: integer
+                    format: int32
+                    description: 审核单id
+                  status:
+                    type: integer
+                    format: int32
+                    description: 审核状态（0：审核通过，1：审核失败）
+                    enum: [0, 1]
+                  map_poi_id:
+                    type: string
+                    description: 从腾讯地图换取的位置点id
+                  name:
+                    type: string
+                    description: 门店名字
+                  address:
+                    type: string
+                    description: 详细地址
+                  latitude:
+                    type: number
+                    format: float
+                    description: 经度
+                  longitude:
+                    type: number
+                    format: float
+                    description: 纬度
+                  sh_remark:
+                    type: string
+                    description: 备注
       responses:
         '200':
           description: ''
@@ -363,7 +637,21 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.GiftCardPayDone'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, PageId, OrderId]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [giftcard_pay_done]
+                  PageId:
+                    type: string
+                    description: 货架的id
+                  OrderId:
+                    type: string
+                    description: 订单号
       responses:
         '200':
           description: ''
@@ -387,7 +675,27 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.GiftCardSendToFriend'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, PageId, OrderId, IsChatRoom, IsReturnBack]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [giftcard_send_to_friend]
+                  PageId:
+                    type: string
+                    description: 货架的id
+                  OrderId:
+                    type: string
+                    description: 订单号
+                  IsChatRoom:
+                    type: boolean
+                    description: 礼品卡是否发送至群，true为是
+                  IsReturnBack:
+                    type: boolean
+                    description: 标识礼品卡是否因超过24小时未被领取，退回卡包。True时表明超时退回卡包。
       responses:
         '200':
           description: ''
@@ -411,7 +719,24 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.GiftCardUserAccept'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, PageId, OrderId, IsChatRoom]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [giftcard_user_accept]
+                  PageId:
+                    type: string
+                    description: 货架的id
+                  OrderId:
+                    type: string
+                    description: 订单号
+                  IsChatRoom:
+                    type: boolean
+                    description: 礼品卡是否发送至群，true为是
       responses:
         '200':
           description: ''
@@ -435,7 +760,27 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.Location'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, Latitude, Longitude, Precision]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [LOCATION]
+                  Latitude:
+                    type: number
+                    format: float
+                    description: 地理位置纬度
+                  Longitude:
+                    type: number
+                    format: float
+                    description: 地理位置经度
+                  Precision:
+                    type: number
+                    format: float
+                    description: 地理位置精度
       responses:
         '200':
           description: ''
@@ -454,7 +799,41 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.LocationSelect'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, EventKey, SendLocationInfo]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [location_select]
+                  EventKey:
+                    type: string
+                    description: 事件KEY值，由开发者在创建菜单时设定
+                  SendLocationInfo:
+                    type: object
+                    required: [Location_X, Location_Y, Scale, Label, Poiname]
+                    description: 发送的图片信息
+                    properties:
+                      Location_X:
+                        type: number
+                        format: float
+                        description: 地理位置纬度
+                      Location_Y:
+                        type: number
+                        format: float
+                        description: 地理位置经度
+                      Scale:
+                        type: integer
+                        format: int32
+                        description: 精度，可理解为精度或者比例尺、越精细的话 scale越高
+                      Label:
+                        type: string
+                        description: 地理位置的字符串信息
+                      Poiname:
+                        type: string
+                        description: 朋友圈POI的名字，可能为空
       responses:
         '200':
           description: ''
@@ -473,7 +852,115 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.MassSendJobFinish'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, MsgID, Status, TotalCount, FilterCount, SentCount, ErrorCount, CopyrightCheckResult]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [MASSSENDJOBFINISH]
+                  MsgID:
+                    type: integer
+                    format: int32
+                    description: 群发的消息ID
+                  Status:
+                    type: string
+                    description: 群发的结构，为“send success”或“send fail”或“err(num)”。但send success时，也有可能因用户拒收公众号的消息、系统错误等原因造成少量用户接收失败。err(num)是审核失败的具体原因，可能的情况如下： err(10001), //涉嫌广告 err(20001), //涉嫌政治 err(20004), //涉嫌社会 err(20002), //涉嫌色情 err(20006), //涉嫌违法犯罪 err(20008), //涉嫌欺诈 err(20013), //涉嫌版权 err(22000), //涉嫌互推(互相宣传) err(21000), //涉嫌其他 err(30001) // 原创校验出现系统错误且用户选择了被判为转载就不群发 err(30002) // 原创校验被判定为不能群发 err(30003) // 原创校验被判定为转载文且用户选择了被判为转载就不群发
+                    enum:
+                      - 'send success'
+                      - 'send fail'
+                      - 'err(10001)'
+                      - 'err(20001)'
+                      - 'err(20004)'
+                      - 'err(20002)'
+                      - 'err(20006)'
+                      - 'err(20008)'
+                      - 'err(20013)'
+                      - 'err(22000)'
+                      - 'err(21000)'
+                      - 'err(30001)'
+                      - 'err(30002)'
+                      - 'err(30003)'
+                  TotalCount:
+                    type: integer
+                    format: int32
+                    description: tag_id下粉丝数；或者openid_list中的粉丝数
+                  FilterCount:
+                    type: integer
+                    format: int32
+                    description: 过滤（过滤是指特定地区、性别的过滤、用户设置拒收的过滤，用户接收已超4条的过滤）后，准备发送的粉丝数，原则上，FilterCount = SentCount + ErrorCount
+                  SentCount:
+                    type: integer
+                    format: int32
+                    description: 发送成功的粉丝数
+                  ErrorCount:
+                    type: integer
+                    format: int32
+                    description: 发送失败的粉丝数
+                  CopyrightCheckResult:
+                    type: object
+                    required: [Count, CheckState, ResultList]
+                    properties:
+                      Count:
+                        type: integer
+                        format: int32
+                      CheckState:
+                        type: integer
+                        format: int32
+                        description: 整体校验结果，1-未被判为转载，可以群发，2-被判为转载，可以群发，3-被判为转载，不能群发
+                        enum: [1, 2, 3]
+                      ResultList:
+                        xml:
+                          wrapped: true
+                        type: array
+                        items:
+                          xml:
+                            name: item
+                          type: object
+                          required: [ArticleIdx, UserDeclareState, AuditState, OriginalArticleUrl, OriginalArticleType, CanReprint, NeedReplaceContent, NeedShowReprintSource]
+                          properties:
+                            ArticleIdx:
+                              type: integer
+                              format: int32
+                              description: 群发文章的序号，从1开始
+                            UserDeclareState:
+                              type: integer
+                              format: int32
+                              description: 用户声明文章的状态
+                            AuditState:
+                              type: integer
+                              format: int32
+                              description: 系统校验的状态
+                            OriginalArticleUrl:
+                              type: string
+                              description: 相似原创文的url
+                            OriginalArticleType:
+                              type: string
+                              description: 相似原创文的类型
+                            CanReprint:
+                              type: integer
+                              format: int32
+                              description: 是否能转载
+                            NeedReplaceContent:
+                              type: integer
+                              format: int32
+                              description: 是否需要替换成原创文内容
+                            NeedShowReprintSource:
+                              type: integer
+                              format: int32
+                              description: 是否需要注明转载来源
+                example:
+                  MsgID: 1000001625
+                  CopyrightCheckResult:
+                    Count: 2
+                    CheckState: 2
+                    ResultList:
+                      - ArticleIdx: 1
+                        UserDeclareState: 0
+                      - ArticleIdx: 2
+                        UserDeclareState: 0
       responses:
         '200':
           description: ''
@@ -492,7 +979,24 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.MerchantOrder'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, OrderId, OrderStatus, ProductId, SkuInfo]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [merchant_order]
+                  OrderId:
+                    type: string
+                  OrderStatus:
+                    type: integer
+                    format: int32
+                  ProductId:
+                    type: string
+                  SkuInfo:
+                    type: string
       responses:
         '200':
           description: ''
@@ -511,7 +1015,27 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.ModifyStoreAuditInfo'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, audit_id, status, reason, is_upgrade]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [modify_store_audit_info]
+                  audit_id:
+                    type: integer
+                    format: int32
+                    description: 审核单id
+                  status:
+                    type: integer
+                    format: int32
+                    description: 审核状态（1：审核通过，3：审核失败）
+                    enum: [1, 3]
+                  reason:
+                    type: string
+                    description: 如果status为3，会返回审核失败的原因
       responses:
         '200':
           description: ''
@@ -530,7 +1054,22 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.NamingVerifyFail'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, FailTime, FailReason]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [naming_verify_fail]
+                  FailTime:
+                    type: integer
+                    format: int32
+                    description: 失败发生时间 (整形)，时间戳
+                  FailReason:
+                    type: string
+                    description: 认证失败的原因
       responses:
         '200':
           description: ''
@@ -549,7 +1088,19 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.NamingVerifySuccess'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, ExpiredTime]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [naming_verify_success]
+                  ExpiredTime:
+                    type: integer
+                    format: int32
+                    description: 有效期 (整形)，指的是时间戳，将于该时间戳认证过期
       responses:
         '200':
           description: ''
@@ -568,7 +1119,39 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.PicPhotoOrAlbum'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, EventKey, SendPicsInfo]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [pic_photo_or_album]
+                  EventKey:
+                    type: string
+                    description: 事件KEY值，由开发者在创建菜单时设定
+                  SendPicsInfo:
+                    type: object
+                    required: [Count, PicList]
+                    description: 发送的图片信息
+                    properties:
+                      Count:
+                        type: integer
+                        format: int32
+                        description: 发送的图片数量
+                      PicList:
+                        xml:
+                          wrapped: true
+                        type: array
+                        items:
+                          xml:
+                            name: item
+                          type: object
+                          properties:
+                            PicMd5Sum:
+                              type: string
+                              description: 图片的MD5值，开发者若需要，可用于验证接收到图片
       responses:
         '200':
           description: ''
@@ -587,7 +1170,39 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.PicSysPhoto'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, EventKey, SendPicsInfo]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [pic_sysphoto]
+                  EventKey:
+                    type: string
+                    description: 事件KEY值，由开发者在创建菜单时设定
+                  SendPicsInfo:
+                    type: object
+                    required: [Count, PicList]
+                    description: 发送的图片信息
+                    properties:
+                      Count:
+                        type: integer
+                        format: int32
+                        description: 发送的图片数量
+                      PicList:
+                        xml:
+                          wrapped: true
+                        type: array
+                        items:
+                          xml:
+                            name: item
+                          type: object
+                          properties:
+                            PicMd5Sum:
+                              type: string
+                              description: 图片的MD5值，开发者若需要，可用于验证接收到图片
       responses:
         '200':
           description: ''
@@ -606,7 +1221,39 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.PicWeixin'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, EventKey, SendPicsInfo]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [pic_weixin]
+                  EventKey:
+                    type: string
+                    description: 事件KEY值，由开发者在创建菜单时设定
+                  SendPicsInfo:
+                    type: object
+                    required: [Count, PicList]
+                    description: 发送的图片信息
+                    properties:
+                      Count:
+                        type: integer
+                        format: int32
+                        description: 发送的图片数量
+                      PicList:
+                        xml:
+                          wrapped: true
+                        type: array
+                        items:
+                          xml:
+                            name: item
+                          type: object
+                          properties:
+                            PicMd5Sum:
+                              type: string
+                              description: 图片的MD5值，开发者若需要，可用于验证接收到图片
       responses:
         '200':
           description: ''
@@ -625,7 +1272,28 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.PoiCheckNotify'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, UniqId, PoiId, Result, msg]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [poi_check_notify]
+                  UniqId:
+                    type: string
+                    description: 商户自己内部ID，即字段中的sid
+                  PoiId:
+                    type: string
+                    description: 微信的门店ID，微信内门店唯一标示ID
+                  Result:
+                    type: string
+                    description: 审核结果，成功succ 或失败fail
+                    enum: [succ, fail]
+                  msg:
+                    type: string
+                    description: 成功的通知信息，或审核失败的驳回理由
       responses:
         '200':
           description: ''
@@ -644,7 +1312,22 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.QualificationVerifyFail'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, FailTime, FailReason]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [qualification_verify_fail]
+                  FailTime:
+                    type: integer
+                    format: int32
+                    description: 失败发生时间 (整形)，时间戳
+                  FailReason:
+                    type: string
+                    description: 认证失败的原因
       responses:
         '200':
           description: ''
@@ -663,7 +1346,19 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.QualificationVerifySuccess'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, ExpiredTime]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [qualification_verify_success]
+                  ExpiredTime:
+                    type: integer
+                    format: int32
+                    description: 有效期 (整形)，指的是时间戳，将于该时间戳认证过期
       responses:
         '200':
           description: ''
@@ -682,7 +1377,22 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.Scan'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, EventKey, Ticket]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [SCAN]
+                  EventKey:
+                    type: integer
+                    format: int32
+                    description: 事件KEY值，是一个32位无符号整数，即创建二维码时的二维码scene_id
+                  Ticket:
+                    type: string
+                    description: 二维码的ticket，可用来换取二维码图片(未关注用户扫描二维码)
       responses:
         '200':
           description: ''
@@ -701,7 +1411,29 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.ScanCodePush'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, EventKey, ScanCodeInfo]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [scancode_push]
+                  EventKey:
+                    type: string
+                    description: 事件KEY值，由开发者在创建菜单时设定
+                  ScanCodeInfo:
+                    type: object
+                    required: [ScanType, ScanResult]
+                    description: 扫描信息
+                    properties:
+                      ScanType:
+                        type: string
+                        description: 扫描类型，一般是qrcode
+                      ScanResult:
+                        type: string
+                        description: 扫描结果，即二维码对应的字符串信息
       responses:
         '200':
           description: ''
@@ -720,7 +1452,29 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.ScanCodeWaitMsg'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, EventKey, ScanCodeInfo]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [scancode_waitmsg]
+                  EventKey:
+                    type: string
+                    description: 事件KEY值，由开发者在创建菜单时设定
+                  ScanCodeInfo:
+                    type: object
+                    required: [ScanType, ScanResult]
+                    description: 扫描信息
+                    properties:
+                      ScanType:
+                        type: string
+                        description: 扫描类型，一般是qrcode
+                      ScanResult:
+                        type: string
+                        description: 扫描结果，即二维码对应的字符串信息
       responses:
         '200':
           description: ''
@@ -739,7 +1493,29 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.ShakeAroundLotteryBind'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, LotteryId, Ticket, Money, BindTime]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [ShakearoundLotteryBind]
+                  LotteryId:
+                    type: string
+                    description: 红包活动id
+                  Ticket:
+                    type: string
+                    description: 红包ticket
+                  Money:
+                    type: integer
+                    format: int32
+                    description: 红包金额
+                  BindTime:
+                    type: integer
+                    format: int32
+                    description: 红包绑定时间
       responses:
         '200':
           description: ''
@@ -758,7 +1534,47 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.ShakeAroundUserShake'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, OrderId, OrderStatus, ProductId, SkuInfo]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [ShakearoundUserShake]
+                  ChosenBeacon:
+                    type: object
+                    properties:
+                      Uuid:
+                        type: string
+                      Major:
+                        type: string
+                      Minor:
+                        type: string
+                      Distance:
+                        type: number
+                        format: float
+                        description: 设备与用户的距离（浮点数；单位：米）
+                  AroundBeacons:
+                    xml:
+                      wrapped: true
+                    type: array
+                    items:
+                      xml:
+                        name: AroundBeacon
+                      type: object
+                      properties:
+                        Uuid:
+                          type: string
+                        Major:
+                          type: string
+                        Minor:
+                          type: string
+                        Distance:
+                          type: number
+                          format: float
+                          description: 设备与用户的距离（浮点数；单位：米）
       responses:
         '200':
           description: ''
@@ -777,7 +1593,40 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.SubmitInvoiceTitle'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, fpqqlsh, nsrsbh, status]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [submit_invoice_title]
+                  title:
+                    type: string
+                    description: 抬头
+                  phone:
+                    type: string
+                    description: 联系方式
+                  tax_no:
+                    type: string
+                    description: 税号
+                  addr:
+                    type: string
+                    description: 联系地址
+                  bank_type:
+                    type: string
+                    description: 银行类型
+                  bank_no:
+                    type: string
+                    description: 银行号码
+                  attach:
+                    type: string
+                    description: 附加字段
+                  title_type:
+                    type: string
+                    description: 抬头类型
+                    enum: [InvoiceUserTitlePersonType, InvoiceUserTitleBusinessType]
       responses:
         '200':
           description: ''
@@ -796,7 +1645,21 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.SubmitMemberCardUserInfo'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, CardId, Detail]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [submit_membercard_user_info]
+                  CardId:
+                    type: string
+                    description: 卡券ID。
+                  UserCardCode:
+                    type: string
+                    description: code序列号。
       responses:
         '200':
           description: ''
@@ -815,7 +1678,21 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.Subscribe'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [subscribe]
+                  EventKey:
+                    type: string
+                    description: 事件KEY值，qrscene_为前缀，后面为二维码的参数值(未关注用户扫描二维码)
+                  Ticket:
+                    type: string
+                    description: 二维码的ticket，可用来换取二维码图片(未关注用户扫描二维码)
       responses:
         '200':
           description: ''
@@ -834,7 +1711,23 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.TemplateSendJobFinish'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, MsgID, Status]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [TEMPLATESENDJOBFINISH]
+                  MsgID:
+                    type: integer
+                    format: int32
+                    description: 消息id
+                  Status:
+                    type: string
+                    description: 发送状态
+                    enum: ['success', 'failed:user block', 'failed: system failed']
       responses:
         '200':
           description: ''
@@ -853,7 +1746,15 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.Unsubscribe'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [unsubscribe]
       responses:
         '200':
           description: ''
@@ -872,7 +1773,29 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.UpdateMemberCard'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, CardId, UserCardCode, ModifyBonus, ModifyBalance]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [update_member_card]
+                  CardId:
+                    type: string
+                    description: 卡券ID。
+                  UserCardCode:
+                    type: string
+                    description: code序列号。
+                  ModifyBonus:
+                    type: integer
+                    format: int32
+                    description: 变动的积分值。
+                  ModifyBalance:
+                    type: integer
+                    format: int32
+                    description: 变动的余额值。
       responses:
         '200':
           description: ''
@@ -891,7 +1814,31 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.UserAuthorizeInvoice'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, AuthorizeAppId, AppId, Source]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [user_authorize_invoice]
+                  SuccOrderId:
+                    type: string
+                    description: 授权成功的订单号
+                  FailOrderId:
+                    type: string
+                    description: 授权失败的订单号
+                  AppId:
+                    type: string
+                    description: 用于接收事件推送的公众号的AppId
+                  AuthorizeAppId:
+                    type: string
+                    description: 获取授权页链接的AppId
+                  Source:
+                    type: string
+                    description: 授权来源，web表示来自微信内H5，app标识来自ap，pwxa：小程序开票，wap：h5开票
+                    enum: [web, app, wxa, wap]
       responses:
         '200':
           description: ''
@@ -915,7 +1862,40 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.UserConsumeCard'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, CardId, UserCardCode, ConsumeSource, OuterStr]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [user_consume_card]
+                  CardId:
+                    type: string
+                    description: 卡券ID。
+                  UserCardCode:
+                    type: string
+                    description: code序列号。
+                  ConsumeSource:
+                    type: string
+                    description: 核销来源。支持开发者统计API核销（FROM_API）、公众平台核销（FROM_MP）、卡券商户助手核销（FROM_MOBILE_HELPER）（核销员微信号）
+                    enum: [FROM_API, FROM_MP, FROM_MOBILE_HELPER]
+                  LocationName:
+                    type: string
+                    description: 门店名称，当前卡券核销的门店名称（只有通过自助核销和买单核销时才会出现该字段）
+                  StaffOpenId:
+                    type: string
+                    description: 核销该卡券核销员的openid（只有通过卡券商户助手核销时才会出现）
+                  VerifyCode:
+                    type: string
+                    description: 自助核销时，用户输入的验证码
+                  RemarkAmount:
+                    type: string
+                    description: 自助核销时，用户输入的备注金额
+                  OuterStr:
+                    type: string
+                    description: 开发者发起核销时传入的自定义参数，用于进行核销渠道统计
       responses:
         '200':
           description: ''
@@ -934,7 +1914,21 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.UserDelCard'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, CardId, UserCardCode]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [user_del_card]
+                  CardId:
+                    type: string
+                    description: 卡券ID。
+                  UserCardCode:
+                    type: string
+                    description: code序列号。
       responses:
         '200':
           description: ''
@@ -953,7 +1947,21 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.UserEnterSessionFromCard'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, CardId, UserCardCode, ConsumeSource, OuterStr]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [user_enter_session_from_card]
+                  CardId:
+                    type: string
+                    description: 卡券ID。
+                  UserCardCode:
+                    type: string
+                    description: code序列号。
       responses:
         '200':
           description: ''
@@ -972,7 +1980,43 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.UserGetCard'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, CardId, IsGiveByFriend, UserCardCode, OuterStr]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [user_get_card]
+                  CardId:
+                    type: string
+                    description: 卡券ID。
+                  IsGiveByFriend:
+                    type: integer
+                    format: int32
+                    description: 是否为转赠领取，1代表是，0代表否。
+                    enum: [0, 1]
+                  FriendUserName:
+                    type: string
+                    description: 当IsGiveByFriend为1时填入的字段，表示发起转赠用户的openid
+                  UserCardCode:
+                    type: string
+                    description: code序列号。
+                  OldUserCardCode:
+                    type: string
+                    description: 为保证安全，微信会在转赠发生后变更该卡券的code号，该字段表示转赠前的code。
+                  OuterStr:
+                    type: string
+                    description: 领取场景值，用于领取渠道数据统计。可在生成二维码接口及添加Addcard接口中自定义该字段的字符串值。
+                  IsRestoreMemberCard:
+                    type: integer
+                    format: int32
+                    description: 用户删除会员卡后可重新找回，当用户本次操作为找回时，该值为1，否则为0
+                    enum: [0, 1]
+                  UnionId:
+                    type: string
+                    description: 领券用户的UnionId
       responses:
         '200':
           description: ''
@@ -991,7 +2035,33 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.UserGiftingCard'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, CardId, IsGiveByFriend, UserCardCode, OuterStr]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [user_gifting_card]
+                  CardId:
+                    type: string
+                    description: 卡券ID。
+                  FriendUserName:
+                    type: string
+                    description: 接收卡券用户的openid
+                  UserCardCode:
+                    type: string
+                    description: code序列号。
+                  IsReturnBack:
+                    type: integer
+                    format: int32
+                    description: 是否转赠退回，0代表不是，1代表是。
+                    enum: [0, 1]
+                  IsChatRoom:
+                    type: integer
+                    format: int32
+                    description: 是否是群转赠
       responses:
         '200':
           description: ''
@@ -1010,7 +2080,35 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.UserPayFromPayCell'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, CardId, UserCardCode]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [user_pay_from_pay_cell]
+                  CardId:
+                    type: string
+                    description: 卡券ID。
+                  UserCardCode:
+                    type: string
+                    description: code序列号。
+                  TransId:
+                    type: string
+                    description: 微信支付交易订单号（只有使用买单功能核销的卡券才会出现）
+                  LocationId:
+                    type: string
+                    description: 门店ID，当前卡券核销的门店ID（只有通过卡券商户助手和买单核销时才会出现）
+                  Fee:
+                    type: integer
+                    format: int32
+                    description: 实付金额，单位为分
+                  OriginalFee:
+                    type: integer
+                    format: int32
+                    description: 应付金额，单位为分
       responses:
         '200':
           description: ''
@@ -1029,7 +2127,43 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.UserScanProduct'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, KeyStandard, KeyStr, Country, Province, City, Sex, Scene, ExtInfo]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [user_scan_product]
+                  KeyStandard:
+                    type: string
+                    description: 商品编码标准。
+                  KeyStr:
+                    type: string
+                    description: 商品编码内容。
+                  Country:
+                    type: string
+                    description: 用户在微信内设置的国家。
+                  Province:
+                    type: string
+                    description: 用户在微信内设置的省份。
+                  City:
+                    type: string
+                    description: 用户在微信内设置的城市 。
+                  Sex:
+                    type: integer
+                    format: int32
+                    description: 用户的性别，1为男性，2为女性，0代表未知。
+                    enum: [0, 1, 2]
+                  Scene:
+                    type: integer
+                    format: int32
+                    description: 打开商品主页的场景，1为扫码，2为其他打开场景（如会话、收藏或朋友圈）。
+                    enum: [1, 2]
+                  ExtInfo:
+                    type: string
+                    description: 调用“获取商品二维码接口”时传入的extinfo，为标识参数。
       responses:
         '200':
           description: ''
@@ -1048,7 +2182,27 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.UserScanProductAsync'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, KeyStandard, KeyStr, ExtInfo, RegionCode]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [user_scan_product_async]
+                  KeyStandard:
+                    type: string
+                    description: 商品编码标准。
+                  KeyStr:
+                    type: string
+                    description: 商品编码内容。
+                  ExtInfo:
+                    type: string
+                    description: 调用“获取商品二维码接口”时传入的extinfo，为标识参数。
+                  RegionCode:
+                    type: string
+                    description: 用户的实时地理位置信息（目前只精确到省一级），可在[国家统计局网站查到对应明细](http://www.stats.gov.cn/tjsj/tjbz/xzqhdm/201504/t20150415_712722.html)
       responses:
         '200':
           description: ''
@@ -1067,7 +2221,24 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.UserScanProductEnterSession'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, KeyStandard, KeyStr, Country, Province, City, Sex, Scene, ExtInfo]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [user_scan_product_enter_session]
+                  KeyStandard:
+                    type: string
+                    description: 商品编码标准。
+                  KeyStr:
+                    type: string
+                    description: 商品编码内容。
+                  ExtInfo:
+                    type: string
+                    description: 调用“获取商品二维码接口”时传入的extinfo，为标识参数。
       responses:
         '200':
           description: ''
@@ -1086,7 +2257,28 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.UserScanProductVerifyAction'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, KeyStandard, KeyStr, ExtInfo, Result, ReasonMsg]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [user_scan_product_async]
+                  KeyStandard:
+                    type: string
+                    description: 商品编码标准。
+                  KeyStr:
+                    type: string
+                    description: 商品编码内容。
+                  Result:
+                    type: string
+                    description: 审核结果。verify_ok表示审核通过，verify_not_pass表示审核未通过。
+                    enum: [verify_ok, verify_not_pass]
+                  ReasonMsg:
+                    type: string
+                    description: 审核未通过的原因。
       responses:
         '200':
           description: ''
@@ -1105,7 +2297,24 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.UserViewCard'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, CardId, UserCardCode, ConsumeSource, OuterStr]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [user_view_card]
+                  CardId:
+                    type: string
+                    description: 卡券ID。
+                  UserCardCode:
+                    type: string
+                    description: code序列号。
+                  OuterStr:
+                    type: string
+                    description: 商户自定义二维码渠道参数，用于标识本次扫码打开会员卡来源来自于某个渠道值的二维码
       responses:
         '200':
           description: ''
@@ -1124,7 +2333,19 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.VerifyExpired'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, ExpiredTime]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [verify_expired]
+                  ExpiredTime:
+                    type: integer
+                    format: int32
+                    description: 有效期 (整形)，指的是时间戳，表示已于该时间戳认证过期，需要重新发起微信认证
       responses:
         '200':
           description: ''
@@ -1143,7 +2364,21 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.View'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, EventKey]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [VIEW]
+                  EventKey:
+                    type: string
+                    description: 事件KEY值，设置的跳转URL
+                  MenuId:
+                    type: string
+                    description: 指菜单ID，如果是个性化菜单，则可以通过这个字段，知道是哪个规则的菜单被点击了。
       responses:
         '200':
           description: ''
@@ -1162,7 +2397,22 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.WeappAuditFail'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, EventKey]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [weapp_audit_fail]
+                  Reason:
+                    type: string
+                    description: 审核失败的原因
+                  FailTime:
+                    type: integer
+                    format: int32
+                    description: 审核失败时的时间（整形），时间戳
       responses:
         '200':
           description: ''
@@ -1181,7 +2431,19 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.WeappAuditSuccess'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, EventKey]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [weapp_audit_success]
+                  SuccTime:
+                    type: integer
+                    format: int32
+                    description: 审核成功时的时间（整形），时间戳
       responses:
         '200':
           description: ''
@@ -1200,7 +2462,32 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.event.WifiConnected'
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, ConnectTime, ExpireTime, VendorId, ShopId, DeviceNo]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [WifiConnected]
+                  ConnectTime:
+                    type: integer
+                    format: int32
+                    description: 连网时间（整型）
+                  ExpireTime:
+                    type: integer
+                    format: int32
+                    description: 系统保留字段，固定值
+                  VendorId:
+                    type: string
+                    description: 系统保留字段，固定值
+                  ShopId:
+                    type: string
+                    description: 门店ID，即shop_id
+                  DeviceNo:
+                    type: string
+                    description: 连网的设备无线mac地址，对应bssid
       responses:
         '200':
           description: ''
@@ -1219,7 +2506,20 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.message.Image'
+            allOf:
+              - $ref: '#/definitions/notify.BaseMessage'
+              - type: object
+                required: [MsgType, PicUrl, MediaId]
+                properties:
+                  MsgType:
+                    type: string
+                    enum: [image]
+                  PicUrl:
+                    type: string
+                    description: 图片链接（由系统生成）
+                  MediaId:
+                    type: string
+                    description: 图片消息媒体id，可以调用多媒体文件下载接口拉取数据。
       responses:
         '200':
           description: ''
@@ -1238,7 +2538,23 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.message.Link'
+            allOf:
+              - $ref: '#/definitions/notify.BaseMessage'
+              - type: object
+                required: [MsgType, Title, Description, Url]
+                properties:
+                  MsgType:
+                    type: string
+                    enum: [link]
+                  Title:
+                    type: string
+                    description: 消息标题
+                  Description:
+                    type: string
+                    description: 消息描述
+                  Url:
+                    type: string
+                    description: 消息链接
       responses:
         '200':
           description: ''
@@ -1257,7 +2573,29 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.message.Location'
+            allOf:
+              - $ref: '#/definitions/notify.BaseMessage'
+              - type: object
+                required: [MsgType, Location_X, Location_Y, Scale, Label]
+                properties:
+                  MsgType:
+                    type: string
+                    enum: [location]
+                  Location_X:
+                    type: number
+                    format: float
+                    description: 地理位置纬度
+                  Location_Y:
+                    type: number
+                    format: float
+                    description: 地理位置经度
+                  Scale:
+                    type: integer
+                    format: int32
+                    description: 地图缩放大小
+                  Label:
+                    type: string
+                    description: 地理位置信息
       responses:
         '200':
           description: ''
@@ -1276,7 +2614,20 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.message.ShortVideo'
+            allOf:
+              - $ref: '#/definitions/notify.BaseMessage'
+              - type: object
+                required: [MsgType, MediaId, ThumbMediaId]
+                properties:
+                  MsgType:
+                    type: string
+                    enum: [shortvideo]
+                  MediaId:
+                    type: string
+                    description: 视频消息媒体id，可以调用多媒体文件下载接口拉取数据。
+                  ThumbMediaId:
+                    type: string
+                    description: 视频消息缩略图的媒体id，可以调用多媒体文件下载接口拉取数据。
       responses:
         '200':
           description: ''
@@ -1295,7 +2646,17 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.message.Text'
+            allOf:
+              - $ref: '#/definitions/notify.BaseMessage'
+              - type: object
+                required: [MsgType, Content]
+                properties:
+                  MsgType:
+                    type: string
+                    enum: [text]
+                  Content:
+                    type: string
+                    description: 文本消息内容
       responses:
         '200':
           description: ''
@@ -1314,7 +2675,20 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.message.TransferCustomerService'
+            allOf:
+              - $ref: '#/definitions/notify.Base'
+              - type: object
+                required: [MsgType]
+                properties:
+                  MsgType:
+                    type: string
+                    enum: [transfer_customer_service]
+                  TransInfo:
+                    type: object
+                    properties:
+                      KfAccount:
+                        type: string
+                        description: 指定会话接入的客服账号
       responses:
         '200':
           description: ''
@@ -1333,7 +2707,20 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.message.Video'
+            allOf:
+              - $ref: '#/definitions/notify.BaseMessage'
+              - type: object
+                required: [MsgType, MediaId, ThumbMediaId]
+                properties:
+                  MsgType:
+                    type: string
+                    enum: [video]
+                  MediaId:
+                    type: string
+                    description: 视频消息媒体id，可以调用多媒体文件下载接口拉取数据。
+                  ThumbMediaId:
+                    type: string
+                    description: 视频消息缩略图的媒体id，可以调用多媒体文件下载接口拉取数据。
       responses:
         '200':
           description: ''
@@ -1352,7 +2739,24 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/notify.message.Voice'
+            allOf:
+              - $ref: '#/definitions/notify.BaseMessage'
+              - type: object
+                required: [MsgType, MediaId, Format]
+                properties:
+                  MsgType:
+                    type: string
+                    enum: [voice]
+                  MediaId:
+                    type: string
+                    description: 语音消息媒体id，可以调用多媒体文件下载接口拉取数据。
+                  Format:
+                    type: string
+                    description: 语音格式：amr,speex
+                    enum: [amr, speex]
+                  Recognition:
+                    type: string
+                    description: 语音识别结果，UTF8编码(开通语音识别后有)
       responses:
         '200':
           description: ''
@@ -9260,6 +10664,19 @@ paths:
                                   format: int32
                                   description: 扩展字段是否正在更新中。1 表示扩展字段正在更新中，尚未生效，不允许再次更新； 0 表示扩展字段 没有在更新中或更新已生效 ，可以再次更新
                                   enum: [0, 1]
+                                upgrade_status:
+                                  type: integer
+                                  format: int32
+                                  description: 迁移状态 0 待迁移 1 失败 2 迁移中 3 成功 4 禁止迁移
+                                  enum: [0, 1, 2, 3, 4]
+                                upgrade_comment:
+                                  type: integer
+                                  format: int32
+                                  description: 迁移驳回的理由（upgrade_status=1）
+                                mapid:
+                                  type: integer
+                                  format: int32
+                                  description: 腾讯地图的map_poi_id
   /cgi-bin/poi/getwxcategory:
     get:
       summary: 门店类目表
@@ -16165,6 +17582,7 @@ paths:
   /wxa/add_store:
     post:
       summary: 添加门店
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496904104_cfEfT)'
       security:
         - accessToken: []
       tags:
@@ -16174,10 +17592,59 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            required:
+              - map_poi_id
+              - pic_list
+              - contract_phone
+              - hour
+              - credential
+            properties:
+              map_poi_id:
+                type: string
+                description: 从腾讯地图换取的位置点id， 即search_map_poi接口返回的sosomap_poi_uid字段
+              pic_list:
+                type: object
+                description: 门店图片，可传多张图片 pic_list 字段是一个 json
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: string
+              contract_phone:
+                type: string
+                description: 联系电话
+              hour:
+                type: string
+                description: 营业时间，格式11:11-12:12
+              credential:
+                type: string
+                description: 经营资质证件号
+              company_name:
+                type: string
+                description: 主体名字 临时素材mediaid 如果复用公众号主体，则company_name为空 如果不复用公众号主体，则company_name为具体的主体名字
+              qualification_list:
+                type: string
+                description: 相关证明材料 临时素材mediaid 不复用公众号主体时，才需要填 支持0~5个mediaid，例如mediaid1 mediaid2
+              card_id:
+                type: string
+                description: 卡券id，如果不需要添加卡券，该参数可为空 目前仅开放支持会员卡、买单和刷卡支付券，不支持自定义code，需要先去公众平台卡券后台创建cardid
+              poi_id:
+                type: string
+                description: 如果是从门店管理迁移门店到门店小程序，则需要填该字段
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      audit_id:
+                        type: integer
+                        format: int32
   /wxa/addnearbypoi:
     post:
       summary: 添加地点
@@ -16315,6 +17782,7 @@ paths:
   /wxa/apply_merchant:
     post:
       summary: 创建门店小程序
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496904104_cfEfT)'
       security:
         - accessToken: []
       tags:
@@ -16324,10 +17792,46 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            required:
+              - first_catid
+              - second_catid
+              - qualification_list
+              - headimg_mediaid
+              - nickname
+              - intro
+            properties:
+              first_catid:
+                type: integer
+                format: int32
+                description: 一级类目id
+              second_catid:
+                type: integer
+                format: int32
+                description: 二级类目id
+              qualification_list:
+                type: string
+                description: 类目相关证件的临时素材mediaid 如果second_catid对应的sensitive_type为1 ，则qualification_list字段需要填 支持0~5个mediaid，例如mediaid1  mediaid2
+              headimg_mediaid:
+                type: string
+                description: 头像 --- 临时素材mediaid
+              nickname:
+                type: string
+                description: 门店小程序的昵称 名称长度为4-30个字符（中文算两个字符）
+              intro:
+                type: string
+                description: 门店小程序的介绍
+              org_code:
+                type: string
+                description: 营业执照或组织代码证 --- 临时素材mediaid 如果返回错误码85024，则该字段必填，否则不用填
+              other_files:
+                type: string
+                description: 补充材料 --- 临时素材mediaid 如果返回错误码85024，则可以选填 支持0~5个mediaid，例如mediaid1 mediaid2
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
   /wxa/bind_tester:
     post:
       summary: 绑定微信用户为小程序体验者
@@ -16447,6 +17951,7 @@ paths:
   /wxa/create_map_poi:
     post:
       summary: 在腾讯地图中创建门店
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496904104_cfEfT)'
       security:
         - accessToken: []
       tags:
@@ -16456,13 +17961,89 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              name:
+                type: string
+                description: 名字
+              longitude:
+                type: number
+                format: float
+                description: 经度
+              latitude:
+                type: number
+                format: float
+                description: 纬度
+              province:
+                type: string
+                description: 省份
+              city:
+                type: string
+                description: 城市
+              district:
+                type: string
+                description: 区
+              address:
+                type: string
+                description: 详细地址
+              category:
+                type: string
+                description: 类目，比如美食:中餐厅
+              telephone:
+                type: string
+                description: 电话，可多个，使用英文分号间隔 010-6666666-111;010-6666666;010-6666666-222
+              photo:
+                type: string
+                description: 门店图片url
+              license:
+                type: string
+                description: 营业执照url
+              introduct:
+                type: string
+                description: 介绍
+              districtid:
+                type: string
+                description: 腾讯地图拉取省市区信息接口返回的id
+              poi_id:
+                type: string
+                description: 如果是迁移门店， 必须填 poi_id字段
+              access_token:
+                type: string
+                description: 调用接口凭证
+            required:
+              - name
+              - longitude
+              - latitude
+              - province
+              - city
+              - district
+              - address
+              - category
+              - telephone
+              - photo
+              - license
+              - introduct
+              - districtid
       responses:
         '200':
           description: ''
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              data:
+                type: object
+                properties:
+                  base_id:
+                    type: integer
+                    format: int32
+                  rich_id:
+                    type: integer
+                    format: int32
   /wxa/del_store:
     post:
       summary: 删除门店
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496904104_cfEfT)'
       security:
         - accessToken: []
       tags:
@@ -16472,10 +18053,17 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              poi_id:
+                type: integer
+                format: int32
+                description: 为门店小程序添加门店，审核成功后返回的门店id
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
   /wxa/deletetemplate:
     post:
       summary: 删除指定小程序代码模版
@@ -16689,6 +18277,48 @@ paths:
       responses:
         '200':
           description: ''
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                format: int32
+              message:
+                type: string
+              data_version:
+                type: string
+              result:
+                type: array
+                items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      fullname:
+                        type: string
+                        description: 省市区的名字
+                      pinyin:
+                        type: array
+                        items:
+                          type: string
+                      location:
+                        type: object
+                        properties:
+                          lat:
+                            type: number
+                            format: float
+                          lng:
+                            type: number
+                            format: float
+                      cidx:
+                        type: array
+                        items:
+                          type: integer
+                          format: int32
   /wxa/get_latest_auditstatus:
     get:
       summary: 查询最新一次提交的审核状态（仅供第三方代小程序调用）
@@ -16717,6 +18347,7 @@ paths:
   /wxa/get_merchant_audit_info:
     get:
       summary: 查询门店小程序审核结果
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496904104_cfEfT)'
       security:
         - accessToken: []
       tags:
@@ -16725,9 +18356,30 @@ paths:
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      audit_id:
+                        type: integer
+                        format: int32
+                        description: 审核单id
+                      status:
+                        type: integer
+                        format: int32
+                        description: 审核状态，0：未提交审核，1：审核成功，2：审核中，3：审核失败，4：管理员拒绝
+                        enum: [0, 1, 2, 3, 4]
+                      reason:
+                        type: string
+                        description: 审核状态为3或者4时，reason列出审核失败的原因
   /wxa/get_merchant_category:
     get:
       summary: 拉取门店小程序类目
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496904104_cfEfT)'
       security:
         - accessToken: []
       tags:
@@ -16736,6 +18388,65 @@ paths:
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      all_category_info:
+                        type: object
+                        properties:
+                          categories:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  format: int32
+                                  description: 类目id
+                                name:
+                                  type: string
+                                level:
+                                  type: integer
+                                  format: int32
+                                  description: 类目的级别，一级或者二级类目
+                                father:
+                                  type: integer
+                                  format: int32
+                                children:
+                                  type: array
+                                  description: 子节点列表
+                                  items:
+                                    type: integer
+                                    format: int32
+                                qualify:
+                                  type: object
+                                  properties:
+                                    exter_list:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          inner_list:
+                                            type: array
+                                            items:
+                                              type: object
+                                              properties:
+                                                name:
+                                                  type: string
+                                                  description: 相关证件的名字
+                                scene:
+                                  type: integer
+                                  format: int32
+                                sensitive_type:
+                                  type: integer
+                                  format: int32
+                                  description: 0或者1， 0表示不用特殊处理 1表示创建该类目的门店小程序时，需要添加相关证件
+                                  enum: [0, 1]
   /wxa/get_page:
     get:
       summary: 获取小程序的第三方提交代码的页面配置（仅供第三方开发者代小程序调用）
@@ -16779,6 +18490,7 @@ paths:
   /wxa/get_store_info:
     post:
       summary: 获取单个门店信息
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496904104_cfEfT)'
       security:
         - accessToken: []
       tags:
@@ -16788,13 +18500,69 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              poi_id:
+                type: integer
+                format: int32
+                description: 为门店小程序添加门店，审核成功后返回的门店id
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  business:
+                    type: object
+                    properties:
+                      base_info:
+                        type: object
+                        properties:
+                          business_name:
+                            type: string
+                          address:
+                            type: string
+                          telephone:
+                            type: string
+                          city:
+                            type: string
+                          province:
+                            type: string
+                          district:
+                            type: string
+                          longitude:
+                            type: number
+                            format: float
+                            description: 经度
+                          latitude:
+                            type: number
+                            format: float
+                            description: 纬度
+                          open_time:
+                            type: string
+                          poi_id:
+                            type: string
+                          photo_list:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                photo_url:
+                                  type: string
+                          status:
+                            type: integer
+                            format: int32
+                            description: 1=审核通过,2=审核中,3=审核失败
+                            enum: [1, 2, 3]
+                          qualification_num:
+                            type: string
+                          qualification_name:
+                            type: string
   /wxa/get_store_list:
     post:
       summary: 获取门店信息列表
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496904104_cfEfT)'
       security:
         - accessToken: []
       tags:
@@ -16804,10 +18572,72 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              offset:
+                type: integer
+                format: int32
+                description: 获取门店列表的初始偏移位置，从0开始计数
+              limit:
+                type: integer
+                format: int32
+                description: 获取门店个数
+                default: 20
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  business_list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        base_info:
+                          type: object
+                          properties:
+                            business_name:
+                              type: string
+                            address:
+                              type: string
+                            telephone:
+                              type: string
+                            city:
+                              type: string
+                            province:
+                              type: string
+                            district:
+                              type: string
+                            longitude:
+                              type: number
+                              format: float
+                              description: 经度
+                            latitude:
+                              type: number
+                              format: float
+                              description: 纬度
+                            open_time:
+                              type: string
+                            poi_id:
+                              type: string
+                            photo_list:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  photo_url:
+                                    type: string
+                            status:
+                              type: integer
+                              format: int32
+                              description: 1=审核通过,2=审核中,3=审核失败
+                              enum: [1, 2, 3]
+                            qualification_num:
+                              type: string
+                            qualification_name:
+                              type: string
   /wxa/getgrayreleaseplan:
     get:
       summary: 查询当前分阶段发布详情
@@ -17273,6 +19103,7 @@ paths:
   /wxa/modify_merchant:
     post:
       summary: 修改门店小程序信息
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496904104_cfEfT)'
       security:
         - accessToken: []
       tags:
@@ -17282,10 +19113,19 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              headimg_mediaid:
+                type: string
+                description: 门店头像的临时素材mediaid，如果不想改，参数传空值
+              intro:
+                type: string
+                description: 门店小程序的介绍,如果不想改，参数传空值
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
   /wxa/msg_sec_check:
     post:
       summary: 检查一段文本是否含有违法违规内容
@@ -17411,6 +19251,7 @@ paths:
   /wxa/search_map_poi:
     post:
       summary: 在腾讯地图中搜索门店
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496904104_cfEfT)'
       security:
         - accessToken: []
       tags:
@@ -17420,10 +19261,64 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              districtid:
+                type: string
+                description: 对应 拉取省市区信息接口 中的id字段
+              keyword:
+                type: string
+                description: 搜索的关键词
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      ret_code:
+                        type: integer
+                        format: int32
+                      total_count:
+                        type: integer
+                        format: int32
+                      item:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            branch_name:
+                              type: string
+                            address:
+                              type: string
+                              description: 详细地址
+                            longitude:
+                              type: number
+                              format: float
+                            latitude:
+                              type: number
+                              format: float
+                            telephone:
+                              type: string
+                            category:
+                              type: string
+                            sosomap_poi_uid:
+                              type: string
+                              description: 从腾讯地图换取的位置点id， 即后面创建门店接口中的map_poi_id参数
+                            data_supply:
+                              type: integer
+                              format: int32
+                            pic_urls:
+                              type: array
+                              items:
+                                type: string
+                            card_id_list:
+                              type: array
+                              items:
+                                type: string
   /wxa/setnearbypoishowstatus:
     post:
       summary: 展示/取消展示附近小程序
@@ -17649,6 +19544,7 @@ paths:
   /wxa/update_store:
     post:
       summary: 更新门店信息
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1496904104_cfEfT)'
       security:
         - accessToken: []
       tags:
@@ -17658,10 +19554,54 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            required:
+              - poi_id
+              - hour
+              - contract_phone
+              - pic_list
+            properties:
+              poi_id:
+                type: string
+                description: 为门店小程序添加门店，审核成功后返回的门店id
+              hour:
+                type: string
+                description: 自定义营业时间，格式为10:00-12:00
+              contract_phone:
+                type: string
+                description: 自定义联系电话
+              pic_list:
+                type: array
+                description: 门店图片，可传多张图片 pic_list 字段是一个 json
+                items:
+                  type: object
+                  properties:
+                    list:
+                      type: array
+                      items:
+                        type: string
+              card_id:
+                type: string
+                description: 卡券id，如果不想修改的话，设置为空
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      has_audit_id:
+                        type: integer
+                        format: int32
+                        description: 是否需要审核(1表示需要，0表示不需要)
+                        enum: [0, 1]
+                      audit_id:
+                        type: integer
+                        format: int32
+                        description: 审核单id
 definitions:
   base.ArticleItemBo:
     type: object
@@ -19722,1538 +21662,6 @@ definitions:
             description: 消息id，64位整型
         example:
           MsgId: 1234567890123456
-  notify.event.AddStoreAuditInfo:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, audit_id, status, reason, is_upgrade]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [add_store_audit_info]
-          audit_id:
-            type: integer
-            format: int32
-            description: 审核单id
-          status:
-            type: integer
-            format: int32
-            description: 审核状态（1：审核通过，3：审核失败）
-            enum: [1, 3]
-          reason:
-            type: string
-            description: 如果status为3，会返回审核失败的原因
-          is_upgrade:
-            type: integer
-            format: int32
-            description: 0=表示创建门店1=表示是补充门店
-          poiid:
-            type: integer
-            format: int32
-            description: 门店id(status=1的时候才有效)
-  notify.event.AnnualRenew:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, ExpiredTime]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [annual_renew]
-          ExpiredTime:
-            type: integer
-            format: int32
-            description: 有效期 (整形)，指的是时间戳，将于该时间戳认证过期，需尽快年审
-  notify.event.ApplyMerchantAuditInfo:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, audit_id, status, reason]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [apply_merchant_audit_info]
-          audit_id:
-            type: integer
-            format: int32
-            description: 审核单id
-          status:
-            type: integer
-            format: int32
-            description: 审核状态（1：审核通过，3：审核失败，4：管理员拒绝）
-            enum: [1, 3, 4]
-          reason:
-            type: string
-            description: 如果status为3或者4，会返回审核失败的原因
-  notify.event.CardMerchantAuthCheckResult:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [InfoType, AppId, SubMerchantAppId, IsPass, Reason]
-        properties:
-          InfoType:
-            type: string
-            description: 事件类型
-            enum: [card_merchant_check_result]
-          AppId:
-            type: string
-            description: “公众号第三方平台”账号（即母商户）的AppID。
-          SubMerchantAppId:
-            type: string
-            description: 子商户账号的AppID。
-          IsPass:
-            type: integer
-            format: int32
-            description: 是否通过，为1时审核通过。
-          Reason:
-            type: string
-            description: 驳回的原因
-  notify.event.CardMerchantCheckResult:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, MerchantId, IsPass, Reason]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [card_merchant_check_result]
-          MerchantId:
-            type: integer
-            format: int32
-            description: 子商户ID。
-          IsPass:
-            type: integer
-            format: int32
-            description: 是否通过，为1时审核通过。
-          Reason:
-            type: string
-            description: 驳回的原因
-  notify.event.CardNotPassCheck:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, CardId, IsGiveByFriend, UserCardCode, OuterStr]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [card_not_pass_check]
-          CardId:
-            type: string
-            description: 卡券ID。
-          RefuseReason:
-            type: string
-            description: 审核不通过原因
-  notify.event.CardPassCheck:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, CardId, IsGiveByFriend, UserCardCode, OuterStr]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [card_pass_check]
-          CardId:
-            type: string
-            description: 卡券ID。
-          RefuseReason:
-            type: string
-            description: 审核不通过原因
-  notify.event.CardPayOrder:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, CardId, Detail]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [card_pay_order]
-          OrderId:
-            type: string
-            description: 本次推送对应的订单号
-          Status:
-            type: string
-            description: 本次订单号的状态,ORDER_STATUS_WAITING 等待支付 ORDER_STATUS_SUCC 支付成功 ORDER_STATUS_FINANCE_SUCC 加代币成功 ORDER_STATUS_QUANTITY_SUCC 加库存成功 ORDER_STATUS_HAS_REFUND 已退币 ORDER_STATUS_REFUND_WAITING 等待退币确认 ORDER_STATUS_ROLLBACK 已回退,系统失败 ORDER_STATUS_HAS_RECEIPT 已开发票
-            enum:
-              - ORDER_STATUS_WAITING
-              - ORDER_STATUS_SUCC
-              - ORDER_STATUS_FINANCE_SUCC
-              - ORDER_STATUS_QUANTITY_SUCC
-              - ORDER_STATUS_HAS_REFUND
-              - ORDER_STATUS_REFUND_WAITING
-              - ORDER_STATUS_ROLLBACK
-              - ORDER_STATUS_HAS_RECEIPT
-          CreateOrderTime:
-            type: integer
-            format: int32
-            description: 购买券点时，支付二维码的生成时间
-          PayFinishTime:
-            type: integer
-            format: int32
-            description: 购买券点时，实际支付成功的时间
-          Desc:
-            type: string
-            description: 支付方式，一般为微信支付充值
-          FreeCoinCount:
-            type: integer
-            format: int32
-            description: 剩余免费券点数量
-          PayCoinCount:
-            type: integer
-            format: int32
-            description: 剩余付费券点数量
-          RefundFreeCoinCount:
-            type: integer
-            format: int32
-            description: 本次变动的免费券点数量
-          RefundPayCoinCount:
-            type: integer
-            format: int32
-            description: 本次变动的付费券点数量
-          OrderType:
-            type: string
-            description: 所要拉取的订单类型 ORDER_TYPE_SYS_ADD 平台赠送券点 ORDER_TYPE_WXPAY 充值券点 ORDER_TYPE_REFUND 库存未使用回退券点 ORDER_TYPE_REDUCE 券点兑换库存 ORDER_TYPE_SYS_REDUCE 平台扣减
-            enum:
-              - ORDER_TYPE_SYS_ADD
-              - ORDER_TYPE_WXPAY
-              - ORDER_TYPE_REFUND
-              - ORDER_TYPE_REDUCE
-              - ORDER_TYPE_SYS_REDUCE
-          Memo:
-            type: string
-            description: 系统备注，说明此次变动的缘由，如开通账户奖励、门店奖励、核销奖励以及充值、扣减。
-          ReceiptInfo:
-            type: string
-            description: 所开发票的详情
-  notify.event.CardSkuRemind:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, CardId, Detail]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [card_sku_remind]
-          CardId:
-            type: string
-            description: 卡券ID。
-          Detail:
-            type: string
-            description: 报警详细信息
-  notify.event.Click:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, EventKey]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [CLICK]
-          EventKey:
-            type: string
-            description: 事件KEY值，与自定义菜单接口中KEY值对应
-  notify.event.CloudInvoiceInvoiceResultEvent:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, fpqqlsh, nsrsbh, status]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [cloud_invoice_invoiceresult_event]
-          fpqqlsh:
-            type: string
-            description: 发票请求流水号，唯一识别发票请求的流水号
-          nsrsbh:
-            type: string
-            description: 纳税人识别码
-          status:
-            type: integer
-            format: int32
-            description: 开票结果：2失败 100成功
-            enum: [100, 2]
-  notify.event.CreateMapPoiAuditInfo:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, audit_id, status, map_poi_id, name, address, latitude, longitude, sh_remark]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [create_map_poi_audit_info]
-          audit_id:
-            type: integer
-            format: int32
-            description: 审核单id
-          status:
-            type: integer
-            format: int32
-            description: 审核状态（0：审核通过，1：审核失败）
-            enum: [0, 1]
-          map_poi_id:
-            type: string
-            description: 从腾讯地图换取的位置点id
-          name:
-            type: string
-            description: 门店名字
-          address:
-            type: string
-            description: 详细地址
-          latitude:
-            type: number
-            format: float
-            description: 经度
-          longitude:
-            type: number
-            format: float
-            description: 纬度
-          sh_remark:
-            type: string
-            description: 备注
-  notify.event.GiftCardPayDone:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, PageId, OrderId]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [giftcard_pay_done]
-          PageId:
-            type: string
-            description: 货架的id
-          OrderId:
-            type: string
-            description: 订单号
-  notify.event.GiftCardSendToFriend:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, PageId, OrderId, IsChatRoom, IsReturnBack]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [giftcard_send_to_friend]
-          PageId:
-            type: string
-            description: 货架的id
-          OrderId:
-            type: string
-            description: 订单号
-          IsChatRoom:
-            type: boolean
-            description: 礼品卡是否发送至群，true为是
-          IsReturnBack:
-            type: boolean
-            description: 标识礼品卡是否因超过24小时未被领取，退回卡包。True时表明超时退回卡包。
-  notify.event.GiftCardUserAccept:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, PageId, OrderId, IsChatRoom]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [giftcard_user_accept]
-          PageId:
-            type: string
-            description: 货架的id
-          OrderId:
-            type: string
-            description: 订单号
-          IsChatRoom:
-            type: boolean
-            description: 礼品卡是否发送至群，true为是
-  notify.event.Location:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, Latitude, Longitude, Precision]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [LOCATION]
-          Latitude:
-            type: number
-            format: float
-            description: 地理位置纬度
-          Longitude:
-            type: number
-            format: float
-            description: 地理位置经度
-          Precision:
-            type: number
-            format: float
-            description: 地理位置精度
-  notify.event.LocationSelect:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, EventKey, SendLocationInfo]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [location_select]
-          EventKey:
-            type: string
-            description: 事件KEY值，由开发者在创建菜单时设定
-          SendLocationInfo:
-            type: object
-            required: [Location_X, Location_Y, Scale, Label, Poiname]
-            description: 发送的图片信息
-            properties:
-              Location_X:
-                type: number
-                format: float
-                description: 地理位置纬度
-              Location_Y:
-                type: number
-                format: float
-                description: 地理位置经度
-              Scale:
-                type: integer
-                format: int32
-                description: 精度，可理解为精度或者比例尺、越精细的话 scale越高
-              Label:
-                type: string
-                description: 地理位置的字符串信息
-              Poiname:
-                type: string
-                description: 朋友圈POI的名字，可能为空
-  notify.event.MassSendJobFinish:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, MsgID, Status, TotalCount, FilterCount, SentCount, ErrorCount, CopyrightCheckResult]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [MASSSENDJOBFINISH]
-          MsgID:
-            type: integer
-            format: int32
-            description: 群发的消息ID
-          Status:
-            type: string
-            description: 群发的结构，为“send success”或“send fail”或“err(num)”。但send success时，也有可能因用户拒收公众号的消息、系统错误等原因造成少量用户接收失败。err(num)是审核失败的具体原因，可能的情况如下： err(10001), //涉嫌广告 err(20001), //涉嫌政治 err(20004), //涉嫌社会 err(20002), //涉嫌色情 err(20006), //涉嫌违法犯罪 err(20008), //涉嫌欺诈 err(20013), //涉嫌版权 err(22000), //涉嫌互推(互相宣传) err(21000), //涉嫌其他 err(30001) // 原创校验出现系统错误且用户选择了被判为转载就不群发 err(30002) // 原创校验被判定为不能群发 err(30003) // 原创校验被判定为转载文且用户选择了被判为转载就不群发
-            enum:
-              - 'send success'
-              - 'send fail'
-              - 'err(10001)'
-              - 'err(20001)'
-              - 'err(20004)'
-              - 'err(20002)'
-              - 'err(20006)'
-              - 'err(20008)'
-              - 'err(20013)'
-              - 'err(22000)'
-              - 'err(21000)'
-              - 'err(30001)'
-              - 'err(30002)'
-              - 'err(30003)'
-          TotalCount:
-            type: integer
-            format: int32
-            description: tag_id下粉丝数；或者openid_list中的粉丝数
-          FilterCount:
-            type: integer
-            format: int32
-            description: 过滤（过滤是指特定地区、性别的过滤、用户设置拒收的过滤，用户接收已超4条的过滤）后，准备发送的粉丝数，原则上，FilterCount = SentCount + ErrorCount
-          SentCount:
-            type: integer
-            format: int32
-            description: 发送成功的粉丝数
-          ErrorCount:
-            type: integer
-            format: int32
-            description: 发送失败的粉丝数
-          CopyrightCheckResult:
-            type: object
-            required: [Count, CheckState, ResultList]
-            properties:
-              Count:
-                type: integer
-                format: int32
-              CheckState:
-                type: integer
-                format: int32
-                description: 整体校验结果，1-未被判为转载，可以群发，2-被判为转载，可以群发，3-被判为转载，不能群发
-                enum: [1, 2, 3]
-              ResultList:
-                xml:
-                  wrapped: true
-                type: array
-                items:
-                  xml:
-                    name: item
-                  type: object
-                  required: [ArticleIdx, UserDeclareState, AuditState, OriginalArticleUrl, OriginalArticleType, CanReprint, NeedReplaceContent, NeedShowReprintSource]
-                  properties:
-                    ArticleIdx:
-                      type: integer
-                      format: int32
-                      description: 群发文章的序号，从1开始
-                    UserDeclareState:
-                      type: integer
-                      format: int32
-                      description: 用户声明文章的状态
-                    AuditState:
-                      type: integer
-                      format: int32
-                      description: 系统校验的状态
-                    OriginalArticleUrl:
-                      type: string
-                      description: 相似原创文的url
-                    OriginalArticleType:
-                      type: string
-                      description: 相似原创文的类型
-                    CanReprint:
-                      type: integer
-                      format: int32
-                      description: 是否能转载
-                    NeedReplaceContent:
-                      type: integer
-                      format: int32
-                      description: 是否需要替换成原创文内容
-                    NeedShowReprintSource:
-                      type: integer
-                      format: int32
-                      description: 是否需要注明转载来源
-        example:
-          MsgID: 1000001625
-          CopyrightCheckResult:
-            Count: 2
-            CheckState: 2
-            ResultList:
-              - ArticleIdx: 1
-                UserDeclareState: 0
-              - ArticleIdx: 2
-                UserDeclareState: 0
-  notify.event.MerchantOrder:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, OrderId, OrderStatus, ProductId, SkuInfo]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [merchant_order]
-          OrderId:
-            type: string
-          OrderStatus:
-            type: integer
-            format: int32
-          ProductId:
-            type: string
-          SkuInfo:
-            type: string
-  notify.event.ModifyStoreAuditInfo:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, audit_id, status, reason, is_upgrade]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [modify_store_audit_info]
-          audit_id:
-            type: integer
-            format: int32
-            description: 审核单id
-          status:
-            type: integer
-            format: int32
-            description: 审核状态（1：审核通过，3：审核失败）
-            enum: [1, 3]
-          reason:
-            type: string
-            description: 如果status为3，会返回审核失败的原因
-  notify.event.NamingVerifyFail:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, FailTime, FailReason]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [naming_verify_fail]
-          FailTime:
-            type: integer
-            format: int32
-            description: 失败发生时间 (整形)，时间戳
-          FailReason:
-            type: string
-            description: 认证失败的原因
-  notify.event.NamingVerifySuccess:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, ExpiredTime]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [naming_verify_success]
-          ExpiredTime:
-            type: integer
-            format: int32
-            description: 有效期 (整形)，指的是时间戳，将于该时间戳认证过期
-  notify.event.PicPhotoOrAlbum:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, EventKey, SendPicsInfo]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [pic_photo_or_album]
-          EventKey:
-            type: string
-            description: 事件KEY值，由开发者在创建菜单时设定
-          SendPicsInfo:
-            type: object
-            required: [Count, PicList]
-            description: 发送的图片信息
-            properties:
-              Count:
-                type: integer
-                format: int32
-                description: 发送的图片数量
-              PicList:
-                xml:
-                  wrapped: true
-                type: array
-                items:
-                  xml:
-                    name: item
-                  type: object
-                  properties:
-                    PicMd5Sum:
-                      type: string
-                      description: 图片的MD5值，开发者若需要，可用于验证接收到图片
-  notify.event.PicSysPhoto:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, EventKey, SendPicsInfo]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [pic_sysphoto]
-          EventKey:
-            type: string
-            description: 事件KEY值，由开发者在创建菜单时设定
-          SendPicsInfo:
-            type: object
-            required: [Count, PicList]
-            description: 发送的图片信息
-            properties:
-              Count:
-                type: integer
-                format: int32
-                description: 发送的图片数量
-              PicList:
-                xml:
-                  wrapped: true
-                type: array
-                items:
-                  xml:
-                    name: item
-                  type: object
-                  properties:
-                    PicMd5Sum:
-                      type: string
-                      description: 图片的MD5值，开发者若需要，可用于验证接收到图片
-  notify.event.PicWeixin:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, EventKey, SendPicsInfo]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [pic_weixin]
-          EventKey:
-            type: string
-            description: 事件KEY值，由开发者在创建菜单时设定
-          SendPicsInfo:
-            type: object
-            required: [Count, PicList]
-            description: 发送的图片信息
-            properties:
-              Count:
-                type: integer
-                format: int32
-                description: 发送的图片数量
-              PicList:
-                xml:
-                  wrapped: true
-                type: array
-                items:
-                  xml:
-                    name: item
-                  type: object
-                  properties:
-                    PicMd5Sum:
-                      type: string
-                      description: 图片的MD5值，开发者若需要，可用于验证接收到图片
-  notify.event.PoiCheckNotify:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, UniqId, PoiId, Result, msg]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [poi_check_notify]
-          UniqId:
-            type: string
-            description: 商户自己内部ID，即字段中的sid
-          PoiId:
-            type: string
-            description: 微信的门店ID，微信内门店唯一标示ID
-          Result:
-            type: string
-            description: 审核结果，成功succ 或失败fail
-            enum: [succ, fail]
-          msg:
-            type: string
-            description: 成功的通知信息，或审核失败的驳回理由
-  notify.event.QualificationVerifyFail:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, FailTime, FailReason]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [qualification_verify_fail]
-          FailTime:
-            type: integer
-            format: int32
-            description: 失败发生时间 (整形)，时间戳
-          FailReason:
-            type: string
-            description: 认证失败的原因
-  notify.event.QualificationVerifySuccess:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, ExpiredTime]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [qualification_verify_success]
-          ExpiredTime:
-            type: integer
-            format: int32
-            description: 有效期 (整形)，指的是时间戳，将于该时间戳认证过期
-  notify.event.Scan:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, EventKey, Ticket]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [SCAN]
-          EventKey:
-            type: integer
-            format: int32
-            description: 事件KEY值，是一个32位无符号整数，即创建二维码时的二维码scene_id
-          Ticket:
-            type: string
-            description: 二维码的ticket，可用来换取二维码图片(未关注用户扫描二维码)
-  notify.event.ScanCodePush:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, EventKey, ScanCodeInfo]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [scancode_push]
-          EventKey:
-            type: string
-            description: 事件KEY值，由开发者在创建菜单时设定
-          ScanCodeInfo:
-            type: object
-            required: [ScanType, ScanResult]
-            description: 扫描信息
-            properties:
-              ScanType:
-                type: string
-                description: 扫描类型，一般是qrcode
-              ScanResult:
-                type: string
-                description: 扫描结果，即二维码对应的字符串信息
-  notify.event.ScanCodeWaitMsg:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, EventKey, ScanCodeInfo]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [scancode_waitmsg]
-          EventKey:
-            type: string
-            description: 事件KEY值，由开发者在创建菜单时设定
-          ScanCodeInfo:
-            type: object
-            required: [ScanType, ScanResult]
-            description: 扫描信息
-            properties:
-              ScanType:
-                type: string
-                description: 扫描类型，一般是qrcode
-              ScanResult:
-                type: string
-                description: 扫描结果，即二维码对应的字符串信息
-  notify.event.ShakeAroundLotteryBind:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, LotteryId, Ticket, Money, BindTime]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [ShakearoundLotteryBind]
-          LotteryId:
-            type: string
-            description: 红包活动id
-          Ticket:
-            type: string
-            description: 红包ticket
-          Money:
-            type: integer
-            format: int32
-            description: 红包金额
-          BindTime:
-            type: integer
-            format: int32
-            description: 红包绑定时间
-  notify.event.ShakeAroundUserShake:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, OrderId, OrderStatus, ProductId, SkuInfo]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [ShakearoundUserShake]
-          ChosenBeacon:
-            type: object
-            properties:
-              Uuid:
-                type: string
-              Major:
-                type: string
-              Minor:
-                type: string
-              Distance:
-                type: number
-                format: float
-                description: 设备与用户的距离（浮点数；单位：米）
-          AroundBeacons:
-            xml:
-              wrapped: true
-            type: array
-            items:
-              xml:
-                name: AroundBeacon
-              type: object
-              properties:
-                Uuid:
-                  type: string
-                Major:
-                  type: string
-                Minor:
-                  type: string
-                Distance:
-                  type: number
-                  format: float
-                  description: 设备与用户的距离（浮点数；单位：米）
-  notify.event.SubmitInvoiceTitle:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, fpqqlsh, nsrsbh, status]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [submit_invoice_title]
-          title:
-            type: string
-            description: 抬头
-          phone:
-            type: string
-            description: 联系方式
-          tax_no:
-            type: string
-            description: 税号
-          addr:
-            type: string
-            description: 联系地址
-          bank_type:
-            type: string
-            description: 银行类型
-          bank_no:
-            type: string
-            description: 银行号码
-          attach:
-            type: string
-            description: 附加字段
-          title_type:
-            type: string
-            description: 抬头类型
-            enum: [InvoiceUserTitlePersonType, InvoiceUserTitleBusinessType]
-  notify.event.SubmitMemberCardUserInfo:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, CardId, Detail]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [submit_membercard_user_info]
-          CardId:
-            type: string
-            description: 卡券ID。
-          UserCardCode:
-            type: string
-            description: code序列号。
-  notify.event.Subscribe:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [subscribe]
-          EventKey:
-            type: string
-            description: 事件KEY值，qrscene_为前缀，后面为二维码的参数值(未关注用户扫描二维码)
-          Ticket:
-            type: string
-            description: 二维码的ticket，可用来换取二维码图片(未关注用户扫描二维码)
-  notify.event.TemplateSendJobFinish:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, MsgID, Status]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [TEMPLATESENDJOBFINISH]
-          MsgID:
-            type: integer
-            format: int32
-            description: 消息id
-          Status:
-            type: string
-            description: 发送状态
-            enum: ['success', 'failed:user block', 'failed: system failed']
-  notify.event.Unsubscribe:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [unsubscribe]
-  notify.event.UpdateMemberCard:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, CardId, UserCardCode, ModifyBonus, ModifyBalance]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [update_member_card]
-          CardId:
-            type: string
-            description: 卡券ID。
-          UserCardCode:
-            type: string
-            description: code序列号。
-          ModifyBonus:
-            type: integer
-            format: int32
-            description: 变动的积分值。
-          ModifyBalance:
-            type: integer
-            format: int32
-            description: 变动的余额值。
-  notify.event.UserAuthorizeInvoice:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, AuthorizeAppId, AppId, Source]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [user_authorize_invoice]
-          SuccOrderId:
-            type: string
-            description: 授权成功的订单号
-          FailOrderId:
-            type: string
-            description: 授权失败的订单号
-          AppId:
-            type: string
-            description: 用于接收事件推送的公众号的AppId
-          AuthorizeAppId:
-            type: string
-            description: 获取授权页链接的AppId
-          Source:
-            type: string
-            description: 授权来源，web表示来自微信内H5，app标识来自ap，pwxa：小程序开票，wap：h5开票
-            enum: [web, app, wxa, wap]
-  notify.event.UserConsumeCard:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, CardId, UserCardCode, ConsumeSource, OuterStr]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [user_consume_card]
-          CardId:
-            type: string
-            description: 卡券ID。
-          UserCardCode:
-            type: string
-            description: code序列号。
-          ConsumeSource:
-            type: string
-            description: 核销来源。支持开发者统计API核销（FROM_API）、公众平台核销（FROM_MP）、卡券商户助手核销（FROM_MOBILE_HELPER）（核销员微信号）
-            enum: [FROM_API, FROM_MP, FROM_MOBILE_HELPER]
-          LocationName:
-            type: string
-            description: 门店名称，当前卡券核销的门店名称（只有通过自助核销和买单核销时才会出现该字段）
-          StaffOpenId:
-            type: string
-            description: 核销该卡券核销员的openid（只有通过卡券商户助手核销时才会出现）
-          VerifyCode:
-            type: string
-            description: 自助核销时，用户输入的验证码
-          RemarkAmount:
-            type: string
-            description: 自助核销时，用户输入的备注金额
-          OuterStr:
-            type: string
-            description: 开发者发起核销时传入的自定义参数，用于进行核销渠道统计
-  notify.event.UserDelCard:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, CardId, UserCardCode]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [user_del_card]
-          CardId:
-            type: string
-            description: 卡券ID。
-          UserCardCode:
-            type: string
-            description: code序列号。
-  notify.event.UserEnterSessionFromCard:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, CardId, UserCardCode, ConsumeSource, OuterStr]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [user_enter_session_from_card]
-          CardId:
-            type: string
-            description: 卡券ID。
-          UserCardCode:
-            type: string
-            description: code序列号。
-  notify.event.UserGetCard:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, CardId, IsGiveByFriend, UserCardCode, OuterStr]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [user_get_card]
-          CardId:
-            type: string
-            description: 卡券ID。
-          IsGiveByFriend:
-            type: integer
-            format: int32
-            description: 是否为转赠领取，1代表是，0代表否。
-            enum: [0, 1]
-          FriendUserName:
-            type: string
-            description: 当IsGiveByFriend为1时填入的字段，表示发起转赠用户的openid
-          UserCardCode:
-            type: string
-            description: code序列号。
-          OldUserCardCode:
-            type: string
-            description: 为保证安全，微信会在转赠发生后变更该卡券的code号，该字段表示转赠前的code。
-          OuterStr:
-            type: string
-            description: 领取场景值，用于领取渠道数据统计。可在生成二维码接口及添加Addcard接口中自定义该字段的字符串值。
-          IsRestoreMemberCard:
-            type: integer
-            format: int32
-            description: 用户删除会员卡后可重新找回，当用户本次操作为找回时，该值为1，否则为0
-            enum: [0, 1]
-          UnionId:
-            type: string
-            description: 领券用户的UnionId
-  notify.event.UserGiftingCard:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, CardId, IsGiveByFriend, UserCardCode, OuterStr]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [user_gifting_card]
-          CardId:
-            type: string
-            description: 卡券ID。
-          FriendUserName:
-            type: string
-            description: 接收卡券用户的openid
-          UserCardCode:
-            type: string
-            description: code序列号。
-          IsReturnBack:
-            type: integer
-            format: int32
-            description: 是否转赠退回，0代表不是，1代表是。
-            enum: [0, 1]
-          IsChatRoom:
-            type: integer
-            format: int32
-            description: 是否是群转赠
-  notify.event.UserPayFromPayCell:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, CardId, UserCardCode]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [user_pay_from_pay_cell]
-          CardId:
-            type: string
-            description: 卡券ID。
-          UserCardCode:
-            type: string
-            description: code序列号。
-          TransId:
-            type: string
-            description: 微信支付交易订单号（只有使用买单功能核销的卡券才会出现）
-          LocationId:
-            type: string
-            description: 门店ID，当前卡券核销的门店ID（只有通过卡券商户助手和买单核销时才会出现）
-          Fee:
-            type: integer
-            format: int32
-            description: 实付金额，单位为分
-          OriginalFee:
-            type: integer
-            format: int32
-            description: 应付金额，单位为分
-  notify.event.UserScanProduct:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, KeyStandard, KeyStr, Country, Province, City, Sex, Scene, ExtInfo]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [user_scan_product]
-          KeyStandard:
-            type: string
-            description: 商品编码标准。
-          KeyStr:
-            type: string
-            description: 商品编码内容。
-          Country:
-            type: string
-            description: 用户在微信内设置的国家。
-          Province:
-            type: string
-            description: 用户在微信内设置的省份。
-          City:
-            type: string
-            description: 用户在微信内设置的城市 。
-          Sex:
-            type: integer
-            format: int32
-            description: 用户的性别，1为男性，2为女性，0代表未知。
-            enum: [0, 1, 2]
-          Scene:
-            type: integer
-            format: int32
-            description: 打开商品主页的场景，1为扫码，2为其他打开场景（如会话、收藏或朋友圈）。
-            enum: [1, 2]
-          ExtInfo:
-            type: string
-            description: 调用“获取商品二维码接口”时传入的extinfo，为标识参数。
-  notify.event.UserScanProductAsync:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, KeyStandard, KeyStr, ExtInfo, RegionCode]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [user_scan_product_async]
-          KeyStandard:
-            type: string
-            description: 商品编码标准。
-          KeyStr:
-            type: string
-            description: 商品编码内容。
-          ExtInfo:
-            type: string
-            description: 调用“获取商品二维码接口”时传入的extinfo，为标识参数。
-          RegionCode:
-            type: string
-            description: 用户的实时地理位置信息（目前只精确到省一级），可在[国家统计局网站查到对应明细](http://www.stats.gov.cn/tjsj/tjbz/xzqhdm/201504/t20150415_712722.html)
-  notify.event.UserScanProductEnterSession:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, KeyStandard, KeyStr, Country, Province, City, Sex, Scene, ExtInfo]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [user_scan_product_enter_session]
-          KeyStandard:
-            type: string
-            description: 商品编码标准。
-          KeyStr:
-            type: string
-            description: 商品编码内容。
-          ExtInfo:
-            type: string
-            description: 调用“获取商品二维码接口”时传入的extinfo，为标识参数。
-  notify.event.UserScanProductVerifyAction:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, KeyStandard, KeyStr, ExtInfo, Result, ReasonMsg]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [user_scan_product_async]
-          KeyStandard:
-            type: string
-            description: 商品编码标准。
-          KeyStr:
-            type: string
-            description: 商品编码内容。
-          Result:
-            type: string
-            description: 审核结果。verify_ok表示审核通过，verify_not_pass表示审核未通过。
-            enum: [verify_ok, verify_not_pass]
-          ReasonMsg:
-            type: string
-            description: 审核未通过的原因。
-  notify.event.UserViewCard:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, CardId, UserCardCode, ConsumeSource, OuterStr]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [user_view_card]
-          CardId:
-            type: string
-            description: 卡券ID。
-          UserCardCode:
-            type: string
-            description: code序列号。
-          OuterStr:
-            type: string
-            description: 商户自定义二维码渠道参数，用于标识本次扫码打开会员卡来源来自于某个渠道值的二维码
-  notify.event.VerifyExpired:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, ExpiredTime]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [verify_expired]
-          ExpiredTime:
-            type: integer
-            format: int32
-            description: 有效期 (整形)，指的是时间戳，表示已于该时间戳认证过期，需要重新发起微信认证
-  notify.event.View:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, EventKey]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [VIEW]
-          EventKey:
-            type: string
-            description: 事件KEY值，设置的跳转URL
-          MenuId:
-            type: string
-            description: 指菜单ID，如果是个性化菜单，则可以通过这个字段，知道是哪个规则的菜单被点击了。
-  notify.event.WeappAuditFail:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, EventKey]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [weapp_audit_fail]
-          Reason:
-            type: string
-            description: 审核失败的原因
-          FailTime:
-            type: integer
-            format: int32
-            description: 审核失败时的时间（整形），时间戳
-  notify.event.WeappAuditSuccess:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, EventKey]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [weapp_audit_success]
-          SuccTime:
-            type: integer
-            format: int32
-            description: 审核成功时的时间（整形），时间戳
-  notify.event.WifiConnected:
-    allOf:
-      - $ref: '#/definitions/notify.BaseEvent'
-      - type: object
-        required: [Event, ConnectTime, ExpireTime, VendorId, ShopId, DeviceNo]
-        properties:
-          Event:
-            type: string
-            description: 事件类型
-            enum: [WifiConnected]
-          ConnectTime:
-            type: integer
-            format: int32
-            description: 连网时间（整型）
-          ExpireTime:
-            type: integer
-            format: int32
-            description: 系统保留字段，固定值
-          VendorId:
-            type: string
-            description: 系统保留字段，固定值
-          ShopId:
-            type: string
-            description: 门店ID，即shop_id
-          DeviceNo:
-            type: string
-            description: 连网的设备无线mac地址，对应bssid
-  notify.message.Image:
-    allOf:
-      - $ref: '#/definitions/notify.BaseMessage'
-      - type: object
-        required: [MsgType, PicUrl, MediaId]
-        properties:
-          MsgType:
-            type: string
-            enum: [image]
-          PicUrl:
-            type: string
-            description: 图片链接（由系统生成）
-          MediaId:
-            type: string
-            description: 图片消息媒体id，可以调用多媒体文件下载接口拉取数据。
-  notify.message.Link:
-    allOf:
-      - $ref: '#/definitions/notify.BaseMessage'
-      - type: object
-        required: [MsgType, Title, Description, Url]
-        properties:
-          MsgType:
-            type: string
-            enum: [link]
-          Title:
-            type: string
-            description: 消息标题
-          Description:
-            type: string
-            description: 消息描述
-          Url:
-            type: string
-            description: 消息链接
-  notify.message.Location:
-    allOf:
-      - $ref: '#/definitions/notify.BaseMessage'
-      - type: object
-        required: [MsgType, Location_X, Location_Y, Scale, Label]
-        properties:
-          MsgType:
-            type: string
-            enum: [location]
-          Location_X:
-            type: number
-            format: float
-            description: 地理位置纬度
-          Location_Y:
-            type: number
-            format: float
-            description: 地理位置经度
-          Scale:
-            type: integer
-            format: int32
-            description: 地图缩放大小
-          Label:
-            type: string
-            description: 地理位置信息
-  notify.message.ShortVideo:
-    allOf:
-      - $ref: '#/definitions/notify.BaseMessage'
-      - type: object
-        required: [MsgType, MediaId, ThumbMediaId]
-        properties:
-          MsgType:
-            type: string
-            enum: [shortvideo]
-          MediaId:
-            type: string
-            description: 视频消息媒体id，可以调用多媒体文件下载接口拉取数据。
-          ThumbMediaId:
-            type: string
-            description: 视频消息缩略图的媒体id，可以调用多媒体文件下载接口拉取数据。
-  notify.message.Text:
-    allOf:
-      - $ref: '#/definitions/notify.BaseMessage'
-      - type: object
-        required: [MsgType, Content]
-        properties:
-          MsgType:
-            type: string
-            enum: [text]
-          Content:
-            type: string
-            description: 文本消息内容
-  notify.message.TransferCustomerService:
-    allOf:
-      - $ref: '#/definitions/notify.Base'
-      - type: object
-        required: [MsgType]
-        properties:
-          MsgType:
-            type: string
-            enum: [transfer_customer_service]
-          TransInfo:
-            type: object
-            properties:
-              KfAccount:
-                type: string
-                description: 指定会话接入的客服账号
-  notify.message.Video:
-    allOf:
-      - $ref: '#/definitions/notify.BaseMessage'
-      - type: object
-        required: [MsgType, MediaId, ThumbMediaId]
-        properties:
-          MsgType:
-            type: string
-            enum: [video]
-          MediaId:
-            type: string
-            description: 视频消息媒体id，可以调用多媒体文件下载接口拉取数据。
-          ThumbMediaId:
-            type: string
-            description: 视频消息缩略图的媒体id，可以调用多媒体文件下载接口拉取数据。
-  notify.message.Voice:
-    allOf:
-      - $ref: '#/definitions/notify.BaseMessage'
-      - type: object
-        required: [MsgType, MediaId, Format]
-        properties:
-          MsgType:
-            type: string
-            enum: [voice]
-          MediaId:
-            type: string
-            description: 语音消息媒体id，可以调用多媒体文件下载接口拉取数据。
-          Format:
-            type: string
-            description: 语音格式：amr,speex
-            enum: [amr, speex]
-          Recognition:
-            type: string
-            description: 语音识别结果，UTF8编码(开通语音识别后有)
   poi.BaseInfoBo:
     type: object
     description: 门店基础信息字段

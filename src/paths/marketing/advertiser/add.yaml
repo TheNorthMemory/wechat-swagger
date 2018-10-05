@@ -1,0 +1,43 @@
+post:
+  summary: 开通帐号
+  security:
+    - accessToken: []
+  tags:
+    - 广告服务商接口
+  consumes:
+    - application/x-www-form-urlencoded
+  parameters:
+    - in: formData
+      name: system_industry_id
+      type: integer
+      format: int64
+      description: 二级行业id,可填行业id详见[微信广告主 开户行业&朋友圈准入行业](http://wximg.qq.com/wxp/docs/api_industry.xlsx)
+      required: true
+    - in: formData
+      name: contact_person
+      type: string
+      description: 投放负责人姓名
+      required: true
+    - in: formData
+      name: contact_person_telephone
+      type: string
+      description: 投放负责人联系电话
+      required: true
+    - in: formData
+      name: business_type
+      type: string
+      description: 经营性质，部分行业需要设置，详见[微信广告主开户行业&朋友圈准入行业](http://wximg.qq.com/wxp/docs/api_industry.xlsx)
+      enum:
+        - ONLINE_INCLUDE_THIRD_PARTY_MERCHANTS
+        - ONLINE_EXCLUDE_THIRD_PARTY_MERCHANTS
+        - OFFLINE
+    - in: formData
+      name: business_content
+      type: string
+      description: 经营内容，部分行业需要设置，详见[微信广告主开户行业&朋友圈准入行业](http://wximg.qq.com/wxp/docs/api_industry.xlsx)
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'

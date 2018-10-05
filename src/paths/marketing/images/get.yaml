@@ -1,0 +1,112 @@
+get:
+  summary: 获取图片信息
+  security:
+    - accessToken: []
+  tags:
+    - 广告服务商接口
+  consumes:
+    - application/x-www-form-urlencoded
+  parameters:
+    - in: query
+      name: image_id
+      type: string
+      description: 指定帐号的图片id，上传图片成功后获得
+    - in: query
+      name: filtering
+      type: array
+      items:
+        type: object
+        properties:
+          field:
+            type: string
+            description: 过滤字段
+            enum: [signature, image_id, width, height]
+          operator:
+            type: string
+            description: 操作符
+            enum: [EQUALS, CONTAINS]
+          values:
+            type: array
+            items:
+              type: string
+              description: 字段取值
+    - in: query
+      name: page
+      type: integer
+      format: int64
+      description: 大于等于 1 小于等于实际总页数， 若不传则代表获取第 1 页
+    - in: query
+      name: page_size
+      type: integer
+      format: int64
+      description: 一页获取的数据条数，1-100，默认为 10
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    image_id:
+                      type: string
+                      description: 图片 id
+                    width:
+                      type: integer
+                      format: int64
+                      description: 图片宽度
+                    height:
+                      type: integer
+                      format: int64
+                      description: 图片高度
+                    file_size:
+                      type: integer
+                      format: int64
+                      description: 图片大小 单位 byte
+                    type:
+                      type: string
+                      description: 图片类型，见附录【图片类型】
+                      enum: [IMAGE_TYPE_GIF, IMAGE_TYPE_JPG, IMAGE_TYPE_PNG]
+                    signature:
+                      type: string
+                      description: 图片签名
+                    preview_url:
+                      type: string
+                      description: 图片预览地址
+              page_info:
+                type: object
+                properties:
+                  total_number:
+                    type: integer
+                    format: int64
+                  total_page:
+                    type: integer
+                    format: int64
+                  page_size:
+                    type: integer
+                    format: int64
+                  page:
+                    type: integer
+                    format: int64
+        example:
+          errcode: 0
+          errmsg: ''
+          data:
+            list:
+              - image_id: '2644750941:4f71a5b6e71c6abf67a2b16c0b9017a8'
+                width: 160
+                height: 210
+                file_size: 10280
+                type: IMAGE_TYPE_JPG
+                signature: 4f71a5b6e71c6abf67a2b16c0b9017a8
+                preview_url: 'https://example.com/example.jpg'
+            page_info:
+              total_number: 1
+              total_page: 1
+              page_size: 10
+              page: 1

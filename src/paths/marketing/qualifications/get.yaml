@@ -1,0 +1,79 @@
+get:
+  summary: 获取主资质
+  security:
+    - accessToken: []
+  tags:
+    - 广告服务商接口
+  consumes:
+    - application/x-www-form-urlencoded
+  parameters: []
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    qualification_id:
+                      type: integer
+                      format: int64
+                      description: 资质 id
+                    qualification_name:
+                      type: string
+                      description: 资质名称
+                    qualification_image:
+                      type: string
+                      description: 资质图片 url
+                    qualification_type:
+                      type: string
+                      description: 资质类型，详见附录【资质类型】
+                      enum: [AD_QUALIFICATION, INDUSTRY_QUALIFICATION]
+                    qualification_status:
+                      type: string
+                      description: 资质系统状态，详见附录【资质系统状态】
+                      enum: [QUALIFICATION_STATUS_NORMAL, QUALIFICATION_STATUS_PENDING, QUALIFICATION_STATUS_DENIED, QUALIFICATION_STATUS_EXPIRED, QUALIFICATION_STATUS_WILL_EXPIR]
+                    valid_date:
+                      type: string
+                      format: date
+                      description: 资质有效日期，日期格式，YYYY-mm-dd，空 代表永久有效
+                    reject_message:
+                      type: string
+                      description: 审核消息
+              page_info:
+                type: object
+                properties:
+                  total_number:
+                    type: integer
+                    format: int64
+                  total_page:
+                    type: integer
+                    format: int64
+                  page_size:
+                    type: integer
+                    format: int64
+                  page:
+                    type: integer
+                    format: int64
+        example:
+          errcode: 0
+          errmsg: ''
+          data:
+            list:
+              - qualification_id: 12345
+                qualification_name: 《增值电信业务经营许可证》
+                qualification_url: 'https://www.example.com/image/01'
+                qualification_type: INDUSTRY_QUALIFICATION
+                qualification_status: QUALIFICATION_STATUS_NORMAL
+                valid_date: ''
+                reject_message: ''
+            page_info:
+              total_number: 1
+              total_page: 1
+              page_size: 10
+              page: 1

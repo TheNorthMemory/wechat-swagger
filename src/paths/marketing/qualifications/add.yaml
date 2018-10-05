@@ -1,0 +1,45 @@
+post:
+  summary: 上传主资质
+  security:
+    - accessToken: []
+  tags:
+    - 广告服务商接口
+  consumes:
+    - application/x-www-form-urlencoded
+  parameters:
+    - in: formData
+      name: qualification_type
+      type: string
+      description: 资质类型
+      enum: [AD_QUALIFICATION, INDUSTRY_QUALIFICATION]
+      required: true
+    - in: formData
+      name: qualification_name
+      type: string
+      description: 资质名称
+      required: true
+    - in: formData
+      name: qualification_image_id
+      type: string
+      description: 图片id可通过 images 模块上传图片后获得
+      required: true
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  qualification_id:
+                    type: integer
+                    format: int64
+                    description: 资质id
+        example:
+          errcode: 0
+          errmsg: ''
+          data:
+            qualification_id: 12345

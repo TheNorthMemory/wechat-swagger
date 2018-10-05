@@ -14465,6 +14465,481 @@ paths:
                   image_url:
                     type: string
                     description: 上传后的图片URL
+  /marketing/advertiser/add:
+    post:
+      summary: 开通帐号
+      security:
+        - accessToken: []
+      tags:
+        - 广告服务商接口
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: system_industry_id
+          type: integer
+          format: int64
+          description: 二级行业id,可填行业id详见[微信广告主 开户行业&朋友圈准入行业](http://wximg.qq.com/wxp/docs/api_industry.xlsx)
+          required: true
+        - in: formData
+          name: contact_person
+          type: string
+          description: 投放负责人姓名
+          required: true
+        - in: formData
+          name: contact_person_telephone
+          type: string
+          description: 投放负责人联系电话
+          required: true
+        - in: formData
+          name: business_type
+          type: string
+          description: 经营性质，部分行业需要设置，详见[微信广告主开户行业&朋友圈准入行业](http://wximg.qq.com/wxp/docs/api_industry.xlsx)
+          enum:
+            - ONLINE_INCLUDE_THIRD_PARTY_MERCHANTS
+            - ONLINE_EXCLUDE_THIRD_PARTY_MERCHANTS
+            - OFFLINE
+        - in: formData
+          name: business_content
+          type: string
+          description: 经营内容，部分行业需要设置，详见[微信广告主开户行业&朋友圈准入行业](http://wximg.qq.com/wxp/docs/api_industry.xlsx)
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+  /marketing/advertiser/get:
+    get:
+      summary: 获取帐号信息
+      security:
+        - accessToken: []
+      tags:
+        - 广告服务商接口
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      wechat_account_name:
+                        type: string
+                        description: 公众号名称
+                      system_status:
+                        type: string
+                        description: 系统状态，详见附录【帐号系统状态】
+                        enum:
+                          - MP_STATUS_NORMAL
+                          - MP_STATUS_PENDING
+                          - MP_STATUS_DENIED
+                      industry_id:
+                        type: integer
+                        format: int64
+                        description: 二级行业 id
+                      contact_person:
+                        type: string
+                        description: 投放负责人姓名
+                      contact_person_telephone:
+                        type: string
+                        description: 投放负责人联系电话
+                      business_type:
+                        type: string
+                        description: 经营性质，详见附录【经营性质】
+                        enum:
+                          - ONLINE_INCLUDE_THIRD_PARTY_MERCHANTS
+                          - ONLINE_EXCLUDE_THIRD_PARTY_MERCHANTS
+                          - OFFLINE
+                      business_content:
+                        type: string
+                        description: 经营内容
+            example:
+              errcode: 0
+              errmsg: ''
+              data:
+                wechat_account_name: 微信广告
+                system_status: MP_STATUS_NORMAL
+                industry_id: 2113
+                contact_person: test
+                contact_person_telephone: '13500000000'
+                business_type: OFFLINE
+                business_content: ''
+  /marketing/advertiser/update:
+    post:
+      summary: 更新帐号信息
+      security:
+        - accessToken: []
+      tags:
+        - 广告服务商接口
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: system_industry_id
+          type: integer
+          format: int64
+          description: 二级行业id,可填行业id详见[微信广告主开户行业&朋友圈准入行业](http://wximg.qq.com/wxp/docs/api_industry.xlsx)
+        - in: formData
+          name: contact_person
+          type: string
+          description: 投放负责人姓名
+        - in: formData
+          name: contact_person_telephone
+          type: string
+          description: 投放负责人联系电话
+        - in: formData
+          name: business_type
+          type: string
+          description: 经营性质，部分行业需要设置，详见[微信广告主开户行业&朋友圈准入行业](http://wximg.qq.com/wxp/docs/api_industry.xlsx)
+          enum:
+            - ONLINE_INCLUDE_THIRD_PARTY_MERCHANTS
+            - ONLINE_EXCLUDE_THIRD_PARTY_MERCHANTS
+            - OFFLINE
+        - in: formData
+          name: business_content
+          type: string
+          description: 经营内容，部分行业需要设置，详见[微信广告主开户行业&朋友圈准入行业](http://wximg.qq.com/wxp/docs/api_industry.xlsx)
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+  /marketing/images/add:
+    post:
+      summary: 添加图片文件
+      security:
+        - accessToken: []
+      tags:
+        - 广告服务商接口
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: formData
+          name: media
+          type: file
+          description: 支持文件类型:jpg、png、 gif、swf 文件大小限制:小于等于 3MB，单位换算 规则:1KB=1024B、 1MB=1024KB 播放时长:gif 小于等于 5s
+          required: true
+        - in: formData
+          name: signature
+          type: string
+          description: 图片签名，目前使用 图片文件的 md5 值
+          required: true
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  image_id:
+                    type: string
+                    description: 图片 id
+                  width:
+                    type: integer
+                    format: int64
+                    description: 图片宽度
+                  height:
+                    type: integer
+                    format: int64
+                    description: 图片高度
+                  file_size:
+                    type: integer
+                    format: int64
+                    description: 图片大小 单位 byte
+                  type:
+                    type: string
+                    description: 图片类型，见附录【图片类型】
+                    enum: [IMAGE_TYPE_GIF, IMAGE_TYPE_JPG, IMAGE_TYPE_PNG]
+                  signature:
+                    type: string
+                    description: 图片签名
+                  preview_url:
+                    type: string
+                    description: 图片预览地址
+            example:
+              errcode: 0
+              errmsg: ''
+              data:
+                image_id: '999:4f71a5b6e71c6abf67a2b16c0b9017a8'
+                width: 160
+                height: 210
+                file_size: 10280
+                type: IMAGE_TYPE_JPG
+                signature: 4f71a5b6e71c6abf67a2b16c0b9017a8
+                preview_url: 'https://example.com/example.jpg'
+  /marketing/images/get:
+    get:
+      summary: 获取图片信息
+      security:
+        - accessToken: []
+      tags:
+        - 广告服务商接口
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: query
+          name: image_id
+          type: string
+          description: 指定帐号的图片id，上传图片成功后获得
+        - in: query
+          name: filtering
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: 过滤字段
+                enum: [signature, image_id, width, height]
+              operator:
+                type: string
+                description: 操作符
+                enum: [EQUALS, CONTAINS]
+              values:
+                type: array
+                items:
+                  type: string
+                  description: 字段取值
+        - in: query
+          name: page
+          type: integer
+          format: int64
+          description: 大于等于 1 小于等于实际总页数， 若不传则代表获取第 1 页
+        - in: query
+          name: page_size
+          type: integer
+          format: int64
+          description: 一页获取的数据条数，1-100，默认为 10
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        image_id:
+                          type: string
+                          description: 图片 id
+                        width:
+                          type: integer
+                          format: int64
+                          description: 图片宽度
+                        height:
+                          type: integer
+                          format: int64
+                          description: 图片高度
+                        file_size:
+                          type: integer
+                          format: int64
+                          description: 图片大小 单位 byte
+                        type:
+                          type: string
+                          description: 图片类型，见附录【图片类型】
+                          enum: [IMAGE_TYPE_GIF, IMAGE_TYPE_JPG, IMAGE_TYPE_PNG]
+                        signature:
+                          type: string
+                          description: 图片签名
+                        preview_url:
+                          type: string
+                          description: 图片预览地址
+                  page_info:
+                    type: object
+                    properties:
+                      total_number:
+                        type: integer
+                        format: int64
+                      total_page:
+                        type: integer
+                        format: int64
+                      page_size:
+                        type: integer
+                        format: int64
+                      page:
+                        type: integer
+                        format: int64
+            example:
+              errcode: 0
+              errmsg: ''
+              data:
+                list:
+                  - image_id: '2644750941:4f71a5b6e71c6abf67a2b16c0b9017a8'
+                    width: 160
+                    height: 210
+                    file_size: 10280
+                    type: IMAGE_TYPE_JPG
+                    signature: 4f71a5b6e71c6abf67a2b16c0b9017a8
+                    preview_url: 'https://example.com/example.jpg'
+                page_info:
+                  total_number: 1
+                  total_page: 1
+                  page_size: 10
+                  page: 1
+  /marketing/qualifications/add:
+    post:
+      summary: 上传主资质
+      security:
+        - accessToken: []
+      tags:
+        - 广告服务商接口
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: qualification_type
+          type: string
+          description: 资质类型
+          enum: [AD_QUALIFICATION, INDUSTRY_QUALIFICATION]
+          required: true
+        - in: formData
+          name: qualification_name
+          type: string
+          description: 资质名称
+          required: true
+        - in: formData
+          name: qualification_image_id
+          type: string
+          description: 图片id可通过 images 模块上传图片后获得
+          required: true
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      qualification_id:
+                        type: integer
+                        format: int64
+                        description: 资质id
+            example:
+              errcode: 0
+              errmsg: ''
+              data:
+                qualification_id: 12345
+  /marketing/qualifications/delete:
+    post:
+      summary: 删除主资质
+      security:
+        - accessToken: []
+      tags:
+        - 广告服务商接口
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: qualification_id
+          type: integer
+          format: int64
+          description: 资质id
+          required: true
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+            example:
+              errcode: 0
+              errmsg: succeed
+  /marketing/qualifications/get:
+    get:
+      summary: 获取主资质
+      security:
+        - accessToken: []
+      tags:
+        - 广告服务商接口
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        qualification_id:
+                          type: integer
+                          format: int64
+                          description: 资质 id
+                        qualification_name:
+                          type: string
+                          description: 资质名称
+                        qualification_image:
+                          type: string
+                          description: 资质图片 url
+                        qualification_type:
+                          type: string
+                          description: 资质类型，详见附录【资质类型】
+                          enum: [AD_QUALIFICATION, INDUSTRY_QUALIFICATION]
+                        qualification_status:
+                          type: string
+                          description: 资质系统状态，详见附录【资质系统状态】
+                          enum: [QUALIFICATION_STATUS_NORMAL, QUALIFICATION_STATUS_PENDING, QUALIFICATION_STATUS_DENIED, QUALIFICATION_STATUS_EXPIRED, QUALIFICATION_STATUS_WILL_EXPIR]
+                        valid_date:
+                          type: string
+                          format: date
+                          description: 资质有效日期，日期格式，YYYY-mm-dd，空 代表永久有效
+                        reject_message:
+                          type: string
+                          description: 审核消息
+                  page_info:
+                    type: object
+                    properties:
+                      total_number:
+                        type: integer
+                        format: int64
+                      total_page:
+                        type: integer
+                        format: int64
+                      page_size:
+                        type: integer
+                        format: int64
+                      page:
+                        type: integer
+                        format: int64
+            example:
+              errcode: 0
+              errmsg: ''
+              data:
+                list:
+                  - qualification_id: 12345
+                    qualification_name: 《增值电信业务经营许可证》
+                    qualification_url: 'https://www.example.com/image/01'
+                    qualification_type: INDUSTRY_QUALIFICATION
+                    qualification_status: QUALIFICATION_STATUS_NORMAL
+                    valid_date: ''
+                    reject_message: ''
+                page_info:
+                  total_number: 1
+                  total_page: 1
+                  page_size: 10
+                  page: 1
   /merchant/category/getproperty:
     post:
       summary: 获取指定分类的所有属性

@@ -1,0 +1,63 @@
+post:
+  summary: 添加图片文件
+  security:
+    - accessToken: []
+  tags:
+    - 广告服务商接口
+  consumes:
+    - multipart/form-data
+  parameters:
+    - in: formData
+      name: media
+      type: file
+      description: 支持文件类型:jpg、png、 gif、swf 文件大小限制:小于等于 3MB，单位换算 规则:1KB=1024B、 1MB=1024KB 播放时长:gif 小于等于 5s
+      required: true
+    - in: formData
+      name: signature
+      type: string
+      description: 图片签名，目前使用 图片文件的 md5 值
+      required: true
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              image_id:
+                type: string
+                description: 图片 id
+              width:
+                type: integer
+                format: int64
+                description: 图片宽度
+              height:
+                type: integer
+                format: int64
+                description: 图片高度
+              file_size:
+                type: integer
+                format: int64
+                description: 图片大小 单位 byte
+              type:
+                type: string
+                description: 图片类型，见附录【图片类型】
+                enum: [IMAGE_TYPE_GIF, IMAGE_TYPE_JPG, IMAGE_TYPE_PNG]
+              signature:
+                type: string
+                description: 图片签名
+              preview_url:
+                type: string
+                description: 图片预览地址
+        example:
+          errcode: 0
+          errmsg: ''
+          data:
+            image_id: '999:4f71a5b6e71c6abf67a2b16c0b9017a8'
+            width: 160
+            height: 210
+            file_size: 10280
+            type: IMAGE_TYPE_JPG
+            signature: 4f71a5b6e71c6abf67a2b16c0b9017a8
+            preview_url: 'https://example.com/example.jpg'

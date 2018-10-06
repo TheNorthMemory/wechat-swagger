@@ -14465,6 +14465,875 @@ paths:
                   image_url:
                     type: string
                     description: 上传后的图片URL
+  /marketing/adcreatives/add:
+    post:
+      summary: 创建广告创意
+      security:
+        - accessToken: []
+      tags:
+        - 广告服务商接口
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - name: campaign_id
+          in: formData
+          type: integer
+          format: int64
+          description: 推广计划 id
+          required: true
+        - name: adcreative_name
+          in: formData
+          type: string
+          description: 广告创意名称，同一帐号下的广告创意名称不允许重复 字段长度最小 1 字节，长度最大 120 字节
+          required: true
+        - name: adcreative_template_id
+          in: formData
+          type: integer
+          format: int64
+          description: 创意规格 id，具体请咨询您的运营接口人，也可通过 [创意规格查询工具] 进行查询
+          enum: [263, 310, 311, 450, 133, 134]
+          required: true
+        - name: adcreative_elements
+          in: formData
+          type: object
+          description: 创意元素，不同 adcreative_template_id 要求的元素不尽相同，具体情况可通过 [创意规格查询工具] 进行查询
+          required: true
+          properties:
+            link_name_type:
+              type: string
+              enum: [VIEW_DETAILS, GET_COUPONS, MAKE_AN_APPOINTMENT]
+            title:
+              type: string
+            description:
+              type: string
+            image:
+              type: string
+            image_list:
+              type: array
+              items:
+                type: string
+        - name: destination_url
+          in: formData
+          type: string
+          description: 创意目标 url
+          required: true
+        - name: site_set
+          in: formData
+          type: string
+          description: 投放站点集合
+          enum: [SITE_SET_WECHAT]
+          required: true
+        - name: product_type
+          in: formData
+          type: string
+          description: 推广标的物类型
+          enum: [PRODUCT_TYPE_LINK_WECHAT, PRODUCT_TYPE_ECOMMERCE, PRODUCT_TYPE_LBS_WECHAT]
+          required: true
+        - name: product_refs_id
+          in: formData
+          type: string
+          description: 标的物 id，0-128 个英文字符，本地门店推广时需设置为门店 id，微信公众号平台门店管理界 面或接口获得
+        - name: share_info
+          in: formData
+          type: object
+          description: 分享信息
+          properties:
+            share_title:
+              type: string
+            share_description:
+              type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      adcreative_id:
+                        type: integer
+                        format: int64
+                        description: 广告创意 id
+            example:
+              errcode: 0
+              errmsg: ''
+              data:
+                adcreative_id: 123456
+  /marketing/adcreatives/get:
+    get:
+      summary: 获取广告创意
+      security:
+        - accessToken: []
+      tags:
+        - 广告服务商接口
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - name: adcreative_id
+          in: query
+          type: integer
+          format: int64
+          description: 广告创意 id
+        - name: filtering
+          in: query
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: 过滤字段
+                enum: [adcreative_name]
+              operator:
+                type: string
+                description: 操作符
+                enum: [EQUALS, CONTAINS]
+              values:
+                type: array
+                items:
+                  type: string
+                  description: 字段取值
+        - name: page
+          in: query
+          type: integer
+          format: int64
+          description: 大于等于 1 小于等于实际总页数， 若不传则代表获取第 1 页
+        - name: page_size
+          in: query
+          type: integer
+          format: int64
+          description: 一页获取的数据条数，1-100，默认为 10
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      list:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            campaign_id:
+                              type: integer
+                              format: int64
+                              description: 推广计划 id
+                            adcreative_id:
+                              type: integer
+                              format: int64
+                              description: 广告创意 id
+                            adcreative_name:
+                              type: string
+                              description: 广告创意名称，同一帐号下的广告创意名称不允许重复 字段长度最小 1 字节，长度最大 120 字节
+                            adcreative_template_id:
+                              type: integer
+                              format: int64
+                              description: 创意规格 id，具体请咨询您的运营接口人，也可通过 [创意规格查询工具] 进行查询
+                              enum: [263, 310, 311, 450, 133, 134]
+                            adcreative_elements:
+                              type: object
+                              description: 创意元素，不同 adcreative_template_id 要求的元素不尽相同，具体情况可通过 [创意规格查询工具] 进行查询
+                              properties:
+                                link_name_type:
+                                  type: string
+                                  enum: [VIEW_DETAILS, GET_COUPONS, MAKE_AN_APPOINTMENT]
+                                title:
+                                  type: string
+                                description:
+                                  type: string
+                                image:
+                                  type: string
+                                image_list:
+                                  type: array
+                                  items:
+                                    type: string
+                            destination_url:
+                              type: string
+                              description: 创意目标 url
+                            site_set:
+                              type: string
+                              description: 投放站点集合
+                              enum: [SITE_SET_WECHAT]
+                            product_type:
+                              type: string
+                              description: 推广标的物类型
+                              enum: [PRODUCT_TYPE_LINK_WECHAT, PRODUCT_TYPE_ECOMMERCE, PRODUCT_TYPE_LBS_WECHAT]
+                            product_refs_id:
+                              type: string
+                              description: 标的物 id，0-128 个英文字符，本地门店推广时需设置为门店 id，微信公众号平台门店管理界 面或接口获得
+                            created_time:
+                              type: integer
+                              format: int64
+                              description: 创建时间，unix 时间戳，精确到秒
+                            last_modified_time:
+                              type: integer
+                              format: int64
+                              description: 最后修改时间，unix 时间戳，精确到秒
+                      page_info:
+                        type: object
+                        properties:
+                          total_number:
+                            type: integer
+                            format: int64
+                          total_page:
+                            type: integer
+                            format: int64
+                          page_size:
+                            type: integer
+                            format: int64
+                          page:
+                            type: integer
+                            format: int64
+            example:
+              errcode: 0
+              errmsg: ''
+              data:
+                list:
+                  - campaign_id: 23456
+                    adcreative_id: 345678
+                    adcreative_name: 朋友圈广告创意 1
+                    adcreative_template_id: 263
+                    adcreative_elements:
+                      title: 微信，是一个生活方式!
+                      image_list:
+                        - '51959:7ef00101f6284a318ccf5'
+                    destination_url: 'https://weixin.qq.com'
+                    site_set:
+                      - SITE_SET_WECHAT
+                    product_type: PRODUCT_TYPE_LINK_WECHAT
+                    product_refs_id: ''
+                    created_time: 1013554516
+                    last_modified_time: 103435226
+                page_info:
+                  total_number: 1
+                  total_page: 1
+                  page_size: 10
+                  page: 1
+  /marketing/adcreatives/update:
+    post:
+      summary: 更新广告创意
+      security:
+        - accessToken: []
+      tags:
+        - 广告服务商接口
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - name: adcreative_id
+          in: formData
+          type: integer
+          format: int64
+          description: 广告创意 id
+          required: true
+        - name: adcreative_name
+          in: formData
+          type: string
+          description: 广告创意名称，同一帐号下的广告创意名称不允许重复 字段长度最小 1 字节，长度最大 120 字节
+        - name: adcreative_elements
+          in: formData
+          type: object
+          description: 创意元素，不同 adcreative_template_id 要求的元素不尽相同，具体情况可通过 [创意规格查询工具] 进行查询
+          properties:
+            link_name_type:
+              type: string
+              enum: [VIEW_DETAILS, GET_COUPONS, MAKE_AN_APPOINTMENT]
+            title:
+              type: string
+            description:
+              type: string
+            image:
+              type: string
+            image_list:
+              type: array
+              items:
+                type: string
+        - name: destination_url
+          in: formData
+          type: string
+          description: 创意目标 url
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      adcreative_id:
+                        type: integer
+                        format: int64
+                        description: 广告创意 id
+            example:
+              errcode: 0
+              errmsg: ''
+              data:
+                adcreative_id: 123456
+  /marketing/adgroups/add:
+    post:
+      summary: 创建广告组
+      security:
+        - accessToken: []
+      tags:
+        - 广告服务商接口
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - name: campaign_id
+          in: formData
+          type: integer
+          format: int64
+          description: 推广计划 id,微信朋友圈广告1个推广计划下最多创建 10 个广告组;微信公众号广告1个推广计划下只能创建 1 个广告组;
+          required: true
+        - name: adgroup_name
+          in: formData
+          type: string
+          description: 广告组名称，小于 120 个英文字符，同一帐号下不允许 重复。
+          required: true
+        - name: site_set
+          in: formData
+          type: array
+          description: 投放站点
+          required: true
+          items:
+            type: string
+            enum: [SITE_SET_WECHAT]
+        - name: product_type
+          in: formData
+          type: string
+          description: 推广标的物类型
+          enum: [PRODUCT_TYPE_LINK_WECHAT, PRODUCT_TYPE_ECOMMERCE, PRODUCT_TYPE_LBS_WECHAT]
+          required: true
+        - name: targeting
+          in: formData
+          type: object
+          properties:
+            age:
+              type: array
+              items:
+                type: string
+                description: 年龄定向，用区间表示，仅支持单年龄段， 且范围为 13~60。例如 ["13~15"]，表示“13 至 15 岁”， 数字与“~”之间不允许存在空格。
+            gender:
+              type: array
+              items:
+                type: string
+                description: 性别定向(仅单选)
+                enum: [MALE, FEMALE]
+            geo_location:
+              type: object
+              properties:
+                regions:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                    description: 省市区县 id 列表，朋友圈广告设置的地域必须为国内城市，且一个 adgroup 设置的多个城市必须级别相同;
+                location_types:
+                  type: array
+                  items:
+                    type: string
+                    description: 地点类型
+                    enum: [LIVE_IN]
+                business_districts:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                    description: 商圈 id 列表，最多限制 400 个，朋友圈广告设置的商圈必须为国内 商圈，且一个 adgroup 设置的多个地理位置所属的城市级别必须相同;
+                custom_locations:
+                  type: array
+                  description: 自定义地理位置列表，使用火星系坐标数组最小长度 1，最大长度 400
+                  items:
+                    type: object
+                    required: [longitude, latitude, radius]
+                    properties:
+                      longitude:
+                        type: number
+                        format: float
+                        description: 经度，单位度 最小值-180，最大值 180，最多保留 6 位小数
+                      latitude:
+                        type: number
+                        format: float
+                        description: 纬度，单位度 最小值-90，最大值 90，最多保留 6 位小数
+                      radius:
+                        type: integer
+                        format: int64
+                        description: 半径，单位米 最小值 200，最大值 25000
+        - name: optimization_goal
+          in: formData
+          type: string
+          description: 优化目标
+          enum: [OPTIMIZATIONGOAL_CLICK, OPTIMIZATIONGOAL_IMPRESSION]
+          required: true
+        - name: billing_event
+          in: formData
+          type: string
+          description: 出价方式
+          required: true
+          enum: [BILLINGEVENT_CLICK, BILLINGEVENT_IMPRESSION]
+        - name: bid_amount
+          type: integer
+          format: int64
+          description: 广告出价，单位为分(人民币)
+          required: true
+        - name: begin_date
+          in: formData
+          type: string
+          format: date
+          description: 始投放日期 格式 YYYY-MM-DD，大于等于今天，小于等于 end_date
+          required: true
+        - name: end_date
+          in: formData
+          type: string
+          format: date
+          description: 结束投放日期 格式 YYYY-MM-DD，大于等于 begin_date
+          required: true
+        - name: time_series
+          in: formData
+          type: string
+          description: 投放时间段 等于 48*7 位字符串，且都是 0 或 1。也就 是以半个小时为最小粒度，周一至周日每 天分为 48 个区段，0 为不投放，1 为投 放，不传、全传 1 均代表全时段投放，全 传 0 代表不投放。朋友圈广告的投放时间 需大于等于 6 小时，小于等于 30 个自然 日，且每天投放的时段需保持一致
+        - name: daily_budget
+          in: formData
+          type: integer
+          format: int64
+          description: 日消耗限额，单位为分
+        - name: product_refs_id
+          in: formData
+          type: string
+          description: 标的物 id，0-128 个英文字符，本地门店推广时需设 置为门店 id，微信公众号平台门店管理界 面或接口获得
+        - name: configured_status
+          in: formData
+          type: string
+          description: 由客户设置的 启用/暂停 状态
+          enum: [AD_STATUS_NORMAL, AD_STATUS_SUSPEND]
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      adgroup_id:
+                        type: integer
+                        format: int64
+                        description: 广告组 id
+            example:
+              errcode: 0
+              errmsg: ''
+              data:
+                adgroup_id: 123456
+  /marketing/adgroups/delete:
+    post:
+      summary: 删除广告组
+      security:
+        - accessToken: []
+      tags:
+        - 广告服务商接口
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - name: adgroup_id
+          in: formData
+          type: integer
+          format: int64
+          description: 广告组 id
+          required: true
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      adgroup_id:
+                        type: integer
+                        format: int64
+                        description: 广告组 id
+            example:
+              errcode: 0
+              errmsg: ''
+              data:
+                adgroup_id: 123456
+  /marketing/adgroups/get:
+    get:
+      summary: 获取广告组
+      security:
+        - accessToken: []
+      tags:
+        - 广告服务商接口
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - name: adgroup_id
+          in: query
+          type: integer
+          format: int64
+          description: 广告组 id
+        - name: filtering
+          in: query
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: 过滤字段
+                enum: [configured_status, system_status, adgroup_name, campaign_id, start_date, end_date]
+              operator:
+                type: string
+                description: 操作符
+                enum: [EQUALS, CONTAINS]
+              values:
+                type: array
+                items:
+                  type: string
+                  description: 字段取值
+        - name: page
+          in: query
+          type: integer
+          format: int64
+          description: 大于等于 1 小于等于实际总页数， 若不传则代表获取第 1 页
+        - name: page_size
+          in: query
+          type: integer
+          format: int64
+          description: 一页获取的数据条数，1-100，默认为 10
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      list:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            campaign_id:
+                              type: integer
+                              format: int64
+                              description: 推广计划 id
+                            adgroup_id:
+                              type: integer
+                              format: int64
+                              description: 广告组 id
+                            adgroup_name:
+                              type: string
+                              description: 广告组名称，小于 120 个英文字符，同一帐号下不允许 重复。
+                            site_set:
+                              type: array
+                              description: 投放站点
+                              items:
+                                type: string
+                                enum: [SITE_SET_WECHAT]
+                            optimization_goal:
+                              type: string
+                              description: 优化目标
+                              enum: [OPTIMIZATIONGOAL_CLICK, OPTIMIZATIONGOAL_IMPRESSION]
+                            billing_event:
+                              type: string
+                              description: 出价方式
+                              enum: [BILLINGEVENT_CLICK, BILLINGEVENT_IMPRESSION]
+                            bid_amount:
+                              type: integer
+                              format: int64
+                              description: 广告出价，单位为分(人民币)
+                            daily_budget:
+                              type: integer
+                              format: int64
+                              description: 日消耗限额，单位为分
+                            product_type:
+                              type: string
+                              description: 推广标的物类型
+                              enum: [PRODUCT_TYPE_LINK_WECHAT, PRODUCT_TYPE_ECOMMERCE, PRODUCT_TYPE_LBS_WECHAT]
+                            product_refs_id:
+                              type: string
+                              description: 标的物 id，0-128 个英文字符，本地门店推广时需设 置为门店 id，微信公众号平台门店管理界 面或接口获得
+                            targeting:
+                              type: object
+                              properties:
+                                age:
+                                  type: array
+                                  items:
+                                    type: string
+                                    description: 年龄定向，用区间表示，仅支持单年龄段， 且范围为 13~60。例如 ["13~15"]，表示“13 至 15 岁”， 数字与“~”之间不允许存在空格。
+                                gender:
+                                  type: array
+                                  items:
+                                    type: string
+                                    description: 性别定向(仅单选)
+                                    enum: [MALE, FEMALE]
+                                geo_location:
+                                  type: object
+                                  properties:
+                                    regions:
+                                      type: array
+                                      items:
+                                        type: integer
+                                        format: int64
+                                        description: 省市区县 id 列表，朋友圈广告设置的地域必须为国内城市，且一个 adgroup 设置的多个城市必须级别相同;
+                                    location_types:
+                                      type: array
+                                      items:
+                                        type: string
+                                        description: 地点类型
+                                        enum: [LIVE_IN]
+                                    business_districts:
+                                      type: array
+                                      items:
+                                        type: integer
+                                        format: int64
+                                        description: 商圈 id 列表，最多限制 400 个，朋友圈广告设置的商圈必须为国内 商圈，且一个 adgroup 设置的多个地理位置所属的城市级别必须相同;
+                                    custom_locations:
+                                      type: array
+                                      description: 自定义地理位置列表，使用火星系坐标数组最小长度 1，最大长度 400
+                                      items:
+                                        type: object
+                                        required: [longitude, latitude, radius]
+                                        properties:
+                                          longitude:
+                                            type: number
+                                            format: float
+                                            description: 经度，单位度 最小值-180，最大值 180，最多保留 6 位小数
+                                          latitude:
+                                            type: number
+                                            format: float
+                                            description: 纬度，单位度 最小值-90，最大值 90，最多保留 6 位小数
+                                          radius:
+                                            type: integer
+                                            format: int64
+                                            description: 半径，单位米 最小值 200，最大值 25000
+                            begin_date:
+                              type: string
+                              format: date
+                              description: 始投放日期 格式 YYYY-MM-DD，大于等于今天，小于等于 end_date
+                            end_date:
+                              type: string
+                              format: date
+                              description: 结束投放日期 格式 YYYY-MM-DD，大于等于 begin_date
+                            time_series:
+                              type: string
+                              description: 投放时间段 等于 48*7 位字符串，且都是 0 或 1。也就 是以半个小时为最小粒度，周一至周日每 天分为 48 个区段，0 为不投放，1 为投 放，不传、全传 1 均代表全时段投放，全 传 0 代表不投放。朋友圈广告的投放时间 需大于等于 6 小时，小于等于 30 个自然 日，且每天投放的时段需保持一致
+                            configured_status:
+                              type: string
+                              description: 由客户设置的 启用/暂停 状态
+                              enum: [AD_STATUS_NORMAL, AD_STATUS_SUSPEND]
+                            system_status:
+                              type: string
+                              description: 系统状态
+                              enum: [AD_STATUS_NORMAL, AD_STATUS_SUSPEND, AD_STATUS_PENDING, AD_STATUS_DENIED, AD_STATUS_DELETED]
+                            reject_message:
+                              type: string
+                              description: 审核拒绝原因
+                            created_time:
+                              type: integer
+                              format: int64
+                              description: 创建时间，unix 时间戳，精确到秒
+                            last_modified_time:
+                              type: integer
+                              format: int64
+                              description: 最后修改时间，unix 时间戳，精确到秒
+                      page_info:
+                        type: object
+                        properties:
+                          total_number:
+                            type: integer
+                            format: int64
+                          total_page:
+                            type: integer
+                            format: int64
+                          page_size:
+                            type: integer
+                            format: int64
+                          page:
+                            type: integer
+                            format: int64
+            example:
+              errcode: 0
+              errmsg: ''
+              data:
+                list:
+                  - campaign_id: 23456
+                    adgroup_id: 123456
+                    adgroup_name: 朋友圈广告组测试 1
+                    site_set:
+                      - SITE_SET_WECHAT
+                    optimization_goal: OPTIMIZATIONGOAL_IMPRESSION
+                    billing_event: BILLINGEVENT_IMPRESSION
+                    bid_amount: 20000
+                    daily_budget: 1000000
+                    product_type: PRODUCT_TYPE_LINK_WECHAT
+                    product_refs_id: ''
+                    targeting:
+                      geo_location:
+                        regions:
+                          - 110000
+                          - 310000
+                        location_types:
+                          - LIVE_IN
+                      age:
+                        - 20~30
+                      gender:
+                        - FEMALE
+                    begin_date: '2017-06-11'
+                    end_date: '2017-06-13'
+                    time_series: '111111111111111111111111111111111111000000000000111111111111111111111111111111111111000000000000111111111111111111111111111111111111000000000000111111111111111111111111111111111111000000000000111111111111111111111111111111111111000000000000111111111111111111111111111111111111000000000000111111111111111111111111111111111111000000000000'
+                    configured_status: AD_STATUS_NORMAL
+                    system_status: AD_STATUS_NORMAL
+                    reject_message: ''
+                    created_time: 1013554516
+                    last_modified_time: 103435226
+                page_info:
+                  total_number: 1
+                  total_page: 1
+                  page_size: 10
+                  page: 1
+  /marketing/adgroups/update:
+    post:
+      summary: 更新广告组
+      security:
+        - accessToken: []
+      tags:
+        - 广告服务商接口
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - name: adgroup_id
+          in: formData
+          type: integer
+          format: int64
+          description: 广告组 id
+          required: true
+        - name: adgroup_name
+          in: formData
+          type: string
+          description: 广告组名称，小于 120 个英文字符，同一帐号下不允许 重复。
+        - name: targeting
+          in: formData
+          type: object
+          properties:
+            age:
+              type: array
+              items:
+                type: string
+                description: 年龄定向，用区间表示，仅支持单年龄段， 且范围为 13~60。例如 ["13~15"]，表示“13 至 15 岁”， 数字与“~”之间不允许存在空格。
+            gender:
+              type: array
+              items:
+                type: string
+                description: 性别定向(仅单选)
+                enum: [MALE, FEMALE]
+            geo_location:
+              type: object
+              properties:
+                regions:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                    description: 省市区县 id 列表，朋友圈广告设置的地域必须为国内城市，且一个 adgroup 设置的多个城市必须级别相同;
+                location_types:
+                  type: array
+                  items:
+                    type: string
+                    description: 地点类型
+                    enum: [LIVE_IN]
+                business_districts:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                    description: 商圈 id 列表，最多限制 400 个，朋友圈广告设置的商圈必须为国内 商圈，且一个 adgroup 设置的多个地理位置所属的城市级别必须相同;
+                custom_locations:
+                  type: array
+                  description: 自定义地理位置列表，使用火星系坐标数组最小长度 1，最大长度 400
+                  items:
+                    type: object
+                    required: [longitude, latitude, radius]
+                    properties:
+                      longitude:
+                        type: number
+                        format: float
+                        description: 经度，单位度 最小值-180，最大值 180，最多保留 6 位小数
+                      latitude:
+                        type: number
+                        format: float
+                        description: 纬度，单位度 最小值-90，最大值 90，最多保留 6 位小数
+                      radius:
+                        type: integer
+                        format: int64
+                        description: 半径，单位米 最小值 200，最大值 25000
+        - name: bid_amount
+          type: integer
+          format: int64
+          description: 广告出价，单位为分(人民币)
+        - name: begin_date
+          in: formData
+          type: string
+          format: date
+          description: 始投放日期 格式 YYYY-MM-DD，大于等于今天，小于等于 end_date
+        - name: end_date
+          in: formData
+          type: string
+          format: date
+          description: 结束投放日期 格式 YYYY-MM-DD，大于等于 begin_date
+        - name: time_series
+          in: formData
+          type: string
+          description: 投放时间段 等于 48*7 位字符串，且都是 0 或 1。也就 是以半个小时为最小粒度，周一至周日每 天分为 48 个区段，0 为不投放，1 为投 放，不传、全传 1 均代表全时段投放，全 传 0 代表不投放。朋友圈广告的投放时间 需大于等于 6 小时，小于等于 30 个自然 日，且每天投放的时段需保持一致
+        - name: daily_budget
+          in: formData
+          type: integer
+          format: int64
+          description: 日消耗限额，单位为分
+        - name: configured_status
+          in: formData
+          type: string
+          description: 由客户设置的 启用/暂停 状态
+          enum: [AD_STATUS_NORMAL, AD_STATUS_SUSPEND]
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      adgroup_id:
+                        type: integer
+                        format: int64
+                        description: 广告组 id
+            example:
+              errcode: 0
+              errmsg: ''
+              data:
+                adgroup_id: 123456
   /marketing/advertiser/add:
     post:
       summary: 开通帐号
@@ -14612,6 +15481,442 @@ paths:
           schema:
             allOf:
               - $ref: '#/definitions/base.ResponseBo'
+  /marketing/campaigns/add:
+    post:
+      summary: 创建推广计划
+      security:
+        - accessToken: []
+      tags:
+        - 广告服务商接口
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: campaign_name
+          type: string
+          description: 推广计划名称，1-120 个英文字符(1 个中文字符等同于 3 个英文字符，下同)，不可与同一帐号下其他 推广计划重名
+          required: true
+        - in: formData
+          name: campaign_type
+          type: string
+          description: 推广计划类型
+          enum: [CAMPAIGN_TYPE_NORMAL, CAMPAIGN_TYPE_WECHAT_OFFICIAL_ACCOUNTS, CAMPAIGN_TYPE_WECHAT_MOMENTS]
+          required: true
+        - in: formData
+          name: product_type
+          type: string
+          description: 推广标的物类型
+          enum: [PRODUCT_TYPE_LINK_WECHAT, PRODUCT_TYPE_ECOMMERCE, PRODUCT_TYPE_LBS_WECHAT]
+          required: true
+        - in: formData
+          name: configured_status
+          type: string
+          description: 由客户设置的 启用/暂停 状态
+          enum: [AD_STATUS_NORMAL, AD_STATUS_SUSPEND]
+        - in: formData
+          name: daily_budget
+          type: integer
+          format: int64
+          description: 日消耗限额，单位为分，微信朋友圈广告（campaign_type = CAMPAIGN_TYPE_WECHAT_MOMENTS）不可使用，其他广告可使用。
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      campaign_id:
+                        type: integer
+                        format: int64
+                        description: 推广计划 id
+            example:
+              errcode: 0
+              errmsg: ''
+              data:
+                campaign_id: 23456
+  /marketing/campaigns/get:
+    get:
+      summary: 获取推广计划
+      security:
+        - accessToken: []
+      tags:
+        - 广告服务商接口
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: query
+          name: campaign_id
+          type: integer
+          format: int64
+          description: 推广计划 id
+        - in: query
+          name: filtering
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: 过滤字段
+                enum: [configured_status, campaign_name]
+              operator:
+                type: string
+                description: 操作符
+                enum: [EQUALS, CONTAINS]
+              values:
+                type: array
+                items:
+                  type: string
+                  description: 字段取值
+        - in: query
+          name: page
+          type: integer
+          format: int64
+          description: 大于等于 1 小于等于实际总页数， 若不传则代表获取第 1 页
+        - in: query
+          name: page_size
+          type: integer
+          format: int64
+          description: 一页获取的数据条数，1-100，默认为 10
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      list:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            campaign_id:
+                              type: integer
+                              format: int64
+                              description: 推广计划 id
+                            campaign_name:
+                              type: string
+                              description: 推广计划名称，1-120 个英文字符(1 个中文字符等同于 3 个英文字符，下同)，不可与同一帐号下其他 推广计划重名
+                            configured_status:
+                              type: string
+                              description: 由客户设置的 启用/暂停 状态
+                              enum: [AD_STATUS_NORMAL, AD_STATUS_SUSPEND]
+                            campaign_type:
+                              type: string
+                              description: 推广计划类型
+                              enum: [CAMPAIGN_TYPE_NORMAL, CAMPAIGN_TYPE_WECHAT_OFFICIAL_ACCOUNTS, CAMPAIGN_TYPE_WECHAT_MOMENTS]
+                            product_type:
+                              type: string
+                              description: 推广标的物类型
+                              enum: [PRODUCT_TYPE_LINK_WECHAT, PRODUCT_TYPE_ECOMMERCE, PRODUCT_TYPE_LBS_WECHAT]
+                            daily_budget:
+                              type: integer
+                              format: int64
+                              description: 日消耗限额，单位为分，微信朋友圈广告（campaign_type = CAMPAIGN_TYPE_WECHAT_MOMENTS）不可使用，其他广告可使用。
+                            budget_reach_date:
+                              type: integer
+                              format: int64
+                              description: 日限额到达日期，值为最近一次触达日限额的日期， 如无触达记录则为空，如:20170501，表示最近一次 到达日限额的日期是 5 月 1 日，若今天是 5 月 1 日，则表示今天已经到达日限额
+                            created_time:
+                              type: integer
+                              format: int64
+                              description: 创建时间，unix 时间戳，精确到秒
+                            last_modified_time:
+                              type: integer
+                              format: int64
+                              description: 最后修改时间，unix 时间戳，精确到秒
+                      page_info:
+                        type: object
+                        properties:
+                          total_number:
+                            type: integer
+                            format: int64
+                          total_page:
+                            type: integer
+                            format: int64
+                          page_size:
+                            type: integer
+                            format: int64
+                          page:
+                            type: integer
+                            format: int64
+            example:
+              errcode: 0
+              errmsg: ''
+              data:
+                list:
+                  - campaign_id: 23456
+                    campaign_name: 朋友圈推广计划测试 1
+                    configured_status: AD_STATUS_NORMAL
+                    campaign_type: CAMPAIGN_TYPE_WECHAT_MOMENTS
+                    product_type: PRODUCT_TYPE_LINK_WECHAT
+                    daily_budget: 0
+                    budget_reach_date: 0
+                    created_time: 1459924690
+                    last_modified_time: 1459924690
+                page_info:
+                  total_number: 1
+                  total_page: 1
+                  page_size: 10
+                  page: 1
+  /marketing/campaigns/update:
+    post:
+      summary: 更新推广计划
+      security:
+        - accessToken: []
+      tags:
+        - 广告服务商接口
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: campaign_id
+          type: integer
+          format: int64
+          description: 推广计划 id
+          required: true
+        - in: formData
+          name: campaign_name
+          type: string
+          description: 推广计划名称，1-120 个英文字符(1 个中文字符等同于 3 个英文字符，下同)，不可与同一帐号下其他 推广计划重名
+          required: true
+        - in: formData
+          name: configured_status
+          type: string
+          description: 由客户设置的 启用/暂停 状态
+          enum: [AD_STATUS_NORMAL, AD_STATUS_SUSPEND]
+        - in: formData
+          name: daily_budget
+          type: integer
+          format: int64
+          description: 日消耗限额，单位为分，微信朋友圈广告（campaign_type = CAMPAIGN_TYPE_WECHAT_MOMENTS）不可使用，其他广告可使用。
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      campaign_id:
+                        type: integer
+                        format: int64
+                        description: 推广计划 id
+            example:
+              errcode: 0
+              errmsg: ''
+              data:
+                campaign_id: 23456
+  /marketing/fund_statements_detailed/get:
+    get:
+      summary: 获取资金账户流水
+      security:
+        - accessToken: []
+      tags:
+        - 广告服务商接口
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: date_range
+          type: object
+          description: 时间范围
+          properties:
+            start_date:
+              type: string
+              format: date
+              description: 开始日期，字段长度为 10，日期格式 YYYY-mm-dd，且日期小于等于今天
+            end_date:
+              type: string
+              format: date
+              description: 结束日期，字段长度为 10，日期格式 YYYY-mm-dd，大于等于今天，且大于等于start_date
+          required: true
+        - in: formData
+          name: transaction_type
+          type: string
+          description: 流水类型
+          required: true
+          enum: [TRANSACTION_RECHARGE, TRANSACTION_EXPENSE]
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      list:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            date:
+                              type: string
+                              description: 交易发生时间
+                            audit_msg:
+                              type: string
+                              description: 审计说明
+                            order_id:
+                              type: string
+                              description: 流水号
+                            expense:
+                              type: integer
+                              format: int64
+                              description: 消耗金额，单位分
+                            recharge:
+                              type: integer
+                              format: int64
+                              description: 充入金额，单位分
+            example:
+              errcode: 0
+              errmsg: ''
+              data:
+                list:
+                  - date: '2017-04-25'
+                    audit_msg: 服务商划账
+                    order_id: '226674295148758029882528'
+                    expense: 0
+                    recharge: 100000
+  /marketing/fund_transfer/add:
+    post:
+      summary: 发起代理商转账给子客户
+      security:
+        - accessToken: []
+      tags:
+        - 广告服务商接口
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: fund_type
+          type: string
+          enum:
+            - GENERAL_CASH
+            - BANK
+            - GENERAL_GIFT
+          description: 资金账户类型
+          required: true
+        - in: formData
+          name: amount
+          type: integer
+          format: int64
+          description: 金额，单位为分
+          required: true
+        - in: formData
+          name: external_bill_no
+          type: string
+          description: 调用方订单号,1~35 英文字符，不支持大写字母
+        - in: formData
+          name: memo
+          type: string
+          description: 备注信息,1~64 英文字符
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      fund_type:
+                        type: string
+                        enum:
+                          - GENERAL_CASH
+                          - BANK
+                          - GENERAL_GIFT
+                        description: 资金账户类型
+                      amount:
+                        type: integer
+                        format: int64
+                        description: 金额，单位为分
+                      external_bill_no:
+                        type: string
+                        description: 调用方订单号,1~35 英文字符，不支持大写字母
+                      time:
+                        type: integer
+                        format: int64
+                        description: 交易时间(时间戳)
+                      is_repeated:
+                        type: boolean
+                        description: 是否重复转账，false:不是，true:是
+            example:
+              errcode: 0
+              errmsg: ''
+              data:
+                fund_type: GENERAL_SHARED
+                amount: 120000
+                external_bill_no: spa-123456
+                time: 1459924690
+                is_repeated: false
+  /marketing/funds/get:
+    get:
+      summary: 获取资金账户信息
+      security:
+        - accessToken: []
+      tags:
+        - 广告服务商接口
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      list:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            fund_type:
+                              type: string
+                              enum: [GENERAL_CASH, BANK, GENERAL_GIFT]
+                              description: 资金账户类型
+                            balance:
+                              type: integer
+                              format: int64
+                              description: 资金余额，单位为分
+                            fund_status:
+                              type: string
+                              description: 资金状态
+                              enum: [FUND_STATUS_NORMAL, FUND_STATUS_FROZEN]
+            example:
+              errcode: 0
+              errmsg: ''
+              data:
+                list:
+                  - balance: 120000
+                    fund_status: FUND_STATUS_NORMAL
+                    fund_type: GENERAL_CASH
+                  - balance: 20000
+                    fund_status: FUND_STATUS_NORMAL
+                    fund_type: GENERAL_GIFT
+                  - balance: 0
+                    fund_status: FUND_STATUS_NORMAL
+                    fund_type: BANK
   /marketing/images/add:
     post:
       summary: 添加图片文件
@@ -14727,51 +16032,54 @@ paths:
               - $ref: '#/definitions/base.ResponseBo'
               - type: object
                 properties:
-                  list:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        image_id:
-                          type: string
-                          description: 图片 id
-                        width:
-                          type: integer
-                          format: int64
-                          description: 图片宽度
-                        height:
-                          type: integer
-                          format: int64
-                          description: 图片高度
-                        file_size:
-                          type: integer
-                          format: int64
-                          description: 图片大小 单位 byte
-                        type:
-                          type: string
-                          description: 图片类型，见附录【图片类型】
-                          enum: [IMAGE_TYPE_GIF, IMAGE_TYPE_JPG, IMAGE_TYPE_PNG]
-                        signature:
-                          type: string
-                          description: 图片签名
-                        preview_url:
-                          type: string
-                          description: 图片预览地址
-                  page_info:
+                  data:
                     type: object
                     properties:
-                      total_number:
-                        type: integer
-                        format: int64
-                      total_page:
-                        type: integer
-                        format: int64
-                      page_size:
-                        type: integer
-                        format: int64
-                      page:
-                        type: integer
-                        format: int64
+                      list:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            image_id:
+                              type: string
+                              description: 图片 id
+                            width:
+                              type: integer
+                              format: int64
+                              description: 图片宽度
+                            height:
+                              type: integer
+                              format: int64
+                              description: 图片高度
+                            file_size:
+                              type: integer
+                              format: int64
+                              description: 图片大小 单位 byte
+                            type:
+                              type: string
+                              description: 图片类型，见附录【图片类型】
+                              enum: [IMAGE_TYPE_GIF, IMAGE_TYPE_JPG, IMAGE_TYPE_PNG]
+                            signature:
+                              type: string
+                              description: 图片签名
+                            preview_url:
+                              type: string
+                              description: 图片预览地址
+                      page_info:
+                        type: object
+                        properties:
+                          total_number:
+                            type: integer
+                            format: int64
+                          total_page:
+                            type: integer
+                            format: int64
+                          page_size:
+                            type: integer
+                            format: int64
+                          page:
+                            type: integer
+                            format: int64
             example:
               errcode: 0
               errmsg: ''
@@ -14940,6 +16248,46 @@ paths:
                   total_page: 1
                   page_size: 10
                   page: 1
+  /marketing/sp_entrustment/add:
+    post:
+      summary: 创建服务商授权
+      security:
+        - accessToken: []
+      tags:
+        - 广告服务商接口
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+  /marketing/sp_entrustment/get:
+    get:
+      summary: 查询服务商授权
+      security:
+        - accessToken: []
+      tags:
+        - 广告服务商接口
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      entrusted:
+                        type: boolean
+                        description: 是否有授权关系，true:有，false:无
   /merchant/category/getproperty:
     post:
       summary: 获取指定分类的所有属性

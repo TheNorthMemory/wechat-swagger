@@ -1,0 +1,122 @@
+post:
+  summary: 更新广告组
+  security:
+    - accessToken: []
+  tags:
+    - 广告服务商接口
+  consumes:
+    - application/x-www-form-urlencoded
+  parameters:
+    - name: adgroup_id
+      in: formData
+      type: integer
+      format: int64
+      description: 广告组 id
+      required: true
+    - name: adgroup_name
+      in: formData
+      type: string
+      description: 广告组名称，小于 120 个英文字符，同一帐号下不允许 重复。
+    - name: targeting
+      in: formData
+      type: object
+      properties:
+        age:
+          type: array
+          items:
+            type: string
+            description: 年龄定向，用区间表示，仅支持单年龄段， 且范围为 13~60。例如 ["13~15"]，表示“13 至 15 岁”， 数字与“~”之间不允许存在空格。
+        gender:
+          type: array
+          items:
+            type: string
+            description: 性别定向(仅单选)
+            enum: [MALE, FEMALE]
+        geo_location:
+          type: object
+          properties:
+            regions:
+              type: array
+              items:
+                type: integer
+                format: int64
+                description: 省市区县 id 列表，朋友圈广告设置的地域必须为国内城市，且一个 adgroup 设置的多个城市必须级别相同;
+            location_types:
+              type: array
+              items:
+                type: string
+                description: 地点类型
+                enum: [LIVE_IN]
+            business_districts:
+              type: array
+              items:
+                type: integer
+                format: int64
+                description: 商圈 id 列表，最多限制 400 个，朋友圈广告设置的商圈必须为国内 商圈，且一个 adgroup 设置的多个地理位置所属的城市级别必须相同;
+            custom_locations:
+              type: array
+              description: 自定义地理位置列表，使用火星系坐标数组最小长度 1，最大长度 400
+              items:
+                type: object
+                required: [longitude, latitude, radius]
+                properties:
+                  longitude:
+                    type: number
+                    format: float
+                    description: 经度，单位度 最小值-180，最大值 180，最多保留 6 位小数
+                  latitude:
+                    type: number
+                    format: float
+                    description: 纬度，单位度 最小值-90，最大值 90，最多保留 6 位小数
+                  radius:
+                    type: integer
+                    format: int64
+                    description: 半径，单位米 最小值 200，最大值 25000
+    - name: bid_amount
+      type: integer
+      format: int64
+      description: 广告出价，单位为分(人民币)
+    - name: begin_date
+      in: formData
+      type: string
+      format: date
+      description: 始投放日期 格式 YYYY-MM-DD，大于等于今天，小于等于 end_date
+    - name: end_date
+      in: formData
+      type: string
+      format: date
+      description: 结束投放日期 格式 YYYY-MM-DD，大于等于 begin_date
+    - name: time_series
+      in: formData
+      type: string
+      description: 投放时间段 等于 48*7 位字符串，且都是 0 或 1。也就 是以半个小时为最小粒度，周一至周日每 天分为 48 个区段，0 为不投放，1 为投 放，不传、全传 1 均代表全时段投放，全 传 0 代表不投放。朋友圈广告的投放时间 需大于等于 6 小时，小于等于 30 个自然 日，且每天投放的时段需保持一致
+    - name: daily_budget
+      in: formData
+      type: integer
+      format: int64
+      description: 日消耗限额，单位为分
+    - name: configured_status
+      in: formData
+      type: string
+      description: 由客户设置的 启用/暂停 状态
+      enum: [AD_STATUS_NORMAL, AD_STATUS_SUSPEND]
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  adgroup_id:
+                    type: integer
+                    format: int64
+                    description: 广告组 id
+        example:
+          errcode: 0
+          errmsg: ''
+          data:
+            adgroup_id: 123456

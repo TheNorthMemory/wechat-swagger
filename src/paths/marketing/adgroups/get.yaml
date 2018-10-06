@@ -1,0 +1,238 @@
+get:
+  summary: 获取广告组
+  security:
+    - accessToken: []
+  tags:
+    - 广告服务商接口
+  consumes:
+    - application/x-www-form-urlencoded
+  parameters:
+    - name: adgroup_id
+      in: query
+      type: integer
+      format: int64
+      description: 广告组 id
+    - name: filtering
+      in: query
+      type: array
+      items:
+        type: object
+        properties:
+          field:
+            type: string
+            description: 过滤字段
+            enum: [configured_status, system_status, adgroup_name, campaign_id, start_date, end_date]
+          operator:
+            type: string
+            description: 操作符
+            enum: [EQUALS, CONTAINS]
+          values:
+            type: array
+            items:
+              type: string
+              description: 字段取值
+    - name: page
+      in: query
+      type: integer
+      format: int64
+      description: 大于等于 1 小于等于实际总页数， 若不传则代表获取第 1 页
+    - name: page_size
+      in: query
+      type: integer
+      format: int64
+      description: 一页获取的数据条数，1-100，默认为 10
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        campaign_id:
+                          type: integer
+                          format: int64
+                          description: 推广计划 id
+                        adgroup_id:
+                          type: integer
+                          format: int64
+                          description: 广告组 id
+                        adgroup_name:
+                          type: string
+                          description: 广告组名称，小于 120 个英文字符，同一帐号下不允许 重复。
+                        site_set:
+                          type: array
+                          description: 投放站点
+                          items:
+                            type: string
+                            enum: [SITE_SET_WECHAT]
+                        optimization_goal:
+                          type: string
+                          description: 优化目标
+                          enum: [OPTIMIZATIONGOAL_CLICK, OPTIMIZATIONGOAL_IMPRESSION]
+                        billing_event:
+                          type: string
+                          description: 出价方式
+                          enum: [BILLINGEVENT_CLICK, BILLINGEVENT_IMPRESSION]
+                        bid_amount:
+                          type: integer
+                          format: int64
+                          description: 广告出价，单位为分(人民币)
+                        daily_budget:
+                          type: integer
+                          format: int64
+                          description: 日消耗限额，单位为分
+                        product_type:
+                          type: string
+                          description: 推广标的物类型
+                          enum: [PRODUCT_TYPE_LINK_WECHAT, PRODUCT_TYPE_ECOMMERCE, PRODUCT_TYPE_LBS_WECHAT]
+                        product_refs_id:
+                          type: string
+                          description: 标的物 id，0-128 个英文字符，本地门店推广时需设 置为门店 id，微信公众号平台门店管理界 面或接口获得
+                        targeting:
+                          type: object
+                          properties:
+                            age:
+                              type: array
+                              items:
+                                type: string
+                                description: 年龄定向，用区间表示，仅支持单年龄段， 且范围为 13~60。例如 ["13~15"]，表示“13 至 15 岁”， 数字与“~”之间不允许存在空格。
+                            gender:
+                              type: array
+                              items:
+                                type: string
+                                description: 性别定向(仅单选)
+                                enum: [MALE, FEMALE]
+                            geo_location:
+                              type: object
+                              properties:
+                                regions:
+                                  type: array
+                                  items:
+                                    type: integer
+                                    format: int64
+                                    description: 省市区县 id 列表，朋友圈广告设置的地域必须为国内城市，且一个 adgroup 设置的多个城市必须级别相同;
+                                location_types:
+                                  type: array
+                                  items:
+                                    type: string
+                                    description: 地点类型
+                                    enum: [LIVE_IN]
+                                business_districts:
+                                  type: array
+                                  items:
+                                    type: integer
+                                    format: int64
+                                    description: 商圈 id 列表，最多限制 400 个，朋友圈广告设置的商圈必须为国内 商圈，且一个 adgroup 设置的多个地理位置所属的城市级别必须相同;
+                                custom_locations:
+                                  type: array
+                                  description: 自定义地理位置列表，使用火星系坐标数组最小长度 1，最大长度 400
+                                  items:
+                                    type: object
+                                    required: [longitude, latitude, radius]
+                                    properties:
+                                      longitude:
+                                        type: number
+                                        format: float
+                                        description: 经度，单位度 最小值-180，最大值 180，最多保留 6 位小数
+                                      latitude:
+                                        type: number
+                                        format: float
+                                        description: 纬度，单位度 最小值-90，最大值 90，最多保留 6 位小数
+                                      radius:
+                                        type: integer
+                                        format: int64
+                                        description: 半径，单位米 最小值 200，最大值 25000
+                        begin_date:
+                          type: string
+                          format: date
+                          description: 始投放日期 格式 YYYY-MM-DD，大于等于今天，小于等于 end_date
+                        end_date:
+                          type: string
+                          format: date
+                          description: 结束投放日期 格式 YYYY-MM-DD，大于等于 begin_date
+                        time_series:
+                          type: string
+                          description: 投放时间段 等于 48*7 位字符串，且都是 0 或 1。也就 是以半个小时为最小粒度，周一至周日每 天分为 48 个区段，0 为不投放，1 为投 放，不传、全传 1 均代表全时段投放，全 传 0 代表不投放。朋友圈广告的投放时间 需大于等于 6 小时，小于等于 30 个自然 日，且每天投放的时段需保持一致
+                        configured_status:
+                          type: string
+                          description: 由客户设置的 启用/暂停 状态
+                          enum: [AD_STATUS_NORMAL, AD_STATUS_SUSPEND]
+                        system_status:
+                          type: string
+                          description: 系统状态
+                          enum: [AD_STATUS_NORMAL, AD_STATUS_SUSPEND, AD_STATUS_PENDING, AD_STATUS_DENIED, AD_STATUS_DELETED]
+                        reject_message:
+                          type: string
+                          description: 审核拒绝原因
+                        created_time:
+                          type: integer
+                          format: int64
+                          description: 创建时间，unix 时间戳，精确到秒
+                        last_modified_time:
+                          type: integer
+                          format: int64
+                          description: 最后修改时间，unix 时间戳，精确到秒
+                  page_info:
+                    type: object
+                    properties:
+                      total_number:
+                        type: integer
+                        format: int64
+                      total_page:
+                        type: integer
+                        format: int64
+                      page_size:
+                        type: integer
+                        format: int64
+                      page:
+                        type: integer
+                        format: int64
+        example:
+          errcode: 0
+          errmsg: ''
+          data:
+            list:
+              - campaign_id: 23456
+                adgroup_id: 123456
+                adgroup_name: 朋友圈广告组测试 1
+                site_set:
+                  - SITE_SET_WECHAT
+                optimization_goal: OPTIMIZATIONGOAL_IMPRESSION
+                billing_event: BILLINGEVENT_IMPRESSION
+                bid_amount: 20000
+                daily_budget: 1000000
+                product_type: PRODUCT_TYPE_LINK_WECHAT
+                product_refs_id: ''
+                targeting:
+                  geo_location:
+                    regions:
+                      - 110000
+                      - 310000
+                    location_types:
+                      - LIVE_IN
+                  age:
+                    - 20~30
+                  gender:
+                    - FEMALE
+                begin_date: '2017-06-11'
+                end_date: '2017-06-13'
+                time_series: '111111111111111111111111111111111111000000000000111111111111111111111111111111111111000000000000111111111111111111111111111111111111000000000000111111111111111111111111111111111111000000000000111111111111111111111111111111111111000000000000111111111111111111111111111111111111000000000000111111111111111111111111111111111111000000000000'
+                configured_status: AD_STATUS_NORMAL
+                system_status: AD_STATUS_NORMAL
+                reject_message: ''
+                created_time: 1013554516
+                last_modified_time: 103435226
+            page_info:
+              total_number: 1
+              total_page: 1
+              page_size: 10
+              page: 1

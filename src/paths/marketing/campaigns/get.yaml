@@ -1,0 +1,128 @@
+get:
+  summary: 获取推广计划
+  security:
+    - accessToken: []
+  tags:
+    - 广告服务商接口
+  consumes:
+    - application/x-www-form-urlencoded
+  parameters:
+    - in: query
+      name: campaign_id
+      type: integer
+      format: int64
+      description: 推广计划 id
+    - in: query
+      name: filtering
+      type: array
+      items:
+        type: object
+        properties:
+          field:
+            type: string
+            description: 过滤字段
+            enum: [configured_status, campaign_name]
+          operator:
+            type: string
+            description: 操作符
+            enum: [EQUALS, CONTAINS]
+          values:
+            type: array
+            items:
+              type: string
+              description: 字段取值
+    - in: query
+      name: page
+      type: integer
+      format: int64
+      description: 大于等于 1 小于等于实际总页数， 若不传则代表获取第 1 页
+    - in: query
+      name: page_size
+      type: integer
+      format: int64
+      description: 一页获取的数据条数，1-100，默认为 10
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        campaign_id:
+                          type: integer
+                          format: int64
+                          description: 推广计划 id
+                        campaign_name:
+                          type: string
+                          description: 推广计划名称，1-120 个英文字符(1 个中文字符等同于 3 个英文字符，下同)，不可与同一帐号下其他 推广计划重名
+                        configured_status:
+                          type: string
+                          description: 由客户设置的 启用/暂停 状态
+                          enum: [AD_STATUS_NORMAL, AD_STATUS_SUSPEND]
+                        campaign_type:
+                          type: string
+                          description: 推广计划类型
+                          enum: [CAMPAIGN_TYPE_NORMAL, CAMPAIGN_TYPE_WECHAT_OFFICIAL_ACCOUNTS, CAMPAIGN_TYPE_WECHAT_MOMENTS]
+                        product_type:
+                          type: string
+                          description: 推广标的物类型
+                          enum: [PRODUCT_TYPE_LINK_WECHAT, PRODUCT_TYPE_ECOMMERCE, PRODUCT_TYPE_LBS_WECHAT]
+                        daily_budget:
+                          type: integer
+                          format: int64
+                          description: 日消耗限额，单位为分，微信朋友圈广告（campaign_type = CAMPAIGN_TYPE_WECHAT_MOMENTS）不可使用，其他广告可使用。
+                        budget_reach_date:
+                          type: integer
+                          format: int64
+                          description: 日限额到达日期，值为最近一次触达日限额的日期， 如无触达记录则为空，如:20170501，表示最近一次 到达日限额的日期是 5 月 1 日，若今天是 5 月 1 日，则表示今天已经到达日限额
+                        created_time:
+                          type: integer
+                          format: int64
+                          description: 创建时间，unix 时间戳，精确到秒
+                        last_modified_time:
+                          type: integer
+                          format: int64
+                          description: 最后修改时间，unix 时间戳，精确到秒
+                  page_info:
+                    type: object
+                    properties:
+                      total_number:
+                        type: integer
+                        format: int64
+                      total_page:
+                        type: integer
+                        format: int64
+                      page_size:
+                        type: integer
+                        format: int64
+                      page:
+                        type: integer
+                        format: int64
+        example:
+          errcode: 0
+          errmsg: ''
+          data:
+            list:
+              - campaign_id: 23456
+                campaign_name: 朋友圈推广计划测试 1
+                configured_status: AD_STATUS_NORMAL
+                campaign_type: CAMPAIGN_TYPE_WECHAT_MOMENTS
+                product_type: PRODUCT_TYPE_LINK_WECHAT
+                daily_budget: 0
+                budget_reach_date: 0
+                created_time: 1459924690
+                last_modified_time: 1459924690
+            page_info:
+              total_number: 1
+              total_page: 1
+              page_size: 10
+              page: 1

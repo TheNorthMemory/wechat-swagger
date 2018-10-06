@@ -1,0 +1,56 @@
+post:
+  summary: 创建推广计划
+  security:
+    - accessToken: []
+  tags:
+    - 广告服务商接口
+  consumes:
+    - application/x-www-form-urlencoded
+  parameters:
+    - in: formData
+      name: campaign_name
+      type: string
+      description: 推广计划名称，1-120 个英文字符(1 个中文字符等同于 3 个英文字符，下同)，不可与同一帐号下其他 推广计划重名
+      required: true
+    - in: formData
+      name: campaign_type
+      type: string
+      description: 推广计划类型
+      enum: [CAMPAIGN_TYPE_NORMAL, CAMPAIGN_TYPE_WECHAT_OFFICIAL_ACCOUNTS, CAMPAIGN_TYPE_WECHAT_MOMENTS]
+      required: true
+    - in: formData
+      name: product_type
+      type: string
+      description: 推广标的物类型
+      enum: [PRODUCT_TYPE_LINK_WECHAT, PRODUCT_TYPE_ECOMMERCE, PRODUCT_TYPE_LBS_WECHAT]
+      required: true
+    - in: formData
+      name: configured_status
+      type: string
+      description: 由客户设置的 启用/暂停 状态
+      enum: [AD_STATUS_NORMAL, AD_STATUS_SUSPEND]
+    - in: formData
+      name: daily_budget
+      type: integer
+      format: int64
+      description: 日消耗限额，单位为分，微信朋友圈广告（campaign_type = CAMPAIGN_TYPE_WECHAT_MOMENTS）不可使用，其他广告可使用。
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  campaign_id:
+                    type: integer
+                    format: int64
+                    description: 推广计划 id
+        example:
+          errcode: 0
+          errmsg: ''
+          data:
+            campaign_id: 23456

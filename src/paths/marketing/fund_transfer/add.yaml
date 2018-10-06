@@ -1,0 +1,73 @@
+post:
+  summary: 发起代理商转账给子客户
+  security:
+    - accessToken: []
+  tags:
+    - 广告服务商接口
+  consumes:
+    - application/x-www-form-urlencoded
+  parameters:
+    - in: formData
+      name: fund_type
+      type: string
+      enum:
+        - GENERAL_CASH
+        - BANK
+        - GENERAL_GIFT
+      description: 资金账户类型
+      required: true
+    - in: formData
+      name: amount
+      type: integer
+      format: int64
+      description: 金额，单位为分
+      required: true
+    - in: formData
+      name: external_bill_no
+      type: string
+      description: 调用方订单号,1~35 英文字符，不支持大写字母
+    - in: formData
+      name: memo
+      type: string
+      description: 备注信息,1~64 英文字符
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  fund_type:
+                    type: string
+                    enum:
+                      - GENERAL_CASH
+                      - BANK
+                      - GENERAL_GIFT
+                    description: 资金账户类型
+                  amount:
+                    type: integer
+                    format: int64
+                    description: 金额，单位为分
+                  external_bill_no:
+                    type: string
+                    description: 调用方订单号,1~35 英文字符，不支持大写字母
+                  time:
+                    type: integer
+                    format: int64
+                    description: 交易时间(时间戳)
+                  is_repeated:
+                    type: boolean
+                    description: 是否重复转账，false:不是，true:是
+        example:
+          errcode: 0
+          errmsg: ''
+          data:
+            fund_type: GENERAL_SHARED
+            amount: 120000
+            external_bill_no: spa-123456
+            time: 1459924690
+            is_repeated: false

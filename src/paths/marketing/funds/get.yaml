@@ -1,0 +1,51 @@
+get:
+  summary: 获取资金账户信息
+  security:
+    - accessToken: []
+  tags:
+    - 广告服务商接口
+  consumes:
+    - application/x-www-form-urlencoded
+  parameters: []
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        fund_type:
+                          type: string
+                          enum: [GENERAL_CASH, BANK, GENERAL_GIFT]
+                          description: 资金账户类型
+                        balance:
+                          type: integer
+                          format: int64
+                          description: 资金余额，单位为分
+                        fund_status:
+                          type: string
+                          description: 资金状态
+                          enum: [FUND_STATUS_NORMAL, FUND_STATUS_FROZEN]
+        example:
+          errcode: 0
+          errmsg: ''
+          data:
+            list:
+              - balance: 120000
+                fund_status: FUND_STATUS_NORMAL
+                fund_type: GENERAL_CASH
+              - balance: 20000
+                fund_status: FUND_STATUS_NORMAL
+                fund_type: GENERAL_GIFT
+              - balance: 0
+                fund_status: FUND_STATUS_NORMAL
+                fund_type: BANK

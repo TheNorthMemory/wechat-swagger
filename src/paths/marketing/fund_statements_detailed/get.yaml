@@ -1,0 +1,72 @@
+get:
+  summary: 获取资金账户流水
+  security:
+    - accessToken: []
+  tags:
+    - 广告服务商接口
+  consumes:
+    - application/x-www-form-urlencoded
+  parameters:
+    - in: formData
+      name: date_range
+      type: object
+      description: 时间范围
+      properties:
+        start_date:
+          type: string
+          format: date
+          description: 开始日期，字段长度为 10，日期格式 YYYY-mm-dd，且日期小于等于今天
+        end_date:
+          type: string
+          format: date
+          description: 结束日期，字段长度为 10，日期格式 YYYY-mm-dd，大于等于今天，且大于等于start_date
+      required: true
+    - in: formData
+      name: transaction_type
+      type: string
+      description: 流水类型
+      required: true
+      enum: [TRANSACTION_RECHARGE, TRANSACTION_EXPENSE]
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          type: string
+                          description: 交易发生时间
+                        audit_msg:
+                          type: string
+                          description: 审计说明
+                        order_id:
+                          type: string
+                          description: 流水号
+                        expense:
+                          type: integer
+                          format: int64
+                          description: 消耗金额，单位分
+                        recharge:
+                          type: integer
+                          format: int64
+                          description: 充入金额，单位分
+        example:
+          errcode: 0
+          errmsg: ''
+          data:
+            list:
+              - date: '2017-04-25'
+                audit_msg: 服务商划账
+                order_id: '226674295148758029882528'
+                expense: 0
+                recharge: 100000

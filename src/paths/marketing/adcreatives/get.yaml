@@ -1,0 +1,154 @@
+get:
+  summary: 获取广告创意
+  security:
+    - accessToken: []
+  tags:
+    - 广告服务商接口
+  consumes:
+    - application/x-www-form-urlencoded
+  parameters:
+    - name: adcreative_id
+      in: query
+      type: integer
+      format: int64
+      description: 广告创意 id
+    - name: filtering
+      in: query
+      type: array
+      items:
+        type: object
+        properties:
+          field:
+            type: string
+            description: 过滤字段
+            enum: [adcreative_name]
+          operator:
+            type: string
+            description: 操作符
+            enum: [EQUALS, CONTAINS]
+          values:
+            type: array
+            items:
+              type: string
+              description: 字段取值
+    - name: page
+      in: query
+      type: integer
+      format: int64
+      description: 大于等于 1 小于等于实际总页数， 若不传则代表获取第 1 页
+    - name: page_size
+      in: query
+      type: integer
+      format: int64
+      description: 一页获取的数据条数，1-100，默认为 10
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        campaign_id:
+                          type: integer
+                          format: int64
+                          description: 推广计划 id
+                        adcreative_id:
+                          type: integer
+                          format: int64
+                          description: 广告创意 id
+                        adcreative_name:
+                          type: string
+                          description: 广告创意名称，同一帐号下的广告创意名称不允许重复 字段长度最小 1 字节，长度最大 120 字节
+                        adcreative_template_id:
+                          type: integer
+                          format: int64
+                          description: 创意规格 id，具体请咨询您的运营接口人，也可通过 [创意规格查询工具] 进行查询
+                          enum: [263, 310, 311, 450, 133, 134]
+                        adcreative_elements:
+                          type: object
+                          description: 创意元素，不同 adcreative_template_id 要求的元素不尽相同，具体情况可通过 [创意规格查询工具] 进行查询
+                          properties:
+                            link_name_type:
+                              type: string
+                              enum: [VIEW_DETAILS, GET_COUPONS, MAKE_AN_APPOINTMENT]
+                            title:
+                              type: string
+                            description:
+                              type: string
+                            image:
+                              type: string
+                            image_list:
+                              type: array
+                              items:
+                                type: string
+                        destination_url:
+                          type: string
+                          description: 创意目标 url
+                        site_set:
+                          type: string
+                          description: 投放站点集合
+                          enum: [SITE_SET_WECHAT]
+                        product_type:
+                          type: string
+                          description: 推广标的物类型
+                          enum: [PRODUCT_TYPE_LINK_WECHAT, PRODUCT_TYPE_ECOMMERCE, PRODUCT_TYPE_LBS_WECHAT]
+                        product_refs_id:
+                          type: string
+                          description: 标的物 id，0-128 个英文字符，本地门店推广时需设置为门店 id，微信公众号平台门店管理界 面或接口获得
+                        created_time:
+                          type: integer
+                          format: int64
+                          description: 创建时间，unix 时间戳，精确到秒
+                        last_modified_time:
+                          type: integer
+                          format: int64
+                          description: 最后修改时间，unix 时间戳，精确到秒
+                  page_info:
+                    type: object
+                    properties:
+                      total_number:
+                        type: integer
+                        format: int64
+                      total_page:
+                        type: integer
+                        format: int64
+                      page_size:
+                        type: integer
+                        format: int64
+                      page:
+                        type: integer
+                        format: int64
+        example:
+          errcode: 0
+          errmsg: ''
+          data:
+            list:
+              - campaign_id: 23456
+                adcreative_id: 345678
+                adcreative_name: 朋友圈广告创意 1
+                adcreative_template_id: 263
+                adcreative_elements:
+                  title: 微信，是一个生活方式!
+                  image_list:
+                    - '51959:7ef00101f6284a318ccf5'
+                destination_url: 'https://weixin.qq.com'
+                site_set:
+                  - SITE_SET_WECHAT
+                product_type: PRODUCT_TYPE_LINK_WECHAT
+                product_refs_id: ''
+                created_time: 1013554516
+                last_modified_time: 103435226
+            page_info:
+              total_number: 1
+              total_page: 1
+              page_size: 10
+              page: 1

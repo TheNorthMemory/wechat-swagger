@@ -1,0 +1,96 @@
+post:
+  summary: 创建广告创意
+  security:
+    - accessToken: []
+  tags:
+    - 广告服务商接口
+  consumes:
+    - application/x-www-form-urlencoded
+  parameters:
+    - name: campaign_id
+      in: formData
+      type: integer
+      format: int64
+      description: 推广计划 id
+      required: true
+    - name: adcreative_name
+      in: formData
+      type: string
+      description: 广告创意名称，同一帐号下的广告创意名称不允许重复 字段长度最小 1 字节，长度最大 120 字节
+      required: true
+    - name: adcreative_template_id
+      in: formData
+      type: integer
+      format: int64
+      description: 创意规格 id，具体请咨询您的运营接口人，也可通过 [创意规格查询工具] 进行查询
+      enum: [263, 310, 311, 450, 133, 134]
+      required: true
+    - name: adcreative_elements
+      in: formData
+      type: object
+      description: 创意元素，不同 adcreative_template_id 要求的元素不尽相同，具体情况可通过 [创意规格查询工具] 进行查询
+      required: true
+      properties:
+        link_name_type:
+          type: string
+          enum: [VIEW_DETAILS, GET_COUPONS, MAKE_AN_APPOINTMENT]
+        title:
+          type: string
+        description:
+          type: string
+        image:
+          type: string
+        image_list:
+          type: array
+          items:
+            type: string
+    - name: destination_url
+      in: formData
+      type: string
+      description: 创意目标 url
+      required: true
+    - name: site_set
+      in: formData
+      type: string
+      description: 投放站点集合
+      enum: [SITE_SET_WECHAT]
+      required: true
+    - name: product_type
+      in: formData
+      type: string
+      description: 推广标的物类型
+      enum: [PRODUCT_TYPE_LINK_WECHAT, PRODUCT_TYPE_ECOMMERCE, PRODUCT_TYPE_LBS_WECHAT]
+      required: true
+    - name: product_refs_id
+      in: formData
+      type: string
+      description: 标的物 id，0-128 个英文字符，本地门店推广时需设置为门店 id，微信公众号平台门店管理界 面或接口获得
+    - name: share_info
+      in: formData
+      type: object
+      description: 分享信息
+      properties:
+        share_title:
+          type: string
+        share_description:
+          type: string
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  adcreative_id:
+                    type: integer
+                    format: int64
+                    description: 广告创意 id
+        example:
+          errcode: 0
+          errmsg: ''
+          data:
+            adcreative_id: 123456

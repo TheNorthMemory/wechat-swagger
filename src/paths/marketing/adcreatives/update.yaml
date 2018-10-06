@@ -1,0 +1,61 @@
+post:
+  summary: 更新广告创意
+  security:
+    - accessToken: []
+  tags:
+    - 广告服务商接口
+  consumes:
+    - application/x-www-form-urlencoded
+  parameters:
+    - name: adcreative_id
+      in: formData
+      type: integer
+      format: int64
+      description: 广告创意 id
+      required: true
+    - name: adcreative_name
+      in: formData
+      type: string
+      description: 广告创意名称，同一帐号下的广告创意名称不允许重复 字段长度最小 1 字节，长度最大 120 字节
+    - name: adcreative_elements
+      in: formData
+      type: object
+      description: 创意元素，不同 adcreative_template_id 要求的元素不尽相同，具体情况可通过 [创意规格查询工具] 进行查询
+      properties:
+        link_name_type:
+          type: string
+          enum: [VIEW_DETAILS, GET_COUPONS, MAKE_AN_APPOINTMENT]
+        title:
+          type: string
+        description:
+          type: string
+        image:
+          type: string
+        image_list:
+          type: array
+          items:
+            type: string
+    - name: destination_url
+      in: formData
+      type: string
+      description: 创意目标 url
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  adcreative_id:
+                    type: integer
+                    format: int64
+                    description: 广告创意 id
+        example:
+          errcode: 0
+          errmsg: ''
+          data:
+            adcreative_id: 123456

@@ -48,51 +48,54 @@ get:
           - $ref: '#/definitions/base.ResponseBo'
           - type: object
             properties:
-              list:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    image_id:
-                      type: string
-                      description: 图片 id
-                    width:
-                      type: integer
-                      format: int64
-                      description: 图片宽度
-                    height:
-                      type: integer
-                      format: int64
-                      description: 图片高度
-                    file_size:
-                      type: integer
-                      format: int64
-                      description: 图片大小 单位 byte
-                    type:
-                      type: string
-                      description: 图片类型，见附录【图片类型】
-                      enum: [IMAGE_TYPE_GIF, IMAGE_TYPE_JPG, IMAGE_TYPE_PNG]
-                    signature:
-                      type: string
-                      description: 图片签名
-                    preview_url:
-                      type: string
-                      description: 图片预览地址
-              page_info:
+              data:
                 type: object
                 properties:
-                  total_number:
-                    type: integer
-                    format: int64
-                  total_page:
-                    type: integer
-                    format: int64
-                  page_size:
-                    type: integer
-                    format: int64
-                  page:
-                    type: integer
-                    format: int64
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        image_id:
+                          type: string
+                          description: 图片 id
+                        width:
+                          type: integer
+                          format: int64
+                          description: 图片宽度
+                        height:
+                          type: integer
+                          format: int64
+                          description: 图片高度
+                        file_size:
+                          type: integer
+                          format: int64
+                          description: 图片大小 单位 byte
+                        type:
+                          type: string
+                          description: 图片类型，见附录【图片类型】
+                          enum: [IMAGE_TYPE_GIF, IMAGE_TYPE_JPG, IMAGE_TYPE_PNG]
+                        signature:
+                          type: string
+                          description: 图片签名
+                        preview_url:
+                          type: string
+                          description: 图片预览地址
+                  page_info:
+                    type: object
+                    properties:
+                      total_number:
+                        type: integer
+                        format: int64
+                      total_page:
+                        type: integer
+                        format: int64
+                      page_size:
+                        type: integer
+                        format: int64
+                      page:
+                        type: integer
+                        format: int64
         example:
           errcode: 0
           errmsg: ''

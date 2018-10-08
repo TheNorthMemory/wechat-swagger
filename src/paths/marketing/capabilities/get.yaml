@@ -1,0 +1,44 @@
+get:
+  summary: 查询广告投放相关权限
+  security:
+    - accessToken: []
+  tags:
+    - 广告服务商接口
+  consumes:
+    - application/x-www-form-urlencoded
+  parameters:
+    - name: capability
+      in: formData
+      type: string
+      description: 要查询的广告投放能力
+      required: true
+      enum: [CAPABILITY_WECHAT_ECOMMERCE_PRODUCT, CAPABILITY_WECHAT_LINK_AD]
+    - name: query_spec
+      in: formData
+      type: object
+      description: 查询条件
+      properties:
+        wechat_link_ad:
+          type: object
+          properties:
+            url:
+              type: string
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  query_result:
+                    type: boolean
+                    description: 是否支持，true/false
+        example:
+          errcode: 0
+          errmsg: ''
+          data:
+            query_result: true

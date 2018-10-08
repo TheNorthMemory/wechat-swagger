@@ -1,0 +1,105 @@
+get:
+  summary: 获取广告组今日实时消耗
+  security:
+    - accessToken: []
+  tags:
+    - 广告服务商接口
+  consumes:
+    - application/x-www-form-urlencoded
+  parameters:
+    - name: level
+      in: query
+      type: string
+      description: 报表层级
+      enum: [ADGROUP]
+      required: true
+    - name: date
+      in: query
+      type: string
+      required: true
+      description: 查询日期，日期格式 YYYY-MM-DD，只支持 今天的数据查询
+    - in: query
+      name: filtering
+      type: array
+      items:
+        type: object
+        properties:
+          field:
+            type: string
+            description: 过滤字段
+            enum: [adgroup_id]
+          operator:
+            type: string
+            description: 操作符
+            enum: [EQUALS]
+          values:
+            type: array
+            items:
+              type: string
+              description: 字段取值
+    - name: page
+      in: query
+      type: integer
+      format: int64
+      description: 大于等于 1 小于等于实际总页数， 若不传则代表获取第 1 页
+    - name: page_size
+      in: query
+      type: integer
+      format: int64
+      description: 一页获取的数据条数，1-100，默认为 10
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        campaign_id:
+                          type: integer
+                          format: int64
+                          description: 推广计划 id，level=CAMPAIGN 时有效
+                        adgroup_id:
+                          type: integer
+                          format: int64
+                          description: 广告组 id，level=ADGROUP 时有效
+                        cost:
+                          type: integer
+                          format: int64
+                          description: 消耗，单位为分
+                  page_info:
+                    type: object
+                    properties:
+                      total_number:
+                        type: integer
+                        format: int64
+                      total_page:
+                        type: integer
+                        format: int64
+                      page_size:
+                        type: integer
+                        format: int64
+                      page:
+                        type: integer
+                        format: int64
+        example:
+          errcode: 0
+          errmsg: ''
+          data:
+            list:
+              - campaign_id: 123456
+                adgroup_id: 2001
+                cost: 1650
+            page_info:
+              total_number: 1
+              total_page: 1
+              page_size: 10
+              page: 1

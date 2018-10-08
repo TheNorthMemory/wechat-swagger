@@ -1,0 +1,43 @@
+post:
+  summary: 更新广告
+  security:
+    - accessToken: []
+  tags:
+    - 广告服务商接口
+  consumes:
+    - application/x-www-form-urlencoded
+  parameters:
+    - name: ad_id
+      type: integer
+      format: int64
+      required: true
+      description: 广告 id
+    - name: ad_name
+      in: formData
+      type: string
+      description: 广告名称
+    - name: configured_status
+      in: formData
+      type: string
+      description: 由客户设置的 启用/暂停 状态
+      enum: [AD_STATUS_NORMAL, AD_STATUS_SUSPEND]
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  ad_id:
+                    type: integer
+                    format: int64
+                    description: 广告 id
+        example:
+          errcode: 0
+          errmsg: ''
+          data:
+            ad_id: 123456

@@ -1,0 +1,51 @@
+post:
+  summary: 上传客户人群数据文件
+  security:
+    - accessToken: []
+  tags:
+    - 广告服务商接口
+  consumes:
+    - multipart/form-data
+  parameters:
+    - name: audience_id
+      in: formData
+      type: integer
+      format: int64
+      description: 人群 id
+      required: true
+    - name: user_id_type
+      in: formData
+      type: string
+      description: 号码包用户 id 类型
+      enum: [QQ, IMEI, IDFA, GDT_OPENID, HASH_IMEI, HASH_IDFA, HASH_MOBILE_PHONE]
+      required: true
+    - name: file
+      in: formData
+      type: file
+      description: 上传人群文件， txt 文件每行一个号码，文件压缩后的 zip 包，压缩后的 zip 包不超过 100M
+      required: true
+    - name: operation_type
+      in: formData
+      type: string
+      description: 文件操作类型
+      enum: [APPEND, REDUCE]
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  custom_audience_file_id:
+                    type: integer
+                    format: int64
+                    description: 数据文件 id
+        example:
+          errcode: 0
+          errmsg: ''
+          data:
+            custom_audience_file_id: 123456

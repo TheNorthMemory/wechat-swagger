@@ -1,0 +1,108 @@
+get:
+  summary: 获取客户人群
+  security:
+    - accessToken: []
+  tags:
+    - 广告服务商接口
+  consumes:
+    - application/x-www-form-urlencoded
+  parameters:
+    - name: audience_id
+      in: formData
+      type: integer
+      format: int64
+      description: 人群 id
+    - name: page
+      in: query
+      type: integer
+      format: int64
+      description: 大于等于 1 小于等于实际总页数， 若不传则代表获取第 1 页
+    - name: page_size
+      in: query
+      type: integer
+      format: int64
+      description: 一页获取的数据条数，1-100，默认为 10
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        audience_id:
+                          type: integer
+                          format: int64
+                          description: 人群 id
+                        name:
+                          type: string
+                          description: 人群名称
+                        description:
+                          type: string
+                          description: 人群描述
+                        type:
+                          type: string
+                          description: 人群类型
+                          enum: [CUSTOMER_FILE]
+                        status:
+                          type: string
+                          description: 处理状态
+                          enum: [PENDING, PROCESSING, SUCCESS, ERROR]
+                        error_code:
+                          type: integer
+                          format: int64
+                          description: 人群错误码
+                        user_count:
+                          type: integer
+                          format: int64
+                          description: 用户覆盖数
+                        created_time:
+                          type: integer
+                          format: int64
+                          description: 创建时间，格式为 yyyy-MM-dd HH:mm:ss，如 2016-11-01 10:42:56
+                        last_modified_time:
+                          type: integer
+                          format: int64
+                          description: 最后修改时间，unix 时间戳，精确到秒
+                  page_info:
+                    type: object
+                    properties:
+                      total_number:
+                        type: integer
+                        format: int64
+                      total_page:
+                        type: integer
+                        format: int64
+                      page_size:
+                        type: integer
+                        format: int64
+                      page:
+                        type: integer
+                        format: int64
+        example:
+          errcode: 0
+          errmsg: ''
+          data:
+            list:
+              - audience_id: <AUDIENCE_ID>
+                name: 测试人群
+                description: ''
+                type: CUSTOMER_FILE
+                status: PENDING
+                error_code: 0
+                user_count: 0
+                created_time: '2016-11-01 10:42:56'
+                last_modified_time: '2017-10-21 17:11:17'
+            page_info:
+              page: 1
+              page_size: 10
+              total_number: 2
+              total_page: 1

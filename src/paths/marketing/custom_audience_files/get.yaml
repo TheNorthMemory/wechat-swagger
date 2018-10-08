@@ -1,0 +1,127 @@
+get:
+  summary: 获取客户人群数据文件
+  security:
+    - accessToken: []
+  tags:
+    - 广告服务商接口
+  consumes:
+    - application/x-www-form-urlencoded
+  parameters:
+    - name: audience_id
+      in: formData
+      type: integer
+      format: int64
+      description: 人群 id
+    - name: custom_audience_file_id
+      type: integer
+      format: int64
+      description: 数据文件 id
+    - name: page
+      in: query
+      type: integer
+      format: int64
+      description: 大于等于 1 小于等于实际总页数， 若不传则代表获取第 1 页
+    - name: page_size
+      in: query
+      type: integer
+      format: int64
+      description: 一页获取的数据条数，1-100，默认为 10
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        audience_id:
+                          type: integer
+                          format: int64
+                          description: 人群 id
+                        custom_audience_file_id:
+                          type: integer
+                          format: int64
+                          description: 数据文件 id
+                        name:
+                          type: string
+                          description: 文件名称
+                        user_id_type:
+                          type: string
+                          description: 号码包用户 id 类型
+                          enum: [QQ, IMEI, IDFA, GDT_OPENID, HASH_IMEI, HASH_IDFA, HASH_MOBILE_PHONE]
+                        operation_type:
+                          type: string
+                          description: 文件操作类型，如果不填则默认为 APPEND
+                          enum: [APPEND, REDUCE]
+                        process_status:
+                          type: string
+                          description: 处理状态，[枚举详情]
+                          enum: [PENDING, PROCESSING, SUCCESS, ERROR]
+                        process_code:
+                          type: integer
+                          format: int64
+                          description: 处理完成后的状态码，0 表示成功，非 0 失败。
+                        error_message:
+                          type: string
+                          description: 错误具体信息
+                        line_count:
+                          type: integer
+                          format: int64
+                          description: 文件总行数
+                        valid_line_count:
+                          type: integer
+                          format: int64
+                          description: 文件中没有格式错误的行数
+                        user_count:
+                          type: integer
+                          format: int64
+                          description: 文件包含的用户数
+                        created_time:
+                          type: string
+                          description: 创建时间，格式为 yyyy-MM-dd HH:mm:ss,如 2016-11-01 10:42:56
+                  page_info:
+                    type: object
+                    properties:
+                      total_number:
+                        type: integer
+                        format: int64
+                      total_page:
+                        type: integer
+                        format: int64
+                      page_size:
+                        type: integer
+                        format: int64
+                      page:
+                        type: integer
+                        format: int64
+        example:
+          errcode: 0
+          errmsg: ''
+          data:
+            list:
+              - audience_id: <AUDIENCE_ID>
+                custom_audience_file_id: <CUSTOM_AUDIENCE_FILE_ID>
+                name: 设备人群包
+                user_id_type: HASH_IMEI
+                operation_type: APPEND
+                open_app_id: ''
+                process_status: PENDING
+                process_code: 0
+                error_message: ''
+                user_count: 100
+                valid_line_count: 100
+                line_count: 120
+                created_time: '2017-01-12 19:20:36'
+            page_info:
+              page: 1
+              page_size: 10
+              total_number: 1
+              total_page: 1

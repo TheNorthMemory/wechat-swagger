@@ -1,0 +1,32 @@
+post:
+  summary: 更新客户人群
+  security:
+    - accessToken: []
+  tags:
+    - 广告服务商接口
+  consumes:
+    - application/x-www-form-urlencoded
+  parameters:
+    - name: audience_id
+      in: formData
+      type: integer
+      format: int64
+      description: 人群 id
+      required: true
+    - name: name
+      in: formData
+      type: string
+      description: 人群名称，必填，同一个帐号下的人群不许重名 字段长度最小 1 字节，长度最大 32 字节
+    - name: description
+      in: formData
+      type: string
+      description: 人群描述 字段长度最小 1 字节，长度最大 100 字节
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+        example:
+          errcode: 0
+          errmsg: ''

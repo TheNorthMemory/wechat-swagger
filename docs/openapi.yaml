@@ -14512,6 +14512,10 @@ paths:
               type: array
               items:
                 type: string
+            mini_program_id:
+              type: string
+            mini_program_path:
+              type: string
         - name: destination_url
           in: formData
           type: string
@@ -14655,6 +14659,10 @@ paths:
                                   type: array
                                   items:
                                     type: string
+                                mini_program_id:
+                                  type: string
+                                mini_program_path:
+                                  type: string
                             destination_url:
                               type: string
                               description: 创意目标 url
@@ -14755,6 +14763,10 @@ paths:
               type: array
               items:
                 type: string
+            mini_program_id:
+              type: string
+            mini_program_path:
+              type: string
         - name: destination_url
           in: formData
           type: string

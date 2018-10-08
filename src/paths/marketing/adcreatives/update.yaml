@@ -35,6 +35,10 @@ post:
           type: array
           items:
             type: string
+        mini_program_id:
+          type: string
+        mini_program_path:
+          type: string
     - name: destination_url
       in: formData
       type: string

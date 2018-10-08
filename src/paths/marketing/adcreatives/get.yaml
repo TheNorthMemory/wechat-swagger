@@ -90,6 +90,10 @@ get:
                               type: array
                               items:
                                 type: string
+                            mini_program_id:
+                              type: string
+                            mini_program_path:
+                              type: string
                         destination_url:
                           type: string
                           description: 创意目标 url

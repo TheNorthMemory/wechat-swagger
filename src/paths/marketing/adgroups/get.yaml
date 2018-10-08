@@ -111,6 +111,24 @@ get:
                                 type: string
                                 description: 性别定向(仅单选)
                                 enum: [MALE, FEMALE]
+                            education:
+                              type: array
+                              items:
+                                type: string
+                                description: 用户学历
+                                enum: [DOCTOR, MASTER, BACHELOR, SENIOR, JUNIOR, PRIMARY]
+                            user_paying_type:
+                              type: array
+                              items:
+                                type: string
+                                description: 用户学历
+                                enum: [LATENT_VIR_PAY, ECOMMERCE_PAID]
+                            relationship_status:
+                              type: array
+                              items:
+                                type: string
+                                description: 婚恋状态
+                                enum: [PARENTING, SINGLE, NEWLY_MARRIED, MARRIED]
                             geo_location:
                               type: object
                               properties:
@@ -151,6 +169,63 @@ get:
                                         type: integer
                                         format: int64
                                         description: 半径，单位米 最小值 200，最大值 25000
+                            network_type:
+                              type: array
+                              items:
+                                type: string
+                                description: 联网方式
+                                enum: [WIFI, NET_2G, NET_3G, NET_4G]
+                            network_operator:
+                              type: array
+                              items:
+                                type: string
+                                description: 联网方式
+                                enum: [CMCC, CUC, CTC]
+                            user_os:
+                              type: array
+                              items:
+                                type: string
+                                description: 联网方式
+                                enum: [IOS, ANDROID]
+                            business_interest:
+                              type: array
+                              items:
+                                type: string
+                                description: 兴趣定向 详见文档[微信商业兴趣列表](http://wximg.qq.com/wxp/docs/xingqu.xlsx)，最多限制 120 个
+                            device_price:
+                              type: array
+                              items:
+                                type: string
+                                description: 移动设备价格
+                                enum: [INEXPENSIVE, AFFORDABLE, EXPENSIVE]
+                            wechat_ad_behavior:
+                              type: object
+                              description: 微信广告行为
+                              properties:
+                                actions:
+                                  type: array
+                                  description: 包含的行为列表，多个行为之间为并集( or )的关系，可 选行为见下表
+                                  items:
+                                    type: string
+                                    enum: [WECHAT_OFFICIAL_ACCOUNT_FOLLOWED, WECHAT_OFFICIAL_ACCOUNT_AD_LIKE, WECHAT_MOMENTS_AD_LIKE, WECHAT_COUPON_OBTAINED, APP_INSTALLED]
+                                excluded_actions:
+                                  type: array
+                                  description: 排除的行为列表，多个行为之间为并集( or )的关系，可 选行为见下表
+                                  items:
+                                    type: string
+                                    enum: [WECHAT_OFFICIAL_ACCOUNT_FOLLOWED, WECHAT_OFFICIAL_ACCOUNT_AD_LIKE, WECHAT_MOMENTS_AD_LIKE, WECHAT_COUPON_OBTAINED, APP_INSTALLED]
+                            custom_audience:
+                              type: array
+                              items:
+                                type: integer
+                                format: int64
+                                description: 自定义人群列表，通过客户人群模块创建的人群 id 列表，最多 10 个
+                            excluded_custom_a udience:
+                              type: array
+                              items:
+                                type: integer
+                                format: int64
+                                description: 排除的自定义人群列表，通过客户人群模块创建的人群 id 列表，最多 10 个
                         begin_date:
                           type: string
                           format: date

@@ -1,0 +1,43 @@
+get:
+  summary: 获取设备绑定openID
+  description: 通过device type和device id获取设备主人的openid。[官方文档](https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-11)
+  security:
+    - accessToken: []
+  tags:
+    - IOT
+  parameters:
+    - name: device_type
+      in: query
+      type: string
+      description: 设备类型，目前为“公众账号原始ID”
+    - name: device_id
+      in: query
+      type: string
+      description: 设备id
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              open_id:
+                type: array
+                items:
+                  type: string
+              resp_msg:
+                type: object
+                properties:
+                  ret_code:
+                    type: integer
+                    format: int32
+                  error_info:
+                    type: string
+        example:
+          open_id:
+            - omN7ljrpaxQgK4NW4H5cRzFRtfa8
+            - omN7ljtqrTZuvYLkjPEX_t_Pmmlg
+          resp_msg:
+            ret_code: 0
+            error_info: get open id list OK!

@@ -1,0 +1,32 @@
+get:
+  summary: 设备状态查询
+  description: 第三方公众账号通过设备id查询该id的状态（三种状态：未授权、已授权、已绑定）。[官方文档](https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-8)
+  security:
+    - accessToken: []
+  tags:
+    - IOT
+  parameters:
+    - name: device_id
+      in: query
+      type: string
+      description: 设备id
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              status:
+                type: integer
+                format: int32
+                description: 设备状态，目前取值如下： 0：未授权 1：已经授权（尚未被用户绑定） 2：已经被用户绑定 3：属性未设置
+                enum: [0, 1, 2, 3]
+              status_info:
+                type: string
+        example:
+          errcode: 0
+          errmsg: ok
+          status: 2
+          status_info: bind

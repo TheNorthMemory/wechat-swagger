@@ -1,0 +1,44 @@
+post:
+  tags:
+    - 事件通知
+  summary: IOT/绑定设备
+  description: '[官方文档](https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-2)'
+  consumes:
+    - application/xml
+  produces:
+    - text/plain
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        allOf:
+          - $ref: '#/definitions/notify.Base'
+          - type: object
+            required: [MsgType, Event, DeviceType, DeviceID, Content, SessionID, OpenID]
+            properties:
+              MsgType:
+                type: string
+                enum: [device_event]
+              Event:
+                type: string
+                description: 事件类型
+                enum: [bind]
+              DeviceType:
+                type: string
+                description: 设备类型，目前为“公众账号原始ID”
+              DeviceID:
+                type: string
+                description: 设备ID，第三方提供
+              Content:
+                type: string
+                description: 当Event为bind时，Content字段存放二维码中第三方追加的自定义的数据，base64格式
+              SessionID:
+                type: string
+                description: 微信客户端生成的session id，用于request和response对应，因此响应中该字段第三方需要原封不变的带回
+              OpenID:
+                type: string
+                description: 微信用户账号的OpenID
+  responses:
+    '200':
+      description: ''

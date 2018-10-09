@@ -1,0 +1,54 @@
+post:
+  summary: 获取设备二维码
+  description: 第三方公众账号通过设备id从公众平台批量获取设备二维码。[官方文档](https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-4)
+  security:
+    - accessToken: []
+  tags:
+    - IOT
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          device_num:
+            type: integer
+            format: int32
+            description: 设备id的个数
+          device_id_list:
+            type: array
+            items:
+              type: string
+              description: 设备ID
+        required:
+          - device_num
+          - device_id_list
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              device_num:
+                type: integer
+                format: int32
+              code_list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    device_id:
+                      type: string
+                      description: 设备ID
+                    ticket:
+                      type: string
+                      description: 设备id对应的二维码生成串
+        example:
+          errcode: 0
+          errmsg: succ
+          device_num: 1
+          code_list:
+            - device_id: id1
+              ticket: t1

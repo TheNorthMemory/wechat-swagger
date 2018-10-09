@@ -86,6 +86,7 @@ tags:
   - name: 连WI-FI/门店
   - name: 连WI-FI/设备
   - name: 连WI-FI/商家主页
+  - name: IOT
   - name: 扫一扫
   - name: 智能接口/语义理解
   - name: 智能接口/AI开放接口
@@ -120,6 +121,184 @@ tags:
   - name: 开放平台/第三方平台/代小程序/代码模版库
   - name: 开放平台/第三方平台/代小程序/模板消息模板设置
 paths:
+  /_notify/device_event/Bind:
+    post:
+      tags:
+        - 事件通知
+      summary: IOT/绑定设备
+      description: '[官方文档](https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-2)'
+      consumes:
+        - application/xml
+      produces:
+        - text/plain
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.Base'
+              - type: object
+                required: [MsgType, Event, DeviceType, DeviceID, Content, SessionID, OpenID]
+                properties:
+                  MsgType:
+                    type: string
+                    enum: [device_event]
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [bind]
+                  DeviceType:
+                    type: string
+                    description: 设备类型，目前为“公众账号原始ID”
+                  DeviceID:
+                    type: string
+                    description: 设备ID，第三方提供
+                  Content:
+                    type: string
+                    description: 当Event为bind时，Content字段存放二维码中第三方追加的自定义的数据，base64格式
+                  SessionID:
+                    type: string
+                    description: 微信客户端生成的session id，用于request和response对应，因此响应中该字段第三方需要原封不变的带回
+                  OpenID:
+                    type: string
+                    description: 微信用户账号的OpenID
+      responses:
+        '200':
+          description: ''
+  /_notify/device_event/SubscribeStatus:
+    post:
+      tags:
+        - 事件通知
+      summary: IOT/订阅设备状态
+      description: '[官方文档](https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-13)'
+      consumes:
+        - application/xml
+      produces:
+        - text/plain
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.Base'
+              - type: object
+                required: [MsgType, Event, DeviceType, DeviceID, OpType, OpenID]
+                properties:
+                  MsgType:
+                    type: string
+                    enum: [device_event]
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [subscribe_status]
+                  DeviceType:
+                    type: string
+                    description: 设备类型，目前为“公众账号原始ID”
+                  DeviceID:
+                    type: string
+                    description: 设备ID，第三方提供
+                  OpType:
+                    type: integer
+                    format: int32
+                    description: 请求类型： 0：退订设备状态； 1：心跳；（心跳的处理方式跟订阅一样） 2：订阅设备状态;
+                    enum: [0, 1, 2]
+                  OpenID:
+                    type: string
+                    description: 微信用户账号的OpenID
+      responses:
+        '200':
+          description: ''
+  /_notify/device_event/Unbind:
+    post:
+      tags:
+        - 事件通知
+      summary: IOT/解除绑定
+      description: '[官方文档](https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-2)'
+      consumes:
+        - application/xml
+      produces:
+        - text/plain
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.Base'
+              - type: object
+                required: [MsgType, Event, DeviceType, DeviceID, Content, SessionID, OpenID]
+                properties:
+                  MsgType:
+                    type: string
+                    enum: [device_event]
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [bind]
+                  DeviceType:
+                    type: string
+                    description: 设备类型，目前为“公众账号原始ID”
+                  DeviceID:
+                    type: string
+                    description: 设备ID，第三方提供
+                  Content:
+                    type: string
+                    description: 当Event为bind时，Content字段存放二维码中第三方追加的自定义的数据，base64格式
+                  SessionID:
+                    type: string
+                    description: 微信客户端生成的session id，用于request和response对应，因此响应中该字段第三方需要原封不变的带回
+                  OpenID:
+                    type: string
+                    description: 微信用户账号的OpenID
+      responses:
+        '200':
+          description: ''
+  /_notify/device_event/UnsubscribeStatus:
+    post:
+      tags:
+        - 事件通知
+      summary: IOT/退订设备状态
+      description: '[官方文档](https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-13)'
+      consumes:
+        - application/xml
+      produces:
+        - text/plain
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.Base'
+              - type: object
+                required: [MsgType, Event, DeviceType, DeviceID, OpType, OpenID]
+                properties:
+                  MsgType:
+                    type: string
+                    enum: [device_event]
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [unsubscribe_status]
+                  DeviceType:
+                    type: string
+                    description: 设备类型，目前为“公众账号原始ID”
+                  DeviceID:
+                    type: string
+                    description: 设备ID，第三方提供
+                  OpType:
+                    type: integer
+                    format: int32
+                    description: 请求类型： 0：退订设备状态； 1：心跳；（心跳的处理方式跟订阅一样） 2：订阅设备状态;
+                    enum: [0, 1, 2]
+                  OpenID:
+                    type: string
+                    description: 微信用户账号的OpenID
+      responses:
+        '200':
+          description: ''
   /_notify/event/AddStoreAuditInfo:
     post:
       tags:
@@ -2488,6 +2667,46 @@ paths:
                   DeviceNo:
                     type: string
                     description: 连网的设备无线mac地址，对应bssid
+      responses:
+        '200':
+          description: ''
+  /_notify/hardware/MyRank.RankList:
+    post:
+      tags:
+        - 事件通知
+      summary: IOT/排行榜消息
+      description: '[官方文档](https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-10)'
+      consumes:
+        - application/xml
+      produces:
+        - text/plain
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.Base'
+              - type: object
+                required: [hardware, ExpiredTime]
+                properties:
+                  MsgType:
+                    type: string
+                    enum: [hardware]
+                  HardWare:
+                    type: object
+                    properties:
+                      MessageView:
+                        type: string
+                        description: 消息展示，目前支持myrank（排行榜）
+                        enum: [myrank]
+                      MessageAction:
+                        type: string
+                        description: 消息点击动作，目前支持ranklist（点击跳转排行榜）
+                        enum: [ranklist]
+                  FuncFlag:
+                    type: integer
+                    format: int32
       responses:
         '200':
           description: ''
@@ -13528,6 +13747,623 @@ paths:
       responses:
         '200':
           description: ''
+  /device/authorize_device:
+    post:
+      summary: 设备授权
+      description: 第三方公众账号将设备id及其属性信息提交公众平台进行授权。[官方文档](https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-5)
+      security:
+        - accessToken: []
+      tags:
+        - IOT
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              device_num:
+                type: string
+                description: 设备id的个数
+              device_list:
+                type: array
+                description: 设备id的列表，json的array格式，其size必须等于device_num
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: 设备的deviceid
+                    mac:
+                      type: string
+                      description: 设备的mac地址 格式采用16进制串的方式（长度为12字节），不需要0X前缀，如： 1234567890AB
+                    connect_protocol:
+                      type: integer
+                      format: int32
+                      description: 支持以下四种连接协议：android classic bluetooth – 1 ios classic bluetooth – 2 ble – 3 wifi - 4 一个设备可以支持多种连接类型，用符号"|"做分割，客户端优先选择靠前的连接方式（优先级按|关系的排序依次降低），
+                      enum: [1, 2, 3, 4]
+                    auth_key:
+                      type: string
+                      description: auth及通信的加密key，第三方需要将key烧制在设备上（128bit），格式采用16进制串的方式（长度为32字节），不需要0X前缀，如： 1234567890ABCDEF1234567890ABCDEF
+                    close_strategy:
+                      type: string
+                      description: 断开策略，目前支持： 1：退出公众号页面时即断开连接 2：退出公众号之后保持连接不断开
+                    conn_strategy:
+                      type: integer
+                      format: int32
+                      description: 连接策略，32位整型，按bit位置位，目前仅第1bit和第3bit位有效（bit置0为无效，1为有效；第2bit已被废弃），且bit位可以按或置位（如1|4=5），各bit置位含义说明如下：1：（第1bit置位）在公众号对话页面，不停的尝试连接设备 4：（第3bit置位）处于非公众号页面（如主界面等），微信自动连接。当用户切换微信到前台时，可能尝试去连接设备，连上后一定时间会断开
+                    crypt_method:
+                      type: integer
+                      format: int32
+                      description: auth加密方法，目前支持两种取值： 0：不加密 1：AES加密（CBC模式，PKCS7填充方式）
+                      enum: [0, 1]
+                    auth_ver:
+                      type: integer
+                      format: int32
+                      description: auth version，设备和微信进行auth时，会根据该版本号来确认auth buf和auth key的格式（各version对应的auth buf及key的具体格式可以参看“客户端蓝牙外设协议”），该字段目前支持取值： 0：不加密的version 1：version 1
+                      enum: [0, 1]
+                    manu_mac_pos:
+                      type: integer
+                      format: int32
+                      description: 表示mac地址在厂商广播manufature data里含有mac地址的偏移，取值如下： -1：在尾部、 -2：表示不包含mac地址 其他：非法偏移
+                      enum: [-1, -2]
+                    ser_mac_pos:
+                      type: integer
+                      format: int32
+                      description: 表示mac地址在厂商serial number里含有mac地址的偏移，取值如下： -1：表示在尾部 -2：表示不包含mac地址 其他：非法偏移
+                      enum: [-1, -2]
+                    ble_simple_protocol:
+                      type: string
+                      description: 精简协议类型，取值如下：计步设备精简协议：1 （若该字段填1，connect_protocol 必须包括3。非精简协议设备切勿填写该字段）
+              op_type:
+                type: integer
+                format: int32
+                description: 请求操作的类型，限定取值为：0：设备授权（缺省值为0） 1：设备更新（更新已授权设备的各属性值）
+                enum: [0, 1]
+              product_id:
+                type: string
+                description: 设备的产品编号（由微信硬件平台分配）。可在公众号设备功能管理页面查询。当 op_type 为‘0’，product_id 为‘1’时，不要填写 product_id 字段（会引起不必要错误）；当 op_type 为‘0’，product_id 不为‘1’时，必须填写 product_id 字段；当 op_type 为 1 时，不要填写 product_id 字段。
+            required:
+              - device_num
+              - device_id_list
+            example:
+              device_num: '1'
+              device_list:
+                - id: dev1
+                  mac: 123456789ABC
+                  connect_protocol: '3'
+                  auth_key: ''
+                  close_strategy: '1'
+                  conn_strategy: '1'
+                  crypt_method: '0'
+                  auth_ver: '1'
+                  manu_mac_pos: '-1'
+                  ser_mac_pos: '-2'
+                  ble_simple_protocol: '0'
+              op_type: '0'
+              product_id: '12222'
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  device_num:
+                    type: integer
+                    format: int32
+                  code_list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        device_id:
+                          type: string
+                          description: 设备ID
+                        ticket:
+                          type: string
+                          description: 设备id对应的二维码生成串
+            example:
+              errcode: 0
+              errmsg: succ
+              device_num: 1
+              code_list:
+                - device_id: id1
+                  ticket: t1
+  /device/bind:
+    post:
+      summary: 设备绑定
+      description: '[官方文档](https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-7)'
+      security:
+        - accessToken: []
+      tags:
+        - IOT
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              ticket:
+                type: string
+                description: 绑定操作合法性的凭证（由微信后台生成，第三方H5通过客户端jsapi获得）
+              device_id:
+                type: string
+                description: 设备ID
+              open_id:
+                type: string
+                description: 微信用户账号的openid
+            required:
+              - device_type
+              - device_id
+              - open_id
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  base_resp:
+                    type: object
+                    properties:
+                      errcode:
+                        type: integer
+                        format: int32
+                      errmsg:
+                        type: string
+            example:
+              base_resp:
+                errcode: 0
+                errmsg: ok
+  /device/compel_bind:
+    post:
+      summary: 强制绑定用户和设备
+      description: '[官方文档](https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-7)'
+      security:
+        - accessToken: []
+      tags:
+        - IOT
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              device_id:
+                type: string
+                description: 设备ID
+              open_id:
+                type: string
+                description: 微信用户账号的openid
+            required:
+              - device_id
+              - open_id
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  base_resp:
+                    type: object
+                    properties:
+                      errcode:
+                        type: integer
+                        format: int32
+                      errmsg:
+                        type: string
+            example:
+              base_resp:
+                errcode: 0
+                errmsg: ok
+  /device/compel_unbind:
+    post:
+      summary: 强制解绑用户和设备
+      description: '[官方文档](https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-7)'
+      security:
+        - accessToken: []
+      tags:
+        - IOT
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              device_id:
+                type: string
+                description: 设备ID
+              open_id:
+                type: string
+                description: 微信用户账号的openid
+            required:
+              - device_id
+              - open_id
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  base_resp:
+                    type: object
+                    properties:
+                      errcode:
+                        type: integer
+                        format: int32
+                      errmsg:
+                        type: string
+            example:
+              base_resp:
+                errcode: 0
+                errmsg: ok
+  /device/create_qrcode:
+    post:
+      summary: 获取设备二维码
+      description: 第三方公众账号通过设备id从公众平台批量获取设备二维码。[官方文档](https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-4)
+      security:
+        - accessToken: []
+      tags:
+        - IOT
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              device_num:
+                type: integer
+                format: int32
+                description: 设备id的个数
+              device_id_list:
+                type: array
+                items:
+                  type: string
+                  description: 设备ID
+            required:
+              - device_num
+              - device_id_list
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  device_num:
+                    type: integer
+                    format: int32
+                  code_list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        device_id:
+                          type: string
+                          description: 设备ID
+                        ticket:
+                          type: string
+                          description: 设备id对应的二维码生成串
+            example:
+              errcode: 0
+              errmsg: succ
+              device_num: 1
+              code_list:
+                - device_id: id1
+                  ticket: t1
+  /device/get_bind_device:
+    get:
+      summary: 过openid获取用户绑定的deviceid
+      description: 通过openid获取用户在当前devicetype下绑定的deviceid列表。[官方文档](https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-12)
+      security:
+        - accessToken: []
+      tags:
+        - IOT
+      parameters:
+        - name: openid
+          in: query
+          type: string
+          description: 要查询的用户的openid
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  open_id:
+                    type: string
+                  device_list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        device_type:
+                          type: string
+                        device_id:
+                          type: string
+                  resp_msg:
+                    type: object
+                    properties:
+                      ret_code:
+                        type: integer
+                        format: int32
+                      error_info:
+                        type: string
+            example:
+              resp_msg:
+                ret_code: 0
+                error_info: ok
+              openid: OPENID
+              device_list:
+                - device_type: dt1
+                  device_id: di1
+  /device/get_openid:
+    get:
+      summary: 获取设备绑定openID
+      description: 通过device type和device id获取设备主人的openid。[官方文档](https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-11)
+      security:
+        - accessToken: []
+      tags:
+        - IOT
+      parameters:
+        - name: device_type
+          in: query
+          type: string
+          description: 设备类型，目前为“公众账号原始ID”
+        - name: device_id
+          in: query
+          type: string
+          description: 设备id
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  open_id:
+                    type: array
+                    items:
+                      type: string
+                  resp_msg:
+                    type: object
+                    properties:
+                      ret_code:
+                        type: integer
+                        format: int32
+                      error_info:
+                        type: string
+            example:
+              open_id:
+                - omN7ljrpaxQgK4NW4H5cRzFRtfa8
+                - omN7ljtqrTZuvYLkjPEX_t_Pmmlg
+              resp_msg:
+                ret_code: 0
+                error_info: get open id list OK!
+  /device/get_stat:
+    get:
+      summary: 设备状态查询
+      description: 第三方公众账号通过设备id查询该id的状态（三种状态：未授权、已授权、已绑定）。[官方文档](https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-8)
+      security:
+        - accessToken: []
+      tags:
+        - IOT
+      parameters:
+        - name: device_id
+          in: query
+          type: string
+          description: 设备id
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                    description: 设备状态，目前取值如下： 0：未授权 1：已经授权（尚未被用户绑定） 2：已经被用户绑定 3：属性未设置
+                    enum: [0, 1, 2, 3]
+                  status_info:
+                    type: string
+            example:
+              errcode: 0
+              errmsg: ok
+              status: 2
+              status_info: bind
+  /device/getqrcode:
+    get:
+      summary: 获取deviceid和二维码
+      description: 第三方获取deviceid和设备二维码。[官方文档](https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-6)
+      security:
+        - accessToken: []
+      tags:
+        - IOT
+      parameters:
+        - name: product_id
+          in: query
+          type: string
+          description: 设备的产品编号（由微信硬件平台分配）。可在公众号设备功能管理页面查询。
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  resp_msg:
+                    type: object
+                    properties:
+                      ret_code:
+                        type: integer
+                        format: int32
+                      error_info:
+                        type: string
+                  device_id:
+                    type: string
+                    description: 设备ID
+                  ticket:
+                    type: string
+                    description: 设备id对应的二维码生成串
+            example:
+              resp_msg:
+                ret_code: 0
+                error_info: ok
+              deviceid: XXX
+              qrticket: XXX
+  /device/transmsg:
+    post:
+      summary: 主动发送消息给设备
+      description: 第三方发送消息给设备主人的微信终端，并最终送达设备。[官方文档](https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-3)
+      security:
+        - accessToken: []
+      tags:
+        - IOT
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              device_type:
+                type: string
+                description: 设备类型，目前为“公众账号原始ID”
+              device_id:
+                type: string
+                description: 设备ID
+              open_id:
+                type: string
+                description: 微信用户账号的openid
+              content:
+                type: string
+                description: 消息内容，BASE64编码
+            required:
+              - device_type
+              - device_id
+              - open_id
+              - content
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  ret:
+                    type: integer
+                    format: int32
+                  ret_info:
+                    type: string
+            example:
+              ret: 0
+              ret_info: this is ok
+  /device/unbind:
+    post:
+      summary: 设备解绑
+      description: '[官方文档](https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-7)'
+      security:
+        - accessToken: []
+      tags:
+        - IOT
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              ticket:
+                type: string
+                description: 绑定操作合法性的凭证（由微信后台生成，第三方H5通过客户端jsapi获得）
+              device_id:
+                type: string
+                description: 设备ID
+              open_id:
+                type: string
+                description: 微信用户账号的openid
+            required:
+              - device_type
+              - device_id
+              - open_id
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  base_resp:
+                    type: object
+                    properties:
+                      errcode:
+                        type: integer
+                        format: int32
+                      errmsg:
+                        type: string
+            example:
+              base_resp:
+                errcode: 0
+                errmsg: ok
+  /device/verify_qrcode:
+    post:
+      summary: 验证二维码
+      description: 第三方公众账号通过获取设备二维码的api得到ticket后，可以通过该api拿到对应的设备属性。[官方文档](https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-9)
+      security:
+        - accessToken: []
+      tags:
+        - IOT
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              ticket:
+                type: string
+                description: 设备二维码的ticket
+            required:
+              - ticket
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  device_num:
+                    type: integer
+                    format: int32
+                  code_list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        device_type:
+                          type: string
+                          description: 设备类型
+                        device_id:
+                          type: string
+                          description: 设备ID
+                        mac:
+                          type: string
+                          description: 设备的mac地址
+            example:
+              errcode: 0
+              errmsg: ok
+              device_type: gh_xxxxxx
+              device_id: DEVICE_ID
+              mac: MAC
   /mall/addbranditem:
     post:
       summary: 新增商品

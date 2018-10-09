@@ -1,0 +1,41 @@
+post:
+  summary: 强制绑定用户和设备
+  description: '[官方文档](https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-7)'
+  security:
+    - accessToken: []
+  tags:
+    - IOT
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          device_id:
+            type: string
+            description: 设备ID
+          open_id:
+            type: string
+            description: 微信用户账号的openid
+        required:
+          - device_id
+          - open_id
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - type: object
+            properties:
+              base_resp:
+                type: object
+                properties:
+                  errcode:
+                    type: integer
+                    format: int32
+                  errmsg:
+                    type: string
+        example:
+          base_resp:
+            errcode: 0
+            errmsg: ok

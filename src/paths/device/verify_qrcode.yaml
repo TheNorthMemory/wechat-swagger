@@ -1,0 +1,49 @@
+post:
+  summary: 验证二维码
+  description: 第三方公众账号通过获取设备二维码的api得到ticket后，可以通过该api拿到对应的设备属性。[官方文档](https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-9)
+  security:
+    - accessToken: []
+  tags:
+    - IOT
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          ticket:
+            type: string
+            description: 设备二维码的ticket
+        required:
+          - ticket
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              device_num:
+                type: integer
+                format: int32
+              code_list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    device_type:
+                      type: string
+                      description: 设备类型
+                    device_id:
+                      type: string
+                      description: 设备ID
+                    mac:
+                      type: string
+                      description: 设备的mac地址
+        example:
+          errcode: 0
+          errmsg: ok
+          device_type: gh_xxxxxx
+          device_id: DEVICE_ID
+          mac: MAC

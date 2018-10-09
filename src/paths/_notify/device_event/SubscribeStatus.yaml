@@ -1,0 +1,43 @@
+post:
+  tags:
+    - 事件通知
+  summary: IOT/订阅设备状态
+  description: '[官方文档](https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-13)'
+  consumes:
+    - application/xml
+  produces:
+    - text/plain
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        allOf:
+          - $ref: '#/definitions/notify.Base'
+          - type: object
+            required: [MsgType, Event, DeviceType, DeviceID, OpType, OpenID]
+            properties:
+              MsgType:
+                type: string
+                enum: [device_event]
+              Event:
+                type: string
+                description: 事件类型
+                enum: [subscribe_status]
+              DeviceType:
+                type: string
+                description: 设备类型，目前为“公众账号原始ID”
+              DeviceID:
+                type: string
+                description: 设备ID，第三方提供
+              OpType:
+                type: integer
+                format: int32
+                description: 请求类型： 0：退订设备状态； 1：心跳；（心跳的处理方式跟订阅一样） 2：订阅设备状态;
+                enum: [0, 1, 2]
+              OpenID:
+                type: string
+                description: 微信用户账号的OpenID
+  responses:
+    '200':
+      description: ''

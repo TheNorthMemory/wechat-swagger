@@ -1,0 +1,46 @@
+post:
+  summary: 主动发送消息给设备
+  description: 第三方发送消息给设备主人的微信终端，并最终送达设备。[官方文档](https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-3)
+  security:
+    - accessToken: []
+  tags:
+    - IOT
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          device_type:
+            type: string
+            description: 设备类型，目前为“公众账号原始ID”
+          device_id:
+            type: string
+            description: 设备ID
+          open_id:
+            type: string
+            description: 微信用户账号的openid
+          content:
+            type: string
+            description: 消息内容，BASE64编码
+        required:
+          - device_type
+          - device_id
+          - open_id
+          - content
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              ret:
+                type: integer
+                format: int32
+              ret_info:
+                type: string
+        example:
+          ret: 0
+          ret_info: this is ok

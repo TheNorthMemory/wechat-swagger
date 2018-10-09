@@ -1,0 +1,40 @@
+get:
+  summary: 获取deviceid和二维码
+  description: 第三方获取deviceid和设备二维码。[官方文档](https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-6)
+  security:
+    - accessToken: []
+  tags:
+    - IOT
+  parameters:
+    - name: product_id
+      in: query
+      type: string
+      description: 设备的产品编号（由微信硬件平台分配）。可在公众号设备功能管理页面查询。
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              resp_msg:
+                type: object
+                properties:
+                  ret_code:
+                    type: integer
+                    format: int32
+                  error_info:
+                    type: string
+              device_id:
+                type: string
+                description: 设备ID
+              ticket:
+                type: string
+                description: 设备id对应的二维码生成串
+        example:
+          resp_msg:
+            ret_code: 0
+            error_info: ok
+          deviceid: XXX
+          qrticket: XXX

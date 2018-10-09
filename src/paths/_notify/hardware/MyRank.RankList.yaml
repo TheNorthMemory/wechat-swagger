@@ -1,0 +1,39 @@
+post:
+  tags:
+    - 事件通知
+  summary: IOT/排行榜消息
+  description: '[官方文档](https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-10)'
+  consumes:
+    - application/xml
+  produces:
+    - text/plain
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        allOf:
+          - $ref: '#/definitions/notify.Base'
+          - type: object
+            required: [hardware, ExpiredTime]
+            properties:
+              MsgType:
+                type: string
+                enum: [hardware]
+              HardWare:
+                type: object
+                properties:
+                  MessageView:
+                    type: string
+                    description: 消息展示，目前支持myrank（排行榜）
+                    enum: [myrank]
+                  MessageAction:
+                    type: string
+                    description: 消息点击动作，目前支持ranklist（点击跳转排行榜）
+                    enum: [ranklist]
+              FuncFlag:
+                type: integer
+                format: int32
+  responses:
+    '200':
+      description: ''

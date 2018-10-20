@@ -4,7 +4,7 @@ post:
   security:
     - componentAccessToken: []
   tags:
-    - 开放平台/第三方平台/代公众号
+    - 开放平台∙第三方平台∙代公众号
   parameters:
     - in: body
       name: body

@@ -4,7 +4,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 帐号管理/二维码
+    - 帐号管理∙二维码
   parameters:
     - in: body
       name: body

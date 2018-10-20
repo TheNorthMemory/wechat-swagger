@@ -4,7 +4,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 智能接口/语义理解
+    - 智能接口∙语义理解
   parameters:
     - in: body
       name: body

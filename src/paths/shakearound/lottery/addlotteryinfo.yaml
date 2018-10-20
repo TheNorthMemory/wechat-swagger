@@ -5,7 +5,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 摇一摇周边/红包
+    - 摇一摇周边∙红包
   parameters:
     - in: query
       name: use_template

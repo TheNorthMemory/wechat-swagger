@@ -3,7 +3,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 小店/邮费模板管理
+    - 小店∙邮费模板管理
   parameters: []
   responses:
     '200':

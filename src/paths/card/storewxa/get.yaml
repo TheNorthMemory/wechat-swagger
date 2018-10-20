@@ -5,7 +5,7 @@ post:
     - accessToken: []
   tags:
     - 卡券
-    - 门店/小程序
+    - 门店∙小程序
   parameters:
     - in: body
       name: body

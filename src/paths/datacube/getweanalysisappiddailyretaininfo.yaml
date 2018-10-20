@@ -3,7 +3,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 小程序/数据/访问分析/访问留存
+    - 小程序∙数据∙访问分析∙访问留存
   parameters:
     - in: body
       name: body

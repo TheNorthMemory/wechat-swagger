@@ -4,7 +4,7 @@ get:
   security:
     - accessToken: []
   tags:
-    - 小程序/附近
+    - 小程序∙附近
   parameters:
     - in: query
       name: page

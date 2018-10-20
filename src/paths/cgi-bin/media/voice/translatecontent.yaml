@@ -3,7 +3,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 智能接口/AI开放接口
+    - 智能接口∙AI开放接口
   parameters:
     - in: body
       name: body

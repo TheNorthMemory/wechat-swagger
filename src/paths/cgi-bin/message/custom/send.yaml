@@ -4,8 +4,8 @@ post:
   security:
     - accessToken: []
   tags:
-    - 多客服/客服消息
-    - 小程序/客服消息
+    - 多客服∙客服消息
+    - 小程序∙客服消息
   parameters:
     - in: body
       name: body

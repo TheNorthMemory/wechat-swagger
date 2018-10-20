@@ -5,7 +5,7 @@ post:
     - accessToken: []
   tags:
     - 卡券
-    - 卡券/会员卡
+    - 卡券∙会员卡
   parameters:
     - in: body
       name: buffer

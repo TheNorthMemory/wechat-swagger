@@ -3,7 +3,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 小店/商品管理
+    - 小店∙商品管理
   parameters:
     - in: body
       name: body

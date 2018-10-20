@@ -5,7 +5,7 @@ get:
     - accessToken: []
   tags:
     - 网页开发
-    - 电子发票/商户接口
+    - 电子发票∙商户接口
   parameters:
     - in: query
       name: type

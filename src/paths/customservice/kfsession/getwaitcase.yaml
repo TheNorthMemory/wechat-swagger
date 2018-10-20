@@ -4,7 +4,7 @@ get:
   security:
     - accessToken: []
   tags:
-    - 多客服/会话控制
+    - 多客服∙会话控制
   parameters: []
   responses:
     '200':

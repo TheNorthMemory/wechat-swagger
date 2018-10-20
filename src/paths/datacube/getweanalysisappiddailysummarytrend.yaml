@@ -3,7 +3,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 小程序/数据/常规分析
+    - 小程序∙数据∙常规分析
   parameters:
     - in: body
       name: body

@@ -5,7 +5,7 @@ post:
     - accessToken: []
   tags:
     - 卡券
-    - 电子发票/开票平台接口
+    - 电子发票∙开票平台接口
   parameters:
     - in: body
       name: buffer

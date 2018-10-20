@@ -4,7 +4,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 多客服/聊天记录
+    - 多客服∙聊天记录
   parameters:
     - in: body
       name: body

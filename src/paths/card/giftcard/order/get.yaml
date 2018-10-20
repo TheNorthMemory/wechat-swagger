@@ -4,7 +4,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 卡券/礼品卡/订单
+    - 卡券∙礼品卡∙订单
   parameters:
     - in: body
       name: body

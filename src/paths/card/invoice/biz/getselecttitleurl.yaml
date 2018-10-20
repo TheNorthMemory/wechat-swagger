@@ -4,7 +4,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 电子发票/极速开票
+    - 电子发票∙极速开票
   parameters:
     - in: body
       name: body

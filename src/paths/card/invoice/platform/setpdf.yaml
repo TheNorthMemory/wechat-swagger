@@ -4,8 +4,8 @@ post:
   security:
     - accessToken: []
   tags:
-    - 电子发票/开票平台接口
-    - 电子发票/非税票据
+    - 电子发票∙开票平台接口
+    - 电子发票∙非税票据
   consumes:
     - multipart/form-data
   parameters:

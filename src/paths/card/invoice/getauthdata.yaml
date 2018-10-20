@@ -4,9 +4,9 @@ post:
   security:
     - accessToken: []
   tags:
-    - 卡券/礼品卡/财务
-    - 电子发票/商户接口
-    - 电子发票/非税票据
+    - 卡券∙礼品卡∙财务
+    - 电子发票∙商户接口
+    - 电子发票∙非税票据
   parameters:
     - in: body
       name: body

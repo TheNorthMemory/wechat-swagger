@@ -4,7 +4,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 卡券/第三方模式/代制
+    - 卡券∙第三方模式∙代制
   parameters:
     - in: body
       name: body

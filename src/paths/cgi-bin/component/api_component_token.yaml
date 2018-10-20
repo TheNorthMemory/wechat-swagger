@@ -2,7 +2,7 @@ post:
   summary: 获取第三方平台component_access_token
   description: 第三方平台component_access_token是第三方平台的下文中接口的调用凭据，也叫做令牌（component_access_token）。每个令牌是存在有效期（2小时）的，且令牌的调用不是无限制的，请第三方平台做好令牌的管理，在令牌快过期时（比如1小时50分）再进行刷新。 [官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1453779503)
   tags:
-    - 开放平台/第三方平台
+    - 开放平台∙第三方平台
   parameters:
     - in: body
       name: body

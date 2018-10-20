@@ -4,7 +4,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 连WI-FI/设备
+    - 连WI-FI∙设备
   parameters:
     - in: body
       name: buffer

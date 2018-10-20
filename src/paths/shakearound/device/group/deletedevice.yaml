@@ -4,7 +4,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 摇一摇周边/设备管理/分组
+    - 摇一摇周边∙设备管理∙分组
   parameters:
     - in: body
       name: body

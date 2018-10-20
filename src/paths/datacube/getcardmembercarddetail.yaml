@@ -4,7 +4,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 数据统计/卡券
+    - 数据统计∙卡券
   parameters:
     - in: body
       name: body

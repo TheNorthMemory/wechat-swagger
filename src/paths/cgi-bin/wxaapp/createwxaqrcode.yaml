@@ -4,7 +4,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 小程序/二维码
+    - 小程序∙二维码
   parameters:
     - in: body
       name: body

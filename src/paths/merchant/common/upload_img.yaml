@@ -5,7 +5,7 @@ post:
   consumes:
     - multipart/form-data
   tags:
-    - 小店/功能接口
+    - 小店∙功能接口
   parameters:
     - in: query
       name: filename

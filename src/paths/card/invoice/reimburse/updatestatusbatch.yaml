@@ -4,7 +4,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 电子发票/报销方接口
+    - 电子发票∙报销方接口
   parameters:
     - in: body
       name: body

@@ -4,7 +4,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 卡券/券点
+    - 卡券∙券点
   parameters:
     - in: body
       name: body

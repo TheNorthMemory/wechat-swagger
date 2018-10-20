@@ -3,7 +3,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 用户管理/标签
+    - 用户管理∙标签
   parameters:
     - in: body
       name: body

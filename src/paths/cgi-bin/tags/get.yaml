@@ -4,7 +4,7 @@ get:
   security:
     - accessToken: []
   tags:
-    - 用户管理/标签
+    - 用户管理∙标签
   parameters: []
   responses:
     '200':

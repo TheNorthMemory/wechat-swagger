@@ -2,7 +2,7 @@ get:
   summary: 刷新access_token（如果需要）
   description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419318590&token=&lang=zh_CN)'
   tags:
-    - 开放平台/第三方平台/代公众号/网页开发
+    - 开放平台∙第三方平台∙代公众号∙网页开发
   security:
     - componentAccessToken: []
   parameters:

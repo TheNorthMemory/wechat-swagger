@@ -4,7 +4,7 @@ get:
   security:
     - authorizerAccessToken: []
   tags:
-    - 开放平台/第三方平台/代小程序/代码管理
+    - 开放平台∙第三方平台∙代小程序∙代码管理
   parameters:
     - in: query
       name: path

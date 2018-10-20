@@ -4,7 +4,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 卡券/立减金活动
+    - 卡券∙立减金活动
   parameters:
     - in: body
       name: body

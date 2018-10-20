@@ -3,7 +3,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 精品店/分组管理
+    - 精品店∙分组管理
   parameters:
     - in: body
       name: body

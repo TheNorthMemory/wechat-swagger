@@ -32,94 +32,94 @@ tags:
   - name: 基础支持
   - name: 自定义菜单
   - name: 用户管理
-  - name: 用户管理/标签
-  - name: 帐号管理/二维码
+  - name: 用户管理∙标签
+  - name: 帐号管理∙二维码
   - name: 素材管理
   - name: 图文消息留言管理
   - name: 消息管理
   - name: 模版消息
   - name: 网页开发
   - name: 卡券
-  - name: 卡券/券点
-  - name: 卡券/会员卡
-  - name: 卡券/会议门票
-  - name: 卡券/电影票
-  - name: 卡券/飞机票
-  - name: 卡券/礼品卡
-  - name: 卡券/礼品卡/货架
-  - name: 卡券/礼品卡/小程序
-  - name: 卡券/礼品卡/订单
-  - name: 卡券/礼品卡/财务
-  - name: 卡券/立减金活动
-  - name: 卡券/第三方模式/代制
-  - name: 卡券/第三方模式/强授权
-  - name: 电子发票/商户接口
-  - name: 电子发票/开票平台接口
-  - name: 电子发票/报销方接口
-  - name: 电子发票/极速开票
-  - name: 电子发票/非税票据
-  - name: 多客服/客服消息
-  - name: 多客服/客服管理
-  - name: 多客服/会话控制
-  - name: 多客服/聊天记录
-  - name: 小店/商品管理
-  - name: 小店/库存管理
-  - name: 小店/邮费模板管理
-  - name: 小店/分组管理
-  - name: 小店/货架管理
-  - name: 小店/订单管理
-  - name: 小店/功能接口
-  - name: 精品店/商品管理
-  - name: 精品店/类目属性管理
-  - name: 精品店/分组管理
-  - name: 精品店/订单管理
+  - name: 卡券∙券点
+  - name: 卡券∙会员卡
+  - name: 卡券∙会议门票
+  - name: 卡券∙电影票
+  - name: 卡券∙飞机票
+  - name: 卡券∙礼品卡
+  - name: 卡券∙礼品卡∙货架
+  - name: 卡券∙礼品卡∙小程序
+  - name: 卡券∙礼品卡∙订单
+  - name: 卡券∙礼品卡∙财务
+  - name: 卡券∙立减金活动
+  - name: 卡券∙第三方模式∙代制
+  - name: 卡券∙第三方模式∙强授权
+  - name: 电子发票∙商户接口
+  - name: 电子发票∙开票平台接口
+  - name: 电子发票∙报销方接口
+  - name: 电子发票∙极速开票
+  - name: 电子发票∙非税票据
+  - name: 多客服∙客服消息
+  - name: 多客服∙客服管理
+  - name: 多客服∙会话控制
+  - name: 多客服∙聊天记录
+  - name: 小店∙商品管理
+  - name: 小店∙库存管理
+  - name: 小店∙邮费模板管理
+  - name: 小店∙分组管理
+  - name: 小店∙货架管理
+  - name: 小店∙订单管理
+  - name: 小店∙功能接口
+  - name: 精品店∙商品管理
+  - name: 精品店∙类目属性管理
+  - name: 精品店∙分组管理
+  - name: 精品店∙订单管理
   - name: 门店
-  - name: 门店/小程序
+  - name: 门店∙小程序
   - name: 摇一摇周边
-  - name: 摇一摇周边/设备管理
-  - name: 摇一摇周边/设备管理/分组
-  - name: 摇一摇周边/页面管理
-  - name: 摇一摇周边/红包
-  - name: 摇一摇周边/数据统计
+  - name: 摇一摇周边∙设备管理
+  - name: 摇一摇周边∙设备管理∙分组
+  - name: 摇一摇周边∙页面管理
+  - name: 摇一摇周边∙红包
+  - name: 摇一摇周边∙数据统计
   - name: 连WI-FI
-  - name: 连WI-FI/小程序
-  - name: 连WI-FI/门店
-  - name: 连WI-FI/设备
-  - name: 连WI-FI/商家主页
+  - name: 连WI-FI∙小程序
+  - name: 连WI-FI∙门店
+  - name: 连WI-FI∙设备
+  - name: 连WI-FI∙商家主页
   - name: IOT
   - name: 扫一扫
-  - name: 智能接口/语义理解
-  - name: 智能接口/AI开放接口
-  - name: 数据统计/用户分析
-  - name: 数据统计/图文分析
-  - name: 数据统计/消息分析
-  - name: 数据统计/接口分析
-  - name: 数据统计/卡券
-  - name: 小程序/数据/常规分析
-  - name: 小程序/数据/访问分析/访问趋势
-  - name: 小程序/数据/访问分析/访问分布
-  - name: 小程序/数据/访问分析/访问留存
-  - name: 小程序/数据/访问分析/访问页面
-  - name: 小程序/数据/用户画像
-  - name: 小程序/文件/内容安全
-  - name: 小程序/插件
-  - name: 小程序/附近
-  - name: 小程序/二维码
-  - name: 小程序/客服消息
-  - name: 小程序/统一服务消息
-  - name: 小程序/模版消息
+  - name: 智能接口∙语义理解
+  - name: 智能接口∙AI开放接口
+  - name: 数据统计∙用户分析
+  - name: 数据统计∙图文分析
+  - name: 数据统计∙消息分析
+  - name: 数据统计∙接口分析
+  - name: 数据统计∙卡券
+  - name: 小程序∙数据∙常规分析
+  - name: 小程序∙数据∙访问分析∙访问趋势
+  - name: 小程序∙数据∙访问分析∙访问分布
+  - name: 小程序∙数据∙访问分析∙访问留存
+  - name: 小程序∙数据∙访问分析∙访问页面
+  - name: 小程序∙数据∙用户画像
+  - name: 小程序∙文件∙内容安全
+  - name: 小程序∙插件
+  - name: 小程序∙附近
+  - name: 小程序∙二维码
+  - name: 小程序∙客服消息
+  - name: 小程序∙统一服务消息
+  - name: 小程序∙模版消息
   - name: 广告服务商接口
     description: '[接口文档](https://wximg.qq.com/wxp/pdftool/get.html?id=HJ2uqGgXW)'
-  - name: 开放平台/帐号管理
-  - name: 开放平台/第三方平台
-  - name: 开放平台/第三方平台/代公众号
-  - name: 开放平台/第三方平台/代公众号/网页开发
-  - name: 开放平台/第三方平台/代公众号/小程序管理
-  - name: 开放平台/第三方平台/代小程序
-  - name: 开放平台/第三方平台/代小程序/成员管理
-  - name: 开放平台/第三方平台/代小程序/代码管理
-  - name: 开放平台/第三方平台/代小程序/代码模版库
-  - name: 开放平台/第三方平台/代小程序/模板消息模板设置
+  - name: 开放平台∙帐号管理
+  - name: 开放平台∙第三方平台
+  - name: 开放平台∙第三方平台∙代公众号
+  - name: 开放平台∙第三方平台∙代公众号∙网页开发
+  - name: 开放平台∙第三方平台∙代公众号∙小程序管理
+  - name: 开放平台∙第三方平台∙代小程序
+  - name: 开放平台∙第三方平台∙代小程序∙成员管理
+  - name: 开放平台∙第三方平台∙代小程序∙代码管理
+  - name: 开放平台∙第三方平台∙代小程序∙代码模版库
+  - name: 开放平台∙第三方平台∙代小程序∙模板消息模板设置
 paths:
   /_notify/device_event/Bind:
     post:
@@ -2986,7 +2986,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 连WI-FI/设备
+        - 连WI-FI∙设备
       parameters:
         - in: body
           name: buffer
@@ -3027,7 +3027,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 连WI-FI/商家主页
+        - 连WI-FI∙商家主页
       parameters:
         - in: body
           name: buffer
@@ -3154,7 +3154,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 连WI-FI/设备
+        - 连WI-FI∙设备
       parameters:
         - in: body
           name: buffer
@@ -3187,7 +3187,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 连WI-FI/设备
+        - 连WI-FI∙设备
       parameters:
         - in: body
           name: buffer
@@ -3209,7 +3209,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 连WI-FI/设备
+        - 连WI-FI∙设备
       parameters:
         - in: body
           name: buffer
@@ -3274,13 +3274,13 @@ paths:
                               enum: [0, 4, 31]
   /bizwifi/finishpage/set:
     post:
-      summary: 连Wi-Fi完成页跳转小程序/设置连网完成页
+      summary: 连Wi-Fi完成页跳转小程序∙设置连网完成页
       description: 设置需要跳转的小程序，连网完成点击“完成”按钮，即可进入设置的小程序。注：只能跳转与公众号关联的小程序。A->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=215135855720FBA0) B->[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457505542)
       security:
         - accessToken: []
       tags:
-        - 连WI-FI/小程序
-        - 连WI-FI/商家主页
+        - 连WI-FI∙小程序
+        - 连WI-FI∙商家主页
       parameters:
         - in: body
           name: buffer
@@ -3319,7 +3319,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 连WI-FI/商家主页
+        - 连WI-FI∙商家主页
       parameters:
         - in: body
           name: buffer
@@ -3358,8 +3358,8 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 连WI-FI/小程序
-        - 连WI-FI/商家主页
+        - 连WI-FI∙小程序
+        - 连WI-FI∙商家主页
       parameters:
         - in: body
           name: buffer
@@ -3486,7 +3486,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 连WI-FI/门店
+        - 连WI-FI∙门店
       parameters:
         - in: body
           name: buffer
@@ -3511,7 +3511,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 连WI-FI/门店
+        - 连WI-FI∙门店
       parameters:
         - in: body
           name: buffer
@@ -3613,7 +3613,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 连WI-FI/门店
+        - 连WI-FI∙门店
       parameters:
         - in: body
           name: buffer
@@ -3705,7 +3705,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 连WI-FI/门店
+        - 连WI-FI∙门店
       parameters:
         - in: body
           name: buffer
@@ -3858,7 +3858,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/飞机票
+        - 卡券∙飞机票
       parameters:
         - in: body
           name: buffer
@@ -4013,7 +4013,7 @@ paths:
         - accessToken: []
       tags:
         - 卡券
-        - 电子发票/开票平台接口
+        - 电子发票∙开票平台接口
       parameters:
         - in: body
           name: buffer
@@ -4101,7 +4101,7 @@ paths:
         - accessToken: []
       tags:
         - 卡券
-        - 卡券/会员卡
+        - 卡券∙会员卡
       parameters:
         - in: body
           name: buffer
@@ -4408,7 +4408,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/礼品卡
+        - 卡券∙礼品卡
       parameters:
         - in: body
           name: body
@@ -4564,8 +4564,8 @@ paths:
         - accessToken: []
       tags:
         - 卡券
-        - 卡券/第三方模式/代制
-        - 卡券/第三方模式/强授权
+        - 卡券∙第三方模式∙代制
+        - 卡券∙第三方模式∙强授权
       parameters: []
       responses:
         '200':
@@ -4642,7 +4642,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/礼品卡/货架
+        - 卡券∙礼品卡∙货架
       parameters:
         - in: body
           name: body
@@ -4709,7 +4709,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/礼品卡/订单
+        - 卡券∙礼品卡∙订单
       parameters:
         - in: body
           name: body
@@ -4762,7 +4762,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/礼品卡/订单
+        - 卡券∙礼品卡∙订单
       parameters:
         - in: body
           name: body
@@ -4786,7 +4786,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/礼品卡/订单
+        - 卡券∙礼品卡∙订单
       parameters:
         - in: body
           name: body
@@ -4808,7 +4808,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/礼品卡/货架
+        - 卡券∙礼品卡∙货架
       parameters:
         - in: body
           name: body
@@ -4835,7 +4835,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/礼品卡/货架
+        - 卡券∙礼品卡∙货架
       parameters:
         - in: body
           name: body
@@ -4870,7 +4870,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/礼品卡/货架
+        - 卡券∙礼品卡∙货架
       parameters:
         - in: body
           name: body
@@ -4897,7 +4897,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/礼品卡/货架
+        - 卡券∙礼品卡∙货架
       parameters:
         - in: body
           name: body
@@ -4924,7 +4924,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/礼品卡/小程序
+        - 卡券∙礼品卡∙小程序
       parameters:
         - in: body
           name: body
@@ -4949,7 +4949,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/礼品卡/小程序
+        - 卡券∙礼品卡∙小程序
       parameters:
         - in: body
           name: body
@@ -4980,7 +4980,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/礼品卡/小程序
+        - 卡券∙礼品卡∙小程序
       parameters:
         - in: body
           name: body
@@ -5005,7 +5005,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 电子发票/极速开票
+        - 电子发票∙极速开票
       parameters:
         - in: body
           name: body
@@ -5037,7 +5037,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 电子发票/极速开票
+        - 电子发票∙极速开票
       parameters:
         - in: body
           name: body
@@ -5089,7 +5089,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 电子发票/商户接口
+        - 电子发票∙商户接口
       parameters:
         - in: body
           name: body
@@ -5127,9 +5127,9 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/礼品卡/财务
-        - 电子发票/商户接口
-        - 电子发票/非税票据
+        - 卡券∙礼品卡∙财务
+        - 电子发票∙商户接口
+        - 电子发票∙非税票据
       parameters:
         - in: body
           name: body
@@ -5227,7 +5227,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 电子发票/商户接口
+        - 电子发票∙商户接口
       parameters:
         - in: body
           name: body
@@ -5293,7 +5293,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 电子发票/开票平台接口
+        - 电子发票∙开票平台接口
       parameters:
         - in: body
           name: body
@@ -5363,7 +5363,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 电子发票/商户接口
+        - 电子发票∙商户接口
       parameters:
         - in: body
           name: body
@@ -5485,7 +5485,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 电子发票/开票平台接口
+        - 电子发票∙开票平台接口
       parameters:
         - in: body
           name: buffer
@@ -5548,8 +5548,8 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 电子发票/开票平台接口
-        - 电子发票/非税票据
+        - 电子发票∙开票平台接口
+        - 电子发票∙非税票据
       parameters:
         - in: body
           name: body
@@ -5588,8 +5588,8 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 电子发票/开票平台接口
-        - 电子发票/非税票据
+        - 电子发票∙开票平台接口
+        - 电子发票∙非税票据
       consumes:
         - multipart/form-data
       parameters:
@@ -5616,8 +5616,8 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 电子发票/开票平台接口
-        - 电子发票/非税票据
+        - 电子发票∙开票平台接口
+        - 电子发票∙非税票据
       parameters:
         - in: body
           name: buffer
@@ -5648,7 +5648,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 电子发票/商户接口
+        - 电子发票∙商户接口
       parameters:
         - in: body
           name: body
@@ -5698,7 +5698,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 电子发票/报销方接口
+        - 电子发票∙报销方接口
       parameters:
         - in: body
           name: body
@@ -5779,7 +5779,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 电子发票/报销方接口
+        - 电子发票∙报销方接口
       parameters:
         - in: body
           name: body
@@ -5850,7 +5850,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 电子发票/报销方接口
+        - 电子发票∙报销方接口
       parameters:
         - in: body
           name: body
@@ -5887,7 +5887,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 电子发票/报销方接口
+        - 电子发票∙报销方接口
       parameters:
         - in: body
           name: body
@@ -5930,8 +5930,8 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 电子发票/商户接口
-        - 电子发票/非税票据
+        - 电子发票∙商户接口
+        - 电子发票∙非税票据
       parameters:
         - in: body
           name: body
@@ -5967,7 +5967,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 电子发票/极速开票
+        - 电子发票∙极速开票
       parameters:
         - in: body
           name: body
@@ -6021,8 +6021,8 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/礼品卡/财务
-        - 电子发票/商户接口
+        - 卡券∙礼品卡∙财务
+        - 电子发票∙商户接口
       parameters:
         - in: query
           name: action
@@ -6069,8 +6069,8 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 电子发票/开票平台接口
-        - 电子发票/非税票据
+        - 电子发票∙开票平台接口
+        - 电子发票∙非税票据
       parameters:
         - in: body
           name: buffer
@@ -6257,7 +6257,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/会议门票
+        - 卡券∙会议门票
       parameters:
         - in: body
           name: body
@@ -6308,7 +6308,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/会员卡
+        - 卡券∙会员卡
       parameters:
         - in: body
           name: body
@@ -6374,7 +6374,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/会员卡
+        - 卡券∙会员卡
       parameters:
         - in: body
           name: body
@@ -6412,7 +6412,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/会员卡
+        - 卡券∙会员卡
       parameters:
         - in: body
           name: body
@@ -6470,7 +6470,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/会员卡
+        - 卡券∙会员卡
       parameters:
         - in: body
           name: body
@@ -6589,7 +6589,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/会员卡
+        - 卡券∙会员卡
       parameters:
         - in: body
           name: body
@@ -6703,7 +6703,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/会员卡
+        - 卡券∙会员卡
       parameters:
         - in: body
           name: body
@@ -6796,7 +6796,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/立减金活动
+        - 卡券∙立减金活动
       parameters:
         - in: body
           name: body
@@ -6922,7 +6922,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/电影票
+        - 卡券∙电影票
       parameters:
         - in: body
           name: body
@@ -7005,7 +7005,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/券点
+        - 卡券∙券点
       parameters: []
       responses:
         '200':
@@ -7026,7 +7026,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/券点
+        - 卡券∙券点
       parameters:
         - in: body
           name: body
@@ -7055,7 +7055,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/券点
+        - 卡券∙券点
       parameters: []
       responses:
         '200':
@@ -7084,7 +7084,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/券点
+        - 卡券∙券点
       parameters:
         - in: body
           name: body
@@ -7113,7 +7113,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/券点
+        - 卡券∙券点
       parameters:
         - in: body
           name: body
@@ -7195,7 +7195,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/券点
+        - 卡券∙券点
       parameters:
         - in: body
           name: body
@@ -7239,7 +7239,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/券点
+        - 卡券∙券点
       parameters:
         - in: body
           name: body
@@ -7403,7 +7403,7 @@ paths:
         - accessToken: []
       tags:
         - 卡券
-        - 门店/小程序
+        - 门店∙小程序
       parameters:
         - in: body
           name: body
@@ -7437,7 +7437,7 @@ paths:
         - accessToken: []
       tags:
         - 卡券
-        - 门店/小程序
+        - 门店∙小程序
       parameters:
         - in: body
           name: body
@@ -7466,7 +7466,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/第三方模式/代制
+        - 卡券∙第三方模式∙代制
       parameters:
         - in: body
           name: body
@@ -7503,7 +7503,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/第三方模式/代制
+        - 卡券∙第三方模式∙代制
       parameters:
         - in: body
           name: body
@@ -7533,7 +7533,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/第三方模式/代制
+        - 卡券∙第三方模式∙代制
       parameters:
         - in: body
           name: body
@@ -7559,7 +7559,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/第三方模式/代制
+        - 卡券∙第三方模式∙代制
       parameters:
         - in: body
           name: body
@@ -7733,7 +7733,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 开放平台/第三方平台/代公众号/小程序管理
+        - 开放平台∙第三方平台∙代公众号∙小程序管理
       parameters:
         - in: body
           name: body
@@ -7758,7 +7758,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 开放平台/第三方平台/代公众号/小程序管理
+        - 开放平台∙第三方平台∙代公众号∙小程序管理
       parameters:
         - in: body
           name: body
@@ -7798,7 +7798,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 开放平台/第三方平台/代公众号/小程序管理
+        - 开放平台∙第三方平台∙代公众号∙小程序管理
       parameters: []
       responses:
         '200':
@@ -7892,7 +7892,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 开放平台/第三方平台/代公众号/小程序管理
+        - 开放平台∙第三方平台∙代公众号∙小程序管理
       parameters:
         - in: body
           name: body
@@ -7937,7 +7937,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 开放平台/第三方平台/代公众号/小程序管理
+        - 开放平台∙第三方平台∙代公众号∙小程序管理
       parameters:
         - in: body
           name: body
@@ -8352,7 +8352,7 @@ paths:
       security:
         - componentAccessToken: []
       tags:
-        - 开放平台/第三方平台
+        - 开放平台∙第三方平台
       parameters:
         - in: body
           name: body
@@ -8395,7 +8395,7 @@ paths:
       summary: 获取第三方平台component_access_token
       description: 第三方平台component_access_token是第三方平台的下文中接口的调用凭据，也叫做令牌（component_access_token）。每个令牌是存在有效期（2小时）的，且令牌的调用不是无限制的，请第三方平台做好令牌的管理，在令牌快过期时（比如1小时50分）再进行刷新。 [官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1453779503)
       tags:
-        - 开放平台/第三方平台
+        - 开放平台∙第三方平台
       parameters:
         - in: body
           name: body
@@ -8437,7 +8437,7 @@ paths:
       security:
         - componentAccessToken: []
       tags:
-        - 卡券/第三方模式/强授权
+        - 卡券∙第三方模式∙强授权
       parameters:
         - in: body
           name: body
@@ -8475,7 +8475,7 @@ paths:
       security:
         - componentAccessToken: []
       tags:
-        - 开放平台/第三方平台
+        - 开放平台∙第三方平台
       parameters:
         - in: body
           name: body
@@ -8509,8 +8509,8 @@ paths:
       security:
         - componentAccessToken: []
       tags:
-        - 卡券/第三方模式/强授权
-        - 开放平台/第三方平台
+        - 卡券∙第三方模式∙强授权
+        - 开放平台∙第三方平台
       parameters:
         - in: body
           name: body
@@ -8613,7 +8613,7 @@ paths:
       security:
         - componentAccessToken: []
       tags:
-        - 开放平台/第三方平台
+        - 开放平台∙第三方平台
       parameters:
         - in: body
           name: body
@@ -8665,7 +8665,7 @@ paths:
       security:
         - componentAccessToken: []
       tags:
-        - 开放平台/第三方平台
+        - 开放平台∙第三方平台
       parameters:
         - in: body
           name: body
@@ -8709,8 +8709,8 @@ paths:
       security:
         - componentAccessToken: []
       tags:
-        - 卡券/第三方模式/强授权
-        - 开放平台/第三方平台
+        - 卡券∙第三方模式∙强授权
+        - 开放平台∙第三方平台
       parameters:
         - in: body
           name: body
@@ -8781,7 +8781,7 @@ paths:
       security:
         - componentAccessToken: []
       tags:
-        - 开放平台/第三方平台
+        - 开放平台∙第三方平台
       parameters:
         - in: body
           name: body
@@ -8817,7 +8817,7 @@ paths:
       security:
         - componentAccessToken: []
       tags:
-        - 卡券/第三方模式/强授权
+        - 卡券∙第三方模式∙强授权
       parameters:
         - in: body
           name: body
@@ -8870,7 +8870,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/第三方模式/强授权
+        - 卡券∙第三方模式∙强授权
       parameters: []
       responses:
         '200':
@@ -8895,7 +8895,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/第三方模式/强授权
+        - 卡券∙第三方模式∙强授权
       parameters:
         - in: body
           name: body
@@ -8929,7 +8929,7 @@ paths:
       security:
         - componentAccessToken: []
       tags:
-        - 开放平台/第三方平台/代公众号
+        - 开放平台∙第三方平台∙代公众号
       parameters:
         - in: body
           name: body
@@ -8953,7 +8953,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/第三方模式/强授权
+        - 卡券∙第三方模式∙强授权
       parameters:
         - in: body
           name: body
@@ -9000,7 +9000,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/第三方模式/强授权
+        - 卡券∙第三方模式∙强授权
       parameters:
         - in: body
           name: body
@@ -9036,7 +9036,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 卡券/第三方模式/强授权
+        - 卡券∙第三方模式∙强授权
       parameters:
         - in: body
           name: body
@@ -9071,7 +9071,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 多客服/客服管理
+        - 多客服∙客服管理
       parameters: []
       responses:
         '200':
@@ -9082,7 +9082,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 多客服/客服管理
+        - 多客服∙客服管理
       parameters: []
       responses:
         '200':
@@ -9633,7 +9633,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 智能接口/AI开放接口
+        - 智能接口∙AI开放接口
       parameters:
         - in: body
           name: body
@@ -9649,7 +9649,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 智能接口/AI开放接口
+        - 智能接口∙AI开放接口
       parameters:
         - in: body
           name: body
@@ -9665,7 +9665,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 智能接口/AI开放接口
+        - 智能接口∙AI开放接口
       parameters:
         - in: body
           name: body
@@ -9806,8 +9806,8 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 多客服/客服消息
-        - 小程序/客服消息
+        - 多客服∙客服消息
+        - 小程序∙客服消息
       parameters:
         - in: body
           name: body
@@ -9944,7 +9944,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 多客服/客服消息
+        - 多客服∙客服消息
       parameters:
         - in: body
           name: body
@@ -10483,7 +10483,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小程序/统一服务消息
+        - 小程序∙统一服务消息
       parameters:
         - in: body
           name: body
@@ -10603,7 +10603,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 开放平台/帐号管理
+        - 开放平台∙帐号管理
       parameters:
         - in: body
           name: body
@@ -10632,7 +10632,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 开放平台/帐号管理
+        - 开放平台∙帐号管理
       parameters:
         - in: body
           name: body
@@ -10662,7 +10662,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 开放平台/帐号管理
+        - 开放平台∙帐号管理
       parameters:
         - in: body
           name: body
@@ -10692,7 +10692,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 开放平台/帐号管理
+        - 开放平台∙帐号管理
       parameters:
         - in: body
           name: body
@@ -10960,7 +10960,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 帐号管理/二维码
+        - 帐号管理∙二维码
       parameters:
         - in: body
           name: body
@@ -11063,7 +11063,7 @@ paths:
       summary: 通过ticket换取二维码
       description: 获取二维码ticket后，开发者可用ticket换取二维码图片。请注意，本接口无须登录态即可调用。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1443433542)
       tags:
-        - 帐号管理/二维码
+        - 帐号管理∙二维码
       parameters:
         - in: query
           name: ticket
@@ -11079,7 +11079,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 用户管理/标签
+        - 用户管理∙标签
       parameters:
         - in: body
           name: body
@@ -11115,7 +11115,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 用户管理/标签
+        - 用户管理∙标签
       parameters:
         - in: body
           name: body
@@ -11141,7 +11141,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 用户管理/标签
+        - 用户管理∙标签
       parameters: []
       responses:
         '200':
@@ -11167,7 +11167,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 用户管理/标签
+        - 用户管理∙标签
       parameters:
         - in: body
           name: body
@@ -11199,7 +11199,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 用户管理/标签
+        - 用户管理∙标签
       parameters:
         - in: body
           name: body
@@ -11225,7 +11225,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 用户管理/标签
+        - 用户管理∙标签
       parameters:
         - in: body
           name: body
@@ -11251,7 +11251,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 用户管理/标签
+        - 用户管理∙标签
       parameters:
         - in: body
           name: body
@@ -11277,7 +11277,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 用户管理/标签
+        - 用户管理∙标签
       parameters:
         - in: body
           name: body
@@ -11303,7 +11303,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 用户管理/标签
+        - 用户管理∙标签
       parameters:
         - in: body
           name: body
@@ -11351,7 +11351,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 用户管理/标签
+        - 用户管理∙标签
       parameters:
         - in: body
           name: body
@@ -11700,7 +11700,7 @@ paths:
         - accessToken: []
       tags:
         - 网页开发
-        - 电子发票/商户接口
+        - 电子发票∙商户接口
       parameters:
         - in: query
           name: type
@@ -11925,7 +11925,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 用户管理/标签
+        - 用户管理∙标签
       parameters:
         - in: body
           name: body
@@ -11967,7 +11967,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小程序/二维码
+        - 小程序∙二维码
       parameters:
         - in: body
           name: body
@@ -11995,7 +11995,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 开放平台/第三方平台/代公众号/小程序管理
+        - 开放平台∙第三方平台∙代公众号∙小程序管理
       parameters:
         - in: body
           name: body
@@ -12048,7 +12048,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 开放平台/第三方平台/代公众号/小程序管理
+        - 开放平台∙第三方平台∙代公众号∙小程序管理
       parameters:
         - in: body
           name: body
@@ -12079,7 +12079,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 开放平台/第三方平台/代公众号/小程序管理
+        - 开放平台∙第三方平台∙代公众号∙小程序管理
       parameters: []
       responses:
         '200':
@@ -12149,7 +12149,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 开放平台/第三方平台/代公众号/小程序管理
+        - 开放平台∙第三方平台∙代公众号∙小程序管理
       parameters: []
       responses:
         '200':
@@ -12205,7 +12205,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/代码管理
+        - 开放平台∙第三方平台∙代小程序∙代码管理
       parameters:
         - in: body
           name: body
@@ -12245,7 +12245,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 开放平台/第三方平台/代公众号/小程序管理
+        - 开放平台∙第三方平台∙代公众号∙小程序管理
       parameters:
         - in: body
           name: body
@@ -12291,7 +12291,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/代码管理
+        - 开放平台∙第三方平台∙代小程序∙代码管理
       parameters:
         - in: body
           name: body
@@ -12337,7 +12337,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/代码管理
+        - 开放平台∙第三方平台∙代小程序∙代码管理
       parameters:
         - in: body
           name: body
@@ -12360,7 +12360,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/代码管理
+        - 开放平台∙第三方平台∙代小程序∙代码管理
       parameters:
         - in: body
           name: body
@@ -12388,7 +12388,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/代码管理
+        - 开放平台∙第三方平台∙代小程序∙代码管理
       parameters:
         - in: body
           name: body
@@ -12453,7 +12453,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/代码管理
+        - 开放平台∙第三方平台∙代小程序∙代码管理
       parameters:
         - in: body
           name: body
@@ -12476,7 +12476,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/代码管理
+        - 开放平台∙第三方平台∙代小程序∙代码管理
       parameters:
         - in: body
           name: body
@@ -12499,8 +12499,8 @@ paths:
         - authorizerAccessToken: []
         - accessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/模板消息模板设置
-        - 小程序/模版消息
+        - 开放平台∙第三方平台∙代小程序∙模板消息模板设置
+        - 小程序∙模版消息
       parameters:
         - in: body
           name: body
@@ -12538,8 +12538,8 @@ paths:
         - authorizerAccessToken: []
         - accessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/模板消息模板设置
-        - 小程序/模版消息
+        - 开放平台∙第三方平台∙代小程序∙模板消息模板设置
+        - 小程序∙模版消息
       parameters:
         - in: body
           name: body
@@ -12577,8 +12577,8 @@ paths:
         - authorizerAccessToken: []
         - accessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/模板消息模板设置
-        - 小程序/模版消息
+        - 开放平台∙第三方平台∙代小程序∙模板消息模板设置
+        - 小程序∙模版消息
       parameters:
         - in: body
           name: body
@@ -12626,8 +12626,8 @@ paths:
         - authorizerAccessToken: []
         - accessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/模板消息模板设置
-        - 小程序/模版消息
+        - 开放平台∙第三方平台∙代小程序∙模板消息模板设置
+        - 小程序∙模版消息
       parameters:
         - in: body
           name: body
@@ -12676,8 +12676,8 @@ paths:
         - authorizerAccessToken: []
         - accessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/模板消息模板设置
-        - 小程序/模版消息
+        - 开放平台∙第三方平台∙代小程序∙模板消息模板设置
+        - 小程序∙模版消息
       parameters:
         - in: body
           name: body
@@ -12703,8 +12703,8 @@ paths:
         - authorizerAccessToken: []
         - accessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/模板消息模板设置
-        - 小程序/模版消息
+        - 开放平台∙第三方平台∙代小程序∙模板消息模板设置
+        - 小程序∙模版消息
       parameters:
         - in: body
           name: body
@@ -12766,7 +12766,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 开放平台/第三方平台/代公众号/小程序管理
+        - 开放平台∙第三方平台∙代公众号∙小程序管理
       parameters:
         - in: body
           name: body
@@ -12801,7 +12801,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 开放平台/第三方平台/代公众号/小程序管理
+        - 开放平台∙第三方平台∙代公众号∙小程序管理
       parameters:
         - in: body
           name: body
@@ -12875,7 +12875,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 开放平台/第三方平台/代公众号/小程序管理
+        - 开放平台∙第三方平台∙代公众号∙小程序管理
       parameters:
         - in: body
           name: body
@@ -12900,7 +12900,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 开放平台/第三方平台/代公众号/小程序管理
+        - 开放平台∙第三方平台∙代公众号∙小程序管理
       parameters:
         - in: body
           name: body
@@ -12933,7 +12933,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 多客服/客服管理
+        - 多客服∙客服管理
       parameters:
         - in: body
           name: body
@@ -12957,7 +12957,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 多客服/客服管理
+        - 多客服∙客服管理
       parameters:
         - in: query
           name: kf_account
@@ -12974,7 +12974,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 多客服/客服管理
+        - 多客服∙客服管理
       parameters:
         - in: body
           name: body
@@ -12999,7 +12999,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 多客服/客服管理
+        - 多客服∙客服管理
       parameters:
         - in: body
           name: body
@@ -13023,7 +13023,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 多客服/客服管理
+        - 多客服∙客服管理
       consumes:
         - multipart/form-data
       parameters:
@@ -13047,7 +13047,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 多客服/会话控制
+        - 多客服∙会话控制
       parameters:
         - in: body
           name: body
@@ -13072,7 +13072,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 多客服/会话控制
+        - 多客服∙会话控制
       parameters:
         - in: body
           name: body
@@ -13097,7 +13097,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 多客服/会话控制
+        - 多客服∙会话控制
       parameters:
         - in: query
           name: openid
@@ -13123,7 +13123,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 多客服/会话控制
+        - 多客服∙会话控制
       parameters:
         - in: query
           name: kf_account
@@ -13154,7 +13154,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 多客服/会话控制
+        - 多客服∙会话控制
       parameters: []
       responses:
         '200':
@@ -13186,7 +13186,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 多客服/聊天记录
+        - 多客服∙聊天记录
       parameters:
         - in: body
           name: body
@@ -13253,7 +13253,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 数据统计/图文分析
+        - 数据统计∙图文分析
       parameters:
         - in: body
           name: body
@@ -13269,7 +13269,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 数据统计/图文分析
+        - 数据统计∙图文分析
       parameters:
         - in: body
           name: body
@@ -13286,7 +13286,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 数据统计/卡券
+        - 数据统计∙卡券
       parameters:
         - in: body
           name: body
@@ -13303,7 +13303,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 数据统计/卡券
+        - 数据统计∙卡券
       parameters:
         - in: body
           name: body
@@ -13320,7 +13320,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 数据统计/卡券
+        - 数据统计∙卡券
       parameters:
         - in: body
           name: body
@@ -13337,7 +13337,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 数据统计/卡券
+        - 数据统计∙卡券
       parameters:
         - in: body
           name: body
@@ -13353,7 +13353,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 数据统计/接口分析
+        - 数据统计∙接口分析
       parameters:
         - in: body
           name: body
@@ -13369,7 +13369,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 数据统计/接口分析
+        - 数据统计∙接口分析
       parameters:
         - in: body
           name: body
@@ -13385,7 +13385,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 数据统计/消息分析
+        - 数据统计∙消息分析
       parameters:
         - in: body
           name: body
@@ -13401,7 +13401,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 数据统计/消息分析
+        - 数据统计∙消息分析
       parameters:
         - in: body
           name: body
@@ -13417,7 +13417,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 数据统计/消息分析
+        - 数据统计∙消息分析
       parameters:
         - in: body
           name: body
@@ -13433,7 +13433,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 数据统计/消息分析
+        - 数据统计∙消息分析
       parameters:
         - in: body
           name: body
@@ -13449,7 +13449,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 数据统计/消息分析
+        - 数据统计∙消息分析
       parameters:
         - in: body
           name: body
@@ -13465,7 +13465,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 数据统计/消息分析
+        - 数据统计∙消息分析
       parameters:
         - in: body
           name: body
@@ -13481,7 +13481,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 数据统计/消息分析
+        - 数据统计∙消息分析
       parameters:
         - in: body
           name: body
@@ -13497,7 +13497,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 数据统计/用户分析
+        - 数据统计∙用户分析
       parameters:
         - in: body
           name: body
@@ -13513,7 +13513,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 数据统计/图文分析
+        - 数据统计∙图文分析
       parameters:
         - in: body
           name: body
@@ -13529,7 +13529,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 数据统计/图文分析
+        - 数据统计∙图文分析
       parameters:
         - in: body
           name: body
@@ -13545,7 +13545,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 数据统计/图文分析
+        - 数据统计∙图文分析
       parameters:
         - in: body
           name: body
@@ -13561,7 +13561,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 数据统计/图文分析
+        - 数据统计∙图文分析
       parameters:
         - in: body
           name: body
@@ -13577,7 +13577,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 数据统计/用户分析
+        - 数据统计∙用户分析
       parameters:
         - in: body
           name: body
@@ -13593,7 +13593,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小程序/数据/访问分析/访问留存
+        - 小程序∙数据∙访问分析∙访问留存
       parameters:
         - in: body
           name: body
@@ -13609,7 +13609,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小程序/数据/常规分析
+        - 小程序∙数据∙常规分析
       parameters:
         - in: body
           name: body
@@ -13625,7 +13625,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小程序/数据/访问分析/访问趋势
+        - 小程序∙数据∙访问分析∙访问趋势
       parameters:
         - in: body
           name: body
@@ -13641,7 +13641,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小程序/数据/访问分析/访问留存
+        - 小程序∙数据∙访问分析∙访问留存
       parameters:
         - in: body
           name: body
@@ -13657,7 +13657,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小程序/数据/访问分析/访问趋势
+        - 小程序∙数据∙访问分析∙访问趋势
       parameters:
         - in: body
           name: body
@@ -13673,7 +13673,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小程序/数据/用户画像
+        - 小程序∙数据∙用户画像
       parameters:
         - in: body
           name: body
@@ -13689,7 +13689,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小程序/数据/访问分析/访问分布
+        - 小程序∙数据∙访问分析∙访问分布
       parameters:
         - in: body
           name: body
@@ -13705,7 +13705,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小程序/数据/访问分析/访问页面
+        - 小程序∙数据∙访问分析∙访问页面
       parameters:
         - in: body
           name: body
@@ -13721,7 +13721,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小程序/数据/访问分析/访问留存
+        - 小程序∙数据∙访问分析∙访问留存
       parameters:
         - in: body
           name: body
@@ -13737,7 +13737,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小程序/数据/访问分析/访问趋势
+        - 小程序∙数据∙访问分析∙访问趋势
       parameters:
         - in: body
           name: body
@@ -14370,7 +14370,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 精品店/商品管理
+        - 精品店∙商品管理
       parameters:
         - in: body
           name: body
@@ -14394,7 +14394,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 精品店/分组管理
+        - 精品店∙分组管理
       parameters:
         - in: body
           name: body
@@ -14422,7 +14422,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 精品店/分组管理
+        - 精品店∙分组管理
       parameters:
         - in: body
           name: body
@@ -14455,7 +14455,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 精品店/类目属性管理
+        - 精品店∙类目属性管理
       parameters:
         - in: body
           name: body
@@ -14508,7 +14508,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 精品店/类目属性管理
+        - 精品店∙类目属性管理
       parameters:
         - in: body
           name: body
@@ -14550,7 +14550,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 精品店/商品管理
+        - 精品店∙商品管理
       parameters:
         - in: body
           name: body
@@ -14584,7 +14584,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 精品店/商品管理
+        - 精品店∙商品管理
       parameters:
         - in: body
           name: body
@@ -14620,7 +14620,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 精品店/分组管理
+        - 精品店∙分组管理
       parameters:
         - in: body
           name: body
@@ -14644,7 +14644,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 精品店/分组管理
+        - 精品店∙分组管理
       parameters:
         - in: body
           name: body
@@ -14677,7 +14677,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 精品店/类目属性管理
+        - 精品店∙类目属性管理
       parameters:
         - in: body
           name: body
@@ -14702,7 +14702,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 精品店/类目属性管理
+        - 精品店∙类目属性管理
       parameters:
         - in: body
           name: body
@@ -14728,7 +14728,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 精品店/商品管理
+        - 精品店∙商品管理
       parameters:
         - in: body
           name: body
@@ -14752,7 +14752,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 精品店/商品管理
+        - 精品店∙商品管理
       parameters:
         - in: body
           name: body
@@ -14798,7 +14798,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 精品店/类目属性管理
+        - 精品店∙类目属性管理
       parameters:
         - in: body
           name: body
@@ -14830,7 +14830,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 精品店/分组管理
+        - 精品店∙分组管理
       parameters:
         - in: body
           name: body
@@ -14856,7 +14856,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 精品店/订单管理
+        - 精品店∙订单管理
       parameters:
         - in: body
           name: body
@@ -14887,7 +14887,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 精品店/订单管理
+        - 精品店∙订单管理
       parameters:
         - in: body
           name: body
@@ -14944,7 +14944,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 精品店/类目属性管理
+        - 精品店∙类目属性管理
       parameters:
         - in: body
           name: body
@@ -14974,7 +14974,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 精品店/商品管理
+        - 精品店∙商品管理
       parameters:
         - in: body
           name: body
@@ -15006,7 +15006,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 精品店/商品管理
+        - 精品店∙商品管理
       parameters:
         - in: body
           name: body
@@ -15062,7 +15062,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 精品店/订单管理
+        - 精品店∙订单管理
       parameters:
         - in: body
           name: body
@@ -15133,7 +15133,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 精品店/商品管理
+        - 精品店∙商品管理
       parameters:
         - in: body
           name: body
@@ -15157,7 +15157,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 精品店/分组管理
+        - 精品店∙分组管理
       parameters:
         - in: body
           name: body
@@ -15184,7 +15184,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 精品店/商品管理
+        - 精品店∙商品管理
       parameters:
         - in: body
           name: body
@@ -15211,7 +15211,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 精品店/商品管理
+        - 精品店∙商品管理
       parameters:
         - in: body
           name: body
@@ -15251,7 +15251,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 精品店/商品管理
+        - 精品店∙商品管理
       parameters:
         - in: body
           name: body
@@ -15280,7 +15280,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 精品店/商品管理
+        - 精品店∙商品管理
       parameters:
         - in: formData
           name: item_codes
@@ -18543,7 +18543,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/商品管理
+        - 小店∙商品管理
       parameters:
         - in: body
           name: body
@@ -18565,7 +18565,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/商品管理
+        - 小店∙商品管理
       parameters:
         - in: body
           name: body
@@ -18587,7 +18587,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/商品管理
+        - 小店∙商品管理
       parameters:
         - in: body
           name: body
@@ -18611,7 +18611,7 @@ paths:
       consumes:
         - multipart/form-data
       tags:
-        - 小店/功能接口
+        - 小店∙功能接口
       parameters:
         - in: query
           name: filename
@@ -18630,7 +18630,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/商品管理
+        - 小店∙商品管理
       parameters:
         - in: body
           name: body
@@ -18645,7 +18645,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/商品管理
+        - 小店∙商品管理
       parameters:
         - in: body
           name: body
@@ -18666,7 +18666,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/邮费模板管理
+        - 小店∙邮费模板管理
       parameters: []
       responses:
         '200':
@@ -18677,7 +18677,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/邮费模板管理
+        - 小店∙邮费模板管理
       parameters:
         - in: body
           name: body
@@ -18696,7 +18696,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/邮费模板管理
+        - 小店∙邮费模板管理
       parameters: []
       responses:
         '200':
@@ -18707,7 +18707,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/邮费模板管理
+        - 小店∙邮费模板管理
       parameters:
         - in: body
           name: body
@@ -18726,7 +18726,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/邮费模板管理
+        - 小店∙邮费模板管理
       parameters: []
       responses:
         '200':
@@ -18737,7 +18737,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/商品管理
+        - 小店∙商品管理
       parameters:
         - in: body
           name: body
@@ -18758,7 +18758,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/商品管理
+        - 小店∙商品管理
       parameters:
         - in: body
           name: body
@@ -18780,7 +18780,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/分组管理
+        - 小店∙分组管理
       parameters:
         - in: body
           name: body
@@ -18807,7 +18807,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/分组管理
+        - 小店∙分组管理
       parameters:
         - in: body
           name: body
@@ -18826,7 +18826,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/分组管理
+        - 小店∙分组管理
       parameters: []
       responses:
         '200':
@@ -18837,7 +18837,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/分组管理
+        - 小店∙分组管理
       parameters:
         - in: body
           name: body
@@ -18856,7 +18856,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/分组管理
+        - 小店∙分组管理
       parameters:
         - in: body
           name: body
@@ -18890,7 +18890,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/分组管理
+        - 小店∙分组管理
       parameters:
         - in: body
           name: body
@@ -18912,7 +18912,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/商品管理
+        - 小店∙商品管理
       parameters:
         - in: body
           name: body
@@ -18938,7 +18938,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/订单管理
+        - 小店∙订单管理
       parameters:
         - in: body
           name: body
@@ -18957,7 +18957,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/订单管理
+        - 小店∙订单管理
       parameters:
         - in: body
           name: body
@@ -18986,7 +18986,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/订单管理
+        - 小店∙订单管理
       parameters:
         - in: body
           name: body
@@ -19005,7 +19005,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/订单管理
+        - 小店∙订单管理
       parameters:
         - in: body
           name: body
@@ -19059,7 +19059,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/货架管理
+        - 小店∙货架管理
       parameters:
         - in: body
           name: body
@@ -19075,7 +19075,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/货架管理
+        - 小店∙货架管理
       parameters:
         - in: body
           name: body
@@ -19091,7 +19091,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/货架管理
+        - 小店∙货架管理
       parameters: []
       responses:
         '200':
@@ -19102,7 +19102,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/货架管理
+        - 小店∙货架管理
       parameters:
         - in: body
           name: body
@@ -19118,7 +19118,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/货架管理
+        - 小店∙货架管理
       parameters:
         - in: body
           name: body
@@ -19134,7 +19134,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/库存管理
+        - 小店∙库存管理
       parameters:
         - in: body
           name: body
@@ -19160,7 +19160,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/库存管理
+        - 小店∙库存管理
       parameters:
         - in: body
           name: body
@@ -19186,7 +19186,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小店/商品管理
+        - 小店∙商品管理
       parameters:
         - in: body
           name: body
@@ -19209,7 +19209,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 电子发票/非税票据
+        - 电子发票∙非税票据
       parameters:
         - in: body
           name: body
@@ -19250,7 +19250,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 电子发票/非税票据
+        - 电子发票∙非税票据
       parameters:
         - in: body
           name: body
@@ -19311,7 +19311,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 电子发票/非税票据
+        - 电子发票∙非税票据
       parameters:
         - in: body
           name: body
@@ -19542,7 +19542,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 智能接口/语义理解
+        - 智能接口∙语义理解
       parameters:
         - in: body
           name: body
@@ -19701,7 +19701,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 摇一摇周边/设备管理
+        - 摇一摇周边∙设备管理
       parameters:
         - in: body
           name: body
@@ -19752,7 +19752,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 摇一摇周边/设备管理
+        - 摇一摇周边∙设备管理
       parameters:
         - in: body
           name: body
@@ -19797,7 +19797,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 摇一摇周边/设备管理
+        - 摇一摇周边∙设备管理
       parameters:
         - in: body
           name: body
@@ -19849,7 +19849,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 摇一摇周边/设备管理
+        - 摇一摇周边∙设备管理
       parameters:
         - in: body
           name: body
@@ -19895,7 +19895,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 摇一摇周边/设备管理/分组
+        - 摇一摇周边∙设备管理∙分组
       parameters:
         - in: body
           name: body
@@ -19931,7 +19931,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 摇一摇周边/设备管理/分组
+        - 摇一摇周边∙设备管理∙分组
       parameters:
         - in: body
           name: body
@@ -19975,7 +19975,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 摇一摇周边/设备管理/分组
+        - 摇一摇周边∙设备管理∙分组
       parameters:
         - in: body
           name: body
@@ -20005,7 +20005,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 摇一摇周边/设备管理/分组
+        - 摇一摇周边∙设备管理∙分组
       parameters:
         - in: body
           name: body
@@ -20051,7 +20051,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 摇一摇周边/设备管理/分组
+        - 摇一摇周边∙设备管理∙分组
       parameters:
         - in: body
           name: body
@@ -20123,7 +20123,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 摇一摇周边/设备管理/分组
+        - 摇一摇周边∙设备管理∙分组
       parameters:
         - in: body
           name: body
@@ -20173,7 +20173,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 摇一摇周边/设备管理/分组
+        - 摇一摇周边∙设备管理∙分组
       parameters:
         - in: body
           name: body
@@ -20206,7 +20206,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 摇一摇周边/设备管理
+        - 摇一摇周边∙设备管理
       parameters:
         - in: body
           name: body
@@ -20303,7 +20303,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 摇一摇周边/设备管理
+        - 摇一摇周边∙设备管理
       parameters:
         - in: body
           name: body
@@ -20347,7 +20347,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 摇一摇周边/红包
+        - 摇一摇周边∙红包
       parameters:
         - in: query
           name: use_template
@@ -20420,7 +20420,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 摇一摇周边/红包
+        - 摇一摇周边∙红包
       parameters:
         - in: query
           name: lottery_id
@@ -20506,7 +20506,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 摇一摇周边/红包
+        - 摇一摇周边∙红包
       parameters:
         - in: query
           name: lottery_id
@@ -20533,7 +20533,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 摇一摇周边/红包
+        - 摇一摇周边∙红包
       parameters:
         - in: body
           name: body
@@ -20661,7 +20661,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 摇一摇周边/页面管理
+        - 摇一摇周边∙页面管理
       parameters:
         - in: body
           name: body
@@ -20707,7 +20707,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 摇一摇周边/页面管理
+        - 摇一摇周边∙页面管理
       parameters:
         - in: body
           name: body
@@ -20739,7 +20739,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 摇一摇周边/页面管理
+        - 摇一摇周边∙页面管理
       parameters:
         - in: body
           name: body
@@ -20814,7 +20814,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 摇一摇周边/页面管理
+        - 摇一摇周边∙页面管理
       parameters:
         - in: body
           name: body
@@ -20946,7 +20946,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 摇一摇周边/数据统计
+        - 摇一摇周边∙数据统计
       parameters:
         - in: body
           name: body
@@ -21016,7 +21016,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 摇一摇周边/数据统计
+        - 摇一摇周边∙数据统计
       parameters:
         - in: body
           name: body
@@ -21093,7 +21093,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 摇一摇周边/数据统计
+        - 摇一摇周边∙数据统计
       parameters:
         - in: body
           name: body
@@ -21153,7 +21153,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 摇一摇周边/数据统计
+        - 摇一摇周边∙数据统计
       parameters:
         - in: body
           name: body
@@ -21301,7 +21301,7 @@ paths:
       security:
         - componentAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序
+        - 开放平台∙第三方平台∙代小程序
       parameters:
         - in: query
           name: appid
@@ -21445,7 +21445,7 @@ paths:
       security:
         - componentAccessToken: []
       tags:
-        - 开放平台/第三方平台/代公众号/网页开发
+        - 开放平台∙第三方平台∙代公众号∙网页开发
       parameters:
         - in: query
           name: grant_type
@@ -21497,7 +21497,7 @@ paths:
       summary: 刷新access_token（如果需要）
       description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419318590&token=&lang=zh_CN)'
       tags:
-        - 开放平台/第三方平台/代公众号/网页开发
+        - 开放平台∙第三方平台∙代公众号∙网页开发
       security:
         - componentAccessToken: []
       parameters:
@@ -21658,7 +21658,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 门店/小程序
+        - 门店∙小程序
       parameters:
         - in: body
           name: body
@@ -21724,7 +21724,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小程序/附近
+        - 小程序∙附近
       parameters:
         - in: body
           name: body
@@ -21785,7 +21785,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/代码模版库
+        - 开放平台∙第三方平台∙代小程序∙代码模版库
       parameters:
         - in: body
           name: body
@@ -21811,7 +21811,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 开放平台/第三方平台/代公众号/小程序管理
+        - 开放平台∙第三方平台∙代公众号∙小程序管理
       parameters:
         - in: body
           name: body
@@ -21858,7 +21858,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 门店/小程序
+        - 门店∙小程序
       parameters:
         - in: body
           name: body
@@ -21911,7 +21911,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/成员管理
+        - 开放平台∙第三方平台∙代小程序∙成员管理
       parameters:
         - in: body
           name: body
@@ -21941,7 +21941,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/代码管理
+        - 开放平台∙第三方平台∙代小程序∙代码管理
       parameters:
         - in: body
           name: body
@@ -21967,7 +21967,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序
+        - 开放平台∙第三方平台∙代小程序
       parameters:
         - in: body
           name: body
@@ -21994,7 +21994,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/代码管理
+        - 开放平台∙第三方平台∙代小程序∙代码管理
       parameters:
         - in: body
           name: body
@@ -22027,7 +22027,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 门店/小程序
+        - 门店∙小程序
       parameters:
         - in: body
           name: body
@@ -22119,7 +22119,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 门店/小程序
+        - 门店∙小程序
       parameters:
         - in: body
           name: body
@@ -22143,7 +22143,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/代码模版库
+        - 开放平台∙第三方平台∙代小程序∙代码模版库
       parameters:
         - in: body
           name: body
@@ -22169,7 +22169,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小程序/附近
+        - 小程序∙附近
       parameters:
         - in: body
           name: body
@@ -22197,7 +22197,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小程序/插件
+        - 小程序∙插件
       parameters:
         - in: body
           name: body
@@ -22268,7 +22268,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/代码管理
+        - 开放平台∙第三方平台∙代小程序∙代码管理
       parameters:
         - in: body
           name: body
@@ -22302,7 +22302,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/代码管理
+        - 开放平台∙第三方平台∙代小程序∙代码管理
       parameters: []
       responses:
         '200':
@@ -22344,7 +22344,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 门店/小程序
+        - 门店∙小程序
       parameters: []
       responses:
         '200':
@@ -22398,7 +22398,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/代码管理
+        - 开放平台∙第三方平台∙代小程序∙代码管理
       parameters: []
       responses:
         '200':
@@ -22423,7 +22423,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 门店/小程序
+        - 门店∙小程序
       parameters: []
       responses:
         '200':
@@ -22455,7 +22455,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 门店/小程序
+        - 门店∙小程序
       parameters: []
       responses:
         '200':
@@ -22526,7 +22526,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/代码管理
+        - 开放平台∙第三方平台∙代小程序∙代码管理
       parameters: []
       responses:
         '200':
@@ -22547,7 +22547,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/代码管理
+        - 开放平台∙第三方平台∙代小程序∙代码管理
       parameters:
         - in: query
           name: path
@@ -22566,7 +22566,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 门店/小程序
+        - 门店∙小程序
       parameters:
         - in: body
           name: body
@@ -22638,7 +22638,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 门店/小程序
+        - 门店∙小程序
       parameters:
         - in: body
           name: body
@@ -22717,7 +22717,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/代码管理
+        - 开放平台∙第三方平台∙代小程序∙代码管理
       parameters: []
       responses:
         '200':
@@ -22750,7 +22750,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小程序/附近
+        - 小程序∙附近
       parameters:
         - in: query
           name: page
@@ -22835,7 +22835,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/代码模版库
+        - 开放平台∙第三方平台∙代小程序∙代码模版库
       parameters: []
       responses:
         '200':
@@ -22874,7 +22874,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/代码模版库
+        - 开放平台∙第三方平台∙代小程序∙代码模版库
       parameters: []
       responses:
         '200':
@@ -22910,7 +22910,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小程序/二维码
+        - 小程序∙二维码
       parameters:
         - in: body
           name: body
@@ -22959,7 +22959,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小程序/二维码
+        - 小程序∙二维码
       parameters:
         - in: body
           name: body
@@ -23011,7 +23011,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序
+        - 开放平台∙第三方平台∙代小程序
       parameters: []
       responses:
         '200':
@@ -23033,7 +23033,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/代码管理
+        - 开放平台∙第三方平台∙代小程序∙代码管理
       parameters:
         - in: body
           name: body
@@ -23057,7 +23057,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小程序/文件/内容安全
+        - 小程序∙文件∙内容安全
       consumes:
         - multipart/form-data
       parameters:
@@ -23076,7 +23076,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/成员管理
+        - 开放平台∙第三方平台∙代小程序∙成员管理
       parameters:
         - in: body
           name: body
@@ -23111,7 +23111,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序
+        - 开放平台∙第三方平台∙代小程序
       parameters:
         - in: body
           name: body
@@ -23179,7 +23179,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 门店/小程序
+        - 门店∙小程序
       parameters:
         - in: body
           name: body
@@ -23205,7 +23205,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小程序/文件/内容安全
+        - 小程序∙文件∙内容安全
       parameters:
         - in: body
           name: body
@@ -23225,8 +23225,8 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序
-        - 小程序/插件
+        - 开放平台∙第三方平台∙代小程序
+        - 小程序∙插件
       parameters:
         - in: body
           name: body
@@ -23277,7 +23277,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/代码管理
+        - 开放平台∙第三方平台∙代小程序∙代码管理
       parameters:
         - in: body
           name: body
@@ -23297,7 +23297,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/代码管理
+        - 开放平台∙第三方平台∙代小程序∙代码管理
       parameters: []
       responses:
         '200':
@@ -23312,7 +23312,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/代码管理
+        - 开放平台∙第三方平台∙代小程序∙代码管理
       parameters: []
       responses:
         '200':
@@ -23327,7 +23327,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 门店/小程序
+        - 门店∙小程序
       parameters:
         - in: body
           name: body
@@ -23398,7 +23398,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 小程序/附近
+        - 小程序∙附近
       parameters:
         - in: body
           name: body
@@ -23431,7 +23431,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 开放平台/第三方平台/代公众号/小程序管理
+        - 开放平台∙第三方平台∙代公众号∙小程序管理
       parameters:
         - in: body
           name: body
@@ -23486,7 +23486,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序
+        - 开放平台∙第三方平台∙代小程序
       parameters:
         - in: body
           name: body
@@ -23517,7 +23517,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/代码管理
+        - 开放平台∙第三方平台∙代小程序∙代码管理
       parameters:
         - in: body
           name: body
@@ -23579,7 +23579,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/成员管理
+        - 开放平台∙第三方平台∙代小程序∙成员管理
       parameters:
         - in: body
           name: body
@@ -23605,7 +23605,7 @@ paths:
       security:
         - authorizerAccessToken: []
       tags:
-        - 开放平台/第三方平台/代小程序/代码管理
+        - 开放平台∙第三方平台∙代小程序∙代码管理
       parameters: []
       responses:
         '200':
@@ -23620,7 +23620,7 @@ paths:
       security:
         - accessToken: []
       tags:
-        - 门店/小程序
+        - 门店∙小程序
       parameters:
         - in: body
           name: body

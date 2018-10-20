@@ -4,7 +4,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 连WI-FI/门店
+    - 连WI-FI∙门店
   parameters:
     - in: body
       name: buffer

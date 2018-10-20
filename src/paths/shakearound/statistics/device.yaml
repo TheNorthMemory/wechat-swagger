@@ -4,7 +4,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 摇一摇周边/数据统计
+    - 摇一摇周边∙数据统计
   parameters:
     - in: body
       name: body

@@ -4,7 +4,7 @@ get:
   security:
     - componentAccessToken: []
   tags:
-    - 开放平台/第三方平台/代公众号/网页开发
+    - 开放平台∙第三方平台∙代公众号∙网页开发
   parameters:
     - in: query
       name: grant_type

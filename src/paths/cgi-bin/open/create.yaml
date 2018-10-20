@@ -4,7 +4,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 开放平台/帐号管理
+    - 开放平台∙帐号管理
   parameters:
     - in: body
       name: body

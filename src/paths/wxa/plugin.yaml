@@ -4,8 +4,8 @@ post:
   security:
     - authorizerAccessToken: []
   tags:
-    - 开放平台/第三方平台/代小程序
-    - 小程序/插件
+    - 开放平台∙第三方平台∙代小程序
+    - 小程序∙插件
   parameters:
     - in: body
       name: body

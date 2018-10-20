@@ -4,7 +4,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 多客服/客服管理
+    - 多客服∙客服管理
   parameters:
     - in: body
       name: body

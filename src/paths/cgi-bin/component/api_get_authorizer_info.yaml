@@ -4,8 +4,8 @@ post:
   security:
     - componentAccessToken: []
   tags:
-    - 卡券/第三方模式/强授权
-    - 开放平台/第三方平台
+    - 卡券∙第三方模式∙强授权
+    - 开放平台∙第三方平台
   parameters:
     - in: body
       name: body

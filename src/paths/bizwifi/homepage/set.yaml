@@ -4,8 +4,8 @@ post:
   security:
     - accessToken: []
   tags:
-    - 连WI-FI/小程序
-    - 连WI-FI/商家主页
+    - 连WI-FI∙小程序
+    - 连WI-FI∙商家主页
   parameters:
     - in: body
       name: buffer

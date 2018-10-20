@@ -3,7 +3,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 小程序/数据/用户画像
+    - 小程序∙数据∙用户画像
   parameters:
     - in: body
       name: body

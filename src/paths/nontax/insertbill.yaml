@@ -4,7 +4,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 电子发票/非税票据
+    - 电子发票∙非税票据
   parameters:
     - in: body
       name: body

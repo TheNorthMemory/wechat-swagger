@@ -4,7 +4,7 @@ get:
   security:
     - accessToken: []
   tags:
-    - 开放平台/第三方平台/代公众号/小程序管理
+    - 开放平台∙第三方平台∙代公众号∙小程序管理
   parameters: []
   responses:
     '200':

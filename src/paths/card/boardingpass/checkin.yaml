@@ -4,7 +4,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 卡券/飞机票
+    - 卡券∙飞机票
   parameters:
     - in: body
       name: buffer

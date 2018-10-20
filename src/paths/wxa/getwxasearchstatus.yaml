@@ -4,7 +4,7 @@ get:
   security:
     - authorizerAccessToken: []
   tags:
-    - 开放平台/第三方平台/代小程序
+    - 开放平台∙第三方平台∙代小程序
   parameters: []
   responses:
     '200':

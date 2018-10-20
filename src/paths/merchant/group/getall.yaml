@@ -3,7 +3,7 @@ get:
   security:
     - accessToken: []
   tags:
-    - 小店/分组管理
+    - 小店∙分组管理
   parameters: []
   responses:
     '200':

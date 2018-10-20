@@ -3,7 +3,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 数据统计/图文分析
+    - 数据统计∙图文分析
   parameters:
     - in: body
       name: body

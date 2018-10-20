@@ -5,8 +5,8 @@ get:
     - accessToken: []
   tags:
     - 卡券
-    - 卡券/第三方模式/代制
-    - 卡券/第三方模式/强授权
+    - 卡券∙第三方模式∙代制
+    - 卡券∙第三方模式∙强授权
   parameters: []
   responses:
     '200':

@@ -4,7 +4,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 卡券/礼品卡/小程序
+    - 卡券∙礼品卡∙小程序
   parameters:
     - in: body
       name: body

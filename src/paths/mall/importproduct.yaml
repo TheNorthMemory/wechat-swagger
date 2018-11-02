@@ -4,7 +4,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 小程序∙插件∙购物单∙商品数据
+    - 小程序∙插件∙搜索∙购物单∙商品数据
   parameters:
     - in: body
       name: body

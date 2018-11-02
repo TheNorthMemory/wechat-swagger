@@ -4,7 +4,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 小程序∙插件∙购物单∙已购订单
+    - 小程序∙插件∙搜索∙购物单∙已购订单
   parameters:
     - name: action
       in: query

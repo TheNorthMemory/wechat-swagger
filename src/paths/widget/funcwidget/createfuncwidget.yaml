@@ -4,7 +4,7 @@ post:
   security:
     - accessToken: []
   tags:
-    - 小程序∙插件∙功能直达
+    - 小程序∙插件∙搜索∙功能直达
   parameters:
     - name: body
       in: body

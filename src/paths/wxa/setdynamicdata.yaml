@@ -1,0 +1,38 @@
+post:
+  summary: 导入抽样数据
+  description: 开发者可在“自定义模板-模板管理-开发中模板-实现模板-导入抽样数据”下载导入数据协议文档，并根据协议文档，导入抽样数据。[官方文档](https://developers.weixin.qq.com/miniprogram/introduction/widget/custom/quickstart/implement/import/)
+  security:
+    - accessToken: []
+  tags:
+    - 小程序∙插件∙搜索∙自定义模板
+  parameters:
+    - name: body
+      in: body
+      schema:
+        type: object
+        properties:
+          lifespan:
+            type: integer
+            format: int32
+            description: 数据有效时间，秒为单位，一般为86400，一天一次导入的频率
+          query:
+            type: string
+            description: 固定为"{"type":XXXXX}"，用于标识数据所属的服务类目，注意该字段为string类型而不是object
+          scene:
+            type: integer
+            format: int32
+            description: 1代表用于搜索的数据
+          data:
+            type: string
+            description: 推送到微信后台的数据列表，该数据被微信用于流量分配，注意该字段为string类型而不是object
+        example:
+          lifespan: 86400
+          query: '{"type":100001}'
+          scene: 1
+          data: '{"items":[{"stock_name":"腾讯控股", "stock_code":"00700", "stock_market":"hk"}], "attribute":{"count":2, "totalcount": 100, "id": "XXX", "seq": 0}}'
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'

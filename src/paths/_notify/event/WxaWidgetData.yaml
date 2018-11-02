@@ -1,0 +1,41 @@
+post:
+  tags:
+    - 事件通知
+  summary: 小程序/插件/搜索/自定义模板/搜索Widget事件
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/introduction/widget/custom/quickstart/implement/server/overview.html)'
+  consumes:
+    - application/xml
+  produces:
+    - text/xml
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [Event, Query, Scene]
+            properties:
+              Event:
+                type: string
+                description: 事件类型
+                enum: [wxa_widget_data]
+              Query:
+                type: strng
+                description: 固定为"{"type":XXXXX}"，用于标识数据所属的服务类目，注意该字段为string类型而不是object
+              Scene:
+                type: integer
+                format: int32
+                description: 1代表用于搜索的数据
+        example:
+          ToUserName: gh_6ad1513a84d8
+          FromUserName: oHiD1v9MzTFE4f2lLasf123E1QJ0
+          CreateTime: 1499048811
+          MsgType: event
+          Event: wxa_widget_data
+          Query: '{"type":10000,"slot_list":[{"key":"stock_code","value":"00700"},{"key":"stock_market","value":"hk"}],"longitude":113.319694519,"latitude":23.102640152}'
+          Scene: 1
+  responses:
+    '200':
+      description: ''

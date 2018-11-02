@@ -1,0 +1,25 @@
+post:
+  summary: 下线功能
+  description: 该接口会下线一个线上功能，和删除功能接口不同地方在于，该接口会保留功能提交数据，并可用修改功能接口来再次提交上线。审核中的功能不可下线处理。[官方文档](https://developers.weixin.qq.com/miniprogram/introduction/widget/func-widget/quickstart/submit.html)
+  security:
+    - accessToken: []
+  tags:
+    - 小程序∙插件∙功能直达
+  parameters:
+    - name: body
+      in: body
+      type: object
+      properties:
+        index:
+          type: integer
+          format: int32
+          description: 填入接入检查api中返回的对应index字段。
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+        example:
+          errcode: 0
+          errmsg: success

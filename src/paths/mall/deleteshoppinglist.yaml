@@ -1,0 +1,44 @@
+post:
+  summary: 删除“想买清单”
+  description: 开发者可以在用户从购物车删除商品时，同步商品数据从“想买清单”中删除。[官方文档](https://developers.weixin.qq.com/miniprogram/introduction/widget/order/quickstart/cartlist/delete.html)
+  security:
+    - accessToken: []
+  tags:
+    - 小程序∙插件∙购物单∙想买清单
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          user_open_id:
+            type: string
+            description: 用户微信openid
+          sku_product_list:
+            type: array
+            items:
+              type: object
+              properties:
+                item_code:
+                  type: string
+                  description: 商品ID，需要保证唯一性
+                sku_id:
+                  type: string
+                  description: 商品sku_id，特殊情况下可以填入与item_code一致
+        required:
+          - user_open_id
+          - sku_product_list
+        example:
+          user_open_id: user_open_id
+          sku_product_list:
+            - item_code: here_is_spu_id
+              sku_id: here_is_sku_id
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+        example:
+          errcode: 0
+          errmsg: success

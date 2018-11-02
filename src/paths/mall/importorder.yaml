@@ -1,0 +1,368 @@
+post:
+  summary: 导入“已购订单”/更新订单信息
+  description: 开发者可以在用户支付完成后，同步订单数据至“已购订单” [官方文档](https://developers.weixin.qq.com/miniprogram/introduction/widget/order/quickstart/orderlist/import.html)
+  security:
+    - accessToken: []
+  tags:
+    - 小程序∙插件∙购物单∙已购订单
+  parameters:
+    - name: action
+      in: query
+      enum: [add-order, update-order]
+      required: true
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          order_list:
+            type: array
+            description: 单次请求订单数量不可超过10单
+            items:
+              type: object
+              properties:
+                order_id:
+                  type: string
+                  description: 订单ID，需要保证唯一性
+                create_time:
+                  type: integer
+                  format: int32
+                  description: 订单创建时间，unix时间戳
+                pay_finish_time:
+                  type: integer
+                  format: int32
+                  description: 支付完成时间，unix时间戳
+                desc:
+                  type: string
+                  description: 订单备注
+                fee:
+                  type: integer
+                  format: int32
+                  description: 订单金额，单位：分
+                trans_id:
+                  type: string
+                  description: 微信支付订单ID，对于使用微信支付的订单，该字段必填
+                status:
+                  type: integer
+                  format: int32
+                  description: 订单状态，4：已发货 5：已退款 12：已取消 100：已完成
+                  enum: [4, 5, 12, 100]
+                ext_info:
+                  type: object
+                  description: 订单扩展信息
+                  required: [user_open_id]
+                  properties:
+                    product_info:
+                      type: object
+                      description: 商品相关信息
+                      properties:
+                        item_list:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              item_code:
+                                type: string
+                                description: 商品id
+                              sku_id:
+                                type: string
+                                description: sku_id
+                              amount:
+                                type: integer
+                                format: int32
+                                description: 商品数量
+                              total_fee:
+                                type: integer
+                                format: int32
+                                description: 商品总价，单位：分
+                              thumb_url:
+                                type: string
+                                description: 商品缩略图url
+                              title:
+                                type: string
+                                description: 商品名称
+                              desc:
+                                type: string
+                                description: 商品详细描述
+                              unit_price:
+                                type: integer
+                                format: int32
+                                description: 商品单价（实际售价），单位：分
+                              original_price:
+                                type: integer
+                                format: int32
+                                description: 商品原价，单位：分
+                              stock_attr_info:
+                                type: array
+                                description: 商品属性列表
+                                items:
+                                  properties:
+                                    attr_name:
+                                      type: object
+                                      description: 属性名
+                                      properties:
+                                        name:
+                                          type: string
+                                          description: 属性名称
+                                    attr_value:
+                                      type: object
+                                      description: 属性值
+                                      properties:
+                                        name:
+                                          type: string
+                                          description: 属性值
+                              category_list:
+                                type: array
+                                description: 商品类目列表
+                                items:
+                                  type: string
+                              item_detail_page:
+                                type: object
+                                description: 商品详情页（小程序页面）
+                                properties:
+                                  path:
+                                    type: string
+                                    description: 商品详情页跳转链接（小程序页面）
+                    express_info:
+                      type: object
+                      description: 快递信息，对于已发货订单，该字段必填
+                      properties:
+                        name:
+                          type: string
+                          description: 收件人姓名
+                        phone:
+                          type: string
+                          description: 收件人联系电话
+                        address:
+                          type: string
+                          description: 收件人地址
+                        price:
+                          type: integer
+                          format: int32
+                          description: 运费，单位：分
+                        national_code:
+                          type: string
+                          description: 行政区划代码
+                        country:
+                          type: string
+                          description: 国家
+                        province:
+                          type: string
+                          description: 省份
+                        city:
+                          type: string
+                          description: 城市
+                        district:
+                          type: string
+                          description: 区
+                        express_package_info_list:
+                          type: array
+                          description: 包裹信息
+                          items:
+                            type: object
+                            properties:
+                              express_company_id:
+                                type: integer
+                                format: int32
+                                description: 快递公司id
+                              express_company_name:
+                                type: string
+                                description: 快递公司名
+                              express_code:
+                                type: string
+                                description: 快递单号
+                              ship_time:
+                                type: integer
+                                format: int32
+                                description: 发货时间，unix时间戳
+                              express_page:
+                                type: object
+                                description: 快递详情页（小程序）
+                                properties:
+                                  path:
+                                    type: string
+                                    description: 快递详情页跳转链接（小程序页面）
+                              express_goods_info_list:
+                                type: array
+                                description: 包裹中的商品信息
+                                items:
+                                  type: object
+                                  properties:
+                                    item_code:
+                                      type: string
+                                      description: 商品id
+                                    sku_id:
+                                      type: string
+                                      description: sku_id
+                    promotion_info:
+                      type: object
+                      description: 订单优惠信息
+                      properties:
+                        discount_fee:
+                          type: integer
+                          format: int32
+                          description: 优惠金额
+                    brand_info:
+                      type: object
+                      description: 商家信息
+                      properties:
+                        phone:
+                          type: string
+                          description: 联系电话
+                        contact_detail_page:
+                          type: object
+                          description: 联系商家页面
+                          properties:
+                            path:
+                              type: string
+                              description: 联系商家页跳转链接（小程序页面）
+                    invoice_info:
+                      type: object
+                      description: 发票信息，对于已开发票订单，该字段必填
+                      properties:
+                        type:
+                          type: integer
+                          format: int32
+                          enum: [0, 1]
+                          description: 抬头类型，0：单位，1：个人
+                        title:
+                          type: string
+                          description: 发票抬头
+                        tax_number:
+                          type: string
+                          description: 发票税号
+                        company_address:
+                          type: string
+                          description: 单位地址
+                        telephone:
+                          type: string
+                          description: 手机号码
+                        bank_name:
+                          type: string
+                          description: 银行名称
+                        bank_account:
+                          type: string
+                          description: 银行账号
+                        invoice_detail_page:
+                          type: object
+                          description: 发票详情页（小程序页面）
+                          properties:
+                            path:
+                              type: string
+                              description: 发票详情页跳转链接（小程序页面）
+                    payment_method:
+                      type: integer
+                      format: int32
+                      enum: [0, 1, 2]
+                      description: 订单支付方式，0：未知方式 1：微信支付 2：其他支付方式
+                    user_open_id:
+                      type: string
+                      description: 用户微信openid
+                    order_detail_page:
+                      type: object
+                      description: 订单详情页（小程序页面）
+                      properties:
+                        path:
+                          type: string
+                          description: 订单详情页跳转链接（小程序页面）
+        required:
+          - order_id
+          - status
+          - ext_info
+        example:
+          order_list:
+            - order_id: AQAATGagQ7KQCxMJEj7kHuUjTxxx
+              create_time: 1527584231
+              pay_finish_time: 1527584244
+              desc: xx微主页
+              fee: 1
+              trans_id: 4200000144201807116521229xxx
+              status: 3
+              ext_info:
+                product_info:
+                  item_list:
+                    - item_code: 00003563372839_00000010001xxx
+                      sku_id: 00003563372839_10000010014xxx
+                      amount: 1
+                      total_fee: 1
+                      thumb_url: 'https://shp.qpic.cn/wechat_bs/0/4eb3dcee0edcd34939b87f232e9fxxxx'
+                      title: 潮流T恤
+                      desc: xxxx
+                      unit_price: 1
+                      original_price: 2
+                      stock_attr_info:
+                        - attr_name:
+                            name: 尺码
+                          attr_value:
+                            name: L
+                      category_list:
+                        - 衣服
+                        - T-shirt
+                      item_detail_page:
+                        path: /portal/xxxx/detail?code=00003563372839_00000010001xxx
+                express_info:
+                  name: 测试用户
+                  phone: 158xxxxxx
+                  address: 广东省广州市tit创意园品牌街腾讯微信总部
+                  price: 0
+                  national_code: '440105'
+                  country: 中国
+                  province: 广东省
+                  city: 广州市
+                  district: 海珠区
+                  express_package_info_list:
+                    - express_company_id: 2001
+                      express_company_name: 圆通
+                      express_code: 88627337387xxx
+                      ship_time: 1517713509
+                      express_page:
+                        path: /libs/xxxxx/portal/express-detail/xxxxx
+                      express_goods_info_list:
+                        - item_code: 00003563372839_00000010001xxx
+                          sku_id: 00003563372839_10000010014xxx
+                promotion_info:
+                  discount_fee: 1
+                brand_info:
+                  phone: '12345678'
+                  contact_detail_page:
+                    path: /libs/xxxxx/portal/contact_detail/xxxx
+                invoice_info:
+                  type: 0
+                  title: xxxxxx
+                  tax_number: xxxxxx
+                  company_address: xxxxxx
+                  telephone: 020-xxxxxx
+                  bank_name: 招商银行
+                  bank_account: xxxxxxxx
+                  invoice_detail_page:
+                    path: /libs/xxxxx/portal/invoice-detail/xxxxx
+                payment_method: 1
+                user_open_id: xxxxxxx
+                order_detail_page:
+                  path: /libs/xxxxx/portal/order-detail/xxxxx
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              fail_order_list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    order_id:
+                      type: string
+                      description: 失败订单id
+                    error_code:
+                      type: integer
+                      format: int32
+                      description: 订单错误码
+                    msg:
+                      type: string
+                      description: 错误提示
+        example:
+          errcode: 0
+          errmsg: success

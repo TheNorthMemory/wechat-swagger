@@ -1,0 +1,25 @@
+post:
+  summary: 删除功能
+  description: 该接口会删除一个线上功能，和下线功能接口不同地方在于，该接口会删除所有相关数据，包括公众号与功能的绑定关系，后面只能用新建接口重新提交功能。审核中的功能不可删除处理。[官方文档](https://developers.weixin.qq.com/miniprogram/introduction/widget/func-widget/quickstart/submit.html)
+  security:
+    - accessToken: []
+  tags:
+    - 小程序∙插件∙功能直达
+  parameters:
+    - name: body
+      in: body
+      type: object
+      properties:
+        index:
+          type: integer
+          format: int32
+          description: 填入接入检查api中返回的对应index字段。
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+        example:
+          errcode: 0
+          errmsg: success

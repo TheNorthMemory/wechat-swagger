@@ -1,0 +1,187 @@
+post:
+  summary: 接入检查
+  description: 现阶段功能直达开放了微信公众平台公众号后台接入流程，详情可以查看微信公众平台公众号后台接入流程。在api正式接入之前，开发者可以调用接口来检查小程序之前是否接入过功能直达，若接入，该接口会返回当前小程序接入状态，若未接入，该接口会返回该小程序是否允许接入功能直达。[官方文档](https://developers.weixin.qq.com/miniprogram/introduction/widget/func-widget/quickstart/apply.html)
+  security:
+    - accessToken: []
+  tags:
+    - 小程序∙插件∙功能直达
+  parameters: []
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              can_apply:
+                type: boolean
+                description: 该小程序是否允许申请功能直达，若否，会填入reason字段原因
+              reason:
+                type: string
+                description: 不允许接入的原因
+              func_list:
+                type: array
+                description: 该小程序下申请的功能列表
+                items:
+                  type: object
+                  properties:
+                    keywords:
+                      type: string
+                      description: 提交的功能词，用于搜索侧召回
+                    areacode:
+                      type: array
+                      description: 功能服务覆盖的地域列表，取值看地域编码文档
+                      items:
+                        type: integer
+                        format: int32
+                    brandname:
+                      type: string
+                      description: 功能直达服务的品牌名，若填空，则取小程序名称
+                    categorylist:
+                      type: array
+                      description: 该功能所属类目列表，每个选择类目至少需要填入一级和二级类目，具体类目ID见类目树接口
+                      items:
+                        type: object
+                        properties:
+                          id1:
+                            type: integer
+                            format: int32
+                            description: 一级类目ID
+                          id2:
+                            type: integer
+                            format: int32
+                            description: 二级类目ID
+                          id3:
+                            type: integer
+                            format: int32
+                            description: 三级类目ID，0表示未选择三级类目
+                    material:
+                      type: object
+                      description: 该功能对应的素材
+                      properties:
+                        iconType:
+                          type: integer
+                          format: int32
+                          enum: [0, 1]
+                          description: 0为不设置icon，1为设置icon
+                        items:
+                          type: array
+                          description: 每一个item对应一个宫格数据，可以设置2个或4个宫格
+                          items:
+                            type: object
+                            properties:
+                              icon:
+                                type: string
+                                description: icon图片url
+                              title:
+                                type: string
+                                description: 宫格的标题
+                              desc:
+                                type: string
+                                description: 宫格的描述
+                              jumpUrl:
+                                type: string
+                                description: 点击宫格的跳转路径
+                    online_keywords:
+                      type: string
+                      description: 前一次通过审核的功能词
+                    online_areacode:
+                      type: array
+                      description: 前一次通过审核的地域列表
+                      items: []
+                    online_categorylist:
+                      type: array
+                      description: 前一次通过审核的类目
+                      items: []
+                    online_brandname:
+                      type: string
+                      description: 前一次通过审核的品牌名
+                    online_material:
+                      type: object
+                      description: 前一次通过审核的素材
+                      properties: {}
+                    status:
+                      type: string
+                      description: 审核状态
+                    reason:
+                      type: string
+                      description: 若审核不通过，这里会写明原因
+                    index:
+                      type: integer
+                      format: int32
+                      description: 提交审核的功能序号，修改时需要填入
+              commit_times:
+                type: integer
+                format: int32
+                description: 一个自然月内提交次数
+              left_commit_times:
+                type: integer
+                format: int32
+                description: 一个自然月内剩余提交次数
+              has_bind_gzh:
+                type: boolean
+                description: 该小程序之前是否在公众号mp端申请过
+              bind_appid:
+                type: string
+                description: 申请的公众号appid
+              bind_nickname:
+                type: string
+                description: 申请的公众号名称
+              pages:
+                type: array
+                description: 可以用于作为跳转路径的jumpUrl
+                items:
+                  type: string
+        example:
+          errcode: 0
+          errmsg: success
+          can_apply: true
+          reason: ''
+          func_list:
+            - keywords: here_is_keywords
+              areacode:
+                - 110000
+                - 440100
+              brandname: here_is_brandname
+              categorylist:
+                - id1: 10564
+                  id2: 10707
+                  id3: 0
+              material:
+                iconType: 1
+                items:
+                  - icon: 'https://pic.pic/pic1.png'
+                    title: here_is_title1
+                    desc: here_is_desc1
+                    jumpUrl: here_is_jumpurl1
+                  - icon: 'https://pic.pic/pic2.png'
+                    title: here_is_title2
+                    desc: here_is_desc2
+                    jumpUrl: here_is_jumpurl2
+                  - icon: 'https://pic.pic/pic3.png'
+                    title: here_is_title3
+                    desc: here_is_desc3
+                    jumpUrl: here_is_jumpurl3
+                  - icon: 'https://pic.pic/pic4.png'
+                    title: here_is_title4
+                    desc: here_is_desc4
+                    jumpUrl: here_is_jumpurl4
+              online_keywords: ''
+              online_areacode: []
+              online_brandname: ''
+              online_category: []
+              online_material: {}
+              status: REJECTED
+              reason: here_is_reason
+              index: 0
+          has_bind_gzh: true
+          bind_appid: here_is_gzh_appid
+          bind_nickname: here_is_gzh_nickname
+          left_commit_times: 2
+          commit_times: 1
+          pages:
+            - here_is_jumpurl1
+            - here_is_jumpurl2
+            - here_is_jumpurl3
+            - here_is_jumpurl4

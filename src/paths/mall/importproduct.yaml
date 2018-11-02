@@ -1,0 +1,146 @@
+post:
+  summary: 更新商品信息
+  description: 开发者可以对“想买清单”与“已购订单”中的商品信息进行更新，如上架状态改变、价格更新等。 [官方文档](https://developers.weixin.qq.com/miniprogram/introduction/widget/order/quickstart/goods/update.html)
+  security:
+    - accessToken: []
+  tags:
+    - 小程序∙插件∙购物单∙商品数据
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          product_list:
+            type: array
+            description: 单次请求订单数量不可超过10单
+            items:
+              type: object
+              properties:
+                item_code:
+                  type: string
+                  description: 商品ID，需要保证唯一性
+                title:
+                  type: string
+                  description: 商品名称
+                desc:
+                  type: string
+                  description: 商品描述
+                category_list:
+                  type: array
+                  description: 商品类目列表
+                  items:
+                    type: string
+                image_list:
+                  type: array
+                  description: 商品图片链接列表
+                  items:
+                    type: string
+                src_wxapp_path:
+                  type: string
+                  description: 商品来源小程序路径
+                attr_list:
+                  type: array
+                  description: 商品SPU属性
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        description: 属性名称
+                      value:
+                        type: string
+                        description: 属性内容
+                version:
+                  type: integer
+                  format: int32
+                  description: 数据版本号，需按照更新递增，用在并发更新场景
+                sku_list:
+                  type: array
+                  description: 商品SKU列表，单次导入不超过16个SKU，微信后台会合并多次导入的SKU
+                  items:
+                    type: object
+                    properties:
+                      sku_id:
+                        type: string
+                        description: 商品sku_id，特殊情况下可以填入与item_code一致
+                      price:
+                        type: integer
+                        format: int32
+                        description: 商品价格，分为单位
+                      original_price:
+                        type: integer
+                        format: int32
+                        description: 商品原价，分为单位
+                      version:
+                        type: integer
+                        format: int32
+                        description: 数据版本号，需按照更新递增，用在并发更新场景
+                      status:
+                        type: integer
+                        format: int32
+                        enum: [1, 2]
+                        description: 商品状态，1：在售，2：停售
+                      sku_attr_list:
+                        type: array
+                        description: sku属性列表，参考attr_list
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              description: 属性名称
+                            value:
+                              type: string
+                              description: 属性内容
+        required:
+          - product_list
+        example:
+          product_list:
+            - item_code: here_is_spu_id
+              title: product_name
+              desc: product_description
+              category_list:
+                - 服装
+                - 上衣
+                - 短袖衬衫
+              image_list:
+                - image_url1
+                - image_url2
+              src_wxapp_path: /detail?item_code=xxxx
+              attr_list:
+                - name: 材质
+                  value: 纯棉
+                - name: 款式
+                  value: 短袖
+                - name: 季度
+                  value: 2018年秋
+              version: 200
+              sku_list:
+                - sku_id: sku_id1
+                  price: 10000
+                  original_price: 20010
+                  status: 1
+                  sku_attr_list:
+                    - name: 颜色
+                      value: 白色
+                    - name: 码数
+                      value: L
+                  version: 1200
+                - sku_id: sku_id2
+                  price: 10010
+                  status: 1
+                  sku_attr_list:
+                    - name: 颜色
+                      value: 黑色
+                    - name: 码数
+                      value: XXL
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+        example:
+          errcode: 0
+          errmsg: success

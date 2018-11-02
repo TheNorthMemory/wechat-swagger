@@ -1,0 +1,48 @@
+post:
+  summary: 获取类目树
+  description: 在正式接入功能直达前，小程序开发者需要确定接入的功能所属类目，在提交接入功能的时需要填入功能对应的类目ID，若类目与功能不符合，会被审核拒绝接入。[官方文档](https://developers.weixin.qq.com/miniprogram/introduction/widget/func-widget/quickstart/category.html)
+  security:
+    - accessToken: []
+  tags:
+    - 小程序∙插件∙功能直达
+  parameters: []
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      format: int32
+                      description: 类目ID
+                    parent_id:
+                      type: integer
+                      format: int32
+                      description: 该类目的父节点ID
+                    category_name:
+                      type: string
+                      description: 类目名称
+                    has_sub:
+                      type: integer
+                      format: int32
+                      description: 是否有子节点
+        example:
+          errcode: 0
+          errmsg: success
+          list:
+            - id: 11111
+              parent_id: 111
+              category_name: here_is_category_name
+              has_sub: 0
+            - id: 111
+              parent_id: 0
+              category_name: here_is_category_name
+              has_sub: 1

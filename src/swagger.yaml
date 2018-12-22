@@ -1,0 +1,128 @@
+swagger: '2.0'
+host: 127.0.0.1:7788
+basePath: /gateway
+info:
+  title: 微信接口文档及调试工具
+  description: 整理自[微信官方文档](https://mp.weixin.qq.com)及社区贡献
+  version: 2.0.0
+schemes:
+  - http
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  accessToken:
+    in: query
+    type: apiKey
+    name: access_token
+    description: 公众号调用API凭证
+  componentAccessToken:
+    in: query
+    type: apiKey
+    name: component_access_token
+    description: 第三方代公众号/小程序调用API凭证
+  authorizerAccessToken:
+    in: query
+    type: apiKey
+    name: access_token
+    description: 第三方平台获取到的授权的authorizer_access_token
+tags:
+  - name: 基础支持
+  - name: 自定义菜单
+  - name: 用户管理
+  - name: 用户管理∙标签
+  - name: 帐号管理∙二维码
+  - name: 素材管理
+  - name: 图文消息留言管理
+  - name: 消息管理
+  - name: 模版消息
+  - name: 网页开发
+  - name: 卡券
+  - name: 卡券∙券点
+  - name: 卡券∙会员卡
+  - name: 卡券∙会议门票
+  - name: 卡券∙电影票
+  - name: 卡券∙飞机票
+  - name: 卡券∙礼品卡
+  - name: 卡券∙礼品卡∙货架
+  - name: 卡券∙礼品卡∙小程序
+  - name: 卡券∙礼品卡∙订单
+  - name: 卡券∙礼品卡∙财务
+  - name: 卡券∙立减金活动
+  - name: 卡券∙第三方模式∙代制
+  - name: 卡券∙第三方模式∙强授权
+  - name: 电子发票∙商户接口
+  - name: 电子发票∙开票平台接口
+  - name: 电子发票∙报销方接口
+  - name: 电子发票∙极速开票
+  - name: 电子发票∙非税票据
+  - name: 多客服∙客服消息
+  - name: 多客服∙客服管理
+  - name: 多客服∙会话控制
+  - name: 多客服∙聊天记录
+  - name: 小店∙商品管理
+  - name: 小店∙库存管理
+  - name: 小店∙邮费模板管理
+  - name: 小店∙分组管理
+  - name: 小店∙货架管理
+  - name: 小店∙订单管理
+  - name: 小店∙功能接口
+  - name: 精品店∙商品管理
+  - name: 精品店∙类目属性管理
+  - name: 精品店∙分组管理
+  - name: 精品店∙订单管理
+  - name: 门店
+  - name: 门店∙小程序
+  - name: 摇一摇周边
+  - name: 摇一摇周边∙设备管理
+  - name: 摇一摇周边∙设备管理∙分组
+  - name: 摇一摇周边∙页面管理
+  - name: 摇一摇周边∙红包
+  - name: 摇一摇周边∙数据统计
+  - name: 连WI-FI
+  - name: 连WI-FI∙小程序
+  - name: 连WI-FI∙门店
+  - name: 连WI-FI∙设备
+  - name: 连WI-FI∙商家主页
+  - name: IOT
+  - name: 扫一扫
+  - name: 智能接口∙语义理解
+  - name: 智能接口∙AI开放接口
+  - name: 数据统计∙用户分析
+  - name: 数据统计∙图文分析
+  - name: 数据统计∙消息分析
+  - name: 数据统计∙接口分析
+  - name: 数据统计∙卡券
+  - name: 小程序∙数据∙常规分析
+  - name: 小程序∙数据∙访问分析∙访问趋势
+  - name: 小程序∙数据∙访问分析∙访问分布
+  - name: 小程序∙数据∙访问分析∙访问留存
+  - name: 小程序∙数据∙访问分析∙访问页面
+  - name: 小程序∙数据∙用户画像
+  - name: 小程序∙文件∙内容安全
+  - name: 小程序∙插件
+  - name: 小程序∙附近
+  - name: 小程序∙二维码
+  - name: 小程序∙客服消息
+  - name: 小程序∙统一服务消息
+  - name: 小程序∙模版消息
+  - name: 小程序∙插件∙搜索∙购物单∙已购订单
+  - name: 小程序∙插件∙搜索∙购物单∙想买清单
+  - name: 小程序∙插件∙搜索∙购物单∙商品数据
+  - name: 小程序∙插件∙搜索∙功能直达
+  - name: 小程序∙插件∙搜索∙自定义模板
+  - name: 广告服务商接口
+    description: '[接口文档](https://wximg.qq.com/wxp/pdftool/get.html?id=HJ2uqGgXW)'
+  - name: 开放平台∙帐号管理
+  - name: 开放平台∙第三方平台
+  - name: 开放平台∙第三方平台∙代公众号
+  - name: 开放平台∙第三方平台∙代公众号∙网页开发
+  - name: 开放平台∙第三方平台∙代公众号∙小程序管理
+  - name: 开放平台∙第三方平台∙代小程序
+  - name: 开放平台∙第三方平台∙代小程序∙成员管理
+  - name: 开放平台∙第三方平台∙代小程序∙代码管理
+  - name: 开放平台∙第三方平台∙代小程序∙代码模版库
+  - name: 开放平台∙第三方平台∙代小程序∙模板消息模板设置
+paths: {}

@@ -1,0 +1,78 @@
+post:
+  summary: 导入或更新结果查询接口
+  description: 用于查询导入或更新商品的结果，当导入或更新商品失败时，若为系统错误可进行重试；若为其他错误，请排查解决后进行重试。[官方文档](https://mp.weixin.qq.com/cgi-bin/announce?action=getannouncement&key=11533749572M9ODP&version=1&lang=zh_CN&platform=2)
+  security:
+    - accessToken: []
+  tags:
+    - 返佣商品
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          status_ticket:
+            type: string
+        required:
+          - status_ticket
+        example:
+          status_ticket: '115141102647330200'
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              result:
+                type: object
+                properties:
+                  total_cnt:
+                    type: integer
+                    format: int32
+                    description: 总共导入的数量
+                  succ_cnt:
+                    type: integer
+                    format: int32
+                    description: 成功导入的数量
+                  fail_cnt:
+                    type: integer
+                    format: int32
+                    description: 导入失败的数量
+                  progress:
+                    type: integer
+                    format: int32
+                    description: 整体导入的进度
+                  statuses:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        pid:
+                          type: string
+                        ret:
+                          type: integer
+                          format: int32
+                          description: 每个商品的导入结果，0为成功，否则返回相关错误码，详细参照文档最后的错误码表
+                        err_msg:
+                          type: string
+                        err_msg_zh_cn:
+                          type: string
+        example:
+          errcode: 0
+          errmsg: ok
+          result:
+            succ_cnt: 2
+            fail_cnt: 0
+            total_cnt: 2
+            progress: 100.00%
+            statuses:
+              - pid: pid001
+                ret: 0
+                err_msg: success
+                err_msg_zh_cn: 成功
+              - pid: pid002
+                ret: 0
+                err_msg: success
+                err_msg_zh_cn: 成功

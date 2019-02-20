@@ -1,0 +1,48 @@
+post:
+  summary: 全量商品信息查询接口
+  description: 使用该接口，商户可获取已导入的全量商品信息，供全量验证信息使用。[官方文档](https://mp.weixin.qq.com/cgi-bin/announce?action=getannouncement&key=11533749572M9ODP&version=1&lang=zh_CN&platform=2)
+  security:
+    - accessToken: []
+  tags:
+    - 返佣商品
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          page_num:
+            type: integer
+            format: int32
+            description: 分页的编号，从1开始
+          page_size:
+            type: integer
+            format: int32
+            description: 分页的大小，每一页的大小，目前限制为100以内，注意一次全量验证过程中该参数的值需保持不变
+          page_context:
+            type: string
+            description: 上下文，当page_num大于1时必填，填入上一次访问本接口返回的page_context。page_num为1时无需填写。
+        required:
+          - page_num
+          - page_size
+        example:
+          page_context: Uuls-grxWGsHmCGPcUQbtK0Da
+          page_size: 10
+          page_num: 1
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              page_context:
+                type: string
+                description: 上下文，用于访问下一页数据时使用
+              product:
+                type: array
+                description: 商品详情列表
+                items:
+                  type: object
+                  properties: {}

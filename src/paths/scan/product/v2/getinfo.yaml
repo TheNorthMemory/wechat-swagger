@@ -1,0 +1,33 @@
+post:
+  summary: 导入或更新结果查询接口
+  description: 用于查询导入或更新商品的结果，当导入或更新商品失败时，若为系统错误可进行重试；若为其他错误，请排查解决后进行重试。[官方文档](https://mp.weixin.qq.com/cgi-bin/announce?action=getannouncement&key=11533749572M9ODP&version=1&lang=zh_CN&platform=2)
+  security:
+    - accessToken: []
+  tags:
+    - 返佣商品
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          product:
+            type: object
+            properties:
+              pid:
+                type: string
+        required:
+          - product
+        example:
+          product: 'pid001'
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              product:
+                type: object
+                properties: {}

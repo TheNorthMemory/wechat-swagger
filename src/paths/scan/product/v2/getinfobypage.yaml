@@ -44,5 +44,4 @@ post:
                 type: array
                 description: 商品详情列表
                 items:
-                  type: object
-                  properties: {}
+                  $ref: '#/definitions/scan.ProductItemBo'

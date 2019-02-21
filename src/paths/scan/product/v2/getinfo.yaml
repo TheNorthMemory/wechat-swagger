@@ -1,6 +1,6 @@
 post:
-  summary: 导入或更新结果查询接口
-  description: 用于查询导入或更新商品的结果，当导入或更新商品失败时，若为系统错误可进行重试；若为其他错误，请排查解决后进行重试。[官方文档](https://mp.weixin.qq.com/cgi-bin/announce?action=getannouncement&key=11533749572M9ODP&version=1&lang=zh_CN&platform=2)
+  summary: 单个商品信息查询接口
+  description: 使用该接口，商户可获取已导入的商品信息，供验证信息及抽查导入情况使用。[官方文档](https://mp.weixin.qq.com/cgi-bin/announce?action=getannouncement&key=11533749572M9ODP&version=1&lang=zh_CN&platform=2)
   security:
     - accessToken: []
   tags:
@@ -29,5 +29,4 @@ post:
           - type: object
             properties:
               product:
-                type: object
-                properties: {}
+                $ref: '#/definitions/scan.ProductItemBo'

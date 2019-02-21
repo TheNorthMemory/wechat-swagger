@@ -1,0 +1,118 @@
+allOf:
+  - type: object
+    properties:
+      pid:
+        type: string
+        title: 商品id
+        description: 商品全局唯一标识，只能用字母、数字、部分字符及其组合表示，不超过32个字符。本id代表商品信息聚合的单位（一般称作spu），下面可以有更细的sku（若商户只有sku体系，请指定某个sku的id作为商品pid）
+      partial_update:
+        type: integer
+        format: int32
+        title: 是否增量更新
+        description: 不填默认为1。填0代表全量更新，填1代表增量更新（即更新某些字段）
+        enum: [1, 0]
+        default: 1
+      category_info:
+        type: object
+        title: 商户原始类目
+        description: 多级类目多个category_item分隔（参加示例），写在后的为下一级，每级不超过30个汉字，最多5级。填写商户原本的类目树即可
+        properties:
+          category_item:
+            type: array
+            items:
+              type: object
+              properties:
+                category_name:
+                  type: string
+      official_category_info:
+        type: object
+        title: 微信指定类目
+        description: 只有一级，例如图书商品需要填写一级类目”图书”，目前开放一级类目有 **图书，女装，男装，美妆个护，母婴，食品生鲜，数码家电，珠宝配饰，鞋靴箱包，运动户外，家居百货，汽车用品** ，请准确填写商品所属类目（不属于上述类目的商品请勿导入）
+        properties:
+          category_item:
+            type: array
+            items:
+              type: object
+              properties:
+                category_name:
+                  type: string
+      link_info:
+        type: object
+        properties:
+          link_type:
+            type: string
+            title: 商品详情链接跳转类型
+            description: 必须为小程序类型，请填wxa
+            default: wxa
+          wxa_appid:
+            type: string
+            title: 小程序appid
+            description: 推广商品所属的小程序appid
+          url:
+            type: string
+            title: 商品详情的小程序path路径
+            description: 填写该商品跳转的小程序页面路径
+      title:
+        type: string
+        title: 商品标题
+        description: 商品名称，建议11汉字以内，最长不超过30个汉字（大小超出900字节，后台将截断超出部分后存储）
+      sub_title:
+        type: string
+        title: 商品副标题
+        description: 商品特性、简短描述等，建议最长不超过30个汉字（大小超出900字节，后台将截断超出部分后存储）
+      brand:
+        type: string
+        title: 品牌名称
+        description: 商品所属品牌
+      desc:
+        type: string
+        title: 商品描述
+        description: 商品的详情描述，最长不超过300个汉字（大小超出900字节，后台将截断超出部分后存储）
+  - $ref: '#/definitions/scan.ProductItemBaseBo'
+  - type: object
+    properties:
+      sku_info:
+        type: object
+        properties:
+          sku_item:
+            type: array
+            items:
+              allOf:
+                - type: object
+                  properties:
+                    sku_id:
+                      type: string
+                      title: 商品最小单元的id
+                      description: 商品最小单元（如红色40码鞋子）的标识，全局唯一，只能用字母、数字、部分字符及其组合表示，不超过32个字符。
+                    barcode_type:
+                      type: string
+                      title: 条码类型
+                      description: 标品必填，非标品为空。枚举值：ean13、ean8
+                      enum: [ean13, ean8]
+                    barcode:
+                      type: integer
+                      format: int64
+                      title: 商品条码
+                      description: 标品必填，非标品为空
+                    link_url:
+                      type: string
+                      title: 商品详情的小程序path路径
+                      description: sku_id非空时，必填 填写该商品sku跳转的小程序页面路径
+                - $ref: '#/definitions/scan.ProductItemBaseBo'
+  - type: object
+    description: 类目为图书时，必填
+    properties:
+      custom_info:
+        type: object
+        properties:
+          custom_list:
+            type: array
+            items:
+              type: object
+              properties:
+                key:
+                  type: string
+                  description: 图书的一段简短介绍或者推荐语，用于商品展示，建议30汉字以内（大小超出900字节，后台将截断超出部分后存储）
+                  enum: [book_desc, author, publisher]
+                value:
+                  type: string

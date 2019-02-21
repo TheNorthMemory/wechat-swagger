@@ -1,0 +1,62 @@
+type: object
+properties:
+  image_info:
+    type: object
+    title: 商品图片
+    description: 用于商品展示，至少上传一张，请确保首图清晰完整，宽高比要求1:1，大小不超过5M
+    properties:
+      main_image_list:
+        type: array
+        items:
+          type: object
+          properties:
+            url:
+              type: string
+  shop_info:
+    type: object
+    properties:
+      source:
+        type: integer
+        format: int32
+        title: 商品来源
+        description: 1代表平台自营，2代表非平台自营
+        enum: [1, 2]
+        default: 1
+  price_info:
+    type: object
+    description: 价格信息
+    properties:
+      min_price:
+        type: number
+        format: float
+        title: 现价最低价
+        description: 若只有一个价格，最低价=最高价，单位元，保留小数点后两位（价格有变更时，务必实时更新至微信）
+      max_price:
+        type: number
+        format: float
+        title: 现价最高价
+        description: 若只有一个价格，最低价=最高价，单位元，保留小数点后两位（价格有变更时，务必实时更新至微信）
+      min_ori_price:
+        type: number
+        format: float
+        title: 原价最低价
+        description: 若只有一个价格，最低价=最高价，单位元，保留小数点后两位（价格有变更时，务必实时更新至微信）
+      max_ori_price:
+        type: number
+        format: float
+        title: 原价最高价
+        description: 若只有一个价格，最低价=最高价，单位元，保留小数点后两位（价格有变更时，务必实时更新至微信）
+  sale_info:
+    type: object
+    description: 售卖信息
+    properties:
+      sale_status:
+        type: string
+        title: 商品上下架状态
+        description: 上架“on”，下架“off”，该商品总的上下架状态（状态有变更时，务必实时更新至微信）
+        enum: [on, off]
+      stock:
+        type: integer
+        format: int32
+        title: 库存
+        description: 该商品的总库存（sku库存累加），整数，不可为负。商品若需在选品端被发现，则该字段必填，该字段为空或者为0时，则商品无法在选品端出现（库存有变更时，务必实时更新至微信）

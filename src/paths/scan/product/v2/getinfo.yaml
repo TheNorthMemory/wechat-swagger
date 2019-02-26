@@ -19,7 +19,8 @@ post:
         required:
           - product
         example:
-          product: 'pid001'
+          product:
+            pid: 'pid001'
   responses:
     '200':
       description: ''

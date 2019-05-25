@@ -1,5 +1,6 @@
 post:
   summary: 检查wxticket参数/清除扫码记录
+  description: 可检查当前访问用户来源的商品主页，以及在网页前端获取该用户的身份信息。为保证场景的正确性，wxticket参数作为临时签名仅在20分钟内有效，超过有效时长会检查失败。当商品主页设置了“原生防伪组件”时（详情请查看【创建商品】），用户每一次扫码查看主页，均会被计数，进而展示在“防伪查询详情”中。如果商户希望某个码的扫码记录“归零”，可调用该接口，清除该码的被扫码记录。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455872102)
   security:
     - accessToken: []
   tags:
@@ -9,7 +10,44 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          ticket:
+            type: string
+            description: 请求URL中带上的wxticket参数。
+          keystandard:
+            type: string
+            description: (清除该码的被扫码记录)商品编码格式。
+            enum: [ean13, ean8, qrcode]
+          keystr:
+            type: string
+            description: (清除该码的被扫码记录)商品的编码内容。
+          extinfo:
+            type: string
+            description: (清除该码的被扫码记录)调用“获取商品二维码接口”时传入的extinfo，为标识参数。
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              keystandard:
+                type: string
+                description: 商品编码标准。
+                enum: [ean13, ean8, qrcode]
+              keystr:
+                type: string
+                description: 商品编码内容。
+              openid:
+                type: string
+                description: 当前访问者的openid，可唯一标识用户。
+              scene:
+                type: string
+                description: 打开商品主页的场景，scan为扫码，others为其他场景，可能是会话、收藏或朋友圈。
+              is_check:
+                type: boolean
+                description: 该条码（二维码）是否被扫描，true为是，false为否。
+              is_contact:
+                type: boolean
+                description: 是否关注公众号，true为已关注，false为未关注。

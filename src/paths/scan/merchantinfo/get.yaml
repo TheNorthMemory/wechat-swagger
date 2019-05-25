@@ -1,5 +1,6 @@
 get:
   summary: 获取商户信息
+  description: 商户可获取账号下的类目与号段等信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455871888)
   security:
     - accessToken: []
   tags:
@@ -8,3 +9,37 @@ get:
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              brand_tag_list:
+                type: array
+                description: 品牌标签列表，创建商品时传入，商户自定义生成的品牌标识字段。
+                items:
+                  type: string
+                  description: 商户自定义生成的品牌标识字段。
+              verified_list:
+                type: array
+                description: 权限列表，包含商户号段、类目ID、类目名称三者的对应关系。
+                items:
+                  type: object
+                  properties:
+                    verified_firm_code:
+                      type: integer
+                      format: int32
+                      description: 商户号段，表示该商户下有资质的条码号段。
+                    verified_cate_list:
+                      type: array
+                      description: 商户类目列表，包含类目ID与对应的类目名称。
+                      items:
+                        type: object
+                        properties:
+                          verified_cate_id:
+                            type: integer
+                            format: int32
+                            description: 商户类目ID，表示该商户下可用于创建商的类目ID
+                          verified_cate_name:
+                            type: string
+                            description: 商户类目名称，对应类目ID的名称

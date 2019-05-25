@@ -1,5 +1,6 @@
 post:
   summary: 创建商品
+  description: 使用该接口，商户可以创建商品信息，设置商品主页，支持条码和二维码两种类型。目前，一个账号最多支持创建10万条商品信息。**注意** 1. 至少设置一个推广类型; 2. 文字介绍、公众号和微信卡券三种推广类型，每种类型最多只能分别设置1个；3. 普通链接、公众号、微信卡券三种类型合计最多设置3个；4. 图片跳转链接和视频播放只能二选一展示；5. 必须存在至少一个价格信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455871888)
   security:
     - accessToken: []
   tags:
@@ -9,7 +10,25 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        required: [keystandard, keystr, brand_info]
+        properties:
+          keystandard:
+            type: string
+            description: 商品编码格式。
+            enum: [ean13, ean8, qrcode]
+          keystr:
+            type: string
+            description: 商品的编码内容。
+          brand_info:
+            $ref: '#/definitions/scan.BrandInfoBo'
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              pid:
+                type: string
+                description: 转译后的商品id，将直接编入“获取商品二维码接口”返回的二维码内容。

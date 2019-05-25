@@ -1,5 +1,6 @@
 post:
   summary: 批量查询商品信息
+  description: 商户可以批量查询创建成功的商品信息，查询维度有商品状态和编码内容。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455872102)
   security:
     - accessToken: []
   tags:
@@ -9,7 +10,61 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        required: [offset, limit]
+        properties:
+          offset:
+            type: integer
+            format: int32
+            description: 批量查询的起始位置，从0开始，包含该起始位置。
+            default: 0
+          limit:
+            type: integer
+            format: int32
+            description: 批量查询的数量。
+            default: 10
+          status:
+            type: string
+            description: 支持按状态拉取。on为发布状态，off为未发布状态，check为审核中状态，reject为审核未通过状态，all为所有状态。
+            enum: [on, off, check, reject, all]
+          keystr:
+            type: string
+            description: 支持按部分编码内容拉取。填写该参数后，可将编码内容中包含所传参数的商品信息拉出。类似关键词搜索。
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              total:
+                type: integer
+                format: int32
+                description: 命中筛选条件的商品总数。
+              key_list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    keystandard:
+                      type: string
+                      description: 商品编码标准。
+                      enum: [ean13, ean8, qrcode]
+                    keystr:
+                      type: string
+                      description: 商品编码内容。
+                    category_id:
+                      type: integer
+                      format: int32
+                      description: 商品类目ID。
+                    category_name:
+                      type: string
+                      description: 商品类目名称。
+                    update_time:
+                      type: integer
+                      format: int32
+                      description: 商品信息的最后更新时间（整型）。
+                    status:
+                      type: string
+                      description: 商品主页的状态，on为发布状态，off为未发布状态，check为审核中状态，reject为审核未通过状态。
+                      enum: [on, off, check, reject]

@@ -1,5 +1,6 @@
 post:
   summary: 清除商品信息
+  description: 商户可以清除创建成功的商品信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455872102)
   security:
     - accessToken: []
   tags:
@@ -9,7 +10,18 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        required: [keystandard, keystr]
+        properties:
+          keystandard:
+            type: string
+            description: 商品编码格式。
+            enum: [ean13, ean8, qrcode]
+          keystr:
+            type: string
+            description: 商品的编码内容。
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'

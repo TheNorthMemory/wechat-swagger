@@ -1,0 +1,165 @@
+type: object
+required: [base_info, detail_info, action_info]
+properties:
+  base_info:
+    type: object
+    description: 商品的基本信息。
+    required: [title, thumb_url, brand_tag, category_id]
+    properties:
+      title:
+        type: string
+        description: 商品名称，建议不超过15个字，超过部分在客户端上以省略号显示。
+      thumb_url:
+        type: string
+        description: 商品缩略图，推荐尺寸为180px*180px，大小不超过50k，支持jpg、png、gif、jpeg格式。
+      brand_tag:
+        type: string
+        description: 品牌字段，如“宝洁海飞丝”、“宝洁飘柔”。
+      category_id:
+        type: integer
+        format: int32
+        description: 商品类目ID，通过“获取商户信息”接口获取。
+      store_mgr_type:
+        type: string
+        description: 是否展示有该商品的电商渠道，识别条件是编码内容。auto为自动，由微信识别展示渠道；custom为自定义，商户可指定store_vendorid_list内的渠道出现。
+        enum: [auto, custom]
+        default: auto
+      store_vendorid_list:
+        type: array
+        description: 电商渠道，如果store_mgr_type为custom，则可从以下电商渠道进行选择：2为亚马逊，3为当当网，4为京东，9为一号店，11为聚美优品，19为酒仙网
+        items:
+          type: integer
+          format: int32
+          enum: [2, 3, 4, 9, 11, 19]
+      color:
+        type: string
+        description: 主页头部背景色。设置“auto”或不填则自动取色；也支持传入十六进制颜色码自定义背景色。比如，“FFFFFF”代表纯白色。 注意：颜色码不识别大小写，也不需要传入“#”
+        default: auto
+      status:
+        type: string
+        description: 商品主页的状态，on为发布状态，off为未发布状态，check为审核中状态，reject为审核未通过状态。
+        enum: [on, off, check, reject]
+  detail_info:
+    type: object
+    description: 商品的详细描述信息。
+    required: [banner_list, detail_list]
+    properties:
+      banner_list:
+        type: array
+        description: 商品详情页中图文详情可设置多张图片。
+        items:
+          type: object
+          required: [link]
+          properties:
+            link:
+              type: string
+              description: 商品详情页中图文详情的图片，640px*320px，单张≤200k，支持jpg、png、gif、jpeg格式，最多可上传6张。
+            desc:
+              type: string
+              description: 商品详情页中图文详情的描述，≤80个汉字。
+      detail_list:
+        type: array
+        description: 商品详情页中可设置多组商品属性。
+        items:
+          type: object
+          required: [title]
+          properties:
+            title:
+              type: string
+              description: 商品详情页中商品属性名称，≤6个汉字。
+            desc:
+              type: string
+              description: 商品详情页中商品属性内容，≤80个汉字。
+  action_info:
+    type: object
+    description: 商品的推广服务区信息。
+    required: [action_list]
+    properties:
+      action_list:
+        type: array
+        description: 商品主页中可设置多个服务栏。
+        items:
+          type: object
+          required: [type]
+          properties:
+            type:
+              type: string
+              description: 服务栏的类型，Media{link,image},视频播放；Text{name,text}，文字介绍；Link{name,link,image,showtype}，图片跳转；Link{name,link,digest}，普通链接；User{}，公众号；Card{cardid,digest}，微信卡券；Price{retail_price}，建议零售价；product{name,productid,digest}，微信小店；Store{name,link,sale_price}，电商链接；Recommend{recommend}，商品推荐。
+              enum: [media, text, link, user, card, price, product, store, recommend]
+            link:
+              type: string
+              description: type=media时,对应的视频链接，仅支持在v.qq.com上传的视频内容，格式请按JSON示例拼接；type=link时，对应(图片)跳转后的网页链接;type=store时，对应电商的链接，建议是可以直接购买该商品的页面。
+            image:
+              type: string
+              description: type=media时,对应视频的封面，推荐尺寸690px*320px，大小不超过200k，支持jpg、png、gif、jpeg格式;type=link时对应跳转入口的图片链接；
+            name:
+              type: string
+              description: type=text,对应文字介绍的标题;type=link，链接入口的名称，不超过12个汉字。
+            text:
+              type: string
+              description: type=text,对应文字介绍的内容。
+            showtype:
+              type: string
+              description: type=link&image参数不为空时，值为banner，设置图片跳转类型的服务栏时必填。
+              enum: [banner]
+            digest:
+              type: string
+              description: type=link|card|product时，服务栏右侧的引导语，不超过5个汉字。
+            cardid:
+              type: string
+              description: type=card时，卡券必须为非自定义code（概念说明见微信卡券接口文档）。
+            retail_price:
+              type: number
+              format: float
+              description: type=price时，表示商品的建议零售价，以“元”为单位。
+            productid:
+              type: string
+              description: type=product时，对应小店商品的id，需保证有效。
+            sale_price:
+              type: number
+              format: float
+              description: type=store时，对应商品的价格，单位元。
+            recommend:
+              type: object
+              description: type=recommend必填
+              required: [recommend_type, recommend_list]
+              properties:
+                recommend_type:
+                  type: string
+                  default: appointed
+                  description: 表示商品推荐的方式，目前只支持指定，值为appointed。
+                recommend_list:
+                  type: array
+                  description: 表示指定要推荐的商品列表，注意：被推荐的商品也必须是同一账号下创建的，并且已经发布。
+                  items:
+                    type: object
+                    required: [keystandard, keystr]
+                    properties:
+                      keystandard:
+                        type: string
+                        description: 表示被推荐的商品编码格式。
+                        enum: [ean13, ean8, qrcode]
+                      keystr:
+                        type: string
+                        description: 表示被推荐商品的编码内容。
+  module_info:
+    type: object
+    description: 商品的组件信息。
+    properties:
+      module_list:
+        type: array
+        items:
+          type: object
+          properties:
+            type:
+              type: string
+              description: 组件的类型，目前仅包括防伪组件anti_fake。
+              default: anti_fake
+              enum: [anti_fake]
+            native_show:
+              type: boolean
+              enum: [true, false]
+              description: 设置为true时，防伪结果使用微信提供的弹窗页面展示，商户仅需调用“商品管理”部分的组件消息接口回传产品真假信息。设置为false时，无防伪弹窗效果。
+            anti_fake_url:
+              type: string
+              description: 商户提供的防伪查询链接，当native_show设置为false时必填。

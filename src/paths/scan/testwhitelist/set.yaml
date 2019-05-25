@@ -1,5 +1,6 @@
 post:
   summary: 设置测试人员白名单
+  description: 白名单内的测试人员可以查看未发布或审核通过之前的商品信息。**注意** 每次设置均被视为一次重置，而非增量设置。openid、微信号合计最多设置10个。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455872062)
   security:
     - accessToken: []
   tags:
@@ -9,7 +10,20 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          openid:
+            type: array
+            items:
+              type: string
+              description: 测试人员的openid
+          username:
+            type: array
+            items:
+              type: string
+              description: 测试人员的微信号
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'

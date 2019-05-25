@@ -1,0 +1,67 @@
+post:
+  tags:
+    - 事件通知
+  summary: 扫一扫/防伪查询组件消息
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455872102)'
+  consumes:
+    - application/xml
+  produces:
+    - application/xml
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [Event, KeyStandard, KeyStr]
+            properties:
+              Event:
+                type: string
+                description: 事件类型
+                enum: [scan_product_callback]
+              KeyStandard:
+                type: string
+                description: 商品编码标准。
+                enum: [ean13, ean8, qrcode]
+              KeyStr:
+                type: string
+                description: 商品编码内容。
+              ExtInfo:
+                type: string
+                description: 调用“获取商品二维码接口”时传入的extinfo，为标识参数。
+              NeedAntiFake:
+                type: boolean
+                description: 请是否使用微信提供的弹窗页面展示防伪结果，true为使用，false为未使用。
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/notify.Base'
+          - type: object
+            required: [Event, KeyStandard, KeyStr]
+            properties:
+              MsgType:
+                type: string
+                enum: [scanproduct]
+                description: 消息类型
+              KeyStandard:
+                type: string
+                description: 商品编码标准。
+                enum: [ean13, ean8, qrcode]
+              KeyStr:
+                type: string
+                description: 商品编码内容。
+              ExtInfo:
+                type: string
+                description: 调用“获取商品二维码接口”时传入的extinfo，为标识参数。
+              AntiFake:
+                type: object
+                description: 防伪信息的内容。
+                properties:
+                  CodeResult:
+                    type: string
+                    description: 商品防伪查询的结果，real表示码为真，fake表示码为假，not_active表示该防伪码未激活。
+                    enum: [real, fake, not_active]

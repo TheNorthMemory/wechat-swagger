@@ -89,11 +89,11 @@ post:
                     online_areacode:
                       type: array
                       description: 前一次通过审核的地域列表
-                      items: []
+                      items: {}
                     online_categorylist:
                       type: array
                       description: 前一次通过审核的类目
-                      items: []
+                      items: {}
                     online_brandname:
                       type: string
                       description: 前一次通过审核的品牌名

@@ -22,7 +22,7 @@ post:
                 description: 事件类型
                 enum: [wxa_widget_data]
               Query:
-                type: strng
+                type: string
                 description: 固定为"{"type":XXXXX}"，用于标识数据所属的服务类目，注意该字段为string类型而不是object
               Scene:
                 type: integer

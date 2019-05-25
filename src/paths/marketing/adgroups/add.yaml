@@ -175,6 +175,7 @@ post:
       required: true
       enum: [BILLINGEVENT_CLICK, BILLINGEVENT_IMPRESSION]
     - name: bid_amount
+      in: formData
       type: integer
       format: int64
       description: 广告出价，单位为分(人民币)

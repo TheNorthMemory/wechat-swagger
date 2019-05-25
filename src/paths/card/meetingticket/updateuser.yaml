@@ -44,7 +44,8 @@ post:
     '200':
       description: ''
       schema:
-        $ref: '#/definitions/base.ResponseBo'
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
         example:
           errcode: 0
           errmsg: ok

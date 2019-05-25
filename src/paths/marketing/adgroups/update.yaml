@@ -148,6 +148,7 @@ post:
             format: int64
             description: 排除的自定义人群列表，通过客户人群模块创建的人群 id 列表，最多 10 个
     - name: bid_amount
+      in: formData
       type: integer
       format: int64
       description: 广告出价，单位为分(人民币)

@@ -8,21 +8,22 @@ post:
   parameters:
     - name: body
       in: body
-      type: object
-      properties:
-        start_date:
-          type: string
-          description: 查询的开始时间，xxxx-xx-xx格式
-        end_date:
-          type: string
-          description: 查询的结束时间，xxxx-xx-xx格式
-        query:
-          type: string
-          description: 提交的功能词，若为空，则拉取所有的功能词数据
-      example:
-        start_date: '2018-09-30'
-        end_date: '2018-09-31'
-        query: here_is_keyword
+      schema:
+        type: object
+        properties:
+          start_date:
+            type: string
+            description: 查询的开始时间，xxxx-xx-xx格式
+          end_date:
+            type: string
+            description: 查询的结束时间，xxxx-xx-xx格式
+          query:
+            type: string
+            description: 提交的功能词，若为空，则拉取所有的功能词数据
+        example:
+          start_date: '2018-09-30'
+          end_date: '2018-09-31'
+          query: here_is_keyword
   responses:
     '200':
       description: ''

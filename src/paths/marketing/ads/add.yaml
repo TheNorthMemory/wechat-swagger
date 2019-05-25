@@ -8,11 +8,13 @@ post:
     - application/x-www-form-urlencoded
   parameters:
     - name: adcreative_id
+      in: formData
       type: integer
       format: int64
       required: true
       description: 广告组 id， 1 个 广告组下只能创建 1 个广告
     - name: adgroup_id
+      in: formData
       type: integer
       format: int64
       required: true

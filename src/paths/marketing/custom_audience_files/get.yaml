@@ -13,6 +13,7 @@ get:
       format: int64
       description: 人群 id
     - name: custom_audience_file_id
+      in: formData
       type: integer
       format: int64
       description: 数据文件 id

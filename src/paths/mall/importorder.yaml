@@ -9,6 +9,7 @@ post:
     - name: action
       in: query
       enum: [add-order, update-order]
+      type: string
       required: true
     - in: body
       name: body

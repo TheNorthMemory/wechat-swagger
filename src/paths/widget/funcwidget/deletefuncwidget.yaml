@@ -8,12 +8,13 @@ post:
   parameters:
     - name: body
       in: body
-      type: object
-      properties:
-        index:
-          type: integer
-          format: int32
-          description: 填入接入检查api中返回的对应index字段。
+      schema:
+        type: object
+        properties:
+          index:
+            type: integer
+            format: int32
+            description: 填入接入检查api中返回的对应index字段。
   responses:
     '200':
       description: ''

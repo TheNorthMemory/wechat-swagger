@@ -2,8 +2,8 @@ swagger: '2.0'
 host: 127.0.0.1:7788
 basePath: /gateway
 info:
-  title: 微信接口文档及调试工具
-  description: 整理自[微信官方文档](https://mp.weixin.qq.com)及社区贡献
+  title: 微信服务端接口文档及调试工具
+  description: 整理自[微信官方文档](https://mp.weixin.qq.com/wiki)及社区贡献，项目地址[github](https://github.com/TheNorthMemory/wechat-swagger)
   version: 2.0.0
 schemes:
   - http
@@ -1663,6 +1663,74 @@ paths:
       responses:
         '200':
           description: ''
+  /_notify/event/ScanProductCallback:
+    post:
+      tags:
+        - 事件通知
+      summary: 扫一扫/防伪查询组件消息
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455872102)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, KeyStandard, KeyStr]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [scan_product_callback]
+                  KeyStandard:
+                    type: string
+                    description: 商品编码标准。
+                    enum: [ean13, ean8, qrcode]
+                  KeyStr:
+                    type: string
+                    description: 商品编码内容。
+                  ExtInfo:
+                    type: string
+                    description: 调用“获取商品二维码接口”时传入的extinfo，为标识参数。
+                  NeedAntiFake:
+                    type: boolean
+                    description: 请是否使用微信提供的弹窗页面展示防伪结果，true为使用，false为未使用。
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.Base'
+              - type: object
+                required: [Event, KeyStandard, KeyStr]
+                properties:
+                  MsgType:
+                    type: string
+                    enum: [scanproduct]
+                    description: 消息类型
+                  KeyStandard:
+                    type: string
+                    description: 商品编码标准。
+                    enum: [ean13, ean8, qrcode]
+                  KeyStr:
+                    type: string
+                    description: 商品编码内容。
+                  ExtInfo:
+                    type: string
+                    description: 调用“获取商品二维码接口”时传入的extinfo，为标识参数。
+                  AntiFake:
+                    type: object
+                    description: 防伪信息的内容。
+                    properties:
+                      CodeResult:
+                        type: string
+                        description: 商品防伪查询的结果，real表示码为真，fake表示码为假，not_active表示该防伪码未激活。
+                        enum: [real, fake, not_active]
   /_notify/event/ShakeAroundLotteryBind:
     post:
       tags:
@@ -1874,7 +1942,7 @@ paths:
                     enum: [subscribe]
                   EventKey:
                     type: string
-                    description: 事件KEY值，qrscene_为前缀，后面为二维码的参数值(未关注用户扫描二维码)
+                    description: 事件KEY值，qrscene_为前缀，后面为二维码的参数值(未关注用户扫描二维码)，扫一扫关注信息，共以下四项，以“|”分割，推送消息体格式(scene|keystandard|keystr|extinfo)①scene表示场景：scanbarcode为扫码场景，scanimage为扫封面（图像）场景。②keystandard表示商品编码标准：barcode为条码。③keystr表示商品编码内容。④extinfo表示调用“获取商品二维码接口”时传入的extinfo，为标识参数。
                   Ticket:
                     type: string
                     description: 二维码的ticket，可用来换取二维码图片(未关注用户扫描二维码)
@@ -2701,7 +2769,7 @@ paths:
                     description: 事件类型
                     enum: [wxa_widget_data]
                   Query:
-                    type: strng
+                    type: string
                     description: 固定为"{"type":XXXXX}"，用于标识数据所属的服务类目，注意该字段为string类型而不是object
                   Scene:
                     type: integer
@@ -3951,7 +4019,8 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/base.ResponseBo'
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
             example:
               errcode: 0
               errmsg: ok
@@ -4280,7 +4349,8 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/base.ResponseBo'
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
             example:
               errcode: 0
               errmsg: ok
@@ -4315,7 +4385,8 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/base.ResponseBo'
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
             example:
               errcode: 0
               errmsg: ok
@@ -4350,7 +4421,8 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/base.ResponseBo'
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
             example:
               errcode: 0
               errmsg: ok
@@ -4445,7 +4517,8 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/base.ResponseBo'
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
             example:
               errcode: 0
               errmsg: ok
@@ -6345,7 +6418,8 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/base.ResponseBo'
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
             example:
               errcode: 0
               errmsg: ok
@@ -6411,7 +6485,8 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/base.ResponseBo'
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
             example:
               errcode: 0
               errmsg: ok
@@ -6626,7 +6701,8 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/base.ResponseBo'
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
             example:
               errcode: 0
               errmsg: ok
@@ -6959,7 +7035,8 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/base.ResponseBo'
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
             example:
               errcode: 0
               errmsg: ok
@@ -7010,7 +7087,8 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/base.ResponseBo'
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
             example:
               errcode: 0
               errmsg: ok
@@ -7339,7 +7417,8 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/base.ResponseBo'
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
             example:
               errcode: 0
               errmsg: ok
@@ -7439,7 +7518,8 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/base.ResponseBo'
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
             example:
               errcode: 0
               errmsg: ok
@@ -7503,7 +7583,8 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/base.ResponseBo'
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
             example:
               errcode: 0
               errmsg: ok
@@ -7661,7 +7742,8 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/base.ResponseBo'
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
             example:
               errcode: 0
               errmsg: ok
@@ -15299,6 +15381,7 @@ paths:
         - name: action
           in: query
           enum: [add-order, update-order]
+          type: string
           required: true
         - in: body
           name: body
@@ -16608,6 +16691,7 @@ paths:
           required: true
           enum: [BILLINGEVENT_CLICK, BILLINGEVENT_IMPRESSION]
         - name: bid_amount
+          in: formData
           type: integer
           format: int64
           description: 广告出价，单位为分(人民币)
@@ -17163,6 +17247,7 @@ paths:
                 format: int64
                 description: 排除的自定义人群列表，通过客户人群模块创建的人群 id 列表，最多 10 个
         - name: bid_amount
+          in: formData
           type: integer
           format: int64
           description: 广告出价，单位为分(人民币)
@@ -17221,11 +17306,13 @@ paths:
         - application/x-www-form-urlencoded
       parameters:
         - name: adcreative_id
+          in: formData
           type: integer
           format: int64
           required: true
           description: 广告组 id， 1 个 广告组下只能创建 1 个广告
         - name: adgroup_id
+          in: formData
           type: integer
           format: int64
           required: true
@@ -17509,6 +17596,7 @@ paths:
         - application/x-www-form-urlencoded
       parameters:
         - name: ad_id
+          in: formData
           type: integer
           format: int64
           required: true
@@ -18039,6 +18127,7 @@ paths:
           format: int64
           description: 人群 id
         - name: custom_audience_file_id
+          in: formData
           type: integer
           format: int64
           description: 数据文件 id
@@ -20186,6 +20275,7 @@ paths:
   /scan/merchantinfo/get:
     get:
       summary: 获取商户信息
+      description: 商户可获取账号下的类目与号段等信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455871888)
       security:
         - accessToken: []
       tags:
@@ -20194,9 +20284,44 @@ paths:
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  brand_tag_list:
+                    type: array
+                    description: 品牌标签列表，创建商品时传入，商户自定义生成的品牌标识字段。
+                    items:
+                      type: string
+                      description: 商户自定义生成的品牌标识字段。
+                  verified_list:
+                    type: array
+                    description: 权限列表，包含商户号段、类目ID、类目名称三者的对应关系。
+                    items:
+                      type: object
+                      properties:
+                        verified_firm_code:
+                          type: integer
+                          format: int32
+                          description: 商户号段，表示该商户下有资质的条码号段。
+                        verified_cate_list:
+                          type: array
+                          description: 商户类目列表，包含类目ID与对应的类目名称。
+                          items:
+                            type: object
+                            properties:
+                              verified_cate_id:
+                                type: integer
+                                format: int32
+                                description: 商户类目ID，表示该商户下可用于创建商的类目ID
+                              verified_cate_name:
+                                type: string
+                                description: 商户类目名称，对应类目ID的名称
   /scan/product/clear:
     post:
       summary: 清除商品信息
+      description: 商户可以清除创建成功的商品信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455872102)
       security:
         - accessToken: []
       tags:
@@ -20206,13 +20331,25 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            required: [keystandard, keystr]
+            properties:
+              keystandard:
+                type: string
+                description: 商品编码格式。
+                enum: [ean13, ean8, qrcode]
+              keystr:
+                type: string
+                description: 商品的编码内容。
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
   /scan/product/create:
     post:
       summary: 创建商品
+      description: 使用该接口，商户可以创建商品信息，设置商品主页，支持条码和二维码两种类型。目前，一个账号最多支持创建10万条商品信息。**注意** 1. 至少设置一个推广类型; 2. 文字介绍、公众号和微信卡券三种推广类型，每种类型最多只能分别设置1个；3. 普通链接、公众号、微信卡券三种类型合计最多设置3个；4. 图片跳转链接和视频播放只能二选一展示；5. 必须存在至少一个价格信息。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455871888)
       security:
         - accessToken: []
       tags:
@@ -20222,13 +20359,32 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            required: [keystandard, keystr, brand_info]
+            properties:
+              keystandard:
+                type: string
+                description: 商品编码格式。
+                enum: [ean13, ean8, qrcode]
+              keystr:
+                type: string
+                description: 商品的编码内容。
+              brand_info:
+                $ref: '#/definitions/scan.BrandInfoBo'
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  pid:
+                    type: string
+                    description: 转译后的商品id，将直接编入“获取商品二维码接口”返回的二维码内容。
   /scan/product/get:
     post:
       summary: 查询商品信息
+      description: 商户可以查询创建成功的商品信息，用以检查商品状态或信息设置情况。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455872102)
       security:
         - accessToken: []
       tags:
@@ -20238,13 +20394,29 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            required: [keystandard, keystr]
+            properties:
+              keystandard:
+                type: string
+                description: 商品编码格式。
+                enum: [ean13, ean8, qrcode]
+              keystr:
+                type: string
+                description: 商品的编码内容。
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  brand_info:
+                    $ref: '#/definitions/scan.BrandInfoBo'
   /scan/product/getlist:
     post:
       summary: 批量查询商品信息
+      description: 商户可以批量查询创建成功的商品信息，查询维度有商品状态和编码内容。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455872102)
       security:
         - accessToken: []
       tags:
@@ -20254,13 +20426,68 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            required: [offset, limit]
+            properties:
+              offset:
+                type: integer
+                format: int32
+                description: 批量查询的起始位置，从0开始，包含该起始位置。
+                default: 0
+              limit:
+                type: integer
+                format: int32
+                description: 批量查询的数量。
+                default: 10
+              status:
+                type: string
+                description: 支持按状态拉取。on为发布状态，off为未发布状态，check为审核中状态，reject为审核未通过状态，all为所有状态。
+                enum: [on, off, check, reject, all]
+              keystr:
+                type: string
+                description: 支持按部分编码内容拉取。填写该参数后，可将编码内容中包含所传参数的商品信息拉出。类似关键词搜索。
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  total:
+                    type: integer
+                    format: int32
+                    description: 命中筛选条件的商品总数。
+                  key_list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        keystandard:
+                          type: string
+                          description: 商品编码标准。
+                          enum: [ean13, ean8, qrcode]
+                        keystr:
+                          type: string
+                          description: 商品编码内容。
+                        category_id:
+                          type: integer
+                          format: int32
+                          description: 商品类目ID。
+                        category_name:
+                          type: string
+                          description: 商品类目名称。
+                        update_time:
+                          type: integer
+                          format: int32
+                          description: 商品信息的最后更新时间（整型）。
+                        status:
+                          type: string
+                          description: 商品主页的状态，on为发布状态，off为未发布状态，check为审核中状态，reject为审核未通过状态。
+                          enum: [on, off, check, reject]
   /scan/product/getqrcode:
     post:
       summary: 获取商品二维码
+      description: 商户可获得由微信格式生成的商品二维码，用于印刷在包装上标识商品。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455872062)
       security:
         - accessToken: []
       tags:
@@ -20270,13 +20497,41 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            required: [keystandard, keystr, qrcode_size]
+            properties:
+              keystandard:
+                type: string
+                description: 商品编码格式。
+                enum: [ean13, ean8, qrcode]
+              keystr:
+                type: string
+                description: 商品的编码内容。
+              extinfo:
+                type: string
+                description: 由商户自定义传入，建议仅使用大小写字母、数字及-_().*这6个常用字符。
+              qrcode_size:
+                type: integer
+                format: int32
+                description: 二维码的尺寸（整型），数值代表边长像素数，不填写默认值为100。
+                default: 100
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  pic_url:
+                    type: string
+                    description: 商品二维码的图片链接，可直接下载到本地。
+                  qrcode_url:
+                    type: string
+                    description: 商品二维码的内容，格式为 http://p.url.cn/{$pid}/${extinfo} 。
   /scan/product/modstatus:
     post:
       summary: 商品发布
+      description: 提交审核/取消发布商品。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455872062)
       security:
         - accessToken: []
       tags:
@@ -20286,13 +20541,29 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            required: [keystandard, keystr, status]
+            properties:
+              keystandard:
+                type: string
+                description: 商品编码格式。
+                enum: [ean13, ean8, qrcode]
+              keystr:
+                type: string
+                description: 商品的编码内容。
+              status:
+                type: string
+                description: 设置发布状态。on为提交审核，off为取消发布。
+                enum: [on, off]
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
   /scan/product/update:
     post:
       summary: 更新商品信息
+      description: 可对商品的基本信息（base_info）、详情信息（detail_info）、推广服务区 （action_info）和组件区（modul_info）四部分进行独立或整体的更新。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455872102)
       security:
         - accessToken: []
       tags:
@@ -20302,10 +20573,28 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            required: [keystandard, keystr, brand_info]
+            properties:
+              keystandard:
+                type: string
+                description: 商品编码格式。
+                enum: [ean13, ean8, qrcode]
+              keystr:
+                type: string
+                description: 商品的编码内容。
+              brand_info:
+                $ref: '#/definitions/scan.BrandInfoBo'
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  pid:
+                    type: string
+                    description: 转译后的商品id，将直接编入“获取商品二维码接口”返回的二维码内容。
   /scan/product/v2/add:
     post:
       summary: 导入/更新商品接口
@@ -20511,7 +20800,8 @@ paths:
             required:
               - product
             example:
-              product: 'pid001'
+              product:
+                pid: 'pid001'
       responses:
         '200':
           description: ''
@@ -20652,6 +20942,7 @@ paths:
   /scan/scanticket/check:
     post:
       summary: 检查wxticket参数/清除扫码记录
+      description: 可检查当前访问用户来源的商品主页，以及在网页前端获取该用户的身份信息。为保证场景的正确性，wxticket参数作为临时签名仅在20分钟内有效，超过有效时长会检查失败。当商品主页设置了“原生防伪组件”时（详情请查看【创建商品】），用户每一次扫码查看主页，均会被计数，进而展示在“防伪查询详情”中。如果商户希望某个码的扫码记录“归零”，可调用该接口，清除该码的被扫码记录。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455872102)
       security:
         - accessToken: []
       tags:
@@ -20661,13 +20952,51 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              ticket:
+                type: string
+                description: 请求URL中带上的wxticket参数。
+              keystandard:
+                type: string
+                description: (清除该码的被扫码记录)商品编码格式。
+                enum: [ean13, ean8, qrcode]
+              keystr:
+                type: string
+                description: (清除该码的被扫码记录)商品的编码内容。
+              extinfo:
+                type: string
+                description: (清除该码的被扫码记录)调用“获取商品二维码接口”时传入的extinfo，为标识参数。
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  keystandard:
+                    type: string
+                    description: 商品编码标准。
+                    enum: [ean13, ean8, qrcode]
+                  keystr:
+                    type: string
+                    description: 商品编码内容。
+                  openid:
+                    type: string
+                    description: 当前访问者的openid，可唯一标识用户。
+                  scene:
+                    type: string
+                    description: 打开商品主页的场景，scan为扫码，others为其他场景，可能是会话、收藏或朋友圈。
+                  is_check:
+                    type: boolean
+                    description: 该条码（二维码）是否被扫描，true为是，false为否。
+                  is_contact:
+                    type: boolean
+                    description: 是否关注公众号，true为已关注，false为未关注。
   /scan/testwhitelist/set:
     post:
       summary: 设置测试人员白名单
+      description: 白名单内的测试人员可以查看未发布或审核通过之前的商品信息。**注意** 每次设置均被视为一次重置，而非增量设置。openid、微信号合计最多设置10个。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455872062)
       security:
         - accessToken: []
       tags:
@@ -20677,10 +21006,23 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              openid:
+                type: array
+                items:
+                  type: string
+                  description: 测试人员的openid
+              username:
+                type: array
+                items:
+                  type: string
+                  description: 测试人员的微信号
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
   /semantic/semproxy/search:
     post:
       summary: 语义理解
@@ -22808,65 +23150,66 @@ paths:
       parameters:
         - name: body
           in: body
-          type: object
-          properties:
-            keywords:
-              type: string
-              description: 提交的功能词，用于搜索侧召回
-            areacode:
-              type: array
-              description: 功能服务覆盖的地域列表，取值看地域编码文档，若为空，则不限定地域
-              items:
-                type: integer
-                format: int32
-            brandname:
-              type: string
-              description: 功能直达服务的品牌名，若填空，则取小程序名称
-            categorylist:
-              type: array
-              description: 该功能所属类目列表，可选1-3个类目，每个选择类目至少需要填入一级和二级类目，具体类目ID见类目树接口
-              items:
-                type: object
-                properties:
-                  id1:
-                    type: integer
-                    format: int32
-                    description: 一级类目ID
-                  id2:
-                    type: integer
-                    format: int32
-                    description: 二级类目ID
-                  id3:
-                    type: integer
-                    format: int32
-                    description: 三级类目ID，0表示未选择三级类目
-            material:
-              type: object
-              description: 该功能对应的素材
-              properties:
-                iconType:
+          schema:
+            type: object
+            properties:
+              keywords:
+                type: string
+                description: 提交的功能词，用于搜索侧召回
+              areacode:
+                type: array
+                description: 功能服务覆盖的地域列表，取值看地域编码文档，若为空，则不限定地域
+                items:
                   type: integer
                   format: int32
-                  enum: [0, 1]
-                  description: 0为不设置icon，1为设置icon
+              brandname:
+                type: string
+                description: 功能直达服务的品牌名，若填空，则取小程序名称
+              categorylist:
+                type: array
+                description: 该功能所属类目列表，可选1-3个类目，每个选择类目至少需要填入一级和二级类目，具体类目ID见类目树接口
                 items:
-                  type: array
-                  description: 每一个item对应一个宫格数据，可以设置2个或4个宫格
+                  type: object
+                  properties:
+                    id1:
+                      type: integer
+                      format: int32
+                      description: 一级类目ID
+                    id2:
+                      type: integer
+                      format: int32
+                      description: 二级类目ID
+                    id3:
+                      type: integer
+                      format: int32
+                      description: 三级类目ID，0表示未选择三级类目
+              material:
+                type: object
+                description: 该功能对应的素材
+                properties:
+                  iconType:
+                    type: integer
+                    format: int32
+                    enum: [0, 1]
+                    description: 0为不设置icon，1为设置icon
                   items:
-                    type: object
-                    properties:
-                      icon:
-                        type: string
-                        description: icon图片url
-                      title:
-                        type: string
-                        description: 宫格的标题
-                      desc:
-                        type: string
-                        description: 宫格的描述
-                      jumpUrl:
-                        type: string
-                        description: 点击宫格的跳转路径
+                    type: array
+                    description: 每一个item对应一个宫格数据，可以设置2个或4个宫格
+                    items:
+                      type: object
+                      properties:
+                        icon:
+                          type: string
+                          description: icon图片url
+                        title:
+                          type: string
+                          description: 宫格的标题
+                        desc:
+                          type: string
+                          description: 宫格的描述
+                        jumpUrl:
+                          type: string
+                          description: 点击宫格的跳转路径
       responses:
         '200':
           description: ''
@@ -22887,12 +23230,13 @@ paths:
       parameters:
         - name: body
           in: body
-          type: object
-          properties:
-            index:
-              type: integer
-              format: int32
-              description: 填入接入检查api中返回的对应index字段。
+          schema:
+            type: object
+            properties:
+              index:
+                type: integer
+                format: int32
+                description: 填入接入检查api中返回的对应index字段。
       responses:
         '200':
           description: ''
@@ -23043,11 +23387,11 @@ paths:
                         online_areacode:
                           type: array
                           description: 前一次通过审核的地域列表
-                          items: []
+                          items: {}
                         online_categorylist:
                           type: array
                           description: 前一次通过审核的类目
-                          items: []
+                          items: {}
                         online_brandname:
                           type: string
                           description: 前一次通过审核的品牌名
@@ -23150,21 +23494,22 @@ paths:
       parameters:
         - name: body
           in: body
-          type: object
-          properties:
-            start_date:
-              type: string
-              description: 查询的开始时间，xxxx-xx-xx格式
-            end_date:
-              type: string
-              description: 查询的结束时间，xxxx-xx-xx格式
-            query:
-              type: string
-              description: 提交的功能词，若为空，则拉取所有的功能词数据
-          example:
-            start_date: '2018-09-30'
-            end_date: '2018-09-31'
-            query: here_is_keyword
+          schema:
+            type: object
+            properties:
+              start_date:
+                type: string
+                description: 查询的开始时间，xxxx-xx-xx格式
+              end_date:
+                type: string
+                description: 查询的结束时间，xxxx-xx-xx格式
+              query:
+                type: string
+                description: 提交的功能词，若为空，则拉取所有的功能词数据
+            example:
+              start_date: '2018-09-30'
+              end_date: '2018-09-31'
+              query: here_is_keyword
       responses:
         '200':
           description: ''
@@ -23233,69 +23578,70 @@ paths:
       parameters:
         - name: body
           in: body
-          type: object
-          properties:
-            index:
-              type: integer
-              format: int32
-              description: 填入接入检查api中返回的对应index字段。
-            keywords:
-              type: string
-              description: 提交的功能词，用于搜索侧召回
-            areacode:
-              type: array
-              description: 功能服务覆盖的地域列表，取值看地域编码文档，若为空，则不限定地域
-              items:
+          schema:
+            type: object
+            properties:
+              index:
                 type: integer
                 format: int32
-            brandname:
-              type: string
-              description: 功能直达服务的品牌名，若填空，则取小程序名称
-            categorylist:
-              type: array
-              description: 该功能所属类目列表，可选1-3个类目，每个选择类目至少需要填入一级和二级类目，具体类目ID见类目树接口
-              items:
-                type: object
-                properties:
-                  id1:
-                    type: integer
-                    format: int32
-                    description: 一级类目ID
-                  id2:
-                    type: integer
-                    format: int32
-                    description: 二级类目ID
-                  id3:
-                    type: integer
-                    format: int32
-                    description: 三级类目ID，0表示未选择三级类目
-            material:
-              type: object
-              description: 该功能对应的素材
-              properties:
-                iconType:
+                description: 填入接入检查api中返回的对应index字段。
+              keywords:
+                type: string
+                description: 提交的功能词，用于搜索侧召回
+              areacode:
+                type: array
+                description: 功能服务覆盖的地域列表，取值看地域编码文档，若为空，则不限定地域
+                items:
                   type: integer
                   format: int32
-                  enum: [0, 1]
-                  description: 0为不设置icon，1为设置icon
+              brandname:
+                type: string
+                description: 功能直达服务的品牌名，若填空，则取小程序名称
+              categorylist:
+                type: array
+                description: 该功能所属类目列表，可选1-3个类目，每个选择类目至少需要填入一级和二级类目，具体类目ID见类目树接口
                 items:
-                  type: array
-                  description: 每一个item对应一个宫格数据，可以设置2个或4个宫格
+                  type: object
+                  properties:
+                    id1:
+                      type: integer
+                      format: int32
+                      description: 一级类目ID
+                    id2:
+                      type: integer
+                      format: int32
+                      description: 二级类目ID
+                    id3:
+                      type: integer
+                      format: int32
+                      description: 三级类目ID，0表示未选择三级类目
+              material:
+                type: object
+                description: 该功能对应的素材
+                properties:
+                  iconType:
+                    type: integer
+                    format: int32
+                    enum: [0, 1]
+                    description: 0为不设置icon，1为设置icon
                   items:
-                    type: object
-                    properties:
-                      icon:
-                        type: string
-                        description: icon图片url
-                      title:
-                        type: string
-                        description: 宫格的标题
-                      desc:
-                        type: string
-                        description: 宫格的描述
-                      jumpUrl:
-                        type: string
-                        description: 点击宫格的跳转路径
+                    type: array
+                    description: 每一个item对应一个宫格数据，可以设置2个或4个宫格
+                    items:
+                      type: object
+                      properties:
+                        icon:
+                          type: string
+                          description: icon图片url
+                        title:
+                          type: string
+                          description: 宫格的标题
+                        desc:
+                          type: string
+                          description: 宫格的描述
+                        jumpUrl:
+                          type: string
+                          description: 点击宫格的跳转路径
       responses:
         '200':
           description: ''
@@ -23316,12 +23662,13 @@ paths:
       parameters:
         - name: body
           in: body
-          type: object
-          properties:
-            index:
-              type: integer
-              format: int32
-              description: 填入接入检查api中返回的对应index字段。
+          schema:
+            type: object
+            properties:
+              index:
+                type: integer
+                format: int32
+                description: 填入接入检查api中返回的对应index字段。
       responses:
         '200':
           description: ''
@@ -27536,6 +27883,172 @@ definitions:
         type: integer
         format: int32
         description: 人均价格，大于0 的整数
+  scan.BrandInfoBo:
+    type: object
+    required: [base_info, detail_info, action_info]
+    properties:
+      base_info:
+        type: object
+        description: 商品的基本信息。
+        required: [title, thumb_url, brand_tag, category_id]
+        properties:
+          title:
+            type: string
+            description: 商品名称，建议不超过15个字，超过部分在客户端上以省略号显示。
+          thumb_url:
+            type: string
+            description: 商品缩略图，推荐尺寸为180px*180px，大小不超过50k，支持jpg、png、gif、jpeg格式。
+          brand_tag:
+            type: string
+            description: 品牌字段，如“宝洁海飞丝”、“宝洁飘柔”。
+          category_id:
+            type: integer
+            format: int32
+            description: 商品类目ID，通过“获取商户信息”接口获取。
+          store_mgr_type:
+            type: string
+            description: 是否展示有该商品的电商渠道，识别条件是编码内容。auto为自动，由微信识别展示渠道；custom为自定义，商户可指定store_vendorid_list内的渠道出现。
+            enum: [auto, custom]
+            default: auto
+          store_vendorid_list:
+            type: array
+            description: 电商渠道，如果store_mgr_type为custom，则可从以下电商渠道进行选择：2为亚马逊，3为当当网，4为京东，9为一号店，11为聚美优品，19为酒仙网
+            items:
+              type: integer
+              format: int32
+              enum: [2, 3, 4, 9, 11, 19]
+          color:
+            type: string
+            description: 主页头部背景色。设置“auto”或不填则自动取色；也支持传入十六进制颜色码自定义背景色。比如，“FFFFFF”代表纯白色。 注意：颜色码不识别大小写，也不需要传入“#”
+            default: auto
+          status:
+            type: string
+            description: 商品主页的状态，on为发布状态，off为未发布状态，check为审核中状态，reject为审核未通过状态。
+            enum: [on, off, check, reject]
+      detail_info:
+        type: object
+        description: 商品的详细描述信息。
+        required: [banner_list, detail_list]
+        properties:
+          banner_list:
+            type: array
+            description: 商品详情页中图文详情可设置多张图片。
+            items:
+              type: object
+              required: [link]
+              properties:
+                link:
+                  type: string
+                  description: 商品详情页中图文详情的图片，640px*320px，单张≤200k，支持jpg、png、gif、jpeg格式，最多可上传6张。
+                desc:
+                  type: string
+                  description: 商品详情页中图文详情的描述，≤80个汉字。
+          detail_list:
+            type: array
+            description: 商品详情页中可设置多组商品属性。
+            items:
+              type: object
+              required: [title]
+              properties:
+                title:
+                  type: string
+                  description: 商品详情页中商品属性名称，≤6个汉字。
+                desc:
+                  type: string
+                  description: 商品详情页中商品属性内容，≤80个汉字。
+      action_info:
+        type: object
+        description: 商品的推广服务区信息。
+        required: [action_list]
+        properties:
+          action_list:
+            type: array
+            description: 商品主页中可设置多个服务栏。
+            items:
+              type: object
+              required: [type]
+              properties:
+                type:
+                  type: string
+                  description: 服务栏的类型，Media{link,image},视频播放；Text{name,text}，文字介绍；Link{name,link,image,showtype}，图片跳转；Link{name,link,digest}，普通链接；User{}，公众号；Card{cardid,digest}，微信卡券；Price{retail_price}，建议零售价；product{name,productid,digest}，微信小店；Store{name,link,sale_price}，电商链接；Recommend{recommend}，商品推荐。
+                  enum: [media, text, link, user, card, price, product, store, recommend]
+                link:
+                  type: string
+                  description: type=media时,对应的视频链接，仅支持在v.qq.com上传的视频内容，格式请按JSON示例拼接；type=link时，对应(图片)跳转后的网页链接;type=store时，对应电商的链接，建议是可以直接购买该商品的页面。
+                image:
+                  type: string
+                  description: type=media时,对应视频的封面，推荐尺寸690px*320px，大小不超过200k，支持jpg、png、gif、jpeg格式;type=link时对应跳转入口的图片链接；
+                name:
+                  type: string
+                  description: type=text,对应文字介绍的标题;type=link，链接入口的名称，不超过12个汉字。
+                text:
+                  type: string
+                  description: type=text,对应文字介绍的内容。
+                showtype:
+                  type: string
+                  description: type=link&image参数不为空时，值为banner，设置图片跳转类型的服务栏时必填。
+                  enum: [banner]
+                digest:
+                  type: string
+                  description: type=link|card|product时，服务栏右侧的引导语，不超过5个汉字。
+                cardid:
+                  type: string
+                  description: type=card时，卡券必须为非自定义code（概念说明见微信卡券接口文档）。
+                retail_price:
+                  type: number
+                  format: float
+                  description: type=price时，表示商品的建议零售价，以“元”为单位。
+                productid:
+                  type: string
+                  description: type=product时，对应小店商品的id，需保证有效。
+                sale_price:
+                  type: number
+                  format: float
+                  description: type=store时，对应商品的价格，单位元。
+                recommend:
+                  type: object
+                  description: type=recommend必填
+                  required: [recommend_type, recommend_list]
+                  properties:
+                    recommend_type:
+                      type: string
+                      default: appointed
+                      description: 表示商品推荐的方式，目前只支持指定，值为appointed。
+                    recommend_list:
+                      type: array
+                      description: 表示指定要推荐的商品列表，注意：被推荐的商品也必须是同一账号下创建的，并且已经发布。
+                      items:
+                        type: object
+                        required: [keystandard, keystr]
+                        properties:
+                          keystandard:
+                            type: string
+                            description: 表示被推荐的商品编码格式。
+                            enum: [ean13, ean8, qrcode]
+                          keystr:
+                            type: string
+                            description: 表示被推荐商品的编码内容。
+      module_info:
+        type: object
+        description: 商品的组件信息。
+        properties:
+          module_list:
+            type: array
+            items:
+              type: object
+              properties:
+                type:
+                  type: string
+                  description: 组件的类型，目前仅包括防伪组件anti_fake。
+                  default: anti_fake
+                  enum: [anti_fake]
+                native_show:
+                  type: boolean
+                  enum: [true, false]
+                  description: 设置为true时，防伪结果使用微信提供的弹窗页面展示，商户仅需调用“商品管理”部分的组件消息接口回传产品真假信息。设置为false时，无防伪弹窗效果。
+                anti_fake_url:
+                  type: string
+                  description: 商户提供的防伪查询链接，当native_show设置为false时必填。
   scan.ProductItemBaseBo:
     type: object
     properties:

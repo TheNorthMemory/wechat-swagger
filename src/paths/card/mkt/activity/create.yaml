@@ -1,4 +1,5 @@
 post:
+  deprecated: true
   summary: 创建支付后领取立减金活动
   description: 将已创建的代金券cardid、跳转小程序appid、发起支付的商户号等信息通过此接口创建立减金活动，成功返回活动id即为创建成功。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21515658940X5pIn)
   security:

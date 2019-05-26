@@ -1,0 +1,89 @@
+post:
+  tags:
+    - 事件通知
+    - 小程序∙物流助手∙服务提供方使用
+  summary: 小程序/物流助手/审核商户事件
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.onCheckBusiness.html)'
+  consumes:
+    - application/xml
+  produces:
+    - application/xml
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [Event]
+            properties:
+              Event:
+                type: string
+                description: 事件类型
+                enum: [check_biz]
+              BizID:
+                type: string
+                description: 商户ID，即商户在快递注册的客户编码或月结账户名
+              BizPwd:
+                type: string
+                description: BizID 对应的密码
+              ShopAppID:
+                type: string
+                description: 商户的小程序 AppID
+              ShopName:
+                type: string
+                description: 商户名称，即小程序昵称（仅EMS可用）
+              ShopTelphone:
+                type: string
+                description: 商户联系电话（仅EMS可用）
+              ShopContact:
+                type: string
+                description: 商户联系人姓名（仅EMS可用）
+              ServiceName:
+                type: string
+                description: 预开通的服务类型名称（仅EMS可用）
+              SenderAddress:
+                type: string
+                description: 商户发货地址（仅EMS可用）
+        example:
+          ToUserName: gh_abcdefg
+          FromUserName: oABCD
+          CreateTime: 1533042556
+          MsgType: event
+          Event: check_biz
+          BizID: xyz
+          BizPwd: xyz123
+          ShopAppID: wxABCD
+          ShopName: 商户名称
+          ShopTelphone: '18677778888'
+          ShopContact: 村正
+          ServiceName: 标准快递
+          SenderAddress: 广东省广州市海珠区新港中路397号
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [Event, BizID, Quota, ResultCode, ResultMsg]
+            properties:
+              Event:
+                type: string
+                description: 事件类型，固定为 check_biz
+                enum: [check_biz]
+              BizID:
+                type: string
+                description: 商户ID
+              Quota:
+                type: integer
+                format: int32
+                description: 商户可用余额，0 表示无可用余额
+              ResultCode:
+                type: integer
+                format: int32
+                description: 处理结果错误码
+              ResultMsg:
+                type: string
+                description: 处理结果的详细信息

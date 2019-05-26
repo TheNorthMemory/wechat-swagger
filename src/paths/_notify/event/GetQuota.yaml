@@ -1,0 +1,69 @@
+post:
+  tags:
+    - 事件通知
+    - 小程序∙物流助手∙服务提供方使用
+  summary: 小程序/物流助手/查询商户余额事件
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.onGetQuota.html)'
+  consumes:
+    - application/xml
+  produces:
+    - application/xml
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [Event]
+            properties:
+              Event:
+                type: string
+                description: 事件类型
+                enum: [get_quota]
+              BizID:
+                type: string
+                description: 商户ID，即商户在快递注册的客户编码或月结账户名
+              BizPwd:
+                type: string
+                description: BizID 对应的密码
+              ShopAppID:
+                type: string
+                description: 商户的小程序 AppID
+        example:
+          ToUserName: gh_abcdefg
+          FromUserName: oABCD
+          CreateTime: 1533042556
+          MsgType: event
+          Event: get_quota
+          BizID: xyz
+          BizPwd: xyz123
+          ShopAppID: wxABCD
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [Event, BizID, Quota, ResultCode, ResultMsg]
+            properties:
+              Event:
+                type: string
+                description: 事件类型，固定为 get_quota
+                enum: [get_quota]
+              BizID:
+                type: string
+                description: 商户ID
+              Quota:
+                type: integer
+                format: int32
+                description: 商户可用余额，0 表示无可用余额
+              ResultCode:
+                type: integer
+                format: int32
+                description: 处理结果错误码
+              ResultMsg:
+                type: string
+                description: 处理结果的详细信息

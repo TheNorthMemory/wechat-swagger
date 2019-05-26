@@ -1,0 +1,48 @@
+post:
+  summary: 预览面单模板
+  description: 用于调试面单模板使用。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.previewTemplate.html)
+  security:
+    - accessToken: []
+  tags:
+    - 小程序∙物流助手∙服务提供方使用
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          waybill_id:
+            type: string
+            description: 运单 ID
+          waybill_template:
+            type: string
+            description: 面单 HTML 模板内容（需经 Base64 编码）
+          waybill_data:
+            type: string
+            description: 面单数据。详情参考下单事件返回值中的 WaybillData
+          custom:
+            $ref: '#/definitions/logistics.OrderBo'
+        required:
+          - waybill_id
+          - waybill_template
+          - waybill_data
+          - custom
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              waybillId:
+                type: string
+                description: 运单ID
+              rendered_waybill_template:
+                type: string
+                description: 渲染后的面单 HTML 文件（已经过 Base64 编码）
+        example:
+          errcode: 0
+          errmsg: openapi.logistics.previewTemplate:ok
+          waybill_id: '12345678901234567890'
+          rendered_waybill_template: PGh0bWw+dGVzdDwvaHRtbD4=

@@ -1,0 +1,38 @@
+post:
+  summary: 更新商户审核结果
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.updateBusiness.html)'
+  security:
+    - accessToken: []
+  tags:
+    - 小程序∙物流助手∙服务提供方使用
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          shop_app_id:
+            type: string
+            description: 商户的小程序AppID，即审核商户事件中的 ShopAppID
+          biz_id:
+            type: string
+            description: 商户账户
+          result_code:
+            type: number
+            description: 审核结果，0 表示审核通过，其他表示审核失败
+          result_msg:
+            type: string
+            description: 审核错误原因，仅 result_code 不等于 0 时需要设置
+        required:
+          - shop_app_id
+          - biz_id
+          - result_code
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+        example:
+          errcode: 0
+          errmsg: openapi.logistics.updateBusiness:ok

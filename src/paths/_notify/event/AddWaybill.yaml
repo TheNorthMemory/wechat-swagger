@@ -1,0 +1,247 @@
+post:
+  tags:
+    - 事件通知
+    - 小程序∙物流助手∙服务提供方使用
+  summary: 小程序/物流助手/请求下单事件
+  description: 各字段均为商家提供，不保证完整，不保证正确，需要快递侧做好参数合法性和正确性检查。当网络环境不稳定时，下单事件可能会重复推送。对于相同的 BizID+OrderID，要返回相同的运单 ID。不支持子母单、代收货款。**注意 官方文档返回结果Sender&Receiver&Cargo&Insured&Service可能存误，本文档以样本数据推演其结构** [官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.onAddOrder.html)
+  consumes:
+    - application/xml
+  produces:
+    - application/xml
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [Event]
+            properties:
+              Event:
+                type: string
+                description: 事件类型
+                enum: [add_waybill]
+              Token:
+                type: string
+                description: 订单 Token。请保存该 Token，调用logistics.updatePath时需要传入
+              OrderID:
+                type: string
+                description: 唯一标识订单的 ID，由商户生成。快递需要保证相同的 OrderID 生成相同的运单ID。
+              BizID:
+                type: string
+                description: 商户 ID，即商户在快递注册的客户编码或月结账户名
+              BizPwd:
+                type: string
+                description: BizID 对应的密码
+              ShopAppID:
+                type: string
+                description: 商户的小程序 AppID
+              WayBillID:
+                type: string
+                description: 运单 ID，从微信号段中生成。若为 0，则表示需要快递来生成运单 ID。
+              Remark:
+                type: string
+                description: 快递备注，会打印到面单上，比如"易碎物品"
+              Sender:
+                type: object
+                description: 发件人信息
+                properties:
+                  Name:
+                    type: string
+                    description: 发件人姓名
+                  Tel:
+                    type: string
+                    description: 发件人座机号码
+                  Mobile:
+                    type: string
+                    description: 发件人手机号码
+                  Company:
+                    type: string
+                    description: 发件人公司名
+                  PostCode:
+                    type: string
+                    description: 发件人邮编
+                  Country:
+                    type: string
+                    description: 发件人所在国家，默认为"中国"
+                  Province:
+                    type: string
+                    description: 发件人省份，比如"广东省"
+                  City:
+                    type: string
+                    description: 发件人地区/市，比如"广州市"
+                  Area:
+                    type: string
+                    description: 发件人区/县，比如"海珠区"
+                  Address:
+                    type: string
+                    description: 发件人详细地址，比如"XX路XX号XX大厦XX"
+              Receiver:
+                type: object
+                description: 收件人信息
+                properties:
+                  Name:
+                    type: string
+                    description: 收件人姓名
+                  Tel:
+                    type: string
+                    description: 收件人座机号码
+                  Mobile:
+                    type: string
+                    description: 收件人手机号码
+                  Company:
+                    type: string
+                    description: 收件人公司名
+                  PostCode:
+                    type: string
+                    description: 收件人邮编
+                  Country:
+                    type: string
+                    description: 收件人所在国家，默认为"中国"
+                  Province:
+                    type: string
+                    description: 收件人省份，比如"广东省"
+                  City:
+                    type: string
+                    description: 收件人地区/市，比如"广州市"
+                  Area:
+                    type: string
+                    description: 收件人区/县，比如"海珠区"
+                  Address:
+                    type: string
+                    description: 收件人详细地址，比如"XX路XX号XX大厦XX"
+              Cargo:
+                type: object
+                description: 包裹信息
+                properties:
+                  Weight:
+                    type: integer
+                    format: int32
+                    description: 货物总重量，比如1.2，单位是千克(kg)
+                  Space_X:
+                    type: integer
+                    format: int32
+                    description: 货物长度，比如20.5，单位是厘米(cm)
+                  Space_Y:
+                    type: integer
+                    format: int32
+                    description: 货物宽度，比如15.0，单位是厘米(cm)
+                  Space_Z:
+                    type: integer
+                    format: int32
+                    description: 货物高度，比如10.0，单位是厘米(cm)
+                  Count:
+                    type: integer
+                    format: int32
+                    description: 货物数量，一般为1
+              Insured:
+                type: object
+                description: 保价信息
+                properties:
+                  UseInsured:
+                    type: integer
+                    format: int32
+                    description: 是否保价，0 表示不保价，1 表示保价
+                  InsuredValue:
+                    type: integer
+                    format: int32
+                    description: 保价金额，单位是分，比如:10000 表示 100 元
+              Service:
+                type: object
+                description: 服务类型
+                properties:
+                  ServiceType:
+                    type: integer
+                    format: int32
+                    description: 服务类型ID，详见已经支持的快递公司基本信息
+                  ServiceName:
+                    type: string
+                    description: 服务名称，详见已经支持的快递公司基本信息
+        example:
+          ToUserName: gh_abcdefg
+          FromUserName: oABCD
+          CreateTime: 1533042556
+          MsgType: event
+          Event: add_waybill
+          Token: 1234ABC234523451
+          OrderID: 012345678901234567890123456789
+          BizID: xyz
+          BizPwd: xyz123
+          ShopAppID: wxABCD
+          WayBillID: '123456789'
+          Remark: 易碎物品
+          Sender:
+            Name: 张三
+            Tel: 020-88888888
+            Mobile: '18666666666'
+            Company: 公司名
+            PostCode: '123456'
+            Country: 中国
+            Province: 广东省
+            City: 广州市
+            Area: 海珠区
+            Address: XX路XX号XX大厦XX栋XX
+          Receiver:
+            Name: 王小蒙
+            Tel: 029-77777777
+            Mobile: '18610000000'
+            Company: 公司名
+            PostCode: '654321'
+            Country: 中国
+            Province: 广东省
+            City: 广州市
+            Area: 天河区
+            Address: XX路XX号XX大厦XX栋XX
+          Cargo:
+            Weight: 1.2
+            Space_X: 20.5
+            Space_Y: 15
+            Space_Z: 10
+            Count: 2
+            DetailList:
+              - Name: 一千零一夜钻石包
+                Count: 1
+              - Name: 爱马仕柏金钻石包
+                Count: 1
+          Insured:
+            UseInsured: 1
+            InsuredValue: 10000
+          Service:
+            ServiceType: 0
+            ServiceName: 标准快递
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [Event, Token, OrderID, BizID, WayBillID, ResultCode, ResultMsg, WaybillData]
+            properties:
+              Event:
+                type: string
+                description: 事件类型，固定为 add_waybill
+                enum: [add_waybill]
+              Token:
+                type: string
+                description: 传入的 Token，原样返回
+              OrderID:
+                type: string
+                description: 传入的唯一标识订单的 ID，由商户生成，原样返回
+              BizID:
+                type: string
+                description: 商户 ID，原样返回
+              WayBillID:
+                type: string
+                description: 运单 ID
+              ResultCode:
+                type: integer
+                format: int32
+                description: 处理结果错误码
+              ResultMsg:
+                type: string
+                description: 处理结果的详细信息
+              WaybillData:
+                type: string
+                description: 集包地、三段码、大头笔等信息，用于生成面单信息。详见后文返回值说明

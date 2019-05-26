@@ -1,0 +1,82 @@
+post:
+  summary: 获取面单联系人信息
+  description: '**注意 官方文档返回结果sender&receiver可能存误，本文档以样本数据推演其结构** [官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.getContact.html)'
+  security:
+    - accessToken: []
+  tags:
+    - 小程序∙物流助手∙服务提供方使用
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          token:
+            type: string
+            description: 商户侧下单事件中推送的 Token 字段
+          waybill_id:
+            type: string
+            description: 运单ID
+        required:
+          - token
+          - waybill_id
+        example:
+          token: TOKEN
+          waybill_id: 123456789
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              waybillId:
+                type: string
+                description: 运单ID
+              sender:
+                type: object
+                description: 发件人信息
+                properties:
+                  address:
+                    type: string
+                    description: 地址，已经将省市区信息合并
+                  name:
+                    type: string
+                    description: 用户姓名
+                  tel:
+                    type: string
+                    description: 座机号码
+                  mobile:
+                    type: string
+                    description: 手机号码
+              receiver:
+                type: object
+                description: 收件人信息
+                properties:
+                  address:
+                    type: string
+                    description: 地址，已经将省市区信息合并
+                  name:
+                    type: string
+                    description: 用户姓名
+                  tel:
+                    type: string
+                    description: 座机号码
+                  mobile:
+                    type: string
+                    description: 手机号码
+        example:
+          errcode: 0
+          errmsg: openapi.logistics.getContact:ok
+          waybill_id: '12345678901234567890'
+          sender:
+            address: 广东省广州市海珠区XX路XX号XX大厦XX栋XX
+            name: 张三
+            tel: 020-88888888
+            mobile: '18666666666'
+          receiver:
+            address: 广东省广州市天河区XX路XX号XX大厦XX栋XX
+            name: 王小蒙
+            tel: 029-77777777
+            mobile: '18610000000'

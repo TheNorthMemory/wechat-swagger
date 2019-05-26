@@ -1,0 +1,76 @@
+post:
+  tags:
+    - 事件通知
+    - 小程序∙物流助手∙服务提供方使用
+  summary: 小程序/物流助手/取消订单事件
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.onCancelOrder.html)'
+  consumes:
+    - application/xml
+  produces:
+    - application/xml
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [Event]
+            properties:
+              Event:
+                type: string
+                description: 事件类型
+                enum: [cancel_waybill]
+              OrderID:
+                type: string
+                description: 唯一标识订单的 ID，由商户生成。快递需要保证相同的 OrderID 生成相同的运单ID。
+              BizID:
+                type: string
+                description: 商户 ID，即商户在快递注册的客户编码或月结账户名
+              BizPwd:
+                type: string
+                description: BizID 对应的密码
+              ShopAppID:
+                type: string
+                description: 商户的小程序 AppID
+              WayBillID:
+                type: string
+                description: 运单 ID，从微信号段中生成。若为 0，则表示需要快递来生成运单 ID。
+        example:
+          ToUserName: gh_abcdefg
+          FromUserName: oABCD
+          CreateTime: 1533042556
+          MsgType: event
+          Event: cancel_waybill
+          OrderID: 012345678901234567890123456789
+          BizID: xyz
+          BizPwd: xyz123
+          ShopAppID: wxABCD
+          WayBillID: '123456789'
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [Event, OrderID, WayBillID, ResultCode, ResultMsg]
+            properties:
+              Event:
+                type: string
+                description: 事件类型，固定为 cancel_waybill
+                enum: [cancel_waybill]
+              OrderID:
+                type: string
+                description: 传入的唯一标识订单的 ID，由商户生成，原样返回
+              WayBillID:
+                type: string
+                description: 运单 ID
+              ResultCode:
+                type: integer
+                format: int32
+                description: 处理结果错误码
+              ResultMsg:
+                type: string
+                description: 处理结果的详细信息

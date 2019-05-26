@@ -1,0 +1,61 @@
+post:
+  summary: 更新运单轨迹
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.updatePath.html)'
+  security:
+    - accessToken: []
+  tags:
+    - 小程序∙物流助手∙服务提供方使用
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          token:
+            type: string
+            description: 商户侧下单事件中推送的 Token 字段
+          waybill_id:
+            type: string
+            description: 运单 ID
+          action_time:
+            type: integer
+            format: int32
+            description: 轨迹变化 Unix 时间戳
+          action_type:
+            type: integer
+            format: int32
+            description: 轨迹节点类型,100001=揽件阶段-揽件成功;100002=揽件阶段-揽件失败;100003=揽件阶段-分配业务员;200001=运输阶段-更新运输轨迹;300002=派送阶段-开始派送;300003=派送阶段-签收成功;300004=派送阶段-签收失败;400001=异常阶段-订单取消;400002=异常阶段-订单滞留
+            enum:
+              - 100001
+              - 100002
+              - 100003
+              - 200001
+              - 300002
+              - 300003
+              - 300004
+              - 400001
+              - 400002
+          action_msg:
+            type: string
+            description: 轨迹变化具体信息说明，展示在快递轨迹详情页中。若有手机号码，则直接写11位手机号码。使用UTF-8编码。
+        required:
+          - token
+          - waybill_id
+          - action_time
+          - action_type
+          - action_msg
+        example:
+          token: TOKEN
+          waybill_id: '12345678901234567890'
+          action_time: 1533052800
+          action_type: 300002
+          action_msg: 丽影邓丽君【18666666666】正在派件
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+        example:
+          errcode: 0
+          errmsg: openapi.logistics.updatePath:ok

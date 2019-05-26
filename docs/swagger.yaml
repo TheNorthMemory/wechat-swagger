@@ -3,7 +3,7 @@ host: 127.0.0.1:7788
 basePath: /gateway
 info:
   title: 微信服务端接口文档及调试工具
-  description: 整理自[微信官方文档](https://mp.weixin.qq.com/wiki)及社区贡献，项目地址[github](https://github.com/TheNorthMemory/wechat-swagger)
+  description: 整理自[微信官方文档](https://mp.weixin.qq.com/wiki)及社区贡献，[官方DEBUG工具](https://mp.weixin.qq.com/debug)，项目地址[github](https://github.com/TheNorthMemory/wechat-swagger)
   version: 2.0.0
 schemes:
   - http
@@ -91,6 +91,7 @@ tags:
   - name: 返佣商品
   - name: 智能接口∙语义理解
   - name: 智能接口∙AI开放接口
+  - name: 智能接口∙OCR识别
   - name: 数据统计∙用户分析
   - name: 数据统计∙图文分析
   - name: 数据统计∙消息分析
@@ -4522,6 +4523,38 @@ paths:
             example:
               errcode: 0
               errmsg: ok
+  /card/generalcard/activate:
+    post:
+      summary: 通用卡接口激活.
+      security:
+        - accessToken: []
+      tags:
+        - 卡券∙礼品卡
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
+  /card/generalcard/unactivate:
+    post:
+      summary: 通用卡撤销激活.
+      security:
+        - accessToken: []
+      tags:
+        - 卡券∙礼品卡
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+      responses:
+        '200':
+          description: ''
   /card/generalcard/updateuser:
     post:
       summary: 更新用户礼品卡信息接口
@@ -6915,6 +6948,7 @@ paths:
                                 type: string
   /card/mkt/activity/create:
     post:
+      deprecated: true
       summary: 创建支付后领取立减金活动
       description: 将已创建的代金券cardid、跳转小程序appid、发起支付的商户号等信息通过此接口创建立减金活动，成功返回活动id即为创建成功。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21515658940X5pIn)
       security:
@@ -13377,6 +13411,169 @@ paths:
                       type: integer
                       format: int32
                       description: 操作时间，unix时间戳
+  /cv/ocr/bankcard:
+    post:
+      summary: 银行卡OCR识别接口
+      description: 图片支持使用img参数实时上传，也支持使用img_url参数传送图片地址，由微信后台下载图片进行识别。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21516712284rHWMX)
+      security:
+        - accessToken: []
+      tags:
+        - 智能接口∙OCR识别
+      consumes:
+        - multipart/form-data
+      parameters:
+        - name: img_url
+          in: query
+          type: string
+          description: 图片地址
+        - name: img
+          in: formData
+          type: file
+          description: form-data中媒体文件标识，有filename、filelength、content-type等信息
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  number:
+                    type: string
+                    description: 银行卡号
+            example:
+              errcode: 0
+              errmsg: ok
+              number: 6222300074419865
+  /cv/ocr/driving:
+    post:
+      summary: 行驶证OCR识别接口
+      description: 图片支持使用img参数实时上传，也支持使用img_url参数传送图片地址，由微信后台下载图片进行识别。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21516712284rHWMX)
+      security:
+        - accessToken: []
+      tags:
+        - 智能接口∙OCR识别
+      consumes:
+        - multipart/form-data
+      parameters:
+        - name: img_url
+          in: query
+          type: string
+          description: 图片地址
+        - name: img
+          in: formData
+          type: file
+          description: form-data中媒体文件标识，有filename、filelength、content-type等信息
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  plate_num:
+                    type: string
+                  vehicle_type:
+                    type: string
+                  owner:
+                    type: string
+                  addr:
+                    type: string
+                  use_character:
+                    type: string
+                  model:
+                    type: string
+                  vin:
+                    type: string
+                  engine_num:
+                    type: string
+                  register_date:
+                    type: string
+                  issue_date:
+                    type: string
+                  plate_num_b:
+                    type: string
+                  record:
+                    type: string
+                  passengers_num:
+                    type: string
+                  total_quality:
+                    type: string
+                  prepare_quality:
+                    type: string
+            example:
+              errcode: 0
+              errmsg: ok
+              plate_num: 粤xxxxx
+              vehicle_type: 小型普通客⻋
+              owner: 东莞市xxxxx机械厂
+              addr: 广东省东莞市xxxxx号
+              use_character: 非营运
+              model: 江淮牌HFCxxxxxxx
+              vin: LJ166xxxxxxxx51
+              engine_num: J3xxxxx3
+              register_date: '2018-07-06'
+              issue_date: '2018-07-01'
+              plate_num_b: 粤xxxxx
+              record: 441xxxxxx3
+              passengers_num: 7人
+              total_quality: 2700kg
+              prepare_quality: 1995kg
+  /cv/ocr/idcard:
+    post:
+      summary: 身份证OCR识别接口
+      description: 图片支持使用img参数实时上传，也支持使用img_url参数传送图片地址，由微信后台下载图片进行识别。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21516712284rHWMX)
+      security:
+        - accessToken: []
+      tags:
+        - 智能接口∙OCR识别
+      consumes:
+        - multipart/form-data
+      parameters:
+        - name: type
+          in: query
+          type: string
+          description: photo：拍照模型，带背景的图片;scan：扫描模式，不带背景的图片
+          required: true
+          enum:
+            - photo
+            - scan
+        - name: img_url
+          in: query
+          type: string
+          description: 图片地址
+        - name: img
+          in: formData
+          type: file
+          description: form-data中媒体文件标识，有filename、filelength、content-type等信息
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  type:
+                    type: string
+                    description: 正/背面标识
+                    enum: [Front, Back]
+                  valid_date:
+                    type: string
+                    description: 有效期（背面）
+                  name:
+                    type: string
+                    description: 名字
+                  id:
+                    type: string
+                    description: 身份证ID
+            example:
+              errcode: 0
+              errmsg: ok
+              type: Front
+              name: 张三
+              id: 101010200010101010X
   /datacube/getarticlesummary:
     post:
       summary: 获取图文群发每日数据

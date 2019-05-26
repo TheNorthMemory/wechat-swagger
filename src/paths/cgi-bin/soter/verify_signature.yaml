@@ -1,0 +1,45 @@
+post:
+  summary: SOTER 生物认证秘钥签名验证
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/soter.verifySignature.html)'
+  security:
+    - accessToken: []
+  tags:
+    - 小程序∙生物认证
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          openid:
+            type: string
+            description: 用户 openid
+          json_string:
+            type: string
+            description: 通过 wx.startSoterAuthentication 成功回调获得的 resultJSON 字段
+          json_signature:
+            type: string
+            description: 通过 wx.startSoterAuthentication 成功回调获得的 resultJSONSignature 字段
+        required:
+          - openid
+          - json_string
+          - json_signature
+        example:
+          openid: $openid
+          json_string: $resultJSON
+          json_signature: $resultJSONSignature
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              is_ok:
+                type: boolean
+                description: 验证结果
+        example:
+          errcode: 0
+          errmsg: openapi.soter.verifySignature:ok
+          is_ok: true

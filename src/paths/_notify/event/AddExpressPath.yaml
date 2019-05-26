@@ -16,7 +16,7 @@ post:
         allOf:
           - $ref: '#/definitions/notify.BaseEvent'
           - type: object
-            required: [Event, EventKey]
+            required: [Event]
             properties:
               Event:
                 type: string

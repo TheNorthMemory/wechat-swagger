@@ -1,0 +1,74 @@
+post:
+  summary: 行驶证OCR识别接口
+  description: 图片支持使用img参数实时上传，也支持使用img_url参数传送图片地址，由微信后台下载图片进行识别。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21516712284rHWMX)
+  security:
+    - accessToken: []
+  tags:
+    - 智能接口∙OCR识别
+  consumes:
+    - multipart/form-data
+  parameters:
+    - name: img_url
+      in: query
+      type: string
+      description: 图片地址
+    - name: img
+      in: formData
+      type: file
+      description: form-data中媒体文件标识，有filename、filelength、content-type等信息
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              plate_num:
+                type: string
+              vehicle_type:
+                type: string
+              owner:
+                type: string
+              addr:
+                type: string
+              use_character:
+                type: string
+              model:
+                type: string
+              vin:
+                type: string
+              engine_num:
+                type: string
+              register_date:
+                type: string
+              issue_date:
+                type: string
+              plate_num_b:
+                type: string
+              record:
+                type: string
+              passengers_num:
+                type: string
+              total_quality:
+                type: string
+              prepare_quality:
+                type: string
+        example:
+          errcode: 0
+          errmsg: ok
+          plate_num: 粤xxxxx
+          vehicle_type: 小型普通客⻋
+          owner: 东莞市xxxxx机械厂
+          addr: 广东省东莞市xxxxx号
+          use_character: 非营运
+          model: 江淮牌HFCxxxxxxx
+          vin: LJ166xxxxxxxx51
+          engine_num: J3xxxxx3
+          register_date: '2018-07-06'
+          issue_date: '2018-07-01'
+          plate_num_b: 粤xxxxx
+          record: 441xxxxxx3
+          passengers_num: 7人
+          total_quality: 2700kg
+          prepare_quality: 1995kg

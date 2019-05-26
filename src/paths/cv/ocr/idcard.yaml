@@ -1,0 +1,53 @@
+post:
+  summary: 身份证OCR识别接口
+  description: 图片支持使用img参数实时上传，也支持使用img_url参数传送图片地址，由微信后台下载图片进行识别。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21516712284rHWMX)
+  security:
+    - accessToken: []
+  tags:
+    - 智能接口∙OCR识别
+  consumes:
+    - multipart/form-data
+  parameters:
+    - name: type
+      in: query
+      type: string
+      description: photo：拍照模型，带背景的图片;scan：扫描模式，不带背景的图片
+      required: true
+      enum:
+        - photo
+        - scan
+    - name: img_url
+      in: query
+      type: string
+      description: 图片地址
+    - name: img
+      in: formData
+      type: file
+      description: form-data中媒体文件标识，有filename、filelength、content-type等信息
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              type:
+                type: string
+                description: 正/背面标识
+                enum: [Front, Back]
+              valid_date:
+                type: string
+                description: 有效期（背面）
+              name:
+                type: string
+                description: 名字
+              id:
+                type: string
+                description: 身份证ID
+        example:
+          errcode: 0
+          errmsg: ok
+          type: Front
+          name: 张三
+          id: 101010200010101010X

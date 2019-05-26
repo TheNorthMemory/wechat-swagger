@@ -1,0 +1,33 @@
+post:
+  summary: 银行卡OCR识别接口
+  description: 图片支持使用img参数实时上传，也支持使用img_url参数传送图片地址，由微信后台下载图片进行识别。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21516712284rHWMX)
+  security:
+    - accessToken: []
+  tags:
+    - 智能接口∙OCR识别
+  consumes:
+    - multipart/form-data
+  parameters:
+    - name: img_url
+      in: query
+      type: string
+      description: 图片地址
+    - name: img
+      in: formData
+      type: file
+      description: form-data中媒体文件标识，有filename、filelength、content-type等信息
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              number:
+                type: string
+                description: 银行卡号
+        example:
+          errcode: 0
+          errmsg: ok
+          number: 6222300074419865

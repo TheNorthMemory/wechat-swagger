@@ -3,7 +3,7 @@ host: 127.0.0.1:7788
 basePath: /gateway
 info:
   title: 微信服务端接口文档及调试工具
-  description: 整理自[微信官方文档](https://mp.weixin.qq.com/wiki)及社区贡献，项目地址[github](https://github.com/TheNorthMemory/wechat-swagger)
+  description: 整理自[微信官方文档](https://mp.weixin.qq.com/wiki)及社区贡献，[官方DEBUG工具](https://mp.weixin.qq.com/debug)，项目地址[github](https://github.com/TheNorthMemory/wechat-swagger)
   version: 2.0.0
 schemes:
   - http
@@ -91,6 +91,7 @@ tags:
   - name: 返佣商品
   - name: 智能接口∙语义理解
   - name: 智能接口∙AI开放接口
+  - name: 智能接口∙OCR识别
   - name: 数据统计∙用户分析
   - name: 数据统计∙图文分析
   - name: 数据统计∙消息分析

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 src=$(dirname $0)"/../src"
 paths="${src}/paths"

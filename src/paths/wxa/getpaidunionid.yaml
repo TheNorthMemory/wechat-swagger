@@ -1,0 +1,42 @@
+get:
+  summary: 用户支付完成后，获取该用户的 UnionId。
+  description: 无需用户授权。本接口支持第三方平台代理查询。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/auth.getPaidUnionId.html)
+  security:
+    - accessToken: []
+    - authorizerAccessToken: []
+  tags:
+    - 小程序∙用户信息
+    - 开放平台∙第三方平台∙代小程序∙用户管理
+  parameters:
+    - name: openid
+      in: query
+      type: string
+      required: true
+      description: 支付用户唯一标识
+    - name: transaction_id
+      in: query
+      type: string
+      description: 微信支付订单号
+    - name: mch_id
+      in: query
+      type: string
+      description: 微信支付分配的商户号，和商户订单号配合使用
+    - name: out_trade_no
+      in: query
+      type: string
+      description: 微信支付商户订单号，和商户号配合使用
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              unionid:
+                type: string
+                description: 用户唯一标识，调用成功后返回
+        example:
+          unionid: oTmHYjg-tElZ68xxxxxxxxhy1Rgk
+          errcode: 0
+          errmsg: ok

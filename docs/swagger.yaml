@@ -104,12 +104,18 @@ tags:
   - name: 小程序∙数据∙访问分析∙访问页面
   - name: 小程序∙数据∙用户画像
   - name: 小程序∙文件∙内容安全
-  - name: 小程序∙插件
+  - name: 小程序∙登录
+  - name: 小程序∙用户信息
+  - name: 小程序∙生物认证
   - name: 小程序∙附近
   - name: 小程序∙二维码
   - name: 小程序∙客服消息
   - name: 小程序∙统一服务消息
   - name: 小程序∙模版消息
+  - name: 小程序∙动态消息
+  - name: 小程序∙物流助手∙小程序使用
+  - name: 小程序∙物流助手∙服务提供方使用
+  - name: 小程序∙插件
   - name: 小程序∙插件∙搜索∙购物单∙已购订单
   - name: 小程序∙插件∙搜索∙购物单∙想买清单
   - name: 小程序∙插件∙搜索∙购物单∙商品数据
@@ -124,6 +130,7 @@ tags:
   - name: 开放平台∙第三方平台∙代公众号∙小程序管理
   - name: 开放平台∙第三方平台∙代小程序
   - name: 开放平台∙第三方平台∙代小程序∙成员管理
+  - name: 开放平台∙第三方平台∙代小程序∙用户管理
   - name: 开放平台∙第三方平台∙代小程序∙代码管理
   - name: 开放平台∙第三方平台∙代小程序∙代码模版库
   - name: 开放平台∙第三方平台∙代小程序∙模板消息模板设置
@@ -306,6 +313,95 @@ paths:
       responses:
         '200':
           description: ''
+  /_notify/event/AddExpressPath:
+    post:
+      tags:
+        - 事件通知
+        - 小程序∙物流助手∙小程序使用
+      summary: 小程序/物流助手/运单轨迹更新事件
+      description: 当运单轨迹有更新时，会产生如下数据包。收到事件之后，回复success或者空串即可。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.onPathUpdate.html)
+      consumes:
+        - application/xml
+      produces:
+        - text/plain
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [add_express_path]
+                  DeliveryID:
+                    type: string
+                    description: 快递公司ID
+                  WayBillId:
+                    type: string
+                    description: 运单ID
+                  Version:
+                    type: integer
+                    format: int32
+                    description: 轨迹版本号（整型）
+                  Count:
+                    type: integer
+                    format: int32
+                    description: 轨迹节点数（整型）
+                  Actions:
+                    type: array
+                    description: 轨迹列表
+                    items:
+                      type: object
+                      properties:
+                        ActionTime:
+                          type: integer
+                          format: int32
+                          description: 轨迹节点 Unix 时间戳
+                        ActionType:
+                          type: integer
+                          format: int32
+                          description: 轨迹节点类型,100001=揽件阶段-揽件成功;100002=揽件阶段-揽件失败;100003=揽件阶段-分配业务员;200001=运输阶段-更新运输轨迹;300002=派送阶段-开始派送;300003=派送阶段-签收成功;300004=派送阶段-签收失败;400001=异常阶段-订单取消;400002=异常阶段-订单滞留
+                          enum:
+                            - 100001
+                            - 100002
+                            - 100003
+                            - 200001
+                            - 300002
+                            - 300003
+                            - 300004
+                            - 400001
+                            - 400002
+                        ActionMsg:
+                          type: string
+                          description: 轨迹节点详情
+            example:
+              ToUserName: toUser
+              FromUserName: fromUser
+              CreateTime: 1546924844
+              MsgType: event
+              Event: add_express_path
+              DeliveryID: SF
+              WayBillId: '123456789'
+              Version: 2
+              Count: 3
+              Actions:
+                - ActionTime: 1546924840
+                  ActionType: 100001
+                  ActionMsg: 小哥A揽件成功
+                - ActionTime: 1546924841
+                  ActionType: 200001
+                  ActionMsg: 到达广州集包地
+                - ActionTime: 1546924842
+                  ActionType: 200001
+                  ActionMsg: 运往目的地
+      responses:
+        '200':
+          description: ''
   /_notify/event/AddStoreAuditInfo:
     post:
       tags:
@@ -353,6 +449,254 @@ paths:
       responses:
         '200':
           description: ''
+  /_notify/event/AddWaybill:
+    post:
+      tags:
+        - 事件通知
+        - 小程序∙物流助手∙服务提供方使用
+      summary: 小程序/物流助手/请求下单事件
+      description: 各字段均为商家提供，不保证完整，不保证正确，需要快递侧做好参数合法性和正确性检查。当网络环境不稳定时，下单事件可能会重复推送。对于相同的 BizID+OrderID，要返回相同的运单 ID。不支持子母单、代收货款。**注意 官方文档返回结果Sender&Receiver&Cargo&Insured&Service可能存误，本文档以样本数据推演其结构** [官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.onAddOrder.html)
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [add_waybill]
+                  Token:
+                    type: string
+                    description: 订单 Token。请保存该 Token，调用logistics.updatePath时需要传入
+                  OrderID:
+                    type: string
+                    description: 唯一标识订单的 ID，由商户生成。快递需要保证相同的 OrderID 生成相同的运单ID。
+                  BizID:
+                    type: string
+                    description: 商户 ID，即商户在快递注册的客户编码或月结账户名
+                  BizPwd:
+                    type: string
+                    description: BizID 对应的密码
+                  ShopAppID:
+                    type: string
+                    description: 商户的小程序 AppID
+                  WayBillID:
+                    type: string
+                    description: 运单 ID，从微信号段中生成。若为 0，则表示需要快递来生成运单 ID。
+                  Remark:
+                    type: string
+                    description: 快递备注，会打印到面单上，比如"易碎物品"
+                  Sender:
+                    type: object
+                    description: 发件人信息
+                    properties:
+                      Name:
+                        type: string
+                        description: 发件人姓名
+                      Tel:
+                        type: string
+                        description: 发件人座机号码
+                      Mobile:
+                        type: string
+                        description: 发件人手机号码
+                      Company:
+                        type: string
+                        description: 发件人公司名
+                      PostCode:
+                        type: string
+                        description: 发件人邮编
+                      Country:
+                        type: string
+                        description: 发件人所在国家，默认为"中国"
+                      Province:
+                        type: string
+                        description: 发件人省份，比如"广东省"
+                      City:
+                        type: string
+                        description: 发件人地区/市，比如"广州市"
+                      Area:
+                        type: string
+                        description: 发件人区/县，比如"海珠区"
+                      Address:
+                        type: string
+                        description: 发件人详细地址，比如"XX路XX号XX大厦XX"
+                  Receiver:
+                    type: object
+                    description: 收件人信息
+                    properties:
+                      Name:
+                        type: string
+                        description: 收件人姓名
+                      Tel:
+                        type: string
+                        description: 收件人座机号码
+                      Mobile:
+                        type: string
+                        description: 收件人手机号码
+                      Company:
+                        type: string
+                        description: 收件人公司名
+                      PostCode:
+                        type: string
+                        description: 收件人邮编
+                      Country:
+                        type: string
+                        description: 收件人所在国家，默认为"中国"
+                      Province:
+                        type: string
+                        description: 收件人省份，比如"广东省"
+                      City:
+                        type: string
+                        description: 收件人地区/市，比如"广州市"
+                      Area:
+                        type: string
+                        description: 收件人区/县，比如"海珠区"
+                      Address:
+                        type: string
+                        description: 收件人详细地址，比如"XX路XX号XX大厦XX"
+                  Cargo:
+                    type: object
+                    description: 包裹信息
+                    properties:
+                      Weight:
+                        type: integer
+                        format: int32
+                        description: 货物总重量，比如1.2，单位是千克(kg)
+                      Space_X:
+                        type: integer
+                        format: int32
+                        description: 货物长度，比如20.5，单位是厘米(cm)
+                      Space_Y:
+                        type: integer
+                        format: int32
+                        description: 货物宽度，比如15.0，单位是厘米(cm)
+                      Space_Z:
+                        type: integer
+                        format: int32
+                        description: 货物高度，比如10.0，单位是厘米(cm)
+                      Count:
+                        type: integer
+                        format: int32
+                        description: 货物数量，一般为1
+                  Insured:
+                    type: object
+                    description: 保价信息
+                    properties:
+                      UseInsured:
+                        type: integer
+                        format: int32
+                        description: 是否保价，0 表示不保价，1 表示保价
+                      InsuredValue:
+                        type: integer
+                        format: int32
+                        description: 保价金额，单位是分，比如:10000 表示 100 元
+                  Service:
+                    type: object
+                    description: 服务类型
+                    properties:
+                      ServiceType:
+                        type: integer
+                        format: int32
+                        description: 服务类型ID，详见已经支持的快递公司基本信息
+                      ServiceName:
+                        type: string
+                        description: 服务名称，详见已经支持的快递公司基本信息
+            example:
+              ToUserName: gh_abcdefg
+              FromUserName: oABCD
+              CreateTime: 1533042556
+              MsgType: event
+              Event: add_waybill
+              Token: 1234ABC234523451
+              OrderID: 012345678901234567890123456789
+              BizID: xyz
+              BizPwd: xyz123
+              ShopAppID: wxABCD
+              WayBillID: '123456789'
+              Remark: 易碎物品
+              Sender:
+                Name: 张三
+                Tel: 020-88888888
+                Mobile: '18666666666'
+                Company: 公司名
+                PostCode: '123456'
+                Country: 中国
+                Province: 广东省
+                City: 广州市
+                Area: 海珠区
+                Address: XX路XX号XX大厦XX栋XX
+              Receiver:
+                Name: 王小蒙
+                Tel: 029-77777777
+                Mobile: '18610000000'
+                Company: 公司名
+                PostCode: '654321'
+                Country: 中国
+                Province: 广东省
+                City: 广州市
+                Area: 天河区
+                Address: XX路XX号XX大厦XX栋XX
+              Cargo:
+                Weight: 1.2
+                Space_X: 20.5
+                Space_Y: 15
+                Space_Z: 10
+                Count: 2
+                DetailList:
+                  - Name: 一千零一夜钻石包
+                    Count: 1
+                  - Name: 爱马仕柏金钻石包
+                    Count: 1
+              Insured:
+                UseInsured: 1
+                InsuredValue: 10000
+              Service:
+                ServiceType: 0
+                ServiceName: 标准快递
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, Token, OrderID, BizID, WayBillID, ResultCode, ResultMsg, WaybillData]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型，固定为 add_waybill
+                    enum: [add_waybill]
+                  Token:
+                    type: string
+                    description: 传入的 Token，原样返回
+                  OrderID:
+                    type: string
+                    description: 传入的唯一标识订单的 ID，由商户生成，原样返回
+                  BizID:
+                    type: string
+                    description: 商户 ID，原样返回
+                  WayBillID:
+                    type: string
+                    description: 运单 ID
+                  ResultCode:
+                    type: integer
+                    format: int32
+                    description: 处理结果错误码
+                  ResultMsg:
+                    type: string
+                    description: 处理结果的详细信息
+                  WaybillData:
+                    type: string
+                    description: 集包地、三段码、大头笔等信息，用于生成面单信息。详见后文返回值说明
   /_notify/event/AnnualRenew:
     post:
       tags:
@@ -423,6 +767,83 @@ paths:
       responses:
         '200':
           description: ''
+  /_notify/event/CancelWaybill:
+    post:
+      tags:
+        - 事件通知
+        - 小程序∙物流助手∙服务提供方使用
+      summary: 小程序/物流助手/取消订单事件
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.onCancelOrder.html)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [cancel_waybill]
+                  OrderID:
+                    type: string
+                    description: 唯一标识订单的 ID，由商户生成。快递需要保证相同的 OrderID 生成相同的运单ID。
+                  BizID:
+                    type: string
+                    description: 商户 ID，即商户在快递注册的客户编码或月结账户名
+                  BizPwd:
+                    type: string
+                    description: BizID 对应的密码
+                  ShopAppID:
+                    type: string
+                    description: 商户的小程序 AppID
+                  WayBillID:
+                    type: string
+                    description: 运单 ID，从微信号段中生成。若为 0，则表示需要快递来生成运单 ID。
+            example:
+              ToUserName: gh_abcdefg
+              FromUserName: oABCD
+              CreateTime: 1533042556
+              MsgType: event
+              Event: cancel_waybill
+              OrderID: 012345678901234567890123456789
+              BizID: xyz
+              BizPwd: xyz123
+              ShopAppID: wxABCD
+              WayBillID: '123456789'
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, OrderID, WayBillID, ResultCode, ResultMsg]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型，固定为 cancel_waybill
+                    enum: [cancel_waybill]
+                  OrderID:
+                    type: string
+                    description: 传入的唯一标识订单的 ID，由商户生成，原样返回
+                  WayBillID:
+                    type: string
+                    description: 运单 ID
+                  ResultCode:
+                    type: integer
+                    format: int32
+                    description: 处理结果错误码
+                  ResultMsg:
+                    type: string
+                    description: 处理结果的详细信息
   /_notify/event/CardMerchantAuthCheckResult:
     post:
       tags:
@@ -684,6 +1105,96 @@ paths:
       responses:
         '200':
           description: ''
+  /_notify/event/CheckBiz:
+    post:
+      tags:
+        - 事件通知
+        - 小程序∙物流助手∙服务提供方使用
+      summary: 小程序/物流助手/审核商户事件
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.onCheckBusiness.html)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [check_biz]
+                  BizID:
+                    type: string
+                    description: 商户ID，即商户在快递注册的客户编码或月结账户名
+                  BizPwd:
+                    type: string
+                    description: BizID 对应的密码
+                  ShopAppID:
+                    type: string
+                    description: 商户的小程序 AppID
+                  ShopName:
+                    type: string
+                    description: 商户名称，即小程序昵称（仅EMS可用）
+                  ShopTelphone:
+                    type: string
+                    description: 商户联系电话（仅EMS可用）
+                  ShopContact:
+                    type: string
+                    description: 商户联系人姓名（仅EMS可用）
+                  ServiceName:
+                    type: string
+                    description: 预开通的服务类型名称（仅EMS可用）
+                  SenderAddress:
+                    type: string
+                    description: 商户发货地址（仅EMS可用）
+            example:
+              ToUserName: gh_abcdefg
+              FromUserName: oABCD
+              CreateTime: 1533042556
+              MsgType: event
+              Event: check_biz
+              BizID: xyz
+              BizPwd: xyz123
+              ShopAppID: wxABCD
+              ShopName: 商户名称
+              ShopTelphone: '18677778888'
+              ShopContact: 村正
+              ServiceName: 标准快递
+              SenderAddress: 广东省广州市海珠区新港中路397号
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, BizID, Quota, ResultCode, ResultMsg]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型，固定为 check_biz
+                    enum: [check_biz]
+                  BizID:
+                    type: string
+                    description: 商户ID
+                  Quota:
+                    type: integer
+                    format: int32
+                    description: 商户可用余额，0 表示无可用余额
+                  ResultCode:
+                    type: integer
+                    format: int32
+                    description: 处理结果错误码
+                  ResultMsg:
+                    type: string
+                    description: 处理结果的详细信息
   /_notify/event/Click:
     post:
       tags:
@@ -808,6 +1319,76 @@ paths:
       responses:
         '200':
           description: ''
+  /_notify/event/GetQuota:
+    post:
+      tags:
+        - 事件通知
+        - 小程序∙物流助手∙服务提供方使用
+      summary: 小程序/物流助手/查询商户余额事件
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.onGetQuota.html)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [get_quota]
+                  BizID:
+                    type: string
+                    description: 商户ID，即商户在快递注册的客户编码或月结账户名
+                  BizPwd:
+                    type: string
+                    description: BizID 对应的密码
+                  ShopAppID:
+                    type: string
+                    description: 商户的小程序 AppID
+            example:
+              ToUserName: gh_abcdefg
+              FromUserName: oABCD
+              CreateTime: 1533042556
+              MsgType: event
+              Event: get_quota
+              BizID: xyz
+              BizPwd: xyz123
+              ShopAppID: wxABCD
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event, BizID, Quota, ResultCode, ResultMsg]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型，固定为 get_quota
+                    enum: [get_quota]
+                  BizID:
+                    type: string
+                    description: 商户ID
+                  Quota:
+                    type: integer
+                    format: int32
+                    description: 商户可用余额，0 表示无可用余额
+                  ResultCode:
+                    type: integer
+                    format: int32
+                    description: 处理结果错误码
+                  ResultMsg:
+                    type: string
+                    description: 处理结果的详细信息
   /_notify/event/GiftCardPayDone:
     post:
       tags:
@@ -9251,6 +9832,673 @@ paths:
       responses:
         '200':
           description: ''
+  /cgi-bin/express/business/delivery/getall:
+    get:
+      summary: 获取支持的快递公司列表
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.getAllDelivery.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙物流助手∙小程序使用
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  count:
+                    type: integer
+                    format: int32
+                    description: 快递公司数量
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        delivery_id:
+                          type: string
+                          description: 快递公司 ID
+                        delivery_name:
+                          type: string
+                          description: 快递公司名称
+            example:
+              errcode: 0
+              errmsg: openapi.logistics.getAllDelivery:ok
+              count: 8
+              data:
+                - delivery_id: BEST
+                  delivery_name: 百世快递
+                - delivery_id: EMS
+                  delivery_name: 中国邮政速递物流
+                - delivery_id: OTP
+                  delivery_name: 承诺达特快
+                - delivery_id: PJ
+                  delivery_name: 品骏物流
+                - delivery_id: SF
+                  delivery_name: 顺丰速运
+                - delivery_id: YTO
+                  delivery_name: 圆通速递
+                - delivery_id: YUNDA
+                  delivery_name: 韵达快递
+                - delivery_id: ZTO
+                  delivery_name: 中通快递
+  /cgi-bin/express/business/order/add:
+    post:
+      summary: 生成运单
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.addOrder.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙物流助手∙小程序使用
+      parameters:
+        - in: body
+          name: body
+          schema:
+            allOf:
+              - $ref: '#/definitions/logistics.OrderBo'
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  order_id:
+                    type: string
+                    description: 订单ID，下单成功时返回
+                  waybill_id:
+                    type: string
+                    description: 运单ID，下单成功时返回
+                  waybill_data:
+                    type: array
+                    description: 运单信息，下单成功时返回
+                    items:
+                      type: object
+                      properties:
+                        key:
+                          type: string
+                          description: 运单信息 key
+                        value:
+                          type: string
+                          description: 运单信息 value
+                  delivery_resultcode:
+                    type: number
+                    description: 快递侧错误码，下单失败时返回
+                  delivery_resultmsg:
+                    type: string
+                    description: 快递侧错误信息，下单失败时返回
+            example:
+              order_id: 01234567890123456789
+              waybill_id: '123456789'
+              waybill_data:
+                - key: SF_bagAddr
+                  value: 广州
+                - key: SF_mark
+                  value: 101-07-03509
+              errcode: 9300501
+              errmsg: delivery logic fail
+              delivery_resultcode: 10002
+              delivery_resultmsg: 客户密码不正确
+  /cgi-bin/express/business/order/cancel:
+    post:
+      summary: 取消运单
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.cancelOrder.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙物流助手∙小程序使用
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              order_id:
+                type: string
+                description: 订单 ID，需保证全局唯一
+              openid:
+                type: string
+                description: 用户 openid
+              delivery_id:
+                type: string
+                description: 快递公司ID，参见getAllDelivery
+              waybill_id:
+                type: string
+                description: 运单ID
+            required:
+              - order_id
+              - openid
+              - delivery_id
+              - waybill_id
+            example:
+              order_id: 01234567890123456789
+              openid: oABC123456
+              delivery_id: SF
+              waybill_id: 123456789
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+            example:
+              errcode: 0
+              errmsg: openapi.logistics.cancelOrder:ok
+  /cgi-bin/express/business/order/get:
+    post:
+      summary: 获取运单数据
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.getOrder.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙物流助手∙小程序使用
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              order_id:
+                type: string
+                description: 订单 ID，需保证全局唯一
+              openid:
+                type: string
+                description: 用户 openid
+              delivery_id:
+                type: string
+                description: 快递公司ID，参见getAllDelivery
+              waybill_id:
+                type: string
+                description: 运单ID
+            required:
+              - order_id
+              - openid
+              - delivery_id
+              - waybill_id
+            example:
+              order_id: 01234567890123456789
+              openid: oABC123456
+              delivery_id: SF
+              waybill_id: 123456789
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  print_html:
+                    type: string
+                    description: 运单 html 的 BASE64 结果
+                  waybill_data:
+                    type: array
+                    description: 运单信息
+                    items:
+                      type: object
+                      properties:
+                        key:
+                          type: string
+                          description: 运单信息 key
+                        value:
+                          type: string
+                          description: 运单信息 value
+            example:
+              errcode: 0
+              errmsg: openapi.logistics.getOrder:ok
+              print_html: jh7DjipP4ul4CQYUh69cniskrQZuOPwa1inAbXIqKbU0t71c0s65Au54cdWBZW0QJY4LYeofdM
+              waybill_data:
+                - key: SF_bagAddr
+                  value: 广州
+                - key: SF_mark
+                  value: 101- 07-03 509
+  /cgi-bin/express/business/path/get:
+    post:
+      summary: 查询运单轨迹
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.getPath.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙物流助手∙小程序使用
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              order_id:
+                type: string
+                description: 订单 ID，需保证全局唯一
+              openid:
+                type: string
+                description: 用户 openid
+              delivery_id:
+                type: string
+                description: 快递公司ID，参见getAllDelivery
+              waybill_id:
+                type: string
+                description: 运单ID
+            required:
+              - order_id
+              - openid
+              - delivery_id
+              - waybill_id
+            example:
+              order_id: 01234567890123456789
+              openid: oABC123456
+              delivery_id: SF
+              waybill_id: '123456789'
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  openid:
+                    type: string
+                    description: 用户openid
+                  delivery_id:
+                    type: string
+                    description: 快递公司 ID
+                  waybill_id:
+                    type: string
+                    description: 运单 ID
+                  path_item_num:
+                    type: integer
+                    format: int32
+                    description: 轨迹节点数量
+                  path_item_list:
+                    type: array
+                    description: 轨迹节点列表
+                    items:
+                      type: object
+                      properties:
+                        action_time:
+                          type: integer
+                          format: int32
+                          description: 轨迹节点 Unix 时间戳
+                        action_type:
+                          type: integer
+                          format: int32
+                          description: 轨迹节点类型,100001=揽件阶段-揽件成功;100002=揽件阶段-揽件失败;100003=揽件阶段-分配业务员;200001=运输阶段-更新运输轨迹;300002=派送阶段-开始派送;300003=派送阶段-签收成功;300004=派送阶段-签收失败;400001=异常阶段-订单取消;400002=异常阶段-订单滞留
+                          enum:
+                            - 100001
+                            - 100002
+                            - 100003
+                            - 200001
+                            - 300002
+                            - 300003
+                            - 300004
+                            - 400001
+                            - 400002
+                        action_msg:
+                          type: string
+                          description: 轨迹节点详情
+            example:
+              openid: OPENID
+              delivery_id: SF
+              waybill_id: '12345678901234567890'
+              path_item_num: 3
+              path_item_list:
+                - action_time: 1533052800
+                  action_type: 100001
+                  action_msg: 快递员已成功取件
+                - action_time: 1533062800
+                  action_type: 200001
+                  action_msg: 快件已到达xxx集散中心，准备发往xxx
+                - action_time: 1533072800
+                  action_type: 300001
+                  action_msg: 快递员已出发，联系电话xxxxxx
+  /cgi-bin/express/business/printer/getall:
+    get:
+      summary: 获取打印员
+      description: '若需要使用[微信打单 PC 软件](https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/express-download.html)，才需要调用。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.getPrinter.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙物流助手∙小程序使用
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  count:
+                    type: integer
+                    format: int32
+                    description: 快递公司数量
+                  openid:
+                    type: array
+                    items:
+                      type: string
+                      description: 打印员 openid 列表
+            example:
+              errcode: 0
+              errmsg: openapi.logistics.getPrinter:ok
+              count: 2
+              openid:
+                - oABC
+                - oXYZ
+  /cgi-bin/express/business/printer/update:
+    post:
+      summary: 更新打印员
+      description: '若需要使用[微信打单 PC 软件](https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/express-download.html)，才需要调用。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.updatePrinter.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙物流助手∙小程序使用
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              openid:
+                type: string
+                description: 打印员 openid
+              update_type:
+                type: string
+                description: 更新类型;bind=绑定,unbind=解除绑定
+                enum: [bind, unbind]
+            required:
+              - openid
+              - update_type
+            example:
+              openid: oJ4v0wRAfiXcnIbM3SgGEUkTw3Qw
+              update_type: bind
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+            example:
+              errcode: 0
+              errmsg: openapi.logistics.updatePrinter:ok
+  /cgi-bin/express/business/quota/get:
+    post:
+      summary: 获取电子面单余额
+      description: 仅在使用加盟类快递公司时，才可以调用。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.getQuota.html)
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙物流助手∙小程序使用
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              delivery_id:
+                type: string
+                description: 快递公司ID，参见getAllDelivery
+              biz_id:
+                type: string
+                description: 快递公司客户编码
+            required:
+              - delivery_id
+              - biz_id
+            example:
+              delivery_id: SF
+              biz_id: xyz
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  quota_num:
+                    type: integer
+                    format: int32
+                    description: 电子面单余额
+            example:
+              errcode: 0
+              errmsg: openapi.logistics.getQuota:ok
+              quota_num: 210
+  /cgi-bin/express/dilivery/contact/get:
+    post:
+      summary: 获取面单联系人信息
+      description: '**注意 官方文档返回结果sender&receiver可能存误，本文档以样本数据推演其结构** [官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.getContact.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙物流助手∙服务提供方使用
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+                description: 商户侧下单事件中推送的 Token 字段
+              waybill_id:
+                type: string
+                description: 运单ID
+            required:
+              - token
+              - waybill_id
+            example:
+              token: TOKEN
+              waybill_id: 123456789
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  waybillId:
+                    type: string
+                    description: 运单ID
+                  sender:
+                    type: object
+                    description: 发件人信息
+                    properties:
+                      address:
+                        type: string
+                        description: 地址，已经将省市区信息合并
+                      name:
+                        type: string
+                        description: 用户姓名
+                      tel:
+                        type: string
+                        description: 座机号码
+                      mobile:
+                        type: string
+                        description: 手机号码
+                  receiver:
+                    type: object
+                    description: 收件人信息
+                    properties:
+                      address:
+                        type: string
+                        description: 地址，已经将省市区信息合并
+                      name:
+                        type: string
+                        description: 用户姓名
+                      tel:
+                        type: string
+                        description: 座机号码
+                      mobile:
+                        type: string
+                        description: 手机号码
+            example:
+              errcode: 0
+              errmsg: openapi.logistics.getContact:ok
+              waybill_id: '12345678901234567890'
+              sender:
+                address: 广东省广州市海珠区XX路XX号XX大厦XX栋XX
+                name: 张三
+                tel: 020-88888888
+                mobile: '18666666666'
+              receiver:
+                address: 广东省广州市天河区XX路XX号XX大厦XX栋XX
+                name: 王小蒙
+                tel: 029-77777777
+                mobile: '18610000000'
+  /cgi-bin/express/dilivery/path/update:
+    post:
+      summary: 更新运单轨迹
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.updatePath.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙物流助手∙服务提供方使用
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+                description: 商户侧下单事件中推送的 Token 字段
+              waybill_id:
+                type: string
+                description: 运单 ID
+              action_time:
+                type: integer
+                format: int32
+                description: 轨迹变化 Unix 时间戳
+              action_type:
+                type: integer
+                format: int32
+                description: 轨迹节点类型,100001=揽件阶段-揽件成功;100002=揽件阶段-揽件失败;100003=揽件阶段-分配业务员;200001=运输阶段-更新运输轨迹;300002=派送阶段-开始派送;300003=派送阶段-签收成功;300004=派送阶段-签收失败;400001=异常阶段-订单取消;400002=异常阶段-订单滞留
+                enum:
+                  - 100001
+                  - 100002
+                  - 100003
+                  - 200001
+                  - 300002
+                  - 300003
+                  - 300004
+                  - 400001
+                  - 400002
+              action_msg:
+                type: string
+                description: 轨迹变化具体信息说明，展示在快递轨迹详情页中。若有手机号码，则直接写11位手机号码。使用UTF-8编码。
+            required:
+              - token
+              - waybill_id
+              - action_time
+              - action_type
+              - action_msg
+            example:
+              token: TOKEN
+              waybill_id: '12345678901234567890'
+              action_time: 1533052800
+              action_type: 300002
+              action_msg: 丽影邓丽君【18666666666】正在派件
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+            example:
+              errcode: 0
+              errmsg: openapi.logistics.updatePath:ok
+  /cgi-bin/express/dilivery/service/business/update:
+    post:
+      summary: 更新商户审核结果
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.updateBusiness.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙物流助手∙服务提供方使用
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              shop_app_id:
+                type: string
+                description: 商户的小程序AppID，即审核商户事件中的 ShopAppID
+              biz_id:
+                type: string
+                description: 商户账户
+              result_code:
+                type: number
+                description: 审核结果，0 表示审核通过，其他表示审核失败
+              result_msg:
+                type: string
+                description: 审核错误原因，仅 result_code 不等于 0 时需要设置
+            required:
+              - shop_app_id
+              - biz_id
+              - result_code
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+            example:
+              errcode: 0
+              errmsg: openapi.logistics.updateBusiness:ok
+  /cgi-bin/express/dilivery/template/preview:
+    post:
+      summary: 预览面单模板
+      description: 用于调试面单模板使用。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.previewTemplate.html)
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙物流助手∙服务提供方使用
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              waybill_id:
+                type: string
+                description: 运单 ID
+              waybill_template:
+                type: string
+                description: 面单 HTML 模板内容（需经 Base64 编码）
+              waybill_data:
+                type: string
+                description: 面单数据。详情参考下单事件返回值中的 WaybillData
+              custom:
+                $ref: '#/definitions/logistics.OrderBo'
+            required:
+              - waybill_id
+              - waybill_template
+              - waybill_data
+              - custom
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  waybillId:
+                    type: string
+                    description: 运单ID
+                  rendered_waybill_template:
+                    type: string
+                    description: 渲染后的面单 HTML 文件（已经过 Base64 编码）
+            example:
+              errcode: 0
+              errmsg: openapi.logistics.previewTemplate:ok
+              waybill_id: '12345678901234567890'
+              rendered_waybill_template: PGh0bWw+dGVzdDwvaHRtbD4=
   /cgi-bin/get_current_selfmenu_info:
     get:
       summary: 获取自定义配置
@@ -9966,7 +11214,7 @@ paths:
   /cgi-bin/message/custom/send:
     post:
       summary: 客服接口-发消息
-      description: 当用户和公众号产生特定动作的交互时（具体动作列表请见下方说明），微信将会把消息数据推送给开发者，开发者可以在一段时间内（目前修改为48小时）调用客服接口，通过POST一个JSON数据包来发送消息给普通用户。此接口主要用于客服等有人工消息处理环节的功能，方便开发者为用户提供更加优质的服务。[公众号->官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140547) [小程序->官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/custommsg/conversation.html)
+      description: 当用户和公众号产生特定动作的交互时（具体动作列表请见下方说明），微信将会把消息数据推送给开发者，开发者可以在一段时间内（目前修改为48小时）调用客服接口，通过POST一个JSON数据包来发送消息给普通用户。此接口主要用于客服等有人工消息处理环节的功能，方便开发者为用户提供更加优质的服务。[公众号->官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140547) [小程序->官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/customerServiceMessage.send.html)
       security:
         - accessToken: []
       tags:
@@ -10081,10 +11329,12 @@ paths:
                 properties:
                   title:
                     type: string
+                    description: 消息标题
                   appid:
                     type: string
                   pagepath:
                     type: string
+                    description: 小程序的页面路径，跟app.json对齐，支持参数，比如pages/index/index?foo=bar
                   thumb_media_id:
                     type: string
                     description: 缩略图/小程序卡片图片的媒体ID，小程序卡片图片建议大小为520*416
@@ -10105,10 +11355,12 @@ paths:
   /cgi-bin/message/custom/typing:
     post:
       summary: 客服输入状态
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/customerServiceMessage.setTyping.html)'
       security:
         - accessToken: []
       tags:
         - 多客服∙客服消息
+        - 小程序∙客服消息
       parameters:
         - in: body
           name: body
@@ -10127,6 +11379,9 @@ paths:
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/message/mass/delete:
     post:
       summary: 删除群发
@@ -10640,10 +11895,39 @@ paths:
           description: ''
           schema:
             $ref: '#/definitions/base.ResponseBo'
+  /cgi-bin/message/wxopen/activityid/create:
+    get:
+      summary: 创建被分享动态消息的 activity_id
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/updatableMessage.createActivityId.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙动态消息
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  activity_id:
+                    type: string
+                    description: 动态消息的 ID
+                  expiration_time:
+                    type: integer
+                    format: int32
+                    description: activity_id 的过期时间戳。默认24小时后过期。
+            example:
+              errcode: 0
+              errmsg: ok
+              activity_id: ACTIVITY_ID
+              expiration_time: 86400
   /cgi-bin/message/wxopen/template/uniform_send:
     post:
       summary: 统一服务消息下发接口
-      description: 为便于开发者对用户进行服务消息触达，简化小程序和公众号模板消息下发流程，小程序提供统一的服务消息下发接口。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/notice-uniform.html)
+      description: 为便于开发者对用户进行服务消息触达，简化小程序和公众号模板消息下发流程，小程序提供统一的服务消息下发接口。**注意 官方文档data结构体有误** [官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/uniformMessage.send.html)
       security:
         - accessToken: []
       tags:
@@ -10751,6 +12035,62 @@ paths:
                   remark:
                     value: 欢迎再次购买！
                     color: '#173177'
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+            example:
+              errcode: 0
+              errmsg: ok
+  /cgi-bin/message/wxopen/updatablemsg/send:
+    post:
+      summary: 修改被分享的动态消息
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/updatableMessage.setUpdatableMsg.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙动态消息
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              activity_id:
+                type: string
+                description: 动态消息的 ID，通过 updatableMessage.createActivityId 接口获取
+              target_state:
+                type: integer
+                format: int32
+                description: 动态消息修改后的状态 0=未开始;1=已开始
+                enum: [0, 1]
+              template_info:
+                type: object
+                description: 动态消息对应的模板信息
+                properties:
+                  parameter_list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: 要修改的参数名;member_count(target_state = 0 时必填，文字内容模板中 member_count 的值);room_limit(target_state = 0 时必填，文字内容模板中 room_limit 的值);path(target_state = 1 时必填，点击「进入」启动小程序时使用的路径。对于小游戏，没有页面的概念，可以用于传递查询字符串（query），如 "?foo=bar");version_type(target_state = 1 时必填，点击「进入」启动小程序时使用的版本。有效参数值为：develop（开发版），trial（体验版），release（正式版）)
+                          enum: [member_count, room_limit, path, version_type]
+                        value:
+                          type: string
+                          description: 修改后的参数值
+            example:
+              activity_id: 966_NGiqxxxxxxxxx...xxxxxxxxE33BlwX
+              target_state: 0
+              template_info:
+                parameter_list:
+                  - name: member_count
+                    value: '2'
+                  - name: room_limit
+                    value: '5'
       responses:
         '200':
           description: ''
@@ -11236,6 +12576,52 @@ paths:
       responses:
         '200':
           description: ''
+  /cgi-bin/soter/verify_signature:
+    post:
+      summary: SOTER 生物认证秘钥签名验证
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/soter.verifySignature.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙生物认证
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              openid:
+                type: string
+                description: 用户 openid
+              json_string:
+                type: string
+                description: 通过 wx.startSoterAuthentication 成功回调获得的 resultJSON 字段
+              json_signature:
+                type: string
+                description: 通过 wx.startSoterAuthentication 成功回调获得的 resultJSONSignature 字段
+            required:
+              - openid
+              - json_string
+              - json_signature
+            example:
+              openid: $openid
+              json_string: $resultJSON
+              json_signature: $resultJSONSignature
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  is_ok:
+                    type: boolean
+                    description: 验证结果
+            example:
+              errcode: 0
+              errmsg: openapi.soter.verifySignature:ok
+              is_ok: true
   /cgi-bin/tags/create:
     post:
       summary: 创建
@@ -11895,6 +13281,7 @@ paths:
   /cgi-bin/token:
     get:
       summary: 获取access_token
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/auth.getAccessToken.html)'
       tags:
         - 基础支持
       parameters:
@@ -11918,6 +13305,23 @@ paths:
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  access_token:
+                    type: string
+                    description: 获取到的凭证
+                  expires_in:
+                    type: integer
+                    format: int32
+                    description: 凭证有效时间，单位：秒。目前是7200秒之内的值。
+            example:
+              access_token: ACCESS_TOKEN
+              expires_in: 7200
+              errcode: 0
+              errmsg: ok
   /cgi-bin/user/get:
     post:
       summary: 获取用户列表
@@ -12658,7 +14062,7 @@ paths:
   /cgi-bin/wxopen/template/add:
     post:
       summary: 组合模板并添加至帐号下的个人模板库
-      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR)'
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR) [小程序文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/templateMessage.addTemplate.html)'
       security:
         - authorizerAccessToken: []
         - accessToken: []
@@ -12697,7 +14101,7 @@ paths:
   /cgi-bin/wxopen/template/del:
     post:
       summary: 删除帐号下的某个模板
-      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR)'
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR) [小程序文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/templateMessage.deleteTemplate.html)'
       security:
         - authorizerAccessToken: []
         - accessToken: []
@@ -12710,33 +14114,21 @@ paths:
           schema:
             type: object
             properties:
-              id:
+              template_id:
                 type: string
-                description: 模板标题id（获取模板标题下的关键词库时需要）
-              keyword_id_list:
-                type: array
-                description: 开发者自行组合好的模板关键词列表，关键词顺序可以自由搭配（例如[3,5,4]或[4,5,3]），最多支持10个关键词组合
-                items:
-                  type: integer
-                  format: int32
+                description: 要删除的模板id
             required:
-              - id
-              - keyword_id_list
+              - template_id
       responses:
         '200':
           description: ''
           schema:
             allOf:
               - $ref: '#/definitions/base.ResponseBo'
-              - type: object
-                properties:
-                  template_id:
-                    type: string
-                    description: 添加至帐号下的模板id，发送小程序模板消息时所需
   /cgi-bin/wxopen/template/library/get:
     post:
       summary: 获取模板库某个模板标题下关键词库
-      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR)'
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR) [小程序文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/templateMessage.getTemplateLibraryById.html)'
       security:
         - authorizerAccessToken: []
         - accessToken: []
@@ -12782,10 +14174,25 @@ paths:
                         example:
                           type: string
                           description: 关键词内容对应的示例
+            example:
+              errcode: 0
+              errmsg: ok
+              id: AT0002
+              title: 购买成功通知
+              keyword_list:
+                - keyword_id: 3
+                  name: 购买地点
+                  example: TIT造舰厂
+                - keyword_id: 4
+                  name: 购买时间
+                  example: 2016年6月6日
+                - keyword_id: 5
+                  name: 物品名称
+                  example: 咖啡
   /cgi-bin/wxopen/template/library/list:
     post:
       summary: 获取小程序模板库标题列表
-      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR)'
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR) [小程序文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/templateMessage.getTemplateLibraryList.html)'
       security:
         - authorizerAccessToken: []
         - accessToken: []
@@ -12832,10 +14239,25 @@ paths:
                         title:
                           type: string
                           description: 模板标题内容
+            example:
+              errcode: 0
+              errmsg: ok
+              list:
+                - id: AT0002
+                  title: 购买成功通知
+                - id: AT0003
+                  title: 购买失败通知
+                - id: AT0004
+                  title: 交易提醒
+                - id: AT0005
+                  title: 付款成功通知
+                - id: AT0006
+                  title: 付款失败通知
+              total_count: 599
   /cgi-bin/wxopen/template/list:
     post:
       summary: 获取帐号下已存在的模板列表
-      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR)'
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR) [小程序文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/templateMessage.getTemplateList.html)'
       security:
         - authorizerAccessToken: []
         - accessToken: []
@@ -12848,21 +14270,55 @@ paths:
           schema:
             type: object
             properties:
-              template_id:
-                type: string
-                description: 要删除的模板id
+              offset:
+                type: integer
+                format: int32
+                description: offset和count用于分页，表示从offset开始，拉取count条记录，offset从0开始，count最大为20。
+              count:
+                type: integer
+                format: int32
+                description: offset和count用于分页，表示从offset开始，拉取count条记录，offset从0开始，count最大为20。
             required:
-              - template_id
+              - offset
+              - count
       responses:
         '200':
           description: ''
           schema:
             allOf:
               - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  template_id:
+                    type: string
+                    description: 添加至帐号下的模板id，发送小程序模板消息时所需
+                  title:
+                    type: string
+                    description: 模板标题
+                  content:
+                    type: string
+                    description: 模板内容
+                  example:
+                    type: string
+                    description: 模板内容示例
+            example:
+              errcode: 0
+              errmsg: ok
+              list:
+                - template_id: wDYzYZVxobJivW9oMpSCpuvACOfJXQIoKUm0PY397Tc
+                  title: 购买成功通知
+                  content: |
+                    购买地点{{keyword1.DATA}}
+                    购买时间{{keyword2.DATA}}
+                    物品名称{{keyword3.DATA}}
+                  example: |
+                    购买地点：TIT造舰厂
+                    购买时间：2016年6月6日
+                    物品名称：咖啡
   /cgi-bin/wxopen/template/send:
     post:
       summary: 发送模版消息
-      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/notice.html)'
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/templateMessage.send.html)'
       security:
         - authorizerAccessToken: []
         - accessToken: []
@@ -12923,6 +14379,9 @@ paths:
           schema:
             allOf:
               - $ref: '#/definitions/base.ResponseBo'
+            example:
+              errCode: 0
+              errMsg: 'openapi.templateMessage.send:ok'
   /cgi-bin/wxopen/wxamplink:
     post:
       summary: 关联小程序
@@ -23029,9 +24488,10 @@ paths:
   /sns/jscode2session:
     get:
       summary: 登录凭证校验
-      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/api-login.html#wxloginobject)'
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/auth.code2Session.html)'
       tags:
         - 网页开发
+        - 小程序∙登录
       parameters:
         - in: query
           name: appid
@@ -24417,7 +25877,7 @@ paths:
   /wxa/devplugin:
     post:
       summary: 小程序插件(供插件开发者调用)
-      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/plugin.html)'
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/pluginManager.getPluginDevApplyList.html)'
       security:
         - accessToken: []
       tags:
@@ -24477,14 +25937,38 @@ paths:
                         headimgurl:
                           type: string
                           description: 插件头像
+                        categories:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              first:
+                                type: string
+                              second:
+                                type: string
+                        create_time:
+                          type: string
+                          description: 使用者的申请时间
+                        apply_url:
+                          type: string
+                          description: 使用者的小程序码
+                        reason:
+                          type: string
+                          description: 使用者的申请说明
             example:
               errcode: 0
               errmsg: ok
               apply_list:
-                - appid: aaaa
+                - appid: xxxxxxxxxxxxx
                   status: 1
-                  nickname: 小程序昵称
-                  headimgurl: 'http://weixin.qq.com'
+                  nickname: 名称
+                  headimgurl: '**********'
+                  reason: polo has gone
+                  apply_url: '*******'
+                  create_time: '1536305096'
+                  categories:
+                    - first: IT科技
+                      second: 硬件与设备
   /wxa/get_auditstatus:
     post:
       summary: 查询某个指定版本的审核状态（仅供第三方代小程序调用）
@@ -25052,6 +26536,49 @@ paths:
                       audit_status: 3
                       display_status: 0
                       refuse_reason: ''
+  /wxa/getpaidunionid:
+    get:
+      summary: 用户支付完成后，获取该用户的 UnionId。
+      description: 无需用户授权。本接口支持第三方平台代理查询。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/auth.getPaidUnionId.html)
+      security:
+        - accessToken: []
+        - authorizerAccessToken: []
+      tags:
+        - 小程序∙用户信息
+        - 开放平台∙第三方平台∙代小程序∙用户管理
+      parameters:
+        - name: openid
+          in: query
+          type: string
+          required: true
+          description: 支付用户唯一标识
+        - name: transaction_id
+          in: query
+          type: string
+          description: 微信支付订单号
+        - name: mch_id
+          in: query
+          type: string
+          description: 微信支付分配的商户号，和商户订单号配合使用
+        - name: out_trade_no
+          in: query
+          type: string
+          description: 微信支付商户订单号，和商户号配合使用
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  unionid:
+                    type: string
+                    description: 用户唯一标识，调用成功后返回
+            example:
+              unionid: oTmHYjg-tElZ68xxxxxxxxhy1Rgk
+              errcode: 0
+              errmsg: ok
   /wxa/gettemplatedraftlist:
     get:
       summary: 获取草稿箱内的所有临时代码草稿
@@ -25445,7 +26972,7 @@ paths:
   /wxa/plugin:
     post:
       summary: 小程序插件管理权限集
-      description: 插件管理权限集用于第三方代小程序管理插件，具体包括：添加插件、查询已添加的插件及删除插件。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521637082Sqi4M)
+      description: 插件管理权限集用于第三方代小程序管理插件，具体包括：添加插件、查询已添加的插件及删除插件。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521637082Sqi4M) [小程序文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/pluginManager.applyPlugin.html)
       security:
         - authorizerAccessToken: []
       tags:
@@ -25464,8 +26991,12 @@ paths:
               plugin_appid:
                 type: string
                 description: 插件appid
+              reason:
+                type: string
+                description: 申请使用理由
             required:
               - action
+              - plugin_appid
       responses:
         '200':
           description: ''
@@ -27383,6 +28914,248 @@ definitions:
       guide_url:
         type: string
         description: 导览图url
+  logistics.OrderBo:
+    type: object
+    properties:
+      order_id:
+        type: string
+        description: 订单ID，须保证全局唯一，不超过512字节
+      openid:
+        type: string
+        description: 用户 openid
+      delivery_id:
+        type: string
+        description: 快递公司ID，参见getAllDelivery
+      biz_id:
+        type: string
+        description: 快递客户编码或者现付编码
+      custom_remark:
+        type: string
+        description: 快递备注信息，比如"易碎物品"，不超过1024字节
+      sender:
+        type: object
+        description: 发件人信息
+        required:
+          - name
+          - province
+          - city
+          - area
+          - address
+        properties:
+          name:
+            type: string
+            description: 发件人姓名，不超过64字节
+          tel:
+            type: string
+            description: 发件人座机号码，若不填写则必须填写 mobile，不超过32字节
+          mobile:
+            type: string
+            description: 发件人手机号码，若不填写则必须填写 tel，不超过32字节
+          company:
+            type: string
+            description: 发件人公司名称，不超过64字节
+          post_code:
+            type: string
+            description: 发件人邮编，不超过10字节
+          country:
+            type: string
+            description: 发件人国家，不超过64字节
+          province:
+            type: string
+            description: 发件人省份，比如："广东省"，不超过64字节
+          city:
+            type: string
+            description: 发件人市/地区，比如："广州市"，不超过64字节
+          area:
+            type: string
+            description: 发件人区/县，比如："海珠区"，不超过64字节
+          address:
+            type: string
+            description: 发件人详细地址，比如："XX路XX号XX大厦XX"，不超过512字节
+      receiver:
+        type: object
+        description: 收件人信息
+        required:
+          - name
+          - province
+          - city
+          - area
+          - address
+        properties:
+          name:
+            type: string
+            description: 收件人姓名，不超过64字节
+          tel:
+            type: string
+            description: 收件人座机号码，若不填写则必须填写 mobile，不超过32字节
+          mobile:
+            type: string
+            description: 收件人手机号码，若不填写则必须填写 tel，不超过32字节
+          company:
+            type: string
+            description: 收件人公司名，不超过64字节
+          post_code:
+            type: string
+            description: 收件人邮编，不超过10字节
+          country:
+            type: string
+            description: 收件人所在国家，不超过64字节
+          province:
+            type: string
+            description: 收件人省份，比如："广东省"，不超过64字节
+          city:
+            type: string
+            description: 收件人地区/市，比如："广州市"，不超过64字节
+          area:
+            type: string
+            description: 收件人区/县，比如："天河区"，不超过64字节
+          address:
+            type: string
+            description: 收件人详细地址，比如："XX路XX号XX大厦XX"，不超过512字节
+      cargo:
+        type: object
+        description: 包裹信息，将传递给快递公司
+        required: [count, weight, space_x, space_y, space_z, detail_list]
+        properties:
+          count:
+            type: integer
+            format: int32
+            description: 包裹数量
+          weight:
+            type: integer
+            format: int32
+            description: 包裹总重量，单位是千克(kg)
+          space_x:
+            type: integer
+            format: int32
+            description: 包裹长度，单位厘米(cm)
+          space_y:
+            type: integer
+            format: int32
+            description: 包裹宽度，单位厘米(cm)
+          space_z:
+            type: integer
+            format: int32
+            description: 包裹高度，单位厘米(cm)
+          detail_list:
+            type: array
+            items:
+              type: object
+              description: 包裹中商品详情列表
+              required: [name, count]
+              properties:
+                name:
+                  type: string
+                  description: 商品名，不超过128字节
+                count:
+                  type: integer
+                  format: int32
+                  description: 商品数量
+      shop:
+        type: object
+        description: 商品信息，会展示到物流通知消息中
+        required: [wxa_path, img_url, goods_name, goods_count]
+        properties:
+          wxa_path:
+            type: string
+            description: 商家小程序的路径，建议为订单页面
+          img_url:
+            type: string
+            description: 商品缩略图 url
+          goods_name:
+            type: string
+            description: 商品名称
+          goods_count:
+            type: integer
+            format: int32
+            description: 商品数量
+      insured:
+        type: object
+        description: 保价信息
+        required: [use_insured, insured_value]
+        properties:
+          use_insured:
+            type: integer
+            format: int32
+            description: 是否保价，0 表示不保价，1 表示保价
+            enum: [0, 1]
+          insured_value:
+            type: integer
+            format: int32
+            description: 保价金额，单位是分，比如:10000 表示 100 元
+      service:
+        type: object
+        description: 服务类型
+        required: [service_type, service_name]
+        properties:
+          service_type:
+            type: integer
+            format: int32
+            description: 服务类型ID，详见已经支持的快递公司基本信息
+          service_name:
+            type: string
+            description: 服务名称，详见已经支持的快递公司基本信息
+    required:
+      - order_id
+      - openid
+      - delivery_id
+      - biz_id
+      - sender
+      - receiver
+      - cargo
+      - shop
+      - insured
+      - service
+    example:
+      order_id: 01234567890123456789
+      openid: oABC123456
+      delivery_id: SF
+      biz_id: xyz
+      custom_remark: 易碎物品
+      sender:
+        name: 张三
+        tel: 020-88888888
+        mobile: '18666666666'
+        company: 公司名
+        post_code: '123456'
+        country: 中国
+        province: 广东省
+        city: 广州市
+        area: 海珠区
+        address: XX路XX号XX大厦XX栋XX
+      receiver:
+        name: 王小蒙
+        tel: 020-77777777
+        mobile: '18610000000'
+        company: 公司名
+        post_code: '654321'
+        country: 中国
+        province: 广东省
+        city: 广州市
+        area: 天河区
+        address: XX路XX号XX大厦XX栋XX
+      shop:
+        wxa_path: /index/index?from=waybill&id=01234567890123456789
+        img_url: https://mmbiz.qpic.cn/mmbiz_png/OiaFLUqewuIDNQnTiaCInIG8ibdosYHhQHPbXJUrqYSNIcBL60vo4LIjlcoNG1QPkeH5GWWEB41Ny895CokeAah8A/640
+        goods_name: 一千零一夜钻石包&爱马仕铂金包
+        goods_count: 2
+      cargo:
+        count: 2
+        weight: 5.5
+        space_x: 30.5
+        space_y: 20
+        space_z: 20
+        detail_list:
+          - name: 一千零一夜钻石包
+            count: 1
+          - name: 爱马仕铂金包
+            count: 1
+      insured:
+        use_insured: 1
+        insured_value: 10000
+      service:
+        service_type: 0
+        service_name: 标准快递
   mall.BrandItemBaseBo:
     type: object
     description: 商品的基础属性

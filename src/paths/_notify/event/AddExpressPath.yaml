@@ -1,0 +1,88 @@
+post:
+  tags:
+    - 事件通知
+    - 小程序∙物流助手∙小程序使用
+  summary: 小程序/物流助手/运单轨迹更新事件
+  description: 当运单轨迹有更新时，会产生如下数据包。收到事件之后，回复success或者空串即可。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.onPathUpdate.html)
+  consumes:
+    - application/xml
+  produces:
+    - text/plain
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [Event, EventKey]
+            properties:
+              Event:
+                type: string
+                description: 事件类型
+                enum: [add_express_path]
+              DeliveryID:
+                type: string
+                description: 快递公司ID
+              WayBillId:
+                type: string
+                description: 运单ID
+              Version:
+                type: integer
+                format: int32
+                description: 轨迹版本号（整型）
+              Count:
+                type: integer
+                format: int32
+                description: 轨迹节点数（整型）
+              Actions:
+                type: array
+                description: 轨迹列表
+                items:
+                  type: object
+                  properties:
+                    ActionTime:
+                      type: integer
+                      format: int32
+                      description: 轨迹节点 Unix 时间戳
+                    ActionType:
+                      type: integer
+                      format: int32
+                      description: 轨迹节点类型,100001=揽件阶段-揽件成功;100002=揽件阶段-揽件失败;100003=揽件阶段-分配业务员;200001=运输阶段-更新运输轨迹;300002=派送阶段-开始派送;300003=派送阶段-签收成功;300004=派送阶段-签收失败;400001=异常阶段-订单取消;400002=异常阶段-订单滞留
+                      enum:
+                        - 100001
+                        - 100002
+                        - 100003
+                        - 200001
+                        - 300002
+                        - 300003
+                        - 300004
+                        - 400001
+                        - 400002
+                    ActionMsg:
+                      type: string
+                      description: 轨迹节点详情
+        example:
+          ToUserName: toUser
+          FromUserName: fromUser
+          CreateTime: 1546924844
+          MsgType: event
+          Event: add_express_path
+          DeliveryID: SF
+          WayBillId: '123456789'
+          Version: 2
+          Count: 3
+          Actions:
+            - ActionTime: 1546924840
+              ActionType: 100001
+              ActionMsg: 小哥A揽件成功
+            - ActionTime: 1546924841
+              ActionType: 200001
+              ActionMsg: 到达广州集包地
+            - ActionTime: 1546924842
+              ActionType: 200001
+              ActionMsg: 运往目的地
+  responses:
+    '200':
+      description: ''

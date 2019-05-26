@@ -1,0 +1,32 @@
+get:
+  summary: 获取打印员
+  description: '若需要使用[微信打单 PC 软件](https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/express-download.html)，才需要调用。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.getPrinter.html)'
+  security:
+    - accessToken: []
+  tags:
+    - 小程序∙物流助手∙小程序使用
+  parameters: []
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              count:
+                type: integer
+                format: int32
+                description: 快递公司数量
+              openid:
+                type: array
+                items:
+                  type: string
+                  description: 打印员 openid 列表
+        example:
+          errcode: 0
+          errmsg: openapi.logistics.getPrinter:ok
+          count: 2
+          openid:
+            - oABC
+            - oXYZ

@@ -1,0 +1,41 @@
+post:
+  summary: 获取电子面单余额
+  description: 仅在使用加盟类快递公司时，才可以调用。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.getQuota.html)
+  security:
+    - accessToken: []
+  tags:
+    - 小程序∙物流助手∙小程序使用
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          delivery_id:
+            type: string
+            description: 快递公司ID，参见getAllDelivery
+          biz_id:
+            type: string
+            description: 快递公司客户编码
+        required:
+          - delivery_id
+          - biz_id
+        example:
+          delivery_id: SF
+          biz_id: xyz
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              quota_num:
+                type: integer
+                format: int32
+                description: 电子面单余额
+        example:
+          errcode: 0
+          errmsg: openapi.logistics.getQuota:ok
+          quota_num: 210

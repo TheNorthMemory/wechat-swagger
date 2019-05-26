@@ -1,0 +1,44 @@
+post:
+  summary: 取消运单
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.cancelOrder.html)'
+  security:
+    - accessToken: []
+  tags:
+    - 小程序∙物流助手∙小程序使用
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          order_id:
+            type: string
+            description: 订单 ID，需保证全局唯一
+          openid:
+            type: string
+            description: 用户 openid
+          delivery_id:
+            type: string
+            description: 快递公司ID，参见getAllDelivery
+          waybill_id:
+            type: string
+            description: 运单ID
+        required:
+          - order_id
+          - openid
+          - delivery_id
+          - waybill_id
+        example:
+          order_id: 01234567890123456789
+          openid: oABC123456
+          delivery_id: SF
+          waybill_id: 123456789
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+        example:
+          errcode: 0
+          errmsg: openapi.logistics.cancelOrder:ok

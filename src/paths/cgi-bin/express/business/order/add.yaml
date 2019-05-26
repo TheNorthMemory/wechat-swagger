@@ -1,0 +1,296 @@
+post:
+  summary: 生成运单
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.addOrder.html)'
+  security:
+    - accessToken: []
+  tags:
+    - 小程序∙物流助手∙小程序使用
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          order_id:
+            type: string
+            description: 订单ID，须保证全局唯一，不超过512字节
+          openid:
+            type: string
+            description: 用户 openid
+          delivery_id:
+            type: string
+            description: 快递公司ID，参见getAllDelivery
+          biz_id:
+            type: string
+            description: 快递客户编码或者现付编码
+          custom_remark:
+            type: string
+            description: 快递备注信息，比如"易碎物品"，不超过1024字节
+          sender:
+            type: object
+            description: 发件人信息
+            required:
+              - name
+              - province
+              - city
+              - area
+              - address
+            properties:
+              name:
+                type: string
+                description: 发件人姓名，不超过64字节
+              tel:
+                type: string
+                description: 发件人座机号码，若不填写则必须填写 mobile，不超过32字节
+              mobile:
+                type: string
+                description: 发件人手机号码，若不填写则必须填写 tel，不超过32字节
+              company:
+                type: string
+                description: 发件人公司名称，不超过64字节
+              post_code:
+                type: string
+                description: 发件人邮编，不超过10字节
+              country:
+                type: string
+                description: 发件人国家，不超过64字节
+              province:
+                type: string
+                description: 发件人省份，比如："广东省"，不超过64字节
+              city:
+                type: string
+                description: 发件人市/地区，比如："广州市"，不超过64字节
+              area:
+                type: string
+                description: 发件人区/县，比如："海珠区"，不超过64字节
+              address:
+                type: string
+                description: 发件人详细地址，比如："XX路XX号XX大厦XX"，不超过512字节
+          receiver:
+            type: object
+            description: 收件人信息
+            required:
+              - name
+              - province
+              - city
+              - area
+              - address
+            properties:
+              name:
+                type: string
+                description: 收件人姓名，不超过64字节
+              tel:
+                type: string
+                description: 收件人座机号码，若不填写则必须填写 mobile，不超过32字节
+              mobile:
+                type: string
+                description: 收件人手机号码，若不填写则必须填写 tel，不超过32字节
+              company:
+                type: string
+                description: 收件人公司名，不超过64字节
+              post_code:
+                type: string
+                description: 收件人邮编，不超过10字节
+              country:
+                type: string
+                description: 收件人所在国家，不超过64字节
+              province:
+                type: string
+                description: 收件人省份，比如："广东省"，不超过64字节
+              city:
+                type: string
+                description: 收件人地区/市，比如："广州市"，不超过64字节
+              area:
+                type: string
+                description: 收件人区/县，比如："天河区"，不超过64字节
+              address:
+                type: string
+                description: 收件人详细地址，比如："XX路XX号XX大厦XX"，不超过512字节
+          cargo:
+            type: object
+            description: 包裹信息，将传递给快递公司
+            required: [count, weight, space_x, space_y, space_z, detail_list]
+            properties:
+              count:
+                type: integer
+                format: int32
+                description: 包裹数量
+              weight:
+                type: integer
+                format: int32
+                description: 包裹总重量，单位是千克(kg)
+              space_x:
+                type: integer
+                format: int32
+                description: 包裹长度，单位厘米(cm)
+              space_y:
+                type: integer
+                format: int32
+                description: 包裹宽度，单位厘米(cm)
+              space_z:
+                type: integer
+                format: int32
+                description: 包裹高度，单位厘米(cm)
+              detail_list:
+                type: array
+                items:
+                  type: object
+                  description: 包裹中商品详情列表
+                  required: [name, count]
+                  properties:
+                    name:
+                      type: string
+                      description: 商品名，不超过128字节
+                    count:
+                      type: integer
+                      format: int32
+                      description: 商品数量
+          shop:
+            type: object
+            description: 商品信息，会展示到物流通知消息中
+            required: [wxa_path, img_url, goods_name, goods_count]
+            properties:
+              wxa_path:
+                type: string
+                description: 商家小程序的路径，建议为订单页面
+              img_url:
+                type: string
+                description: 商品缩略图 url
+              goods_name:
+                type: string
+                description: 商品名称
+              goods_count:
+                type: integer
+                format: int32
+                description: 商品数量
+          insured:
+            type: object
+            description: 保价信息
+            required: [use_insured, insured_value]
+            properties:
+              use_insured:
+                type: integer
+                format: int32
+                description: 是否保价，0 表示不保价，1 表示保价
+                enum: [0, 1]
+              insured_value:
+                type: integer
+                format: int32
+                description: 保价金额，单位是分，比如:10000 表示 100 元
+          service:
+            type: object
+            description: 服务类型
+            required: [service_type, service_name]
+            properties:
+              service_type:
+                type: integer
+                format: int32
+                description: 服务类型ID，详见已经支持的快递公司基本信息
+              service_name:
+                type: string
+                description: 服务名称，详见已经支持的快递公司基本信息
+        required:
+          - order_id
+          - openid
+          - delivery_id
+          - biz_id
+          - sender
+          - receiver
+          - cargo
+          - shop
+          - insured
+          - service
+        example:
+          order_id: 01234567890123456789
+          openid: oABC123456
+          delivery_id: SF
+          biz_id: xyz
+          custom_remark: 易碎物品
+          sender:
+            name: 张三
+            tel: 020-88888888
+            mobile: '18666666666'
+            company: 公司名
+            post_code: '123456'
+            country: 中国
+            province: 广东省
+            city: 广州市
+            area: 海珠区
+            address: XX路XX号XX大厦XX栋XX
+          receiver:
+            name: 王小蒙
+            tel: 020-77777777
+            mobile: '18610000000'
+            company: 公司名
+            post_code: '654321'
+            country: 中国
+            province: 广东省
+            city: 广州市
+            area: 天河区
+            address: XX路XX号XX大厦XX栋XX
+          shop:
+            wxa_path: /index/index?from=waybill&id=01234567890123456789
+            img_url: https://mmbiz.qpic.cn/mmbiz_png/OiaFLUqewuIDNQnTiaCInIG8ibdosYHhQHPbXJUrqYSNIcBL60vo4LIjlcoNG1QPkeH5GWWEB41Ny895CokeAah8A/640
+            goods_name: 一千零一夜钻石包&爱马仕铂金包
+            goods_count: 2
+          cargo:
+            count: 2
+            weight: 5.5
+            space_x: 30.5
+            space_y: 20
+            space_z: 20
+            detail_list:
+              - name: 一千零一夜钻石包
+                count: 1
+              - name: 爱马仕铂金包
+                count: 1
+          insured:
+            use_insured: 1
+            insured_value: 10000
+          service:
+            service_type: 0
+            service_name: 标准快递
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              order_id:
+                type: string
+                description: 订单ID，下单成功时返回
+              waybill_id:
+                type: string
+                description: 运单ID，下单成功时返回
+              waybill_data:
+                type: array
+                description: 运单信息，下单成功时返回
+                items:
+                  type: object
+                  properties:
+                    key:
+                      type: string
+                      description: 运单信息 key
+                    value:
+                      type: string
+                      description: 运单信息 value
+              delivery_resultcode:
+                type: number
+                description: 快递侧错误码，下单失败时返回
+              delivery_resultmsg:
+                type: string
+                description: 快递侧错误信息，下单失败时返回
+        example:
+          order_id: 01234567890123456789
+          waybill_id: '123456789'
+          waybill_data:
+            - key: SF_bagAddr
+              value: 广州
+            - key: SF_mark
+              value: 101-07-03509
+          errcode: 9300501
+          errmsg: delivery logic fail
+          delivery_resultcode: 10002
+          delivery_resultmsg: 客户密码不正确

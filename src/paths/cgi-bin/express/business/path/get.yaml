@@ -1,0 +1,98 @@
+post:
+  summary: 查询运单轨迹
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.getPath.html)'
+  security:
+    - accessToken: []
+  tags:
+    - 小程序∙物流助手∙小程序使用
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          order_id:
+            type: string
+            description: 订单 ID，需保证全局唯一
+          openid:
+            type: string
+            description: 用户 openid
+          delivery_id:
+            type: string
+            description: 快递公司ID，参见getAllDelivery
+          waybill_id:
+            type: string
+            description: 运单ID
+        required:
+          - order_id
+          - openid
+          - delivery_id
+          - waybill_id
+        example:
+          order_id: 01234567890123456789
+          openid: oABC123456
+          delivery_id: SF
+          waybill_id: '123456789'
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              openid:
+                type: string
+                description: 用户openid
+              delivery_id:
+                type: string
+                description: 快递公司 ID
+              waybill_id:
+                type: string
+                description: 运单 ID
+              path_item_num:
+                type: integer
+                format: int32
+                description: 轨迹节点数量
+              path_item_list:
+                type: array
+                description: 轨迹节点列表
+                items:
+                  type: object
+                  properties:
+                    action_time:
+                      type: integer
+                      format: int32
+                      description: 轨迹节点 Unix 时间戳
+                    action_type:
+                      type: integer
+                      format: int32
+                      description: 轨迹节点类型,100001=揽件阶段-揽件成功;100002=揽件阶段-揽件失败;100003=揽件阶段-分配业务员;200001=运输阶段-更新运输轨迹;300002=派送阶段-开始派送;300003=派送阶段-签收成功;300004=派送阶段-签收失败;400001=异常阶段-订单取消;400002=异常阶段-订单滞留
+                      enum:
+                        - 100001
+                        - 100002
+                        - 100003
+                        - 200001
+                        - 300002
+                        - 300003
+                        - 300004
+                        - 400001
+                        - 400002
+                    action_msg:
+                      type: string
+                      description: 轨迹节点详情
+        example:
+          openid: OPENID
+          delivery_id: SF
+          waybill_id: '12345678901234567890'
+          path_item_num: 3
+          path_item_list:
+            - action_time: 1533052800
+              action_type: 100001
+              action_msg: 快递员已成功取件
+            - action_time: 1533062800
+              action_type: 200001
+              action_msg: 快件已到达xxx集散中心，准备发往xxx
+            - action_time: 1533072800
+              action_type: 300001
+              action_msg: 快递员已出发，联系电话xxxxxx

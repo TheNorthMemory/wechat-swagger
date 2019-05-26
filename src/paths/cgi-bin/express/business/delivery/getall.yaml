@@ -1,0 +1,52 @@
+get:
+  summary: 获取支持的快递公司列表
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.getAllDelivery.html)'
+  security:
+    - accessToken: []
+  tags:
+    - 小程序∙物流助手∙小程序使用
+  parameters: []
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              count:
+                type: integer
+                format: int32
+                description: 快递公司数量
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    delivery_id:
+                      type: string
+                      description: 快递公司 ID
+                    delivery_name:
+                      type: string
+                      description: 快递公司名称
+        example:
+          errcode: 0
+          errmsg: openapi.logistics.getAllDelivery:ok
+          count: 8
+          data:
+            - delivery_id: BEST
+              delivery_name: 百世快递
+            - delivery_id: EMS
+              delivery_name: 中国邮政速递物流
+            - delivery_id: OTP
+              delivery_name: 承诺达特快
+            - delivery_id: PJ
+              delivery_name: 品骏物流
+            - delivery_id: SF
+              delivery_name: 顺丰速运
+            - delivery_id: YTO
+              delivery_name: 圆通速递
+            - delivery_id: YUNDA
+              delivery_name: 韵达快递
+            - delivery_id: ZTO
+              delivery_name: 中通快递

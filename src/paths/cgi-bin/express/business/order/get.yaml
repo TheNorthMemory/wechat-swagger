@@ -1,0 +1,67 @@
+post:
+  summary: 获取运单数据
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/logistics.getOrder.html)'
+  security:
+    - accessToken: []
+  tags:
+    - 小程序∙物流助手∙小程序使用
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          order_id:
+            type: string
+            description: 订单 ID，需保证全局唯一
+          openid:
+            type: string
+            description: 用户 openid
+          delivery_id:
+            type: string
+            description: 快递公司ID，参见getAllDelivery
+          waybill_id:
+            type: string
+            description: 运单ID
+        required:
+          - order_id
+          - openid
+          - delivery_id
+          - waybill_id
+        example:
+          order_id: 01234567890123456789
+          openid: oABC123456
+          delivery_id: SF
+          waybill_id: 123456789
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              print_html:
+                type: string
+                description: 运单 html 的 BASE64 结果
+              waybill_data:
+                type: array
+                description: 运单信息
+                items:
+                  type: object
+                  properties:
+                    key:
+                      type: string
+                      description: 运单信息 key
+                    value:
+                      type: string
+                      description: 运单信息 value
+        example:
+          errcode: 0
+          errmsg: openapi.logistics.getOrder:ok
+          print_html: jh7DjipP4ul4CQYUh69cniskrQZuOPwa1inAbXIqKbU0t71c0s65Au54cdWBZW0QJY4LYeofdM
+          waybill_data:
+            - key: SF_bagAddr
+              value: 广州
+            - key: SF_mark
+              value: 101- 07-03 509

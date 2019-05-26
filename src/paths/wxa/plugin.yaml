@@ -1,6 +1,6 @@
 post:
   summary: 小程序插件管理权限集
-  description: 插件管理权限集用于第三方代小程序管理插件，具体包括：添加插件、查询已添加的插件及删除插件。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521637082Sqi4M)
+  description: 插件管理权限集用于第三方代小程序管理插件，具体包括：添加插件、查询已添加的插件及删除插件。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21521637082Sqi4M) [小程序文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/pluginManager.applyPlugin.html)
   security:
     - authorizerAccessToken: []
   tags:
@@ -19,8 +19,12 @@ post:
           plugin_appid:
             type: string
             description: 插件appid
+          reason:
+            type: string
+            description: 申请使用理由
         required:
           - action
+          - plugin_appid
   responses:
     '200':
       description: ''

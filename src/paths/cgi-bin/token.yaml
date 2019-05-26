@@ -1,5 +1,6 @@
 get:
   summary: 获取access_token
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/auth.getAccessToken.html)'
   tags:
     - 基础支持
   parameters:
@@ -23,3 +24,20 @@ get:
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              access_token:
+                type: string
+                description: 获取到的凭证
+              expires_in:
+                type: integer
+                format: int32
+                description: 凭证有效时间，单位：秒。目前是7200秒之内的值。
+        example:
+          access_token: ACCESS_TOKEN
+          expires_in: 7200
+          errcode: 0
+          errmsg: ok

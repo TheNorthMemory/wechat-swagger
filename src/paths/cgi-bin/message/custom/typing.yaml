@@ -1,9 +1,11 @@
 post:
   summary: 客服输入状态
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/customerServiceMessage.setTyping.html)'
   security:
     - accessToken: []
   tags:
     - 多客服∙客服消息
+    - 小程序∙客服消息
   parameters:
     - in: body
       name: body
@@ -22,3 +24,6 @@ post:
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'

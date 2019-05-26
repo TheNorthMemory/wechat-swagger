@@ -1,8 +1,9 @@
 get:
   summary: 登录凭证校验
-  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/api-login.html#wxloginobject)'
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/auth.code2Session.html)'
   tags:
     - 网页开发
+    - 小程序∙登录
   parameters:
     - in: query
       name: appid

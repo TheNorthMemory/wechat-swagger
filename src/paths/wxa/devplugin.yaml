@@ -1,6 +1,6 @@
 post:
   summary: 小程序插件(供插件开发者调用)
-  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/plugin.html)'
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/pluginManager.getPluginDevApplyList.html)'
   security:
     - accessToken: []
   tags:
@@ -60,11 +60,35 @@ post:
                     headimgurl:
                       type: string
                       description: 插件头像
+                    categories:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          first:
+                            type: string
+                          second:
+                            type: string
+                    create_time:
+                      type: string
+                      description: 使用者的申请时间
+                    apply_url:
+                      type: string
+                      description: 使用者的小程序码
+                    reason:
+                      type: string
+                      description: 使用者的申请说明
         example:
           errcode: 0
           errmsg: ok
           apply_list:
-            - appid: aaaa
+            - appid: xxxxxxxxxxxxx
               status: 1
-              nickname: 小程序昵称
-              headimgurl: 'http://weixin.qq.com'
+              nickname: 名称
+              headimgurl: '**********'
+              reason: polo has gone
+              apply_url: '*******'
+              create_time: '1536305096'
+              categories:
+                - first: IT科技
+                  second: 硬件与设备

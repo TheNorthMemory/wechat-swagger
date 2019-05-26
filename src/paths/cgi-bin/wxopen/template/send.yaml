@@ -1,6 +1,6 @@
 post:
   summary: 发送模版消息
-  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/notice.html)'
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/templateMessage.send.html)'
   security:
     - authorizerAccessToken: []
     - accessToken: []
@@ -61,3 +61,6 @@ post:
       schema:
         allOf:
           - $ref: '#/definitions/base.ResponseBo'
+        example:
+          errCode: 0
+          errMsg: 'openapi.templateMessage.send:ok'

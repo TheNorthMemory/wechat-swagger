@@ -1,0 +1,28 @@
+get:
+  summary: 创建被分享动态消息的 activity_id
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/updatableMessage.createActivityId.html)'
+  security:
+    - accessToken: []
+  tags:
+    - 小程序∙动态消息
+  parameters: []
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              activity_id:
+                type: string
+                description: 动态消息的 ID
+              expiration_time:
+                type: integer
+                format: int32
+                description: activity_id 的过期时间戳。默认24小时后过期。
+        example:
+          errcode: 0
+          errmsg: ok
+          activity_id: ACTIVITY_ID
+          expiration_time: 86400

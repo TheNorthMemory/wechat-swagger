@@ -3408,6 +3408,46 @@ paths:
       responses:
         '200':
           description: ''
+  /_notify/message/ComponentVerifyTicket:
+    post:
+      tags:
+        - 消息通知
+        - 开放平台∙第三方平台
+      summary: 开放平台/验证票据
+      description: 验证票据（component_verify_ticket），在第三方平台创建审核通过后，微信服务器会向其 ”授权事件接收URL” 每隔 10 分钟以 POST 的方式推送 component_verify_ticket。[官方文档](https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/api/component_verify_ticket.html)
+      consumes:
+        - application/xml
+      produces:
+        - text/plain
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            type: object
+            xml:
+              name: xml
+            required: [AppId, CreateTime, InfoType, ComponentVerifyTicket]
+            properties:
+              AppId:
+                type: string
+                description: 第三方平台 appid
+              CreateTime:
+                type: integer
+                format: int32
+                description: 时间戳，单位：s
+              InfoType:
+                type: string
+                enum: [component_verify_ticket]
+              ComponentVerifyTicket:
+                type: string
+                description:  Ticket 内容
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: string
+            enum: [success]
   /_notify/message/Image:
     post:
       tags:
@@ -9507,7 +9547,7 @@ paths:
                               properties:
                                 id:
                                   type: integer
-                                  description: 1=消息与菜单权限集,2=用户管理权限集,3=账号管理权限集,4=网页授权权限集,5=微信小店权限集,6=多客服权限集,7=业务通知权限集,8=微信卡券权限集,9=扫一扫权限集,10=Wi-Fi权限集,11=素材管理权限集,12=摇周边权限集,13=离线数据权限集
+                                  description: 1=消息管理权限;2=用户管理权限;3=帐号服务权限;4=网页服务权限;5=微信小店权限;6=微信多客服权限;7=群发与通知权限;8=微信卡券权限;9=微信扫一扫权限;10=微信连WIFI权限;11=素材管理权限;12=微信摇周边权限;13=微信门店权限;15=自定义菜单权限;16=获取认证状态及信息;17=帐号管理权限（小程序）;18=开发管理与数据分析权限（小程序）;19=客服消息管理权限（小程序）;20=微信登录权限（小程序）;21=数据分析权限（小程序）;22=城市服务接口权限;23=广告管理权限;24=开放平台帐号管理权限;25=;开放平台帐号管理权限（小程序）;26=微信电子发票权限;41=搜索widget的权限
                             confirm_info:
                                 type: object
                                 properties:

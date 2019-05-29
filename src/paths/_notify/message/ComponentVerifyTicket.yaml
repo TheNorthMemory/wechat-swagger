@@ -1,0 +1,39 @@
+post:
+  tags:
+    - 消息通知
+    - 开放平台∙第三方平台
+  summary: 开放平台/验证票据
+  description: 验证票据（component_verify_ticket），在第三方平台创建审核通过后，微信服务器会向其 ”授权事件接收URL” 每隔 10 分钟以 POST 的方式推送 component_verify_ticket。[官方文档](https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/api/component_verify_ticket.html)
+  consumes:
+    - application/xml
+  produces:
+    - text/plain
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        type: object
+        xml:
+          name: xml
+        required: [AppId, CreateTime, InfoType, ComponentVerifyTicket]
+        properties:
+          AppId:
+            type: string
+            description: 第三方平台 appid
+          CreateTime:
+            type: integer
+            format: int32
+            description: 时间戳，单位：s
+          InfoType:
+            type: string
+            enum: [component_verify_ticket]
+          ComponentVerifyTicket:
+            type: string
+            description:  Ticket 内容
+  responses:
+    '200':
+      description: ''
+      schema:
+        type: string
+        enum: [success]

@@ -1,6 +1,6 @@
 get:
   summary: 获取access_token
-  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/auth.getAccessToken.html)'
+  description: '[公众号官方文档](https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Get_access_token.html) [小程序官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/access-token/auth.getAccessToken.html)'
   tags:
     - 基础支持
   parameters:

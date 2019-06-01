@@ -15,9 +15,11 @@ properties:
                   is_swipe_card:
                     type: boolean
                     description: 是否设置该会员卡支持拉出微信支付刷卡界面
-                  is_pay_and_qrcode:
-                    type: boolean
-                    description: 是否设置该会员卡中部的按钮同时支持微信支付刷卡和会员卡二维码
+                    default: false
+          is_pay_and_qrcode:
+            type: boolean
+            description: 是否设置该会员卡中部的按钮同时支持微信支付刷卡和会员卡二维码
+            default: false
   advanced_info:
     $ref: '#/definitions/card.AdvancedInfoBo'
   background_pic_url:

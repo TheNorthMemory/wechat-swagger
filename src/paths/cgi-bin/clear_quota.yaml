@@ -1,6 +1,6 @@
 post:
   summary: 对公众号的所有API调用次数进行清零
-  description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419318587&token=&lang=zh_CN)'
+  description: '[官方文档](https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Official_Accounts/Official_account_interface.html)'
   security:
     - accessToken: []
   tags:

@@ -27346,8 +27346,8 @@ paths:
               - $ref: '#/definitions/base.ResponseBo'
   /wxa/submit_audit:
     post:
-      summary: 为授权的小程序帐号上传小程序代码
-      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
+      summary: 将第三方提交的代码包提交审核（仅供第三方开发者代小程序调用）
+      description: '**注意：** 只有上个版本被驳回，才能使用“feedback_info”、“feedback_stuff”这两个字段，否则忽略处理。[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1489140610_Uavc4)'
       security:
         - authorizerAccessToken: []
       tags:
@@ -27394,6 +27394,12 @@ paths:
                     title:
                       type: string
                       description: 小程序页面的标题,标题长度不超过32
+                    feedback_info:
+                      type: string
+                      description: 反馈内容，不超过200字
+                    feedback_stuff:
+                      type: string
+                      description: 图片media_id列表，中间用“丨”分割，xx丨yy丨zz，不超过5张图片, 其中 media_id 可以通过新增临时素材接口上传而得到
       responses:
         '200':
           description: ''
@@ -28805,9 +28811,11 @@ definitions:
                       is_swipe_card:
                         type: boolean
                         description: 是否设置该会员卡支持拉出微信支付刷卡界面
-                      is_pay_and_qrcode:
-                        type: boolean
-                        description: 是否设置该会员卡中部的按钮同时支持微信支付刷卡和会员卡二维码
+                        default: false
+              is_pay_and_qrcode:
+                type: boolean
+                description: 是否设置该会员卡中部的按钮同时支持微信支付刷卡和会员卡二维码
+                default: false
       advanced_info:
         $ref: '#/definitions/card.AdvancedInfoBo'
       background_pic_url:

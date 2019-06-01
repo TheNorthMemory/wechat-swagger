@@ -1,0 +1,73 @@
+post:
+  summary: 网络检测
+  description: 为了帮助开发者排查回调连接失败的问题，提供这个网络检测的API。它可以对开发者URL做域名解析，然后对所有IP进行一次ping操作，得到丢包率和耗时。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Network_Detection.html)
+  security:
+    - accessToken: []
+  tags:
+    - 基础支持
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        required:
+          - action
+          - check_operator
+        properties:
+          action:
+            type: string
+            description: 执行的检测动作，允许的值：dns（做域名解析）、ping（做ping检测）、all（dns和ping都做）
+            enum: [all, dns, ping]
+          check_operator:
+            type: string
+            description: 指定平台从某个运营商进行检测，允许的值：CHINANET（电信出口）、UNICOM（联通出口）、CAP（腾讯自建出口）、DEFAULT（根据ip来选择运营商）
+            enum: [DEFAULT, CAP, UNICOM, CHINANET]
+  responses:
+    '200':
+      description: ''
+      schema:
+        type: object
+        properties:
+          dns:
+            type: array
+            items:
+              type: object
+              properties:
+                ip:
+                  type: string
+                  description: 解析出来的ip
+                real_operator:
+                  type: string
+                  description: ip对应的运营商
+          ping:
+            type: array
+            items:
+              type: object
+              properties:
+                ip:
+                  type: string
+                  description: ping的ip，执行命令为ping ip –c 1-w 1 -q
+                from_operator:
+                  type: string
+                  description: ping的源头的运营商，由请求中的check_operator控制
+                package_loss:
+                  type: string
+                  description: ping的丢包率，0%表示无丢包，100%表示全部丢包。因为目前仅发送一个ping包，因此取值仅有0%或者100%两种可能。
+                time:
+                  type: string
+                  description: ping的耗时，取ping结果的avg耗时。
+        example:
+          dns:
+            - ip: 111.161.64.40
+              real_operator: UNICOM
+            - ip: 111.161.64.48
+              real_operator: UNICOM
+          ping:
+            - ip: 111.161.64.40
+              from_operator: UNICOM
+              package_loss: 0%
+              time: 23.079ms
+            - ip: 111.161.64.48
+              from_operator: UNICOM
+              package_loss: 0%
+              time: 21.434ms

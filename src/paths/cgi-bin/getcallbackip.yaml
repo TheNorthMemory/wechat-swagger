@@ -1,5 +1,6 @@
 get:
   summary: 获取微信服务器IP地址
+  description: 基于安全等考虑，需要获知微信服务器的IP地址列表，以便进行相关限制，可以通过该接口获得微信服务器IP地址列表或者IP网段信息。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Get_the_WeChat_server_IP_address.html)
   security:
     - accessToken: []
   tags:
@@ -8,3 +9,15 @@ get:
   responses:
     '200':
       description: ''
+      schema:
+        type: object
+        properties:
+          ip_list:
+            type: array
+            items:
+              type: string
+        example:
+          ip_list:
+            - 127.0.0.1
+            - 127.0.0.2
+            - 101.226.103.0/25

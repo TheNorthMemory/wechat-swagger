@@ -1,0 +1,33 @@
+wxa.onpay.request:
+  type: object
+  xml:
+    name: xml
+  required:
+    - appId
+    - timeStamp
+    - nonceStr
+    - package
+    - signType
+  properties:
+    appId:
+      type: 是
+      description: 小程序ID
+      example: wxd678efh567hg6787
+    timeStamp:
+      type: 是
+      description: 时间戳
+      example: '1490840662'
+    nonceStr:
+      type: 是
+      description: 随机串
+      example: 5K8264ILTKCH16CQ2502SI8ZNMTM67VS
+    package:
+      type: 是
+      description: 数据包
+      example: prepay_id=wx2017033010242291fcfe0db70013231072
+    signType:
+      type: 是
+      description: 签名方式
+      example: MD5
+wxa.onpay.response:
+  allOf: []

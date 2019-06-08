@@ -1,0 +1,61 @@
+appsdk.onpay.request:
+  type: object
+  xml:
+    name: xml
+  required:
+    - appid
+    - partnerid
+    - prepayid
+    - package
+    - noncestr
+    - timestamp
+    - sign
+  properties:
+    appid:
+      type: string
+      description: 应用ID
+      example: wx8888888888888888
+      maxLength: 32
+    partnerid:
+      type: string
+      description: 商户号
+      example: '1900000109'
+      maxLength: 32
+    prepayid:
+      type: string
+      description: 预支付交易会话ID
+      example: WX1217752501201407033233368018
+      maxLength: 32
+    package:
+      type: string
+      description: 扩展字段
+      example: Sign=WXPay
+      maxLength: 128
+    noncestr:
+      type: string
+      description: 随机字符串
+      example: 5K8264ILTKCH16CQ2502SI8ZNMTM67VS
+      maxLength: 32
+    timestamp:
+      type: string
+      description: 时间戳
+      example: '1412000000'
+      maxLength: 10
+    sign:
+      type: string
+      description: 签名
+      example: C380BEC2BFD727A4B6845133519F3AD6
+      maxLength: 32
+appsdk.onpay.response:
+  allOf:
+    - type: object
+      xml:
+        name: xml
+      required:
+        - code
+      properties:
+        code:
+          type: integer
+          format: int32
+          enum: [0,-1,-2]
+          description: '0=成功;-1=错误;-2=用户取消'

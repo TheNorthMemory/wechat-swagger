@@ -1,0 +1,12 @@
+notify.mchrisk.onpay.request:
+  allOf:
+    - type: object
+      xml:
+        name: xml
+      properties: {}
+notify.mchrisk.onpay.response:
+  allOf:
+    - type: object
+      xml:
+        name: xml
+      properties: {}

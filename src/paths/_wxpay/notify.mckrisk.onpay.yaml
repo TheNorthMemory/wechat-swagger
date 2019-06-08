@@ -1,0 +1,20 @@
+post:
+  tags:
+    - 支付∙银行服务商∙风控信息同步
+  summary: 事中-风险交易通知接口
+  description: '推送涉及高风险诈骗（尤其是来源订单/客服电话投诉）的风险订单给银行.'
+  consumes:
+    - application/xml
+  produces:
+    - application/xml
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        $ref: 'wxpay.yaml#/notify.mchrisk.onpay.request'
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: 'wxpay.yaml#/notify.mchrisk.onpay.response'

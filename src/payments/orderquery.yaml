@@ -15,10 +15,21 @@ orderquery.request:
       description: 公众账号ID
       example: wxd678efh567hg6787
       maxLength: 32
+    sub_appid:
+      type: string
+      description: 子商户公众账号ID
+      example: wx8888888888888888
+      maxLength: 32
+      nullable: true
     mch_id:
       type: string
       description: 商户号
       example: '1230000109'
+      maxLength: 32
+    sub_mch_id:
+      type: string
+      description: 子商户号
+      example: '1900000100'
       maxLength: 32
     transaction_id:
       type: string
@@ -79,10 +90,21 @@ orderquery.response:
           description: 公众账号ID
           example: wxd678efh567hg6787
           maxLength: 32
+        sub_appid:
+          type: string
+          description: 子商户公众账号ID
+          example: wx8888888888888888
+          maxLength: 32
+          nullable: true
         mch_id:
           type: string
           description: 商户号
           example: '1230000109'
+          maxLength: 32
+        sub_mch_id:
+          type: string
+          description: 子商户号
+          example: '1900000100'
           maxLength: 32
         nonce_str:
           type: string
@@ -139,6 +161,17 @@ orderquery.response:
         is_subscribe:
           type: string
           description: 是否关注公众账号
+          example: 'Y'
+          maxLength: 1
+        sub_openid:
+          type: string
+          description: 用户子标识
+          example: wxd930ea5d5a258f4f
+          maxLength: 128
+          nullable: true
+        sub_is_subscribe:
+          type: string
+          description: 是否关注子公众账号
           example: 'Y'
           maxLength: 1
         trade_type:
@@ -239,3 +272,14 @@ orderquery.response:
           description: 交易状态描述
           example: 支付失败，请重新下单支付
           maxLength: 256
+        promotion_detail:
+          type: string
+          description: 营销详情列表，使返回值为Json格式
+          maxLength: 6000
+          nullable: true
+        consume_fee:
+          format: int32
+          type: integer
+          description: 押金消费金额
+          example: '888'
+          nullable: true

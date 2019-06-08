@@ -1,22 +1,25 @@
-micropay.request:
+facepay.request:
   type: object
   xml:
     name: xml
   required:
+    - deposit
     - appid
     - mch_id
+    - sub_mch_id
     - nonce_str
     - sign
     - body
     - out_trade_no
     - total_fee
+    - fee_type
     - spbill_create_ip
-    - auth_code
+    - face_code
+    - sign_type
   properties:
     deposit:
       type: string
       description: 是否押金支付
-      enum: [Y,N]
       example: 'Y'
       maxLength: 1
     appid:
@@ -33,7 +36,7 @@ micropay.request:
     mch_id:
       type: string
       description: 商户号
-      example: '1900000109'
+      example: '1900000100'
       maxLength: 32
     sub_mch_id:
       type: string
@@ -54,14 +57,8 @@ micropay.request:
     sign:
       type: string
       description: 签名
-      example: C380BEC2BFD727A4B6845133519F3AD6
-      maxLength: 32
-    sign_type:
-      type: string
-      description: 签名类型
-      example: HMAC-SHA256
-      maxLength: 32
-      nullable: true
+      example: C370BEC2BFD727A4B6845133519F3AD6C370BEC2BFD727A4B6845133519F3AD6
+      maxLength: 64
     body:
       type: string
       description: 商品描述
@@ -81,24 +78,23 @@ micropay.request:
     out_trade_no:
       type: string
       description: 商户订单号
-      example: '1217752501201407033233368018'
+      example: '1217472501201407033233367018'
       maxLength: 32
     total_fee:
       format: int32
       type: integer
-      description: 订单金额
+      description: 总金额
       example: '888'
     fee_type:
       type: string
       description: 货币类型
       example: CNY
       maxLength: 16
-      nullable: true
     spbill_create_ip:
       type: string
       description: 终端IP
       example: 8.8.8.8
-      maxLength: 64
+      maxLength: 16
     goods_tag:
       type: string
       description: 订单优惠标记
@@ -123,31 +119,29 @@ micropay.request:
       example: '20091227091010'
       maxLength: 14
       nullable: true
-    receipt:
+    openid:
       type: string
-      description: 电子发票入口开放标识
-      example: 'Y'
-      maxLength: 8
+      description: 用户标识
+      example: oUpF8uMuAJO_M2pxb1Q9zNjWeS6o
+      maxLength: 128
       nullable: true
-    auth_code:
+    face_code:
       type: string
       description: 授权码
-      example: '120061098828009406'
+      example: b713b5d2-666c-48
       maxLength: 128
-    scene_info:
+    sign_type:
       type: string
-      description: +场景信息
-      example: '{"store_info" : {"id": "SZTX001","name": "腾大餐厅","area_code": "440305","address": "科技园中一路腾讯大厦" }}'
-      maxLength: 256
-      nullable: true
-micropay.response:
+      description: 签名类型
+      example: HMAC-SHA256
+      maxLength: 32
+facepay.response:
   allOf:
     - type: object
       xml:
         name: xml
       required:
         - return_code
-        - return_msg
       properties:
         return_code:
           type: string
@@ -157,14 +151,17 @@ micropay.response:
         return_msg:
           type: string
           description: 返回信息
-          example: OK
+          example: 签名失败
           maxLength: 128
+          nullable: true
     - type: object
       xml:
         name: xml
       required:
         - appid
+        - sub_appid
         - mch_id
+        - sub_mch_id
         - nonce_str
         - sign
         - result_code
@@ -182,7 +179,7 @@ micropay.response:
         mch_id:
           type: string
           description: 商户号
-          example: '1900000109'
+          example: '1900000100'
           maxLength: 32
         sub_mch_id:
           type: string
@@ -203,8 +200,8 @@ micropay.response:
         sign:
           type: string
           description: 签名
-          example: C380BEC2BFD727A4B6845133519F3AD6
-          maxLength: 32
+          example: C380BEC2BFD727A4B6845133519F3AD6C380BEC2BFD727A4B6845133519F3AD6
+          maxLength: 64
         result_code:
           type: string
           description: 业务结果
@@ -246,6 +243,18 @@ micropay.response:
           description: 是否关注公众账号
           example: 'Y'
           maxLength: 1
+        sub_openid:
+          type: string
+          description: 用户子标识
+          example: 'Y'
+          maxLength: 128
+          nullable: true
+        sub_is_subscribe:
+          type: string
+          description: 是否关注子公众账号
+          example: 'Y'
+          maxLength: 1
+          nullable: true
         trade_type:
           type: string
           description: 交易类型
@@ -258,15 +267,26 @@ micropay.response:
           maxLength: 32
         fee_type:
           type: string
-          description: 货币类型
+          description: 标价币种
           example: CNY
           maxLength: 16
           nullable: true
         total_fee:
           format: int32
           type: integer
-          description: 订单金额
+          description: 标价金额
           example: '888'
+        cash_fee_type:
+          type: string
+          description: 现金支付币种
+          example: CNY
+          maxLength: 16
+          nullable: true
+        cash_fee:
+          format: int32
+          type: integer
+          description: 现金支付金额
+          example: '100'
         settlement_total_fee:
           format: int32
           type: integer
@@ -279,21 +299,10 @@ micropay.response:
           description: 代金券金额
           example: '100'
           nullable: true
-        cash_fee_type:
-          type: string
-          description: 现金支付货币类型
-          example: CNY
-          maxLength: 16
-          nullable: true
-        cash_fee:
-          format: int32
-          type: integer
-          description: 现金支付金额
-          example: '100'
         transaction_id:
           type: string
           description: 微信支付订单号
-          example: '1217752501201407033233368018'
+          example: '1217472501201407033233368018'
           maxLength: 32
         out_trade_no:
           type: string
@@ -311,9 +320,3 @@ micropay.response:
           description: 支付完成时间
           example: '20141030133525'
           maxLength: 14
-        promotion_detail:
-          type: string
-          description: 营销详情
-          example: 示例见下文
-          maxLength: 6000
-          nullable: true

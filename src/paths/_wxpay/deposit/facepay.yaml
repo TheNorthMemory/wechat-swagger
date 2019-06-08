@@ -1,0 +1,21 @@
+post:
+  tags:
+    - 支付∙酒店押金
+    - 支付∙人脸支付
+  summary: 支付押金（人脸支付）
+  description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/deposit_sl.php?chapter=27_0&index=1)'
+  consumes:
+    - application/xml
+  produces:
+    - application/xml
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        $ref: 'wxpay.yaml#/facepay.request'
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: 'wxpay.yaml#/facepay.response'

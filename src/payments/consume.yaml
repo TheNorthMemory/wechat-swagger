@@ -1,13 +1,19 @@
-reverse.request:
+consume.request:
   type: object
   xml:
     name: xml
   required:
     - appid
     - mch_id
+    - sub_mch_id
+    - transaction_id
     - out_trade_no
+    - total_fee
+    - consume_fee
+    - fee_type
     - nonce_str
     - sign
+    - sign_type
   properties:
     appid:
       type: string
@@ -23,7 +29,7 @@ reverse.request:
     mch_id:
       type: string
       description: 商户号
-      example: '1900000109'
+      example: '1900000100'
       maxLength: 32
     sub_mch_id:
       type: string
@@ -33,38 +39,49 @@ reverse.request:
     transaction_id:
       type: string
       description: 微信订单号
-      example: '1217752501201407033233368018'
+      example: '013467007045764'
       maxLength: 32
-      nullable: true
     out_trade_no:
-      type: string
+      type: '1217752501201407033233368018'
       description: 商户订单号
-      example: '1217752501201407033233368018'
-      maxLength: 32
+      example: '商户系统内部的订单号,transaction_id、out_trade_no二选一，如果同时存在优先级：transaction_id> out_trade_no'
+    total_fee:
+      format: int32
+      type: integer
+      description: 押金总金额
+      example: '888'
+    consume_fee:
+      format: int32
+      type: integer
+      description: 消费金额
+      example: '888'
+    fee_type:
+      type: string
+      description: 货币类型
+      example: CNY
+      maxLength: 16
     nonce_str:
       type: string
       description: 随机字符串
-      example: 5K8264ILTKCH16CQ2502SI8ZNMTM67VS
+      example: C380BEC2BFD727A4B6845133519F3AD6
       maxLength: 32
     sign:
       type: string
       description: 签名
-      example: C380BEC2BFD727A4B6845133519F3AD6
-      maxLength: 32
+      example: C380BEC2BFD727A4B6845133519F3AD6C380BEC2BFD727A4B6845133519F3AD6
+      maxLength: 64
     sign_type:
       type: string
       description: 签名类型
       example: HMAC-SHA256
       maxLength: 32
-      nullable: true
-reverse.response:
+consume.response:
   allOf:
     - type: object
       xml:
         name: xml
       required:
         - return_code
-        - return_msg
       properties:
         return_code:
           type: string
@@ -74,18 +91,20 @@ reverse.response:
         return_msg:
           type: string
           description: 返回信息
-          example: OK
+          example: 签名失败
           maxLength: 128
+          nullable: true
     - type: object
       xml:
         name: xml
       required:
         - appid
+        - sub_appid
         - mch_id
+        - sub_mch_id
         - nonce_str
         - sign
         - result_code
-        - recall
       properties:
         appid:
           type: string
@@ -97,11 +116,10 @@ reverse.response:
           description: 子商户公众账号ID
           example: wx8888888888888888
           maxLength: 32
-          nullable: true
         mch_id:
           type: string
           description: 商户号
-          example: '1900000109'
+          example: '1900000100'
           maxLength: 32
         sub_mch_id:
           type: string
@@ -116,8 +134,8 @@ reverse.response:
         sign:
           type: string
           description: 签名
-          example: C380BEC2BFD727A4B6845133519F3AD6
-          maxLength: 32
+          example: C380BEC2BFD727A4B6845133519F3AD6C380BEC2BFD727A4B6845133519F3AD6
+          maxLength: 64
         result_code:
           type: string
           description: 业务结果
@@ -131,12 +149,42 @@ reverse.response:
           nullable: true
         err_code_des:
           type: string
-          description: 错误描述
+          description: 错误代码描述
           example: 系统错误
           maxLength: 128
           nullable: true
-        recall:
+    - type: object
+      xml:
+        name: xml
+      required:
+        - transaction_id
+        - out_trade_no
+        - total_fee
+        - consume_fee
+      properties:
+        transaction_id:
           type: string
-          description: 是否重调
-          example: 'Y'
-          maxLength: 1
+          description: 微信订单号
+          example: '1217752501201407033233368018'
+          maxLength: 32
+        out_trade_no:
+          type: string
+          description: 商户订单号
+          example: '1217752501201407033233368018'
+          maxLength: 32
+        total_fee:
+          format: int32
+          type: integer
+          description: 押金总金额
+          example: '888'
+        consume_fee:
+          format: int32
+          type: integer
+          description: 消费金额
+          example: '888'
+        fee_type:
+          type: string
+          description: 货币类型
+          example: CNY
+          maxLength: 16
+          nullable: true

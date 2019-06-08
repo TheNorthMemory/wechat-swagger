@@ -18,9 +18,20 @@ refund.request:
       description: 公众账号ID
       example: wx8888888888888888
       maxLength: 32
+    sub_appid:
+      type: string
+      description: 子商户公众账号ID
+      example: wx8888888888888888
+      maxLength: 32
+      nullable: true
     mch_id:
       type: string
       description: 商户号
+      example: '1900000109'
+      maxLength: 32
+    sub_mch_id:
+      type: string
+      description: 子商户号
       example: '1900000109'
       maxLength: 32
     nonce_str:
@@ -148,6 +159,17 @@ refund.response:
         mch_id:
           type: string
           description: 商户号
+          example: '1900000109'
+          maxLength: 32
+        sub_appid:
+          type: string
+          description: 子商户公众账号ID
+          example: wx8888888888888888
+          maxLength: 32
+          nullable: true
+        sub_mch_id:
+          type: string
+          description: 子商户号
           example: '1900000109'
           maxLength: 32
         nonce_str:

@@ -2,8 +2,9 @@ post:
   tags:
     - 支付∙付款码支付
     - 支付∙JSAPI支付
+    - 支付∙Native支付
   summary: 查询退款
-  description: '注意：如果单个支付订单部分退款次数超过20次请使用退款单号查询[官方文档](https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_5)[官方文档](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_5)'
+  description: '注意：如果单个支付订单部分退款次数超过20次请使用退款单号查询[官方文档](https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_5) [JSAPI官方文档](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_5) [NATIVE官方文档](https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=9_5)'
   consumes:
     - application/xml
   produces:

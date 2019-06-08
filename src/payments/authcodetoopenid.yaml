@@ -1,89 +1,28 @@
 authcodetoopenid.request:
-  type: object
-  xml:
-    name: xml
-  required:
-    - appid
-    - mch_id
-    - sub_mch_id
-    - auth_code
-    - nonce_str
-    - sign
-  properties:
-    appid:
-      type: string
-      description: 公众账号ID
-      maxLength: 32
-    sub_appid:
-      type: string
-      description: 子商户公众账号ID
-      maxLength: 32
-      nullable: true
-    mch_id:
-      type: string
-      description: 商户号
-      maxLength: 32
-    sub_mch_id:
-      type: string
-      description: 子商户号
-      maxLength: 32
-    auth_code:
-      type: string
-      description: 授权码
-      maxLength: 128
-    nonce_str:
-      type: string
-      description: 随机字符串
-      maxLength: 32
-    sign:
-      type: string
-      description: 签名
-      maxLength: 32
-authcodetoopenid.response:
   allOf:
-    - type: object
-      xml:
-        name: xml
-      required:
-        - return_code
-      properties:
-        return_code:
-          type: string
-          description: 返回状态码
-          maxLength: 16
-        return_msg:
-          type: string
-          description: 返回信息
-          maxLength: 128
-          nullable: true
+    - $ref: 'wxpay.yaml#/serviceprovider.subs'
     - type: object
       xml:
         name: xml
       required:
         - appid
         - mch_id
-        - sub_mch_id
+        - auth_code
         - nonce_str
         - sign
-        - result_code
       properties:
         appid:
           type: string
           description: 公众账号ID
           maxLength: 32
-        sub_appid:
-          type: string
-          description: 子商户公众账号ID
-          maxLength: 32
-          nullable: true
         mch_id:
           type: string
           description: 商户号
           maxLength: 32
-        sub_mch_id:
+        auth_code:
           type: string
-          description: 子商户号
-          maxLength: 32
+          description: 授权码
+          maxLength: 128
         nonce_str:
           type: string
           description: 随机字符串
@@ -92,15 +31,12 @@ authcodetoopenid.response:
           type: string
           description: 签名
           maxLength: 32
-        result_code:
-          type: string
-          description: 业务结果
-          maxLength: 16
-        err_code:
-          type: string
-          description: 错误代码
-          maxLength: 32
-          nullable: true
+authcodetoopenid.response:
+  allOf:
+    - $ref: 'wxpay.yaml#/serviceprovider.subs'
+    - $ref: 'wxpay.yaml#/serviceprovider.sub_openid'
+    - $ref: 'wxpay.yaml#/general.response'
+    - $ref: 'wxpay.yaml#/general.response.success'
     - type: object
       xml:
         name: xml
@@ -111,8 +47,3 @@ authcodetoopenid.response:
           type: string
           description: 用户标识
           maxLength: 128
-        sub_openid:
-          type: string
-          description: 用户子标识
-          maxLength: 128
-          nullable: true

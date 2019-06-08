@@ -9,6 +9,7 @@ post:
     - 支付∙人脸支付
     - 支付∙服务商∙付款码支付
     - 支付∙服务商∙JSAPI支付
+    - 支付∙服务商∙Native支付
   summary: 退款结果通知
   description: '当商户申请的退款有结果后，微信会把相关结果发送给商户，商户需要接收处理，并返回应答。**● notify_url的代码处理逻辑不能做登录态校验。 ● 商户侧对微信支付回调IP有防火墙策略限制的，需要对以下IP段开通白名单：
 101.226.103.0/25、140.207.54.0/25、103.7.30.0/25、183.3.234.0/25、58.251.80.0/25** [官方JSAPI文档](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_16&index=10) [官方NATIVE文档](https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=9_16&index=11) [官方APP文档](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_16&index=11) [官方H5文档](https://pay.weixin.qq.com/wiki/doc/api/H5.php?chapter=9_16&index=10) [官方小程序支付文档](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_16&index=10) [官方人脸支付文档](https://share.weiyun.com/5dxUgCw)'

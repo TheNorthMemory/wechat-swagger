@@ -1,0 +1,12 @@
+notify.papayafter.request:
+  allOf:
+    - type: object
+      xml:
+        name: xml
+      properties: {}
+notify.papayafter.response:
+  allOf:
+    - type: object
+      xml:
+        name: xml
+      properties: {}

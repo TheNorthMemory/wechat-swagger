@@ -1,0 +1,20 @@
+post:
+  tags:
+    - 支付∙委托扣款
+  summary: 扣款结果通知
+  description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/pap.php?chapter=18_7&index=11)'
+  consumes:
+    - application/xml
+  produces:
+    - application/xml
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        $ref: 'wxpay.yaml#/notify.papayresult.request'
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: 'wxpay.yaml#/notify.papayresult.response'

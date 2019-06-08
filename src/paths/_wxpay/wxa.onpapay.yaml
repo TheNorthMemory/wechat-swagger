@@ -1,0 +1,13 @@
+post:
+  tags:
+    - 支付∙委托扣款
+  summary: 小程序纯签约
+  description: '小程序调起支付参数列表，本文档仅示例说明参数及返回值 [官方APP文档](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_12&index=2)'
+  consumes:
+    - application/xml
+  produces:
+    - application/xml
+  parameters: []
+  responses:
+    '200':
+      description: ''

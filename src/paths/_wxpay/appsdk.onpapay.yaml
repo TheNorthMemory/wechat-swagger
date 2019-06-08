@@ -1,0 +1,13 @@
+post:
+  tags:
+    - 支付∙委托扣款
+  summary: APP纯签约
+  description: '外部App可通过此能力，拉起微信客户端，完成签约后后，返回App。[官方APP文档](https://pay.weixin.qq.com/wiki/doc/api/pap.php?chapter=18_5&index=2)'
+  consumes:
+    - application/xml
+  produces:
+    - application/xml
+  parameters: []
+  responses:
+    '200':
+      description: ''

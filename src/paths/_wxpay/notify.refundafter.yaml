@@ -1,0 +1,20 @@
+post:
+  tags:
+    - 支付∙JSAPI支付
+  summary: 退款结果通知
+  description: '当商户申请的退款有结果后，微信会把相关结果发送给商户，商户需要接收处理，并返回应答。[官方文档](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_16&index=10)'
+  consumes:
+    - application/xml
+  produces:
+    - application/xml
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        $ref: 'wxpay.yaml#/notify.refundafter.request'
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: 'wxpay.yaml#/notify.refundafter.response'

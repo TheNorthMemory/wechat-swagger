@@ -22,3 +22,9 @@ targetYaml="${src}/../docs/swagger.yaml"
         cat $yaml | sed "s#^#    #"
     done
 } > "${targetYaml}"
+
+{
+    for yaml in $(find "${src}/payments" -type f -name '*.yaml'|sort -u); do
+        cat $yaml
+    done
+} > "${src}/../docs/wxpay.yaml"

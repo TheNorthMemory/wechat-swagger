@@ -1,0 +1,22 @@
+post:
+  x-api-cert-required: true
+  tags:
+    - 支付∙付款码支付
+    - 支付∙JSAPI支付
+  summary: 申请退款
+  description: '一笔退款失败后重新提交，请不要更换退款单号，请使用原商户退款单号[官方文档](https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_4)[官方文档](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_4)'
+  consumes:
+    - application/xml
+  produces:
+    - application/xml
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        $ref: 'wxpay.yaml#/refund.request'
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: 'wxpay.yaml#/refund.response'

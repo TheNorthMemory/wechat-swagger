@@ -1,0 +1,20 @@
+post:
+  tags:
+    - 支付∙JSAPI支付
+  summary: 支付结果通知
+  description: '支付完成后，微信会把相关支付结果及用户信息通过数据流的形式发送给商户，商户需要接收处理，并按文档规范返回应答。[官方文档](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_17&index=11)'
+  consumes:
+    - application/xml
+  produces:
+    - application/xml
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        $ref: 'wxpay.yaml#/notify.payafter.request'
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: 'wxpay.yaml#/notify.payafter.response'

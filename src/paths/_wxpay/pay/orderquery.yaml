@@ -1,0 +1,21 @@
+post:
+  tags:
+    - 支付∙付款码支付
+    - 支付∙JSAPI支付
+  summary: 查询订单
+  description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_2)[官方文档](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_2)'
+  consumes:
+    - application/xml
+  produces:
+    - application/xml
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        $ref: 'wxpay.yaml#/orderquery.request'
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: 'wxpay.yaml#/orderquery.response'

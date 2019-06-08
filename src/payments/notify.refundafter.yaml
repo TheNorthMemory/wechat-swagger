@@ -1,0 +1,149 @@
+notify.refundafter.request:
+  allOf:
+    - type: object
+      xml:
+        name: xml
+      required:
+        - return_code
+        - return_msg
+      properties:
+        return_code:
+          type: string
+          description: 返回状态码
+          example: SUCCESS
+          maxLength: 16
+        return_msg:
+          type: string
+          description: 返回信息
+          example: OK
+          maxLength: 128
+    - type: object
+      xml:
+        name: xml
+      required:
+        - appid
+        - mch_id
+        - nonce_str
+        - req_info
+      properties:
+        appid:
+          type: string
+          description: 公众账号ID
+          example: wx8888888888888888
+          maxLength: 32
+        mch_id:
+          type: string
+          description: 退款的商户号
+          example: '1900000109'
+          maxLength: 32
+        nonce_str:
+          type: string
+          description: 随机字符串
+          example: 5K8264ILTKCH16CQ2502SI8ZNMTM67VS
+          maxLength: 32
+        req_info:
+          type: string
+          description: 加密信息
+          maxLength: 1024
+    - type: object
+      xml:
+        name: xml
+      required:
+        - transaction_id
+        - out_trade_no
+        - refund_id
+        - out_refund_no
+        - total_fee
+        - refund_fee
+        - settlement_refund_fee
+        - refund_status
+        - refund_recv_accout
+        - refund_account
+        - refund_request_source
+      properties:
+        transaction_id:
+          type: string
+          description: 微信订单号
+          example: '1217752501201407033233368018'
+          maxLength: 32
+        out_trade_no:
+          type: string
+          description: 商户订单号
+          example: '1217752501201407033233368018'
+          maxLength: 32
+        refund_id:
+          type: string
+          description: 微信退款单号
+          example: '1217752501201407033233368018'
+          maxLength: 32
+        out_refund_no:
+          type: string
+          description: 商户退款单号
+          example: '1217752501201407033233368018'
+          maxLength: 64
+        total_fee:
+          format: int32
+          type: integer
+          description: 订单金额
+          example: '100'
+        settlement_total_fee:
+          format: int32
+          type: integer
+          description: 应结订单金额
+          example: '100'
+          nullable: true
+        refund_fee:
+          format: int32
+          type: integer
+          description: 申请退款金额
+          example: '100'
+        settlement_refund_fee:
+          format: int32
+          type: integer
+          description: 退款金额
+          example: '100'
+        refund_status:
+          type: string
+          description: 退款状态
+          example: SUCCESS
+          maxLength: 16
+        success_time:
+          type: string
+          description: 退款成功时间
+          example: '2017-12-15 09:46:01'
+          maxLength: 20
+          nullable: true
+        refund_recv_accout:
+          type: string
+          description: 退款入账账户
+          example: 招商银行信用卡0403
+          maxLength: 64
+        refund_account:
+          type: string
+          description: 退款资金来源
+          example: REFUND_SOURCE_RECHARGE_FUNDS
+          maxLength: 30
+        refund_request_source:
+          type: string
+          description: 退款发起来源
+          example: API
+          maxLength: 30
+notify.refundafter.response:
+  allOf:
+    - type: object
+      xml:
+        name: xml
+      required:
+        - return_code
+      properties:
+        return_code:
+          type: string
+          description: 返回状态码
+          example: SUCCESS
+          maxLength: 16
+        return_msg:
+          type: string
+          description: 返回信息
+          example: OK
+          maxLength: 128
+          nullable: true

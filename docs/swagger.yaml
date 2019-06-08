@@ -134,6 +134,32 @@ tags:
   - name: 开放平台∙第三方平台∙代小程序∙代码管理
   - name: 开放平台∙第三方平台∙代小程序∙代码模版库
   - name: 开放平台∙第三方平台∙代小程序∙模板消息模板设置
+  - name: 支付∙付款码支付
+  - name: 支付∙JSAPI支付
+  - name: 支付∙Native支付
+  - name: 支付∙App支付
+  - name: 支付∙H5支付
+  - name: 支付∙小程序支付
+  - name: 支付∙人脸支付
+  - name: 支付∙代金券或立减优惠
+  - name: 支付∙现金红包
+  - name: 支付∙企业付款
+  - name: 支付∙酒店押金
+  - name: 支付∙委托扣款
+  - name: 支付∙服务商∙付款码支付
+  - name: 支付∙服务商∙JSAPI支付
+  - name: 支付∙服务商∙Native支付
+  - name: 支付∙服务商∙App支付
+  - name: 支付∙服务商∙H5支付
+  - name: 支付∙服务商∙小程序支付
+  - name: 支付∙服务商∙人脸支付
+  - name: 支付∙服务商∙现金红包
+  - name: 支付∙服务商∙小微商户
+  - name: 支付∙银行服务商∙现金红包
+  - name: 支付∙银行服务商∙企业付款
+  - name: 支付∙银行服务商∙特约商户报备
+  - name: 支付∙银行服务商∙特约商户配置
+  - name: 支付∙银行服务商∙风控信息同步
 paths:
   /_notify/device_event/Bind:
     post:
@@ -3717,6 +3743,1586 @@ paths:
       responses:
         '200':
           description: ''
+  /_wxpay/applyment/micro/getstate:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙服务商∙小微商户
+      summary: 查询申请状态
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/xiaowei.php?chapter=19_3)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/micro.getstate.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/micro.getstate.response'
+  /_wxpay/applyment/micro/getupgradestate:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙服务商∙小微商户
+      summary: 查询升级申请单状态
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/xiaowei.php?chapter=28_3&index=3)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/micro.getupgradestate.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/micro.getupgradestate.response'
+  /_wxpay/applyment/micro/modifyarchives:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙服务商∙小微商户
+      summary: 修改结算银行卡
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/xiaowei.php?chapter=21_2)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/micro.modifyarchives.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/micro.modifyarchives.response'
+  /_wxpay/applyment/micro/modifycontactinfo:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙服务商∙小微商户
+      summary: 修改联系信息
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/xiaowei.php?chapter=21_4)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/micro.modifycontactinfo.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/micro.modifycontactinfo.response'
+  /_wxpay/applyment/micro/submit:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙服务商∙小微商户
+      summary: 申请入驻
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/xiaowei.php?chapter=19_2)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/micro.submit.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/micro.submit.response'
+  /_wxpay/applyment/micro/submitupgrade:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙服务商∙小微商户
+      summary: 提交升级申请单
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/xiaowei.php?chapter=28_2&index=2)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/micro.submitupgrade.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/micro.submitupgrade.response'
+  /_wxpay/appsdk.onpapay:
+    post:
+      tags:
+        - 支付∙委托扣款
+      summary: APP纯签约
+      description: '外部App可通过此能力，拉起微信客户端，完成签约后后，返回App。[官方APP文档](https://pay.weixin.qq.com/wiki/doc/api/pap.php?chapter=18_5&index=2)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /_wxpay/appsdk.onpay:
+    post:
+      tags:
+        - 支付∙App支付
+        - 支付∙服务商∙App支付
+      summary: 调起支付
+      description: 'APP端调起支付的参数列表，本文档仅示例说明参数及返回值 [官方APP文档](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_12&index=2)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/appsdk.onpay.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/appsdk.onpay.response'
+  /_wxpay/billcommentsp/batchquerycomment:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙JSAPI支付
+        - 支付∙Native支付
+        - 支付∙App支付
+        - 支付∙H5支付
+        - 支付∙小程序支付
+      summary: 拉取订单评价数据
+      description: '商户可以通过该接口拉取用户在微信支付交易记录中针对你的支付记录进行的评价内容。商户可结合商户系统逻辑对该内容数据进行存储、分析、展示、客服回访以及其他使用。如商户业务对评价内容有依赖，可主动引导用户进入微信支付交易记录进行评价。[官方JSAPI文档](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_17&index=11) [官方NATIVE文档](https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=9_17&index=11) [官方APP文档](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_99&index=12) [官方H5文档](https://pay.weixin.qq.com/wiki/doc/api/H5.php?chapter=9_17&index=11) [官方小程序支付文档](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_17&index=11)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/batchquerycomment.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/batchquerycomment.response'
+  /_wxpay/deposit/consume:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙酒店押金
+      summary: 消费押金
+      description: '微信支付根据商户指令，将用户消费金额扣除手续费后结算给指定商户，剩余金额原路退还给用户，并生成押金退款交易记录，给用户下发押金退还发起通知，并更改押金支付的交易记录。用户押金退还到账后，下发押金退还到账通知。若全部消费，则下发押金全部消费通知;[官方文档](https://pay.weixin.qq.com/wiki/doc/api/deposit_sl.php?chapter=27_4&index=5)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/consume.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/consume.response'
+  /_wxpay/deposit/facepay:
+    post:
+      tags:
+        - 支付∙酒店押金
+      summary: 支付押金（人脸支付）
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/deposit_sl.php?chapter=27_0&index=1)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/facepay.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/facepay.response'
+  /_wxpay/deposit/micropay:
+    post:
+      tags:
+        - 支付∙酒店押金
+      summary: 支付押金（付款码支付）
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/deposit_sl.php?chapter=27_1&index=2)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            allOf:
+              - type: object
+                required:
+                  - deposit
+                  - fee_type
+                  - sign_type
+                properties: {}
+              - $ref: 'wxpay.yaml#/micropay.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/micropay.response'
+  /_wxpay/deposit/orderquery:
+    post:
+      tags:
+        - 支付∙酒店押金
+      summary: 查询订单
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/deposit_sl.php?chapter=27_2&index=3)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/orderquery.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/orderquery.response'
+  /_wxpay/deposit/refund:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙酒店押金
+      summary: 申请退款（押金）
+      description: '在押金已消费的情况下，部分金额已结算给商户的资金退还给用户，并为用户下发“退款发起提醒通知“；退款到账后，下发“押金退还到账通知”。可调用多次，允许部分退款; [官方文档](https://pay.weixin.qq.com/wiki/doc/api/deposit_sl.php?chapter=27_5&index=6)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/refund.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/refund.response'
+  /_wxpay/deposit/refundquery:
+    post:
+      tags:
+        - 支付∙酒店押金
+      summary: 查询退款（押金）
+      description: '提交退款申请后，通过调用该接口查询退款状态。退款有一定延时，用零钱支付的退款20分钟内到账，银行卡支付的退款3个工作日后重新查询退款状态; [官方文档](https://pay.weixin.qq.com/wiki/doc/api/deposit_sl.php?chapter=27_6&index=7)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/refundquery.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/refundquery.response'
+  /_wxpay/deposit/reverse:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙酒店押金
+      summary: 撤销订单
+      description: '押金退回:在未押金消费的情况下，商户可调用该接口告知微信支付退回押金给用户，微信支付根据商户指令，将押金全部原路返回给用户，并下发押金退还发起通知，退款到账后，下发押金退还到账通知;调用支付接口后请勿立即调用撤销订单API，建议支付后至少15s后再调用撤销订单接口。[官方文档](https://pay.weixin.qq.com/wiki/doc/api/deposit_sl.php?chapter=27_3&index=4)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/reverse.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/reverse.response'
+  /_wxpay/fund/queryautowithdrawbydate:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙服务商∙小微商户
+      summary: 查询提现状态
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/xiaowei.php?chapter=21_1)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/queryautowithdrawbydate.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/queryautowithdrawbydate.response'
+  /_wxpay/fund/reautowithdrawbydate:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙服务商∙小微商户
+      summary: 重新发起提现
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/xiaowei.php?chapter=21_3)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/reautowithdrawbydate.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/reautowithdrawbydate.response'
+  /_wxpay/mchrisk/bankquerymchauditinfo:
+    post:
+      tags:
+        - 支付∙银行服务商∙风控信息同步
+      summary: 间联模式查询商户审核状态开放接口
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/mch_bank.php?chapter=9_291)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/bankquerymchauditinfo.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/bankquerymchauditinfo.response'
+  /_wxpay/mchrisk/channelquerymchauditinfo:
+    post:
+      tags:
+        - 支付∙银行服务商∙风控信息同步
+      summary: 渠道商查询商户审核信息
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/mch_bank.php?chapter=9_296)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/channelquerymchauditinfo.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/channelquerymchauditinfo.response'
+  /_wxpay/mchrisk/querymchrisk:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙银行服务商∙风控信息同步
+      summary: 事前-风险商户核查接口
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/mch_bank.php?chapter=9_291)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/querymchrisk.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/querymchrisk.response'
+  /_wxpay/mchrisk/setmchriskcallback:
+    post:
+      tags:
+        - 支付∙银行服务商∙风控信息同步
+      summary: 设置风险通知回调链接
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/mch_bank.php?chapter=9_294)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/setmchriskcallback.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/setmchriskcallback.response'
+  /_wxpay/mchrisk/syncmchriskresult:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙银行服务商∙风控信息同步
+      summary: 事后-风险商户处理结果同步接口
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/mch_bank.php?chapter=9_291)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/syncmchriskresult.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/syncmchriskresult.response'
+  /_wxpay/mmpaymkttransfers/gethbinfo:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙现金红包
+        - 支付∙服务商∙现金红包
+        - 支付∙银行服务商∙现金红包
+      summary: 查询红包记录
+      description: 用于商户对已发放的红包进行查询红包的具体信息，可支持普通红包和裂变包。[官方文档](https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_6&index=5)
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/gethbinfo.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/gethbinfo.response'
+  /_wxpay/mmpaymkttransfers/gettransferinfo:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙企业付款
+      summary: 查询企业向微信用户个人付款
+      description: 付款操作进行结果查询，返回付款操作详细结果。查询企业付款API只支持查询30天内的订单，30天之前的订单请登录商户平台查询。[官方文档](https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=14_3)
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/gettransferinfo.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/gettransferinfo.response'
+  /_wxpay/mmpaymkttransfers/pay_bank:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙企业付款
+        - 支付∙银行服务商∙企业付款
+      summary: 企业付款到银行卡
+      description: 企业付款业务是基于微信支付商户平台的资金管理能力，为了协助商户方便地实现企业向银行卡付款，针对部分有开发能力的商户，提供通过API完成企业付款到银行卡的功能。[官方文档](https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=24_2)
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/pay_bank.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/pay_bank.response'
+  /_wxpay/mmpaymkttransfers/promotion/transfers:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙企业付款
+      summary: 向微信用户个人付款
+      description: 目前支持向指定微信用户的openid付款。[官方文档](https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=14_2)
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/transfers.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/transfers.response'
+  /_wxpay/mmpaymkttransfers/query_bank:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙企业付款
+        - 支付∙银行服务商∙企业付款
+      summary: 查询企业付款银行卡
+      description: 用于对商户企业付款到银行卡操作进行结果查询，返回付款操作详细结果。[官方文档](https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=24_3)
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/query_bank.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/query_bank.response'
+  /_wxpay/mmpaymkttransfers/query_coupon_stock:
+    post:
+      tags:
+        - 支付∙代金券或立减优惠
+      summary: 查询代金券批次
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/tools/sp_coupon.php?chapter=12_4&index=5)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/query_coupon_stock.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/query_coupon_stock.response'
+  /_wxpay/mmpaymkttransfers/querycouponsinfo:
+    post:
+      tags:
+        - 支付∙代金券或立减优惠
+      summary: 查询代金券信息
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/tools/sp_coupon.php?chapter=12_5&index=6)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/query_coupon_stock.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/query_coupon_stock.response'
+  /_wxpay/mmpaymkttransfers/send_coupon:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙代金券或立减优惠
+      summary: 发放代金券
+      description: 用于商户主动调用接口给用户发放代金券的场景，已做防小号处理，给小号发放代金券将返回错误码。**注意：通过接口发放的代金券不会进入微信卡包**[官方文档](https://pay.weixin.qq.com/wiki/doc/api/tools/sp_coupon.php?chapter=12_3&index=4)
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/send_coupon.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/send_coupon.response'
+  /_wxpay/mmpaymkttransfers/sendgroupredpack:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙现金红包
+        - 支付∙服务商∙现金红包
+        - 支付∙银行服务商∙现金红包
+      summary: 发放裂变红包
+      description: 裂变红包：一次可以发放一组红包。首先领取的用户为种子用户，种子用户领取一组红包当中的一个，并可以通过社交分享将剩下的红包给其他用户。裂变红包充分利用了人际传播的优势。[官方文档](https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_5&index=4)
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/sendgroupredpack.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/sendgroupredpack.response'
+  /_wxpay/mmpaymkttransfers/sendredpack:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙现金红包
+        - 支付∙服务商∙现金红包
+        - 支付∙银行服务商∙现金红包
+      summary: 发放普通红包
+      description: 现金红包发放后会以公众号消息的形式触达用户，不同情况下触达消息的形式会有差别，相关规则如下：1.已关注公众号的用户，使用“防伪消息”触达；2.未关注公众号的用户，使用“模板消息”触达。[官方文档](https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_4&index=3)
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/sendredpack.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/sendredpack.response'
+  /_wxpay/notify.mckrisk.onpay:
+    post:
+      tags:
+        - 支付∙银行服务商∙风控信息同步
+      summary: 事中-风险交易通知接口
+      description: '推送涉及高风险诈骗（尤其是来源订单/客服电话投诉）的风险订单给银行.'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/notify.mchrisk.onpay.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/notify.mchrisk.onpay.response'
+  /_wxpay/notify.papayafter:
+    post:
+      tags:
+        - 支付∙委托扣款
+      summary: 签约、解约结果通知
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/pap.php?chapter=18_17&index=6)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/notify.papayafter.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/notify.papayafter.response'
+  /_wxpay/notify.papayresult:
+    post:
+      tags:
+        - 支付∙委托扣款
+      summary: 扣款结果通知
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/pap.php?chapter=18_7&index=11)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/notify.papayresult.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/notify.papayresult.response'
+  /_wxpay/notify.payafter:
+    post:
+      tags:
+        - 支付∙JSAPI支付
+        - 支付∙Native支付
+        - 支付∙App支付
+        - 支付∙H5支付
+        - 支付∙小程序支付
+        - 支付∙人脸支付
+        - 支付∙服务商∙JSAPI支付
+        - 支付∙服务商∙Native支付
+        - 支付∙服务商∙App支付
+        - 支付∙服务商∙H5支付
+        - 支付∙服务商∙小程序支付
+        - 支付∙服务商∙人脸支付
+      summary: 支付结果通知
+      description: '支付完成后，微信会把相关支付结果及用户信息通过数据流的形式发送给商户，商户需要接收处理，并按文档规范返回应答。**● notify_url的代码处理逻辑不能做登录态校验。 ● 商户侧对微信支付回调IP有防火墙策略限制的，需要对以下IP段开通白名单：
+    101.226.103.0/25、140.207.54.0/25、103.7.30.0/25、183.3.234.0/25、58.251.80.0/25** [官方JSAPI文档](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_7&index=8) [官方NATIVE文档](https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=9_7&index=8) [官方APP文档](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_7&index=3) [官方H5文档](https://pay.weixin.qq.com/wiki/doc/api/H5.php?chapter=9_3&index=8) [官方小程序支付文档](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_7&index=8) [官方人脸支付文档](https://share.weiyun.com/5dxUgCw)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/notify.payafter.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/notify.payafter.response'
+  /_wxpay/notify.refundafter:
+    post:
+      tags:
+        - 支付∙付款码支付
+        - 支付∙JSAPI支付
+        - 支付∙Native支付
+        - 支付∙App支付
+        - 支付∙H5支付
+        - 支付∙小程序支付
+        - 支付∙人脸支付
+        - 支付∙服务商∙付款码支付
+        - 支付∙服务商∙JSAPI支付
+        - 支付∙服务商∙Native支付
+        - 支付∙服务商∙App支付
+        - 支付∙服务商∙人脸支付
+      summary: 退款结果通知
+      description: '当商户申请的退款有结果后，微信会把相关结果发送给商户，商户需要接收处理，并返回应答。**● notify_url的代码处理逻辑不能做登录态校验。 ● 商户侧对微信支付回调IP有防火墙策略限制的，需要对以下IP段开通白名单：
+    101.226.103.0/25、140.207.54.0/25、103.7.30.0/25、183.3.234.0/25、58.251.80.0/25** [官方JSAPI文档](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_16&index=10) [官方NATIVE文档](https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=9_16&index=11) [官方APP文档](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_16&index=11) [官方H5文档](https://pay.weixin.qq.com/wiki/doc/api/H5.php?chapter=9_16&index=10) [官方小程序支付文档](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_16&index=10) [官方人脸支付文档](https://share.weiyun.com/5dxUgCw)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/notify.refundafter.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/notify.refundafter.response'
+  /_wxpay/papay/deletecontract:
+    post:
+      tags:
+        - 支付∙委托扣款
+      summary: 申请解约
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/pap.php?chapter=18_4&index=9)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/deletecontract.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/deletecontract.response'
+  /_wxpay/papay/entrustweb:
+    get:
+      tags:
+        - 支付∙委托扣款
+      summary: 公众号纯签约
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/pap.php?chapter=18_1&index=1)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /_wxpay/papay/h5entrustweb:
+    get:
+      tags:
+        - 支付∙委托扣款
+      summary: H5纯签约
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/pap.php?chapter=18_16&index=4)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /_wxpay/papay/querycontract:
+    post:
+      tags:
+        - 支付∙委托扣款
+      summary: 查询签约关系
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/pap.php?chapter=18_2&index=7)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/querycontract.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/querycontract.response'
+  /_wxpay/pay/closeorder:
+    post:
+      tags:
+        - 支付∙JSAPI支付
+        - 支付∙Native支付
+        - 支付∙App支付
+        - 支付∙H5支付
+        - 支付∙小程序支付
+        - 支付∙服务商∙JSAPI支付
+        - 支付∙服务商∙Native支付
+        - 支付∙服务商∙App支付
+        - 支付∙服务商∙H5支付
+        - 支付∙服务商∙小程序支付
+      summary: 关闭订单
+      description: '以下情况需要调用关单接口：商户订单支付失败需要生成新单号重新发起支付，要对原订单号调用关单，避免重复支付；系统下单后，用户支付超时，系统退出不再受理，避免用户继续，请调用关单接口。**注意：订单生成后不能马上调用关单接口，最短调用时间间隔为5分钟。**[官方JSAPI文档](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_3) [官方NATIVE文档](https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=9_3) [官方APP文档](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_3&index=5) [官方H5文档](https://pay.weixin.qq.com/wiki/doc/api/H5.php?chapter=9_3&index=3) [官方小程序支付文档](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_3)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/closeorder.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/closeorder.response'
+  /_wxpay/pay/contractorder:
+    post:
+      tags:
+        - 支付∙委托扣款
+      summary: 支付中签约
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/pap.php?chapter=18_13&index=5)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/contractorder.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/contractorder.response'
+  /_wxpay/pay/downloadbill:
+    post:
+      tags:
+        - 支付∙付款码支付
+        - 支付∙JSAPI支付
+        - 支付∙Native支付
+        - 支付∙App支付
+        - 支付∙H5支付
+        - 支付∙小程序支付
+        - 支付∙人脸支付
+        - 支付∙委托扣款
+        - 支付∙服务商∙付款码支付
+        - 支付∙服务商∙JSAPI支付
+        - 支付∙服务商∙Native支付
+        - 支付∙服务商∙App支付
+        - 支付∙服务商∙H5支付
+        - 支付∙服务商∙小程序支付
+        - 支付∙服务商∙人脸支付
+      summary: 下载对账单
+      description: '商户可以通过该接口下载历史交易清单。比如掉单、系统错误等导致商户侧和微信侧数据不一致，通过对账单核对后可校正支付状态。[官方付款码文档](https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_6) [官方JSAPI文档](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_6) [官方NATIVE文档](https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=9_6) [官方APP文档](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_6&index=8) [官方H5文档](https://pay.weixin.qq.com/wiki/doc/api/H5.php?chapter=9_6&index=6) [官方小程序支付文档](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_6) [官方人脸支付文档](https://share.weiyun.com/5dxUgCw)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/downloadbill.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/downloadbill.response'
+  /_wxpay/pay/downloadfundflow:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙付款码支付
+        - 支付∙JSAPI支付
+        - 支付∙Native支付
+        - 支付∙App支付
+        - 支付∙H5支付
+        - 支付∙小程序支付
+      summary: 下载资金账单
+      description: '商户可以通过该接口下载自2017年6月1日起 的历史资金流水账单。[官方付款码文档](https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_18&index=7) [官方JSAPI文档](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_18&index=7) [官方NATIVE文档](https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=9_18&index=7) [官方APP文档](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_18&index=9) [官方H5文档](https://pay.weixin.qq.com/wiki/doc/api/H5.php?chapter=9_18&index=7) [官方小程序支付文档](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_18&index=7)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/downloadfundflow.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/downloadfundflow.response'
+  /_wxpay/pay/facepay:
+    post:
+      tags:
+        - 支付∙人脸支付
+      summary: 提交刷脸支付
+      description: '[官方人脸支付文档](https://share.weiyun.com/5dxUgCw)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/facepay.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/facepay.response'
+  /_wxpay/pay/facepayquery:
+    post:
+      tags:
+        - 支付∙人脸支付
+        - 支付∙服务商∙人脸支付
+      summary: 查询订单
+      description: '[官方人脸支付文档](https://share.weiyun.com/5dxUgCw)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/orderquery.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/orderquery.response'
+  /_wxpay/pay/micropay:
+    post:
+      tags:
+        - 支付∙付款码支付
+        - 支付∙服务商∙付款码支付
+      summary: 提交付款码支付
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_10&index=1)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/micropay.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/micropay.response'
+  /_wxpay/pay/orderquery:
+    post:
+      tags:
+        - 支付∙付款码支付
+        - 支付∙JSAPI支付
+        - 支付∙Native支付
+        - 支付∙App支付
+        - 支付∙H5支付
+        - 支付∙小程序支付
+        - 支付∙服务商∙付款码支付
+        - 支付∙服务商∙JSAPI支付
+        - 支付∙服务商∙Native支付
+        - 支付∙服务商∙App支付
+        - 支付∙服务商∙H5支付
+        - 支付∙服务商∙小程序支付
+      summary: 查询订单
+      description: '[官方付款码文档](https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_2) [官方JSAPI文档](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_2) [官方NATIVE文档](https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=9_2) [官方APP文档](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_2&index=4) [官方H5文档](https://pay.weixin.qq.com/wiki/doc/api/H5.php?chapter=9_2&index=2) [官方小程序支付文档](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_2)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/orderquery.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/orderquery.response'
+  /_wxpay/pay/paporderquery:
+    post:
+      tags:
+        - 支付∙委托扣款
+      summary: 查询订单
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/pap.php?chapter=18_10&index=14)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/paporderquery.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/paporderquery.response'
+  /_wxpay/pay/pappayapply:
+    post:
+      tags:
+        - 支付∙委托扣款
+      summary: 申请扣款
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/pap.php?chapter=18_3&index=8)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/pappayapply.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/pappayapply.response'
+  /_wxpay/pay/refundquery:
+    post:
+      tags:
+        - 支付∙付款码支付
+        - 支付∙JSAPI支付
+        - 支付∙Native支付
+        - 支付∙App支付
+        - 支付∙H5支付
+        - 支付∙小程序支付
+        - 支付∙人脸支付
+        - 支付∙委托扣款
+        - 支付∙服务商∙付款码支付
+        - 支付∙服务商∙JSAPI支付
+        - 支付∙服务商∙Native支付
+        - 支付∙服务商∙App支付
+        - 支付∙服务商∙H5支付
+        - 支付∙服务商∙小程序支付
+        - 支付∙服务商∙人脸支付
+      summary: 查询退款
+      description: '注意：如果单个支付订单部分退款次数超过20次请使用退款单号查询[官方文档](https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_5) [官方JSAPI文档](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_5) [官方NATIVE文档](https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=9_5) [官方APP文档](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_5&index=7) [官方H5文档](https://pay.weixin.qq.com/wiki/doc/api/H5.php?chapter=9_5&index=5) [官方小程序支付文档](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_5) [官方人脸支付文档](https://share.weiyun.com/5dxUgCw)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/refundquery.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/refundquery.response'
+  /_wxpay/pay/unifiedorder:
+    post:
+      tags:
+        - 支付∙JSAPI支付
+        - 支付∙Native支付
+        - 支付∙App支付
+        - 支付∙H5支付
+        - 支付∙小程序支付
+        - 支付∙服务商∙JSAPI支付
+        - 支付∙服务商∙Native支付
+        - 支付∙服务商∙App支付
+        - 支付∙服务商∙H5支付
+        - 支付∙服务商∙小程序支付
+        - 支付∙服务商∙人脸支付
+      summary: 统一下单
+      description: '除付款码支付场景以外，商户系统先调用该接口在微信支付服务后台生成预支付交易单，返回正确的预支付交易会话标识后再按Native、JSAPI、APP等不同场景生成交易串调起支付。[官方JSAPI文档](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_1) [Native官方文档](https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=9_1) [官方APP文档](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_1) [官方H5文档](https://pay.weixin.qq.com/wiki/doc/api/H5.php?chapter=9_20&index=1) [官方小程序支付文档](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_1)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/unifiedorder.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/unifiedorder.response'
+  /_wxpay/payitil/report:
+    post:
+      tags:
+        - 支付∙付款码支付
+        - 支付∙JSAPI支付
+        - 支付∙Native支付
+        - 支付∙App支付
+        - 支付∙H5支付
+        - 支付∙小程序支付
+        - 支付∙人脸支付
+        - 支付∙服务商∙付款码支付
+        - 支付∙服务商∙JSAPI支付
+        - 支付∙服务商∙Native支付
+        - 支付∙服务商∙App支付
+        - 支付∙服务商∙H5支付
+        - 支付∙服务商∙小程序支付
+        - 支付∙服务商∙人脸支付
+      summary: 交易保障
+      description: '商户在调用微信支付提供的相关接口时，会得到微信支付返回的相关信息以及获得整个接口的响应时间。为提高整体的服务水平，协助商户一起提高服务质量，微信支付提供了相关接口调用耗时和返回信息的主动上报接口，微信支付可以根据商户侧上报的数据进一步优化网络部署，完善服务监控，和商户更好的协作为用户提供更好的业务体验。[官方付款码文档](https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_14&index=8) [官方JSAPI文档](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_8&index=9) [官方NATIVE文档](https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=9_8&index=9) [官方APP文档](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_8&index=10) [官方H5文档](https://pay.weixin.qq.com/wiki/doc/api/H5.php?chapter=9_8&index=9) [官方小程序支付文档](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_8&index=9) [官方人脸支付文档](https://share.weiyun.com/5dxUgCw)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/report.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/report.response'
+  /_wxpay/risk/getviolation:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙银行服务商∙风控信息同步
+      summary: 银行特约商户违规信息查询
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/mch_bank.php?chapter=9_28&index=1&p=902)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/getviolation.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/getviolation.response'
+  /_wxpay/secapi/mch/addsubdevconfig:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙服务商∙小微商户
+        - 支付∙银行服务商∙特约商户配置
+      summary: 服务商子商户开发配置新增支付目录/新增对应APPID关联
+      description: 服务商给特约子商户配置支付目录；每个商户最多配置5个支付目录。[官方文档](https://pay.weixin.qq.com/wiki/doc/api/mch_bank.php?chapter=9_24_2&index=2&p=901)
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/addsubdevconfig.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/addsubdevconfig.response'
+  /_wxpay/secapi/mch/modifymchinfo:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙银行服务商∙特约商户报备
+      summary: 银行特约商户信息修改
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/mch_bank.php?chapter=9_27&index=2&p=9)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/modifymchinfo.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/modifymchinfo.response'
+  /_wxpay/secapi/mch/querysubdevconfig:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙服务商∙小微商户
+        - 支付∙银行服务商∙特约商户配置
+      summary: 配置查询
+      description: 服务商给特约子商户配置推荐关注、绑定关系和配置支付目录后可调用该API查询。[官方文档](https://pay.weixin.qq.com/wiki/doc/api/mch_bank.php?chapter=9_25&index=4&p=901)
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/querysubdevconfig.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/querysubdevconfig.response'
+  /_wxpay/secapi/mch/submchmanage:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙银行服务商∙特约商户报备
+      summary: 银行特约商户录入/银行特约商户资料查询
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/mch_bank.php?chapter=9_22&index=3&p=9)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: action
+          in: query
+          type: string
+          enum: [add, query]
+          required: true
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/submchmanage.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/submchmanage.response'
+  /_wxpay/secapi/mkt/addrecommendconf:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙服务商∙小微商户
+        - 支付∙银行服务商∙特约商户配置
+      summary: 服务商特约商户关注功能配置
+      description: 注意：API只支持新增配置，配置后隔30天才能重新修改，所以配置前请确认appid是否正确。[官方文档](https://pay.weixin.qq.com/wiki/doc/api/mch_bank.php?chapter=9_24_1&index=1&p=901)
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/addrecommendconf.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/addrecommendconf.response'
+  /_wxpay/secapi/pay/facepayreverse:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙人脸支付
+        - 支付∙服务商∙人脸支付
+      summary: 撤销订单
+      description: ' [官方人脸支付文档](https://share.weiyun.com/5dxUgCw)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/reverse.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/reverse.response'
+  /_wxpay/secapi/pay/refund:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙付款码支付
+        - 支付∙JSAPI支付
+        - 支付∙Native支付
+        - 支付∙App支付
+        - 支付∙H5支付
+        - 支付∙小程序支付
+        - 支付∙人脸支付
+        - 支付∙委托扣款
+        - 支付∙服务商∙付款码支付
+        - 支付∙服务商∙JSAPI支付
+        - 支付∙服务商∙Native支付
+        - 支付∙服务商∙App支付
+        - 支付∙服务商∙H5支付
+        - 支付∙服务商∙小程序支付
+        - 支付∙服务商∙人脸支付
+      summary: 申请退款
+      description: '一笔退款失败后重新提交，请不要更换退款单号，请使用原商户退款单号[官方付款码文档](https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_4) [官方JSAPI文档](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_4) [官方NATIVE文档](https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=9_4) [官方APP文档](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_4&index=6) [官方H5文档](https://pay.weixin.qq.com/wiki/doc/api/H5.php?chapter=9_4&index=4) [官方小程序支付文档](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_4) [官方刷脸支付文档](https://share.weiyun.com/5dxUgCw)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/refund.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/refund.response'
+  /_wxpay/secapi/pay/reverse:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙付款码支付
+        - 支付∙服务商∙付款码支付
+      summary: 撤销订单
+      description: '调用支付接口后请勿立即调用撤销订单API，建议支付后至少15s后再调用撤销订单接口。[官方付款码文档](https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_11&index=3)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/reverse.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/reverse.response'
+  /_wxpay/tools/authcodetoopenid:
+    post:
+      tags:
+        - 支付∙付款码支付
+        - 支付∙服务商∙付款码支付
+      summary: 授权码查询openid
+      description: '通过授权码查询公众号Openid，调用查询后，该授权码只能由此商户号发起扣款，直至授权码更新。 [官方服务商付款码文档](https://pay.weixin.qq.com/wiki/doc/api/micropay_sl.php?chapter=9_12&index=8)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/authcodetoopenid.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/authcodetoopenid.response'
+  /_wxpay/tools/shorturl:
+    post:
+      tags:
+        - 支付∙Native支付
+        - 支付∙服务商∙Native支付
+      summary: 转换短链接
+      description: '该接口主要用于Native支付模式一中的二维码链接转成短链接(weixin://wxpay/s/XXXXXX)，减小二维码数据量，提升扫描速度和精确度。 [官方NATIVE文档](https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=9_9&index=10)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/shorturl.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/shorturl.response'
+  /_wxpay/wxa.onpapay:
+    post:
+      tags:
+        - 支付∙委托扣款
+      summary: 小程序纯签约
+      description: '小程序调起支付参数列表，本文档仅示例说明参数及返回值 [官方APP文档](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_12&index=2)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /_wxpay/wxa.onpay:
+    post:
+      tags:
+        - 支付∙小程序支付
+      summary: 调起支付
+      description: '小程序调起支付参数列表，本文档仅示例说明参数及返回值 [官方APP文档](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_12&index=2)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/wxa.onpay.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/wxa.onpay.response'
   /bizwifi/apportal/register:
     post:
       summary: 添加portal型设备

@@ -1508,6 +1508,12 @@ micropay.request:
     - spbill_create_ip
     - auth_code
   properties:
+    profit_sharing:
+      type: string
+      description: 是否指定服务商分账;Y-是，需要分账;N-否，不分账;字母要求大写，不传默认不分账
+      enum: [N,Y]
+      example: 'N'
+      maxLength: 1
     deposit:
       type: string
       description: 是否押金支付
@@ -1824,6 +1830,104 @@ modifymchinfo.response:
       xml:
         name: xml
       properties: {}
+multiprofitsharing.request:
+  allOf:
+    - type: object
+      xml:
+        name: xml
+      required:
+        - mch_id
+        - sub_mch_id
+        - appid
+        - nonce_str
+        - sign
+        - transaction_id
+        - out_order_no
+        - receivers
+        - type
+        - account
+        - amount
+        - description
+      properties:
+        mch_id:
+          type: string
+          description: 商户号
+          example: '1900000100'
+          maxLength: 32
+        sub_mch_id:
+          type: string
+          description: 子商户号
+          example: '1900000109'
+          maxLength: 32
+        appid:
+          type: string
+          description: 公众账号ID
+          example: wx8888888888888888
+          maxLength: 32
+        sub_appid:
+          type: string
+          description: 子商户公众账号ID
+          example: wx8888888888888888
+          maxLength: 32
+          nullable: true
+        nonce_str:
+          type: string
+          description: 随机字符串
+          example: 5K8264ILTKCH16CQ2502SI8ZNMTM67VS
+          maxLength: 32
+        sign:
+          type: string
+          description: 签名
+          example: C380BEC2BFD727A4B6845133519F3AD6C380BEC2BFD727A4B6845133519F3AD6
+          maxLength: 64
+        sign_type:
+          type: string
+          description: 签名类型
+          example: HMAC-SHA256
+          maxLength: 32
+          nullable: true
+        transaction_id:
+          type: string
+          description: 微信订单号
+          example: '4208450740201411110007820472'
+          maxLength: 32
+        out_order_no:
+          type: string
+          description: 商户分账单号
+          example: P20150806125346
+          maxLength: 64
+        receivers:
+          type: string
+          description: +分账接收方列表
+          maxLength: 10240
+multiprofitsharing.response:
+  allOf:
+    - $ref: 'wxpay.yaml#/serviceprovider.subs'
+    - $ref: 'wxpay.yaml#/general.response'
+    - $ref: 'wxpay.yaml#/general.response.success'
+    - type: object
+      xml:
+        name: xml
+      required:
+        - transaction_id
+        - out_order_no
+        - order_id
+      properties:
+        transaction_id:
+          type: string
+          description: 微信订单号
+          example: '4208450740201411110007820472'
+          maxLength: 32
+        out_order_no:
+          type: string
+          description: 商户分账单号
+          example: P20150806125346
+          maxLength: 64
+        order_id:
+          type: string
+          description: 微信分账单号
+          example: '3008450740201411110007820472'
+          maxLength: 64
 notify.mchrisk.onpay.request:
   allOf:
     - type: object
@@ -2659,6 +2763,447 @@ pay_bank.response:
           format: int32
           type: integer
           description: 手续费金额
+profitsharing.request:
+  allOf:
+    - type: object
+      xml:
+        name: xml
+      required:
+        - mch_id
+        - sub_mch_id
+        - appid
+        - nonce_str
+        - sign
+        - transaction_id
+        - out_order_no
+        - receivers
+        - type
+        - account
+        - amount
+        - description
+      properties:
+        mch_id:
+          type: string
+          description: 商户号
+          example: '1900000100'
+          maxLength: 32
+        sub_mch_id:
+          type: string
+          description: 子商户号
+          example: '1900000109'
+          maxLength: 32
+        appid:
+          type: string
+          description: 公众账号ID
+          example: wx8888888888888888
+          maxLength: 32
+        sub_appid:
+          type: string
+          description: 子商户公众账号ID
+          example: wx8888888888888888
+          maxLength: 32
+          nullable: true
+        nonce_str:
+          type: string
+          description: 随机字符串
+          example: 5K8264ILTKCH16CQ2502SI8ZNMTM67VS
+          maxLength: 32
+        sign:
+          type: string
+          description: 签名
+          example: C380BEC2BFD727A4B6845133519F3AD6C380BEC2BFD727A4B6845133519F3AD6
+          maxLength: 64
+        sign_type:
+          type: string
+          description: 签名类型
+          example: HMAC-SHA256
+          maxLength: 32
+          nullable: true
+        transaction_id:
+          type: string
+          description: 微信订单号
+          example: '4208450740201411110007820472'
+          maxLength: 32
+        out_order_no:
+          type: string
+          description: 商户分账单号
+          example: P20150806125346
+          maxLength: 64
+        receivers:
+          type: string
+          description: +分账接收方列表
+          maxLength: 10240
+profitsharing.response:
+  allOf:
+    - $ref: 'wxpay.yaml#/serviceprovider.subs'
+    - $ref: 'wxpay.yaml#/general.response'
+    - $ref: 'wxpay.yaml#/general.response.success'
+    - type: object
+      xml:
+        name: xml
+      required:
+        - transaction_id
+        - out_order_no
+        - order_id
+      properties:
+        transaction_id:
+          type: string
+          description: 微信订单号
+          example: '4208450740201411110007820472'
+          maxLength: 32
+        out_order_no:
+          type: string
+          description: 商户分账单号
+          example: P20150806125346
+          maxLength: 64
+        order_id:
+          type: string
+          description: 微信分账单号
+          example: '3008450740201411110007820472'
+          maxLength: 64
+profitsharingaddreceiver.request:
+  allOf:
+    - type: object
+      xml:
+        name: xml
+      required:
+        - mch_id
+        - sub_mch_id
+        - appid
+        - nonce_str
+        - sign
+        - receiver
+      properties:
+        mch_id:
+          type: string
+          description: 商户号
+          example: '1900000100'
+          maxLength: 32
+        sub_mch_id:
+          type: string
+          description: 子商户号
+          example: '1900000109'
+          maxLength: 32
+        appid:
+          type: string
+          description: 公众账号ID
+          example: wx8888888888888888
+          maxLength: 32
+        sub_appid:
+          type: string
+          description: 子商户公众账号ID
+          example: wx8888888888888888
+          maxLength: 32
+          nullable: true
+        nonce_str:
+          type: string
+          description: 随机字符串
+          example: 5K8264ILTKCH16CQ2502SI8ZNMTM67VS
+          maxLength: 32
+        sign:
+          type: string
+          description: 签名
+          example: ABC6DD4AA85C0EECA82C35595A69EFGH
+          maxLength: 64
+        sign_type:
+          type: string
+          description: 签名类型
+          example: HMAC-SHA256
+          maxLength: 32
+          nullable: true
+        receiver:
+          type: string
+          description: +分账接收方;分账接收方对象，json格式
+          maxLength: 2048
+profitsharingaddreceiver.response:
+  allOf:
+    - $ref: 'wxpay.yaml#/serviceprovider.subs'
+    - $ref: 'wxpay.yaml#/general.response'
+    - $ref: 'wxpay.yaml#/general.response.success'
+    - type: object
+      xml:
+        name: xml
+      required:
+        - receiver
+      properties:
+        receiver:
+          type: string
+          description: 分账接收方
+          example: '{"type":"MERCHANT_ID","account":"190001001"}'
+          maxLength: 128
+profitsharingfinish.request:
+  allOf:
+    - type: object
+      xml:
+        name: xml
+      required:
+        - mch_id
+        - sub_mch_id
+        - appid
+        - nonce_str
+        - sign
+        - transaction_id
+        - out_order_no
+        - description
+      properties:
+        mch_id:
+          type: string
+          description: 商户号
+          example: '1900000100'
+          maxLength: 32
+        sub_mch_id:
+          type: string
+          description: 子商户号
+          example: '1900000109'
+          maxLength: 32
+        appid:
+          type: string
+          description: 公众账号ID
+          example: wx8888888888888888
+          maxLength: 32
+        nonce_str:
+          type: string
+          description: 随机字符串
+          example: 5K8264ILTKCH16CQ2502SI8ZNMTM67VS
+          maxLength: 32
+        sign:
+          type: string
+          description: 签名
+          example: C380BEC2BFD727A4B6845133519F3AD6C380BEC2BFD727A4B6845133519F3AD6
+          maxLength: 64
+        sign_type:
+          type: string
+          description: 签名类型
+          example: HMAC-SHA256
+          maxLength: 32
+          nullable: true
+        transaction_id:
+          type: string
+          description: 微信订单号
+          example: '4208450740201411110007820472'
+          maxLength: 32
+        out_order_no:
+          type: string
+          description: 商户分账单号
+          example: P20150806125346
+          maxLength: 64
+        description:
+          type: string
+          description: 分账完结描述
+          example: 分账已完成
+          maxLength: 80
+profitsharingfinish.response:
+  allOf:
+    - $ref: 'wxpay.yaml#/serviceprovider.subs'
+    - $ref: 'wxpay.yaml#/general.response'
+    - $ref: 'wxpay.yaml#/general.response.success'
+    - type: object
+      xml:
+        name: xml
+      required:
+        - transaction_id
+        - out_order_no
+        - order_id
+      properties:
+        transaction_id:
+          type: string
+          description: 微信订单号
+          example: '4208450740201411110007820472'
+          maxLength: 32
+        out_order_no:
+          type: string
+          description: 商户分账单号
+          example: P20150806125346
+          maxLength: 64
+        order_id:
+          type: string
+          description: 微信分账单号
+          example: '3008450740201411110007820472'
+          maxLength: 64
+profitsharingquery.request:
+  allOf:
+    - type: object
+      xml:
+        name: xml
+      required:
+        - mch_id
+        - sub_mch_id
+        - transaction_id
+        - out_order_no
+        - nonce_str
+        - sign
+      properties:
+        mch_id:
+          type: string
+          description: 商户号
+          example: '1900000100'
+          maxLength: 32
+        sub_mch_id:
+          type: string
+          description: 子商户号
+          example: '1900000109'
+          maxLength: 32
+        transaction_id:
+          type: string
+          description: 微信订单号
+          example: '4208450740201411110007820472'
+          maxLength: 32
+        out_order_no:
+          type: string
+          description: 商户分账单号
+          example: P20150806125346
+          maxLength: 32
+        nonce_str:
+          type: string
+          description: 随机字符串
+          example: 5K8264ILTKCH16CQ2502SI8ZNMTM67VS
+          maxLength: 32
+        sign:
+          type: string
+          description: 签名
+          example: C380BEC2BFD727A4B6845133519F3AD6
+          maxLength: 64
+        sign_type:
+          type: string
+          description: 签名类型
+          example: HMAC-SHA256
+          maxLength: 32
+          nullable: true
+profitsharingquery.response:
+  allOf:
+    - $ref: 'wxpay.yaml#/serviceprovider.subs'
+    - $ref: 'wxpay.yaml#/general.response'
+    - $ref: 'wxpay.yaml#/general.response.success'
+    - type: object
+      xml:
+        name: xml
+      required:
+        - transaction_id
+        - out_order_no
+        - order_id
+        - status
+        - receivers
+        - amount
+        - description
+        - type
+        - account
+        - amount
+        - description
+        - result
+        - finish_time
+      properties:
+        transaction_id:
+          type: string
+          description: 微信订单号
+          example: '4208450740201411110007820472'
+          maxLength: 32
+        out_order_no:
+          type: string
+          description: 商户分账单号
+          example: P20150806125346
+          maxLength: 64
+        order_id:
+          type: string
+          description: 微信分账单号
+          example: '3008450740201411110007820472'
+          maxLength: 64
+        status:
+          type: string
+          description: 分账单状态
+          example: SUCCESS
+          maxLength: 16
+        close_reason:
+          type: string
+          description: 关单原因
+          example: NO_AUTH
+          maxLength: 32
+          nullable: true
+        receivers:
+          type: string
+          description: +分账接收方列表;分账接收方列表，json对象详细说明见下文，仅当查询分账请求结果时，存在本字段
+          maxLength: 10240
+        amount:
+          format: int32
+          type: integer
+          description: 分账金额
+          example: '888'
+        description:
+          type: string
+          description: 分账描述
+          example: 分账订单
+          maxLength: 80
+profitsharingremovereceiver.request:
+  allOf:
+    - type: object
+      xml:
+        name: xml
+      required:
+        - mch_id
+        - sub_mch_id
+        - appid
+        - nonce_str
+        - sign
+        - receiver
+        - type
+        - account
+      properties:
+        mch_id:
+          type: string
+          description: 商户号
+          example: '1900000100'
+          maxLength: 32
+        sub_mch_id:
+          type: string
+          description: 子商户号
+          example: '1900000109'
+          maxLength: 32
+        appid:
+          type: string
+          description: 公众账号ID
+          example: wx8888888888888888
+          maxLength: 32
+        sub_appid:
+          type: string
+          description: 子商户公众账号ID
+          example: wx8888888888888888
+          maxLength: 32
+          nullable: true
+        nonce_str:
+          type: string
+          description: 随机字符串
+          example: 5K8264ILTKCH16CQ2502SI8ZNMTM67VS
+          maxLength: 32
+        sign:
+          type: string
+          description: 签名
+          example: ABC6DD4AA85C0EECA82C35595A69EFGH
+          maxLength: 64
+        sign_type:
+          type: string
+          description: 签名类型
+          example: HMAC-SHA256
+          maxLength: 32
+          nullable: true
+        receiver:
+          type: string
+          description: +分账接收方
+          maxLength: 2048
+profitsharingremovereceiver.response:
+  allOf:
+    - $ref: 'wxpay.yaml#/serviceprovider.subs'
+    - $ref: 'wxpay.yaml#/general.response'
+    - $ref: 'wxpay.yaml#/general.response.success'
+    - type: object
+      xml:
+        name: xml
+      required:
+        - receiver
+      properties:
+        receiver:
+          type: string
+          description: 分账接收方
+          example: '{"type":"MERCHANT_ID","account":"190001001"}'
+          maxLength: 128
 query_bank.request:
   type: object
   xml:
@@ -4865,6 +5410,12 @@ unifiedorder.request:
     - notify_url
     - trade_type
   properties:
+    profit_sharing:
+      type: string
+      description: 是否指定服务商分账;Y-是，需要分账;N-否，不分账;字母要求大写，不传默认不分账
+      enum: [N,Y]
+      example: 'N'
+      maxLength: 1
     appid:
       type: string
       description: 公众账号ID
@@ -5176,6 +5727,11 @@ general.response.success:
       type: string
       description: 错误代码
       maxLength: 32
+      nullable: true
+    err_code_des:
+      type: string
+      description: 错误代码描述
+      maxLength: 128
       nullable: true
 serviceprovider.subs:
   type: object

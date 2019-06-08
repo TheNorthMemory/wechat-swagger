@@ -155,6 +155,7 @@ tags:
   - name: 支付∙服务商∙人脸支付
   - name: 支付∙服务商∙现金红包
   - name: 支付∙服务商∙小微商户
+  - name: 支付∙服务商∙分账
   - name: 支付∙银行服务商∙现金红包
   - name: 支付∙银行服务商∙企业付款
   - name: 支付∙银行服务商∙特约商户报备
@@ -4831,6 +4832,7 @@ paths:
       tags:
         - 支付∙付款码支付
         - 支付∙服务商∙付款码支付
+        - 支付∙服务商∙分账
       summary: 提交付款码支付
       description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_10&index=1)'
       consumes:
@@ -4901,10 +4903,11 @@ paths:
           description: ''
           schema:
             $ref: 'wxpay.yaml#/paporderquery.response'
-  /_wxpay/pay/pappayapply:
+  /_wxpay/pay/partner/pappayapply:
     post:
       tags:
         - 支付∙委托扣款
+        - 支付∙服务商∙分账
       summary: 申请扣款
       description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/pap.php?chapter=18_3&index=8)'
       consumes:
@@ -4922,6 +4925,69 @@ paths:
           description: ''
           schema:
             $ref: 'wxpay.yaml#/pappayapply.response'
+  /_wxpay/pay/profitsharingaddreceiver:
+    post:
+      tags:
+        - 支付∙服务商∙分账
+      summary: 添加分账接收方
+      description: '服务商代子商户发起添加分账接收方请求，后续可通过发起分账请求将结算后的钱分到该分账接收方。[官方文档](https://pay.weixin.qq.com/wiki/doc/api/allocation_sl.php?chapter=25_3&index=4)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/profitsharingaddreceiver.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/profitsharingaddreceiver.response'
+  /_wxpay/pay/profitsharingquery:
+    post:
+      tags:
+        - 支付∙服务商∙分账
+      summary: 查询分账结果
+      description: '发起分账请求后，可调用此接口查询分账结果；发起分账完结请求后，可调用此接口查询分账完结的执行结果。[官方文档](https://pay.weixin.qq.com/wiki/doc/api/allocation_sl.php?chapter=25_2&index=3)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/profitsharingquery.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/profitsharingquery.response'
+  /_wxpay/pay/profitsharingremovereceiver:
+    post:
+      tags:
+        - 支付∙服务商∙分账
+      summary: 删除分账接收方
+      description: '服务商代子商户发起删除分账接收方请求，删除后不支持将结算后的钱分到该分账接收方。[官方文档](https://pay.weixin.qq.com/wiki/doc/api/allocation_sl.php?chapter=25_4&index=5)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/profitsharingremovereceiver.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/profitsharingremovereceiver.response'
   /_wxpay/pay/refundquery:
     post:
       tags:
@@ -4971,6 +5037,7 @@ paths:
         - 支付∙服务商∙H5支付
         - 支付∙服务商∙小程序支付
         - 支付∙服务商∙人脸支付
+        - 支付∙服务商∙分账
       summary: 统一下单
       description: '除付款码支付场景以外，商户系统先调用该接口在微信支付服务后台生成预支付交易单，返回正确的预支付交易会话标识后再按Native、JSAPI、APP等不同场景生成交易串调起支付。[官方JSAPI文档](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_1) [Native官方文档](https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=9_1) [官方APP文档](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_1) [官方H5文档](https://pay.weixin.qq.com/wiki/doc/api/H5.php?chapter=9_20&index=1) [官方小程序支付文档](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_1)'
       consumes:
@@ -5185,6 +5252,71 @@ paths:
           description: ''
           schema:
             $ref: 'wxpay.yaml#/reverse.response'
+  /_wxpay/secapi/pay/multiprofitsharing:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙服务商∙分账
+      summary: 请求多次分账
+      description: '微信订单支付成功后，服务商代子商户发起分账请求，将结算后的钱分到分账接收方。多次分账请求仅会按照传入的分账接收方进行分账，不会对剩余的金额进行任何操作。故操作成功后，在待分账金额不等于零时，订单依旧能够再次进行分账。● 多次分账，可以将本商户作为分账接收方直接传入，实现释放资金给本商户的功能。[官方文档](https://pay.weixin.qq.com/wiki/doc/api/allocation_sl.php?chapter=25_6&index=2)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/multiprofitsharing.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/multiprofitsharing.response'
+  /_wxpay/secapi/pay/profitsharing:
+    post:
+      x-api-cert-required: true
+      tags:
+        - 支付∙服务商∙分账
+      summary: 请求单次分账
+      description: '单次分账请求按照传入的分账接收方账号和资金进行分账，同时会将订单剩余的待分账金额解冻给特约商户。故操作成功后，订单不能再进行分账，也不能进行分账完结。 [官方文档](https://pay.weixin.qq.com/wiki/doc/api/allocation_sl.php?chapter=25_1&index=1)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/profitsharing.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/profitsharing.response'
+  /_wxpay/secapi/pay/profitsharingfinish:
+    post:
+      tags:
+        - 支付∙服务商∙分账
+      summary: 完结分账
+      description: '1、不需要进行分账的订单，可直接调用本接口将订单的金额全部解冻给特约商户 2、调用多次分账接口后，需要解冻剩余资金时，调用本接口将剩余的分账金额全部解冻给特约商户 3、已调用请求单次分账后，剩余待分账金额为零，不需要再调用此接口。[官方文档](https://pay.weixin.qq.com/wiki/doc/api/allocation_sl.php?chapter=25_5&index=6)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/profitsharingfinish.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/profitsharingfinish.response'
   /_wxpay/secapi/pay/refund:
     post:
       x-api-cert-required: true

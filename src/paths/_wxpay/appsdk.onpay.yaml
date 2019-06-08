@@ -2,7 +2,7 @@ post:
   tags:
     - 支付∙App支付
   summary: 调起支付
-  description: 'APP端调起支付的参数列表，本文档仅示例说明参数及返回值 [APP官方文档](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_12&index=2)'
+  description: 'APP端调起支付的参数列表，本文档仅示例说明参数及返回值 [官方APP文档](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_12&index=2)'
   consumes:
     - application/xml
   produces:

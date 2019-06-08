@@ -50,6 +50,11 @@ general.response.success:
       description: 错误代码
       maxLength: 32
       nullable: true
+    err_code_des:
+      type: string
+      description: 错误代码描述
+      maxLength: 128
+      nullable: true
 serviceprovider.subs:
   type: object
   xml:

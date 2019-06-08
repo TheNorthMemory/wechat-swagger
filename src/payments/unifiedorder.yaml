@@ -14,6 +14,12 @@ unifiedorder.request:
     - notify_url
     - trade_type
   properties:
+    profit_sharing:
+      type: string
+      description: 是否指定服务商分账;Y-是，需要分账;N-否，不分账;字母要求大写，不传默认不分账
+      enum: [N,Y]
+      example: 'N'
+      maxLength: 1
     appid:
       type: string
       description: 公众账号ID

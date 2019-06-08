@@ -13,6 +13,12 @@ micropay.request:
     - spbill_create_ip
     - auth_code
   properties:
+    profit_sharing:
+      type: string
+      description: 是否指定服务商分账;Y-是，需要分账;N-否，不分账;字母要求大写，不传默认不分账
+      enum: [N,Y]
+      example: 'N'
+      maxLength: 1
     deposit:
       type: string
       description: 是否押金支付

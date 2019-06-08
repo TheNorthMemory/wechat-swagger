@@ -1,8 +1,8 @@
 post:
   tags:
-    - 支付∙酒店押金
-  summary: 支付押金（人脸支付）
-  description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/deposit_sl.php?chapter=27_0&index=1)'
+    - 支付∙人脸支付
+  summary: 提交刷脸支付
+  description: '[官方人脸支付文档](https://share.weiyun.com/5dxUgCw)'
   consumes:
     - application/xml
   produces:

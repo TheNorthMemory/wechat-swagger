@@ -141,6 +141,8 @@ micropay.request:
       example: '120061098828009406'
       maxLength: 128
     scene_info:
+      xml:
+        x-cdata: true
       type: string
       description: +场景信息
       example: '{"store_info" : {"id": "SZTX001","name": "腾大餐厅","area_code": "440305","address": "科技园中一路腾讯大厦" }}'

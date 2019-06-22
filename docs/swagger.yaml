@@ -141,6 +141,7 @@ tags:
   - name: 支付∙H5支付
   - name: 支付∙小程序支付
   - name: 支付∙人脸支付
+  - name: 支付∙合单支付
   - name: 支付∙代金券或立减优惠
   - name: 支付∙现金红包
   - name: 支付∙企业付款
@@ -153,6 +154,7 @@ tags:
   - name: 支付∙服务商∙H5支付
   - name: 支付∙服务商∙小程序支付
   - name: 支付∙服务商∙人脸支付
+  - name: 支付∙服务商∙合单支付
   - name: 支付∙服务商∙现金红包
   - name: 支付∙服务商∙小微商户
   - name: 支付∙服务商∙分账
@@ -4472,6 +4474,28 @@ paths:
           description: ''
           schema:
             $ref: 'wxpay.yaml#/sendredpack.response'
+  /_wxpay/notify.combinedorderafter:
+    post:
+      tags:
+        - 支付∙合单支付
+        - 支付∙服务商∙合单支付
+      summary: 支付结果通知
+      description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/combine.php?chapter=24_4&index=5)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/notify.combinedorderafter.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/notify.combinedorderafter.response'
   /_wxpay/notify.mckrisk.onpay:
     post:
       tags:
@@ -4671,6 +4695,28 @@ paths:
           description: ''
           schema:
             $ref: 'wxpay.yaml#/querycontract.response'
+  /_wxpay/pay/closecombinedorder:
+    post:
+      tags:
+        - 支付∙合单支付
+        - 支付∙服务商∙合单支付
+      summary: 合单关单
+      description: '合单支付订单只能使用此合单关单api完成关单。调用关单接口：商户订单支付失败需要生成新单号重新发起支付，要对原订单号调用关单，避免重复支付；系统下单后，用户支付超时，系统退出不再受理，避免用户继续，请调用关单接口。**注意：订单生成后不能马上调用关单接口，最短调用时间间隔为1分钟。**[官方合单支付文档](https://pay.weixin.qq.com/wiki/doc/api/combine.php?chapter=24_2&index=3)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/closecombinedorder.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/closecombinedorder.response'
   /_wxpay/pay/closeorder:
     post:
       tags:
@@ -4701,6 +4747,28 @@ paths:
           description: ''
           schema:
             $ref: 'wxpay.yaml#/closeorder.response'
+  /_wxpay/pay/combinedorder:
+    post:
+      tags:
+        - 支付∙合单支付
+        - 支付∙服务商∙合单支付
+      summary: 合单下单
+      description: '使用合单支付接口，用户只输入一次密码，即可完成多个订单的支付。目前最多一次可支持10笔订单进行合单支付。用合单下单api在微信支付服务后台生成预支付交易单，返回正确的预支付交易会话标识后再按扫码、JSAPI、APP、H5等不同场景生成交易串调起支付。[官方合单支付文档](https://pay.weixin.qq.com/wiki/doc/api/combine.php?chapter=24_1&index=2)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/combinedorder.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/combinedorder.response'
   /_wxpay/pay/contractorder:
     post:
       tags:
@@ -4988,6 +5056,28 @@ paths:
           description: ''
           schema:
             $ref: 'wxpay.yaml#/profitsharingremovereceiver.response'
+  /_wxpay/pay/querycombinedorder:
+    post:
+      tags:
+        - 支付∙合单支付
+        - 支付∙服务商∙合单支付
+      summary: 合单查单
+      description: '所有微信支付订单的查询，商户可以通过查询订单接口主动查询订单状态，完成下一步的业务逻辑。**合单查单api只能使用合单单号combine_out_trade_no来查询，如果要使用子订单号查询，请使用公众api中的查单接口。**[官方合单支付文档](https://pay.weixin.qq.com/wiki/doc/api/combine.php?chapter=24_3&index=4)'
+      consumes:
+        - application/xml
+      produces:
+        - application/xml
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            $ref: 'wxpay.yaml#/querycombinedorder.request'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'wxpay.yaml#/querycombinedorder.response'
   /_wxpay/pay/refundquery:
     post:
       tags:

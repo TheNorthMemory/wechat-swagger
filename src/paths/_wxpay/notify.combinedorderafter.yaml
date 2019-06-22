@@ -1,0 +1,21 @@
+post:
+  tags:
+    - 支付∙合单支付
+    - 支付∙服务商∙合单支付
+  summary: 支付结果通知
+  description: '[官方文档](https://pay.weixin.qq.com/wiki/doc/api/combine.php?chapter=24_4&index=5)'
+  consumes:
+    - application/xml
+  produces:
+    - application/xml
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        $ref: 'wxpay.yaml#/notify.combinedorderafter.request'
+  responses:
+    '200':
+      description: ''
+      schema:
+        $ref: 'wxpay.yaml#/notify.combinedorderafter.response'

@@ -18165,6 +18165,366 @@ paths:
               device_type: gh_xxxxxx
               device_id: DEVICE_ID
               mac: MAC
+  /intp/marketcode/applycode:
+    post:
+      summary: 申请二维码
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21560865425yiIAp)'
+      security:
+        - accessToken: []
+      tags:
+        - 一物一码
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            required: [code_count, isv_application_id]
+            properties:
+              code_count:
+                type: integer
+                format: int64
+                description: 申请码的数量，≥10000，≤200000000，10000的整数倍
+                minimum: 10000
+                maximum: 200000000
+                default: 10000
+              isv_application_id:
+                type: string
+                maxLength: 128
+                description: 外部单号
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  application_id:
+                    type: integer
+                    format: int64
+                    description: 申请单号
+  /intp/marketcode/applycodedownload:
+    post:
+      summary: 下载二维码包
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21560865425yiIAp)'
+      security:
+        - accessToken: []
+      tags:
+        - 一物一码
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            required: [application_id, code_start, code_end]
+            properties:
+              application_id:
+                type: integer
+                format: int64
+                description: 申请单号
+              code_start:
+                type: integer
+                format: int64
+                description: 开始位置
+              code_end:
+                type: integer
+                format: int64
+                description: 结束位置
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  buffer:
+                    type: string
+                    description: 申请单状态
+                  isv_application_id:
+                    type: string
+                    maxLength: 128
+                    description: 文件buffer，需要先base64 decode，再做解密操作
+  /intp/marketcode/applycodequery:
+    post:
+      summary: 查询二维码申请单
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21560865425yiIAp)'
+      security:
+        - accessToken: []
+      tags:
+        - 一物一码
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            required: [application_id, isv_application_id]
+            properties:
+              application_id:
+                type: integer
+                format: int64
+                description: 申请单号
+              isv_application_id:
+                type: string
+                maxLength: 128
+                description: 外部单号
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  status:
+                    type: string
+                    maxLength: 128
+                    enum: [INIT, PROCESSING, FINISH]
+                    description: 申请单状态
+                  isv_application_id:
+                    type: string
+                    maxLength: 128
+                    description: 外部单号
+                  application_id:
+                    type: integer
+                    format: int32
+                    description: 申请单号
+                  update_time:
+                    type: integer
+                    format: int32
+                    description: 创建时间
+                  create_time:
+                    type: integer
+                    format: int64
+                    description: 更新时间
+                  code_generate_list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code_start:
+                          type: integer
+                          format: int64
+                          description: 开始位置
+                        code_end:
+                          type: integer
+                          format: int64
+                          description: 结束位置
+  /intp/marketcode/codeactive:
+    post:
+      summary: 激活二维码
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21560865425yiIAp)'
+      security:
+        - accessToken: []
+      tags:
+        - 一物一码
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            required: [application_id, activity_name, product_brand, product_title, product_code, wxa_appid, wxa_path, code_start, code_end]
+            properties:
+              application_id:
+                type: integer
+                format: int64
+                description: 申请单号
+              activity_name:
+                type: string
+                maxLength: 128
+                description: 活动名称
+              product_brand:
+                type: string
+                maxLength: 128
+                description: 商品品牌
+              product_title:
+                type: string
+                maxLength: 128
+                description: 商品标题
+              product_code:
+                type: string
+                maxLength: 128
+                description: 商品条码
+              wxa_appid:
+                type: string
+                maxLength: 128
+                description: 小程序的appid
+              wxa_path:
+                type: string
+                maxLength: 128
+                description: 小程序的path
+              wxa_type:
+                type: integer
+                format: int32
+                default: '0'
+                enum: [0, 1, 2]
+                description: 小程序版本,0=正式版，1=开发版，2=体验版
+              code_start:
+                type: integer
+                format: int64
+                description: 激活码段的起始位
+              code_end:
+                type: integer
+                format: int64
+                description: 激活码段的结束位
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+  /intp/marketcode/codeactivequery:
+    post:
+      summary: 查询二维码激活状态
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21560865187fEGJd)'
+      security:
+        - accessToken: []
+      tags:
+        - 一物一码
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            required: [application_id]
+            properties:
+              application_id:
+                type: integer
+                format: int64
+                description: 申请单号
+              code:
+                type: string
+                maxLength: 9
+                description: 九位的字符串原始码
+              code_index:
+                type: integer
+                format: int64
+                description: 该码在批次中的偏移量
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  activity_name:
+                    type: string
+                    maxLength: 128
+                    description: 活动名称
+                  product_brand:
+                    type: string
+                    maxLength: 128
+                    description: 商品品牌
+                  product_title:
+                    type: string
+                    maxLength: 128
+                    description: 商品标题
+                  product_code:
+                    type: string
+                    maxLength: 128
+                    description: 商品条码
+                  wxa_appid:
+                    type: string
+                    maxLength: 128
+                    description: 小程序的appid
+                  wxa_path:
+                    type: string
+                    maxLength: 128
+                    description: 小程序的path
+                  wxa_type:
+                    type: integer
+                    format: int32
+                    default: '0'
+                    enum: [0, 1, 2]
+                    description: 小程序版本,0=正式版，1=开发版，2=体验版
+                  code_start:
+                    type: integer
+                    format: int64
+                    description: 激活码段的起始位
+                  code_end:
+                    type: integer
+                    format: int64
+                    description: 激活码段的结束位
+  /intp/marketcode/tickettocode:
+    post:
+      summary: code_ticket换code
+      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21560865187fEGJd)'
+      security:
+        - accessToken: []
+      tags:
+        - 一物一码
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            required: [openid,code_ticket]
+            properties:
+              openid:
+                type: string
+                description: 用户的openid，**注:是落地小程序内的用户openid**
+              code_ticket:
+                type: string
+                maxLength: 256
+                description: 跳转时带上的code_ticket参数
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  application_id:
+                    type: integer
+                    format: int64
+                    description: 申请单号
+                  isv_application_id:
+                    type: string
+                    maxLength: 128
+                    description: 外部单号
+                  activity_name:
+                    type: string
+                    maxLength: 128
+                    description: 活动名称
+                  product_brand:
+                    type: string
+                    maxLength: 128
+                    description: 商品品牌
+                  product_title:
+                    type: string
+                    maxLength: 128
+                    description: 商品标题
+                  product_code:
+                    type: string
+                    maxLength: 128
+                    description: 商品条码
+                  wxa_appid:
+                    type: string
+                    maxLength: 128
+                    description: 小程序的appid
+                  wxa_path:
+                    type: string
+                    maxLength: 128
+                    description: 小程序的path
+                  wxa_type:
+                    type: integer
+                    format: int32
+                    default: '0'
+                    enum: [0, 1, 2]
+                    description: 小程序版本,0=正式版，1=开发版，2=体验版
+                  code:
+                    type: string
+                    description: 原始码,返回原始码数据，并返回对应的激活信息
+                  code_start:
+                    type: integer
+                    format: int64
+                    description: 激活码段的起始位
+                  code_end:
+                    type: integer
+                    format: int64
+                    description: 激活码段的结束位
   /mall/addbranditem:
     post:
       summary: 新增商品

@@ -1,0 +1,41 @@
+post:
+  summary: 下载二维码包
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21560865425yiIAp)'
+  security:
+    - accessToken: []
+  tags:
+    - 一物一码
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        required: [application_id, code_start, code_end]
+        properties:
+          application_id:
+            type: integer
+            format: int64
+            description: 申请单号
+          code_start:
+            type: integer
+            format: int64
+            description: 开始位置
+          code_end:
+            type: integer
+            format: int64
+            description: 结束位置
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              buffer:
+                type: string
+                description: 申请单状态
+              isv_application_id:
+                type: string
+                maxLength: 128
+                description: 文件buffer，需要先base64 decode，再做解密操作

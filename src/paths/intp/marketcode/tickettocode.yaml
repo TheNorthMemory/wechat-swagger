@@ -1,0 +1,78 @@
+post:
+  summary: code_ticket换code
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21560865187fEGJd)'
+  security:
+    - accessToken: []
+  tags:
+    - 一物一码
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        required: [openid,code_ticket]
+        properties:
+          openid:
+            type: string
+            description: 用户的openid，**注:是落地小程序内的用户openid**
+          code_ticket:
+            type: string
+            maxLength: 256
+            description: 跳转时带上的code_ticket参数
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              application_id:
+                type: integer
+                format: int64
+                description: 申请单号
+              isv_application_id:
+                type: string
+                maxLength: 128
+                description: 外部单号
+              activity_name:
+                type: string
+                maxLength: 128
+                description: 活动名称
+              product_brand:
+                type: string
+                maxLength: 128
+                description: 商品品牌
+              product_title:
+                type: string
+                maxLength: 128
+                description: 商品标题
+              product_code:
+                type: string
+                maxLength: 128
+                description: 商品条码
+              wxa_appid:
+                type: string
+                maxLength: 128
+                description: 小程序的appid
+              wxa_path:
+                type: string
+                maxLength: 128
+                description: 小程序的path
+              wxa_type:
+                type: integer
+                format: int32
+                default: '0'
+                enum: [0, 1, 2]
+                description: 小程序版本,0=正式版，1=开发版，2=体验版
+              code:
+                type: string
+                description: 原始码,返回原始码数据，并返回对应的激活信息
+              code_start:
+                type: integer
+                format: int64
+                description: 激活码段的起始位
+              code_end:
+                type: integer
+                format: int64
+                description: 激活码段的结束位

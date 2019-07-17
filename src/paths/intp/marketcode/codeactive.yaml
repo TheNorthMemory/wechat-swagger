@@ -1,0 +1,62 @@
+post:
+  summary: 激活二维码
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21560865425yiIAp)'
+  security:
+    - accessToken: []
+  tags:
+    - 一物一码
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        required: [application_id, activity_name, product_brand, product_title, product_code, wxa_appid, wxa_path, code_start, code_end]
+        properties:
+          application_id:
+            type: integer
+            format: int64
+            description: 申请单号
+          activity_name:
+            type: string
+            maxLength: 128
+            description: 活动名称
+          product_brand:
+            type: string
+            maxLength: 128
+            description: 商品品牌
+          product_title:
+            type: string
+            maxLength: 128
+            description: 商品标题
+          product_code:
+            type: string
+            maxLength: 128
+            description: 商品条码
+          wxa_appid:
+            type: string
+            maxLength: 128
+            description: 小程序的appid
+          wxa_path:
+            type: string
+            maxLength: 128
+            description: 小程序的path
+          wxa_type:
+            type: integer
+            format: int32
+            default: '0'
+            enum: [0, 1, 2]
+            description: 小程序版本,0=正式版，1=开发版，2=体验版
+          code_start:
+            type: integer
+            format: int64
+            description: 激活码段的起始位
+          code_end:
+            type: integer
+            format: int64
+            description: 激活码段的结束位
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'

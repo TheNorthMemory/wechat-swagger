@@ -1,0 +1,64 @@
+post:
+  summary: 查询二维码申请单
+  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21560865425yiIAp)'
+  security:
+    - accessToken: []
+  tags:
+    - 一物一码
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        required: [application_id, isv_application_id]
+        properties:
+          application_id:
+            type: integer
+            format: int64
+            description: 申请单号
+          isv_application_id:
+            type: string
+            maxLength: 128
+            description: 外部单号
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              status:
+                type: string
+                maxLength: 128
+                enum: [INIT, PROCESSING, FINISH]
+                description: 申请单状态
+              isv_application_id:
+                type: string
+                maxLength: 128
+                description: 外部单号
+              application_id:
+                type: integer
+                format: int32
+                description: 申请单号
+              update_time:
+                type: integer
+                format: int32
+                description: 创建时间
+              create_time:
+                type: integer
+                format: int64
+                description: 更新时间
+              code_generate_list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    code_start:
+                      type: integer
+                      format: int64
+                      description: 开始位置
+                    code_end:
+                      type: integer
+                      format: int64
+                      description: 结束位置

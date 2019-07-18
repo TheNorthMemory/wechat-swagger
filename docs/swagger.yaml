@@ -18241,10 +18241,6 @@ paths:
                 properties:
                   buffer:
                     type: string
-                    description: 申请单状态
-                  isv_application_id:
-                    type: string
-                    maxLength: 128
                     description: 文件buffer，需要先base64 decode，再做解密操作
   /intp/marketcode/applycodequery:
     post:
@@ -18293,11 +18289,11 @@ paths:
                   update_time:
                     type: integer
                     format: int32
-                    description: 创建时间
+                    description: 更新时间
                   create_time:
                     type: integer
                     format: int64
-                    description: 更新时间
+                    description: 创建时间
                   code_generate_list:
                     type: array
                     items:

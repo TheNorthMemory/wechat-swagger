@@ -44,11 +44,11 @@ post:
               update_time:
                 type: integer
                 format: int32
-                description: 创建时间
+                description: 更新时间
               create_time:
                 type: integer
                 format: int64
-                description: 更新时间
+                description: 创建时间
               code_generate_list:
                 type: array
                 items:

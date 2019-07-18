@@ -34,8 +34,4 @@ post:
             properties:
               buffer:
                 type: string
-                description: 申请单状态
-              isv_application_id:
-                type: string
-                maxLength: 128
                 description: 文件buffer，需要先base64 decode，再做解密操作

@@ -1,6 +1,6 @@
 post:
   summary: 获取模板库某个模板标题下关键词库
-  description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR) [小程序文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/templateMessage.getTemplateLibraryById.html)'
+  description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR) [小程序文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/template-message/templateMessage.getTemplateLibraryById.html)'
   security:
     - authorizerAccessToken: []
     - accessToken: []

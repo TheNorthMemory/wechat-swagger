@@ -13940,10 +13940,77 @@ paths:
               errmsg: ok
               activity_id: ACTIVITY_ID
               expiration_time: 86400
+  /cgi-bin/message/wxopen/template/send:
+    post:
+      summary: 发送模版消息
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/template-message/templateMessage.send.html)'
+      security:
+        - authorizerAccessToken: []
+        - accessToken: []
+      tags:
+        - 开放平台∙第三方平台∙代小程序∙模板消息模板设置
+        - 小程序∙模版消息
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              touser:
+                type: string
+                description: 接收者openid
+              template_id:
+                type: string
+                description: 所需下发的模板消息的id
+              page:
+                type: string
+                description: 点击模板卡片后的跳转页面，仅限本小程序内的页面。支持带参数,（示例index?foo=bar）。该字段不填则模板无跳转。
+              form_id:
+                type: string
+                description: 表单提交场景下，为 submit 事件带上的formId；支付场景下，为本次支付的prepay_id
+              emphasis_keyword:
+                type: string
+                description: 模板需要放大的关键词，不填则默认无放大
+              data:
+                type: object
+                description: 模板数据
+                additionalProperties:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                      description: 模版数据值
+            example:
+              touser: OPENID
+              template_id: ngqIpbwh8bUfcSsECmogfXcV14J0tQlEpBO27izEYtY
+              page: index
+              form_id: FORMID
+              emphasis_keyword: keyword1.DATA
+              data:
+                first:
+                  value: 恭喜你购买成功！
+                keyword1:
+                  value: 巧克力
+                keyword2:
+                  value: 39.8元
+                keyword3:
+                  value: 2014年9月22日
+                remark:
+                  value: 欢迎再次购买！
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+            example:
+              errCode: 0
+              errMsg: 'openapi.templateMessage.send:ok'
   /cgi-bin/message/wxopen/template/uniform_send:
     post:
       summary: 统一服务消息下发接口
-      description: 为便于开发者对用户进行服务消息触达，简化小程序和公众号模板消息下发流程，小程序提供统一的服务消息下发接口。**注意 官方文档data结构体有误** [官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/uniformMessage.send.html)
+      description: 为便于开发者对用户进行服务消息触达，简化小程序和公众号模板消息下发流程，小程序提供统一的服务消息下发接口。**注意 官方文档data结构体有误** [官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/uniform-message/uniformMessage.send.html)
       security:
         - accessToken: []
       tags:
@@ -16078,7 +16145,7 @@ paths:
   /cgi-bin/wxopen/template/add:
     post:
       summary: 组合模板并添加至帐号下的个人模板库
-      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR) [小程序文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/templateMessage.addTemplate.html)'
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR) [小程序文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/template-message/templateMessage.addTemplate.html)'
       security:
         - authorizerAccessToken: []
         - accessToken: []
@@ -16117,7 +16184,7 @@ paths:
   /cgi-bin/wxopen/template/del:
     post:
       summary: 删除帐号下的某个模板
-      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR) [小程序文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/templateMessage.deleteTemplate.html)'
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR) [小程序文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/template-message/templateMessage.deleteTemplate.html)'
       security:
         - authorizerAccessToken: []
         - accessToken: []
@@ -16144,7 +16211,7 @@ paths:
   /cgi-bin/wxopen/template/library/get:
     post:
       summary: 获取模板库某个模板标题下关键词库
-      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR) [小程序文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/templateMessage.getTemplateLibraryById.html)'
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR) [小程序文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/template-message/templateMessage.getTemplateLibraryById.html)'
       security:
         - authorizerAccessToken: []
         - accessToken: []
@@ -16208,7 +16275,7 @@ paths:
   /cgi-bin/wxopen/template/library/list:
     post:
       summary: 获取小程序模板库标题列表
-      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR) [小程序文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/templateMessage.getTemplateLibraryList.html)'
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR) [小程序文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/template-message/templateMessage.getTemplateLibraryList.html)'
       security:
         - authorizerAccessToken: []
         - accessToken: []
@@ -16273,7 +16340,7 @@ paths:
   /cgi-bin/wxopen/template/list:
     post:
       summary: 获取帐号下已存在的模板列表
-      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR) [小程序文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/templateMessage.getTemplateList.html)'
+      description: '[官方文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1500465446_j4CgR) [小程序文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/template-message/templateMessage.getTemplateList.html)'
       security:
         - authorizerAccessToken: []
         - accessToken: []
@@ -16331,73 +16398,6 @@ paths:
                     购买地点：TIT造舰厂
                     购买时间：2016年6月6日
                     物品名称：咖啡
-  /cgi-bin/wxopen/template/send:
-    post:
-      summary: 发送模版消息
-      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/templateMessage.send.html)'
-      security:
-        - authorizerAccessToken: []
-        - accessToken: []
-      tags:
-        - 开放平台∙第三方平台∙代小程序∙模板消息模板设置
-        - 小程序∙模版消息
-      parameters:
-        - in: body
-          name: body
-          required: true
-          schema:
-            type: object
-            properties:
-              touser:
-                type: string
-                description: 接收者openid
-              template_id:
-                type: string
-                description: 所需下发的模板消息的id
-              page:
-                type: string
-                description: 点击模板卡片后的跳转页面，仅限本小程序内的页面。支持带参数,（示例index?foo=bar）。该字段不填则模板无跳转。
-              form_id:
-                type: string
-                description: 表单提交场景下，为 submit 事件带上的formId；支付场景下，为本次支付的prepay_id
-              emphasis_keyword:
-                type: string
-                description: 模板需要放大的关键词，不填则默认无放大
-              data:
-                type: object
-                description: 模板数据
-                additionalProperties:
-                  type: object
-                  properties:
-                    value:
-                      type: string
-                      description: 模版数据值
-            example:
-              touser: OPENID
-              template_id: ngqIpbwh8bUfcSsECmogfXcV14J0tQlEpBO27izEYtY
-              page: index
-              form_id: FORMID
-              emphasis_keyword: keyword1.DATA
-              data:
-                first:
-                  value: 恭喜你购买成功！
-                keyword1:
-                  value: 巧克力
-                keyword2:
-                  value: 39.8元
-                keyword3:
-                  value: 2014年9月22日
-                remark:
-                  value: 欢迎再次购买！
-      responses:
-        '200':
-          description: ''
-          schema:
-            allOf:
-              - $ref: '#/definitions/base.ResponseBo'
-            example:
-              errCode: 0
-              errMsg: 'openapi.templateMessage.send:ok'
   /cgi-bin/wxopen/wxamplink:
     post:
       summary: 关联小程序

@@ -1,6 +1,6 @@
 post:
   summary: 拉取卡券概况数据
-  description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)'
+  description: 支持调用该接口拉取本商户的总体数据情况，包括时间区间内的各指标总量。查询时间区间需<=62天。该接口只能拉取非当天的数据。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#10)
   security:
     - accessToken: []
   tags:
@@ -10,7 +10,99 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          begin_date:
+            type: string
+            format: date
+            description: 获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”
+          end_date:
+            type: string
+            format: date
+            description: 获取数据的结束日期，end_date允许设置的最大值为昨日
+          cond_source:
+            type: integer
+            format: int32
+            description: 卡券来源，0为公众平台创建的卡券数据 、1是API创建的卡券数据
+            enum: [0, 1]
+        required:
+          - begin_date
+          - end_date
+          - cond_source
+        example:
+          begin_date: '2014-12-01'
+          end_date: '2015-01-31'
+          cond_source: '1'
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - type: object
+            properties:
+              list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    ref_date:
+                      type: string
+                      format: date
+                      description: 数据的日期，需在begin_date和end_date之间
+                    view_cnt:
+                      type: integer
+                      format: int32
+                      description: 浏览次数
+                    view_user:
+                      type: integer
+                      format: int32
+                      description: 浏览人数
+                    receive_cnt:
+                      type: integer
+                      format: int32
+                      description: 领取次数
+                    receive_user:
+                      type: integer
+                      format: int32
+                      description: 领取人数
+                    verify_cnt:
+                      type: integer
+                      format: int32
+                      description: 使用次数
+                    verify_user:
+                      type: integer
+                      format: int32
+                      description: 使用人数
+                    given_cnt:
+                      type: integer
+                      format: int32
+                      description: 转赠次数
+                    given_user:
+                      type: integer
+                      format: int32
+                      description: 转赠人数
+                    expire_cnt:
+                      type: integer
+                      format: int32
+                      description: 过期次数
+                    expire_user:
+                      type: integer
+                      format: int32
+                      description: 过期人数
+                    view_friends_cnt:
+                      type: integer
+                      format: int32
+                    view_friends_user:
+                      type: integer
+                      format: int32
+                    receive_friends_cnt:
+                      type: integer
+                      format: int32
+                    receive_friends_user:
+                      type: integer
+                      format: int32
+                    verify_friends_cnt:
+                      type: integer
+                      format: int32
+                    verify_friends_user:
+                      type: integer
+                      format: int32

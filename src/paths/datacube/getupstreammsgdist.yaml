@@ -1,5 +1,6 @@
 post:
   summary: 获取消息发送分布数据
+  description: 仅存储了2014年12月1日之后的数据。最大时间跨度最多一次性获取15天的数据。每天上午8点后查询公众号前一天的数据。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/Analytics/Message_analysis_data_interface.html)
   security:
     - accessToken: []
   tags:
@@ -9,7 +10,46 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          begin_date:
+            type: string
+            format: date
+            description: 获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”
+          end_date:
+            type: string
+            format: date
+            description: 获取数据的结束日期，end_date允许设置的最大值为昨日
+        required:
+          - begin_date
+          - end_date
+        example:
+          begin_date: '2014-12-01'
+          end_date: '2014-12-15'
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - type: object
+            properties:
+              list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    ref_date:
+                      type: string
+                      format: date
+                      description: 数据的日期，需在begin_date和end_date之间
+                    user_source:
+                      type: integer
+                      format: int32
+                    count_interval:
+                      type: integer
+                      format: int32
+                      description: 当日发送消息量分布的区间，0代表 “0”，1代表“1-5”，2代表“6-10”，3代表“10次以上”
+                      enum: [0, 1, 2, 3]
+                    msg_user:
+                      type: integer
+                      format: int32
+                      description: 上行发送了（向公众号发送了）消息的用户数

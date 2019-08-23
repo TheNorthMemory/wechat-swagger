@@ -1,5 +1,6 @@
 post:
   summary: 获取消息发送概况数据
+  description: 仅存储了2014年12月1日之后的数据。最大时间跨度最多一次性获取7天的数据。每天上午8点后查询公众号前一天的数据。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/Analytics/Message_analysis_data_interface.html)
   security:
     - accessToken: []
   tags:
@@ -9,7 +10,50 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          begin_date:
+            type: string
+            format: date
+            description: 获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”
+          end_date:
+            type: string
+            format: date
+            description: 获取数据的结束日期，end_date允许设置的最大值为昨日
+        required:
+          - begin_date
+          - end_date
+        example:
+          begin_date: '2014-12-01'
+          end_date: '2014-12-07'
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - type: object
+            properties:
+              list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    ref_date:
+                      type: string
+                      format: date
+                      description: 数据的日期，需在begin_date和end_date之间
+                    user_source:
+                      type: integer
+                      format: int32
+                    msg_type:
+                      type: integer
+                      format: int32
+                      description: 消息类型，代表含义如下： 1代表文字 2代表图片 3代表语音 4代表视频 6代表第三方应用消息（链接消息）
+                      enum: [1, 2, 3, 4, 6]
+                    msg_user:
+                      type: integer
+                      format: int32
+                      description: 上行发送了（向公众号发送了）消息的用户数
+                    msg_count:
+                      type: integer
+                      format: int32
+                      description: 上行发送了消息的消息总数

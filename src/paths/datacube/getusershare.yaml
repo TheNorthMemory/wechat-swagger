@@ -1,5 +1,6 @@
 post:
   summary: 获取图文分享转发数据
+  description: 仅存储了2014年12月1日之后的数据。最大时间跨度最多一次性获取7天的数据。每天上午8点后查询公众号前一天的数据。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/Analytics/Graphic_Analysis_Data_Interface.html)
   security:
     - accessToken: []
   tags:
@@ -9,7 +10,52 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          begin_date:
+            type: string
+            format: date
+            description: 获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”
+          end_date:
+            type: string
+            format: date
+            description: 获取数据的结束日期，end_date允许设置的最大值为昨日
+        required:
+          - begin_date
+          - end_date
+        example:
+          begin_date: '2014-12-01'
+          end_date: '2014-12-07'
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - type: object
+            properties:
+              list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    ref_date:
+                      type: string
+                      format: date
+                      description: 数据的日期，需在begin_date和end_date之间
+                    user_source:
+                      type: integer
+                      format: int32
+                      description: 在获取图文阅读分时数据时才有该字段，代表用户从哪里进入来阅读该图文。0:会话;1.好友;2.朋友圈;3.腾讯微博;4.历史消息页;5.其他;6.看一看;7.搜一搜
+                      enum: [0, 1, 2, 3, 4, 5, 6, 7]
+                    share_scene:
+                      type: integer
+                      format: int32
+                      description: 分享的场景 1代表好友转发 2代表朋友圈 3代表腾讯微博 255代表其他
+                      enum: [1, 2, 3, 255]
+                    share_count:
+                      type: integer
+                      format: int32
+                      description: 分享的次数
+                    share_user:
+                      type: integer
+                      format: int32
+                      description: 分享的人数

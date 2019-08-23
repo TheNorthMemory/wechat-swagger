@@ -1,6 +1,6 @@
 post:
   summary: 获取Wi-Fi门店列表
-  description: 通过此接口获取WiFi的门店列表，该列表包括公众平台的门店信息、以及添加设备后的WiFi相关信息。注：微信连Wi-Fi下的所有接口中的shop_id，必需先通过此接口获取。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444894115)
+  description: 通过此接口获取WiFi的门店列表，该列表包括公众平台的门店信息、以及添加设备后的WiFi相关信息。注：微信连Wi-Fi下的所有接口中的shop_id，必需先通过此接口获取。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/WiFi_via_WeChat/Stores_management/Get_a_Wi-Fi_store_list.html)
   security:
     - accessToken: []
   tags:

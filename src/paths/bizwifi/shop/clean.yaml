@@ -1,6 +1,6 @@
 post:
   summary: 清空门店网络及设备
-  description: 通过此接口清空门店的网络配置及所有设备，恢复空门店状态。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457435430)
+  description: 通过此接口清空门店的网络配置及所有设备，恢复空门店状态。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/WiFi_via_WeChat/Stores_management/Empty_the_store_network_and_devices.html)
   security:
     - accessToken: []
   tags:
@@ -15,6 +15,9 @@ post:
             type: integer
             format: int32
             description: 门店ID
+          ssid:
+            type: string
+            description: 无线网络设备的ssid。若不填写ssid，默认为清空门店下所有设备；填写ssid则为清空该ssid下的所有设备
         required:
           - shop_id
   responses:

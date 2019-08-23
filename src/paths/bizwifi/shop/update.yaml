@@ -1,6 +1,6 @@
 post:
   summary: 修改门店网络信息
-  description: 通过此接口修改门店的网络信息，包括网络名称（ssid）或密码。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457435413)
+  description: 通过此接口修改门店的网络信息，包括网络名称（ssid）或密码。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/WiFi_via_WeChat/Stores_management/Modify_the_store_network_information.html)
   security:
     - accessToken: []
   tags:

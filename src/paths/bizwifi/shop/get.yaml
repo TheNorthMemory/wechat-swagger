@@ -1,6 +1,6 @@
 post:
   summary: 查询门店WiFi信息接口
-  description: 通过此接口查询某一门店的详细Wi-Fi信息，包括门店内的设备类型、ssid、密码、设备数量、商家主页URL、顶部常驻入口文案。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457435331)
+  description: 通过此接口查询某一门店的详细Wi-Fi信息，包括门店内的设备类型、ssid、密码、设备数量、商家主页URL、顶部常驻入口文案。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/WiFi_via_WeChat/Stores_management/Query_store_Wi-Fi_information.html)
   security:
     - accessToken: []
   tags:

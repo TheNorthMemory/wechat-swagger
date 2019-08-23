@@ -2,11 +2,19 @@
 
 基于 `Swagger 2.0` 版本的微信服务端接口文档及工具，配合 `swagger-ui` 可作为本地开发者调试工具。
 
+
+[![](https://img.shields.io/docker/cloud/automated/thenorthmemory/wechat-swagger.svg)](https://hub.docker.com/r/thenorthmemory/wechat-swagger)
+[![](https://img.shields.io/docker/pulls/thenorthmemory/wechat-swagger.svg)](https://hub.docker.com/r/thenorthmemory/wechat-swagger)
+
 ## 说明
 
 1. 纯开发者文档，请访问[这里](https://thenorthmemory.github.io/wechat-swagger)
 2. 因 javascript 存在 CORS 限制，如若想使此文档用作调试工具，需要配合简单反向代理服务器，如 `nginx`，简单配置即可在本地测/调 `500+` 开放接口。
 3. [微信广告服务商](https://wximg.qq.com/wxp/pdftool/get.html?id=HJ2uqGgXW) 使用了另外一套签名方法，本项目也提供了透明代理解决方案，需使用 `openresty` 配合环境变量运行。
+
+## 容器
+
+`docker run -d -e TSA_AGENCY_ID=$TSA_AGENCY_ID TSA_AGENCY_APIKEY=$TSA_AGENCY_APIKEY --rm -p7788:7788 thenorthmemory/wechat-swagger`
 
 ## 本地Docker容器运行时
 

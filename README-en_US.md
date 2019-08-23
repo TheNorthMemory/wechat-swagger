@@ -2,10 +2,17 @@
 
 An easy way to document/play/debug the wechat api using the swagger-ui.
 
+[![](https://img.shields.io/docker/cloud/automated/thenorthmemory/wechat-swagger.svg)](https://hub.docker.com/r/thenorthmemory/wechat-swagger)
+[![](https://img.shields.io/docker/pulls/thenorthmemory/wechat-swagger.svg)](https://hub.docker.com/r/thenorthmemory/wechat-swagger)
+
 ## usage
 
 1. It's only need a http server to host the dist folder as the document root, then that's act as a documentation server.
 2. Using the http reverse proxy with http rewrite features, that's act as the wechat API server.
+
+## container
+
+`docker run -d -e TSA_AGENCY_ID=$TSA_AGENCY_ID TSA_AGENCY_APIKEY=$TSA_AGENCY_APIKEY --rm -p7788:7788 thenorthmemory/wechat-swagger`
 
 ## quickly run in docker
 

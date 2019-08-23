@@ -17055,6 +17055,7 @@ paths:
   /datacube/getarticlesummary:
     post:
       summary: 获取图文群发每日数据
+      description: 仅存储了2014年12月1日之后的数据。最大时间跨度最多一次性获取1天的数据。每天上午8点后查询公众号前一天的数据。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/Analytics/Graphic_Analysis_Data_Interface.html)
       security:
         - accessToken: []
       tags:
@@ -17064,13 +17065,84 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              begin_date:
+                type: string
+                format: date
+                description: 获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”
+              end_date:
+                type: string
+                format: date
+                description: 获取数据的结束日期，end_date允许设置的最大值为昨日
+            required:
+              - begin_date
+              - end_date
+            example:
+              begin_date: '2014-12-01'
+              end_date: '2014-12-01'
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ref_date:
+                          type: string
+                          format: date
+                          description: 数据的日期，需在begin_date和end_date之间
+                        user_source:
+                          type: integer
+                          format: int32
+                          description: 在获取图文阅读分时数据时才有该字段，代表用户从哪里进入来阅读该图文。0:会话;1.好友;2.朋友圈;3.腾讯微博;4.历史消息页;5.其他;6.看一看;7.搜一搜
+                          enum: [0, 1, 2, 3, 4, 5, 6, 7]
+                        msgid:
+                          type: string
+                          description: 请注意：这里的msgid实际上是由msgid（图文消息id，这也就是群发接口调用后返回的msg_data_id）和index（消息次序索引）组成， 例如12003_3， 其中12003是msgid，即一次群发的消息的id； 3为index，假设该次群发的图文消息共5个文章（因为可能为多图文），3表示5个中的第3个
+                        title:
+                          type: string
+                          description: 图文消息的标题
+                        int_page_read_user:
+                          type: integer
+                          format: int32
+                          description: 图文页（点击群发图文卡片进入的页面）的阅读人数
+                        int_page_read_count:
+                          type: integer
+                          format: int32
+                          description: 图文页的阅读次数
+                        ori_page_read_user:
+                          type: integer
+                          format: int32
+                          description: 原文页（点击图文页“阅读原文”进入的页面）的阅读人数，无原文页时此处数据为0
+                        ori_page_read_count:
+                          type: integer
+                          format: int32
+                          description: 原文页的阅读次数
+                        share_user:
+                          type: integer
+                          format: int32
+                          description: 分享的人数
+                        share_count:
+                          type: integer
+                          format: int32
+                          description: 分享的次数
+                        add_to_fav_user:
+                          type: integer
+                          format: int32
+                          description: 收藏的人数
+                        add_to_fav_count:
+                          type: integer
+                          format: int32
+                          description: 收藏的次数
   /datacube/getarticletotal:
     post:
       summary: 获取图文群发总数据
+      description: 仅存储了2014年12月1日之后的数据。最大时间跨度最多一次性获取1天的数据。每天上午8点后查询公众号前一天的数据。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/Analytics/Graphic_Analysis_Data_Interface.html)
       security:
         - accessToken: []
       tags:
@@ -17080,14 +17152,176 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              begin_date:
+                type: string
+                format: date
+                description: 获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”
+              end_date:
+                type: string
+                format: date
+                description: 获取数据的结束日期，end_date允许设置的最大值为昨日
+            required:
+              - begin_date
+              - end_date
+            example:
+              begin_date: '2014-12-01'
+              end_date: '2014-12-01'
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ref_date:
+                          type: string
+                          format: date
+                          description: 数据的日期，需在begin_date和end_date之间
+                        msgid:
+                          type: string
+                          description: 请注意：这里的msgid实际上是由msgid（图文消息id，这也就是群发接口调用后返回的msg_data_id）和index（消息次序索引）组成， 例如12003_3， 其中12003是msgid，即一次群发的消息的id； 3为index，假设该次群发的图文消息共5个文章（因为可能为多图文），3表示5个中的第3个
+                        title:
+                          type: string
+                          description: 图文消息的标题
+                        user_source:
+                          type: integer
+                          format: int32
+                          description: 在获取图文阅读分时数据时才有该字段，代表用户从哪里进入来阅读该图文。0:会话;1.好友;2.朋友圈;3.腾讯微博;4.历史消息页;5.其他;6.看一看;7.搜一搜
+                          enum: [0, 1, 2, 3, 4, 5, 6, 7]
+                        details:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              stat_date:
+                                type: string
+                                description: 统计的日期，在getarticletotal接口中，ref_date指的是文章群发出日期， 而stat_date是数据统计日期
+                              target_user:
+                                type: integer
+                                format: int32
+                                description: 送达人数，一般约等于总粉丝数（需排除黑名单或其他异常情况下无法收到消息的粉丝）
+                              int_page_read_user:
+                                type: integer
+                                format: int32
+                                description: 图文页（点击群发图文卡片进入的页面）的阅读人数
+                              int_page_read_count:
+                                type: integer
+                                format: int32
+                                description: 图文页的阅读次数
+                              ori_page_read_user:
+                                type: integer
+                                format: int32
+                                description: 原文页（点击图文页“阅读原文”进入的页面）的阅读人数，无原文页时此处数据为0
+                              ori_page_read_count:
+                                type: integer
+                                format: int32
+                                description: 原文页的阅读次数
+                              share_user:
+                                type: integer
+                                format: int32
+                                description: 分享的人数
+                              share_count:
+                                type: integer
+                                format: int32
+                                description: 分享的次数
+                              add_to_fav_user:
+                                type: integer
+                                format: int32
+                                description: 收藏的人数
+                              add_to_fav_count:
+                                type: integer
+                                format: int32
+                                description: 收藏的次数
+                              int_page_from_session_read_user:
+                                type: integer
+                                format: int32
+                                description: 公众号会话阅读人数
+                              int_page_from_session_read_count:
+                                type: integer
+                                format: int32
+                                description: 公众号会话阅读次数
+                              int_page_from_hist_msg_read_user:
+                                type: integer
+                                format: int32
+                                description: 历史消息页阅读人数
+                              int_page_from_hist_msg_read_count:
+                                type: integer
+                                format: int32
+                                description: 历史消息页阅读次数
+                              int_page_from_feed_read_user:
+                                type: integer
+                                format: int32
+                                description: 朋友圈阅读人数
+                              int_page_from_feed_read_count:
+                                type: integer
+                                format: int32
+                                description: 朋友圈阅读次数
+                              int_page_from_friends_read_user:
+                                type: integer
+                                format: int32
+                                description: 好友转发阅读人数
+                              int_page_from_friends_read_count:
+                                type: integer
+                                format: int32
+                                description: 好友转发阅读次数
+                              int_page_from_other_read_user:
+                                type: integer
+                                format: int32
+                                description: 其他场景阅读人数
+                              int_page_from_other_read_count:
+                                type: integer
+                                format: int32
+                                description: 其他场景阅读次数
+                              int_page_from_kanyikan_read_user:
+                                type: integer
+                                format: int32
+                                description: 看一看来源阅读人数
+                              int_page_from_kanyikan_read_count:
+                                type: integer
+                                format: int32
+                                description: 看一看来源阅读次数
+                              int_page_from_souyisou_read_user:
+                                type: integer
+                                format: int32
+                                description: 搜一搜来源阅读人数
+                              int_page_from_souyisou_read_count:
+                                type: integer
+                                format: int32
+                                description: 搜一搜来源阅读次数
+                              feed_share_from_session_user:
+                                type: integer
+                                format: int32
+                                description: 公众号会话转发朋友圈人数
+                              feed_share_from_session_cnt:
+                                type: integer
+                                format: int32
+                                description: 公众号会话转发朋友圈次数
+                              feed_share_from_feed_user:
+                                type: integer
+                                format: int32
+                                description: 朋友圈转发朋友圈人数
+                              feed_share_from_feed_cnt:
+                                type: integer
+                                format: int32
+                                description: 朋友圈转发朋友圈次数
+                              feed_share_from_otheruser:
+                                type: integer
+                                format: int32
+                                description: 其他场景转发朋友圈人数
+                              feed_share_from_other_cnt:
+                                type: integer
+                                format: int32
+                                description: 其他场景转发朋友圈次数
   /datacube/getcardbizuininfo:
     post:
       summary: 拉取卡券概况数据
-      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)'
+      description: 支持调用该接口拉取本商户的总体数据情况，包括时间区间内的各指标总量。查询时间区间需<=62天。该接口只能拉取非当天的数据。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#10)
       security:
         - accessToken: []
       tags:
@@ -17097,14 +17331,106 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              begin_date:
+                type: string
+                format: date
+                description: 获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”
+              end_date:
+                type: string
+                format: date
+                description: 获取数据的结束日期，end_date允许设置的最大值为昨日
+              cond_source:
+                type: integer
+                format: int32
+                description: 卡券来源，0为公众平台创建的卡券数据 、1是API创建的卡券数据
+                enum: [0, 1]
+            required:
+              - begin_date
+              - end_date
+              - cond_source
+            example:
+              begin_date: '2014-12-01'
+              end_date: '2015-01-31'
+              cond_source: '1'
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ref_date:
+                          type: string
+                          format: date
+                          description: 数据的日期，需在begin_date和end_date之间
+                        view_cnt:
+                          type: integer
+                          format: int32
+                          description: 浏览次数
+                        view_user:
+                          type: integer
+                          format: int32
+                          description: 浏览人数
+                        receive_cnt:
+                          type: integer
+                          format: int32
+                          description: 领取次数
+                        receive_user:
+                          type: integer
+                          format: int32
+                          description: 领取人数
+                        verify_cnt:
+                          type: integer
+                          format: int32
+                          description: 使用次数
+                        verify_user:
+                          type: integer
+                          format: int32
+                          description: 使用人数
+                        given_cnt:
+                          type: integer
+                          format: int32
+                          description: 转赠次数
+                        given_user:
+                          type: integer
+                          format: int32
+                          description: 转赠人数
+                        expire_cnt:
+                          type: integer
+                          format: int32
+                          description: 过期次数
+                        expire_user:
+                          type: integer
+                          format: int32
+                          description: 过期人数
+                        view_friends_cnt:
+                          type: integer
+                          format: int32
+                        view_friends_user:
+                          type: integer
+                          format: int32
+                        receive_friends_cnt:
+                          type: integer
+                          format: int32
+                        receive_friends_user:
+                          type: integer
+                          format: int32
+                        verify_friends_cnt:
+                          type: integer
+                          format: int32
+                        verify_friends_user:
+                          type: integer
+                          format: int32
   /datacube/getcardcardinfo:
     post:
       summary: 获取免费券数据
-      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)'
+      description: 支持开发者调用该接口拉取免费券（优惠券、团购券、折扣券、礼品券）在固定时间区间内的相关数据。查询时间区间需<=62天。该接口只能拉取非当天的数据。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#11)
       security:
         - accessToken: []
       tags:
@@ -17114,14 +17440,110 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              begin_date:
+                type: string
+                format: date
+                description: 获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”
+              end_date:
+                type: string
+                format: date
+                description: 获取数据的结束日期，end_date允许设置的最大值为昨日
+              cond_source:
+                type: integer
+                format: int32
+                description: 卡券来源，0为公众平台创建的卡券数据 、1是API创建的卡券数据
+                enum: [0, 1]
+              card_id:
+                type: string
+                description: 卡券ID。填写后，指定拉出该卡券的相关数据。
+            required:
+              - begin_date
+              - end_date
+              - cond_source
+            example:
+              begin_date: '2014-12-01'
+              end_date: '2015-01-31'
+              cond_source: '1'
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ref_date:
+                          type: string
+                          description: 日期信息
+                        card_id:
+                          type: string
+                          description: 卡券ID
+                        card_type:
+                          type: integer
+                          format: int32
+                          description: cardtype:0：折扣券， 1：代金券，2：礼品券，3：优惠券，4：团购券（暂不支持拉取特殊票券类型数据，电影票、飞机票、会议门票、景区门票）
+                          enum: [0, 1, 2, 3, 4]
+                        view_cnt:
+                          type: integer
+                          format: int32
+                          description: 浏览次数
+                        view_user:
+                          type: integer
+                          format: int32
+                          description: 浏览人数
+                        receive_cnt:
+                          type: integer
+                          format: int32
+                          description: 领取次数
+                        receive_user:
+                          type: integer
+                          format: int32
+                          description: 领取人数
+                        verify_cnt:
+                          type: integer
+                          format: int32
+                          description: 使用次数
+                        verify_user:
+                          type: integer
+                          format: int32
+                          description: 使用人数
+                        given_cnt:
+                          type: integer
+                          format: int32
+                          description: 转赠次数
+                        given_user:
+                          type: integer
+                          format: int32
+                          description: 转赠人数
+                        expire_cnt:
+                          type: integer
+                          format: int32
+                          description: 过期次数
+                        expire_user:
+                          type: integer
+                          format: int32
+                          description: 过期人数
+                        verify_noself_cnt:
+                          type: integer
+                          format: int32
+                        verify_noself_user:
+                          type: integer
+                          format: int32
+                        isfriendscard:
+                          type: integer
+                          format: int32
+                        is_pay:
+                          type: integer
+                          format: int32
   /datacube/getcardmembercarddetail:
     post:
       summary: 拉取单张会员卡数据
-      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)'
+      description: 查询时间区间需<=30天。该接口只能拉取非当天的数据。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#13)
       security:
         - accessToken: []
       tags:
@@ -17131,14 +17553,105 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              begin_date:
+                type: string
+                format: date
+                description: 获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”
+              end_date:
+                type: string
+                format: date
+                description: 获取数据的结束日期，end_date允许设置的最大值为昨日
+              card_id:
+                type: string
+                description: 卡券ID。填写后，指定拉出该卡券的相关数据。
+            required:
+              - begin_date
+              - end_date
+              - card_id
+            example:
+              begin_date: '2014-12-01'
+              end_date: '2014-12-30'
+              card_id: 'p4WkzwieuDBzzn7Jed6SBO0-ZgaU'
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ref_date:
+                          type: string
+                          format: date
+                          description: 日期信息
+                        cardid:
+                          type: string
+                          description: 卡券ID。填写后，指定拉出该卡券的相关数据。
+                        merchanttype:
+                          type: integer
+                          format: int32
+                          description: 子商户类型
+                        submerchantid:
+                          type: integer
+                          format: int32
+                          description: 子商户ID
+                        view_cnt:
+                          type: integer
+                          format: int32
+                          description: 浏览次数
+                        view_user:
+                          type: integer
+                          format: int32
+                          description: 浏览人数
+                        receive_cnt:
+                          type: integer
+                          format: int32
+                          description: 领取次数
+                        receive_user:
+                          type: integer
+                          format: int32
+                          description: 领取人数
+                        verify_cnt:
+                          type: integer
+                          format: int32
+                          description: 使用次数
+                        verify_user:
+                          type: integer
+                          format: int32
+                          description: 使用人数
+                        active_user:
+                          type: integer
+                          format: int32
+                          description: 激活人数
+                        total_user:
+                          type: integer
+                          format: int32
+                          description: 有效会员总人数
+                        total_receive_user:
+                          type: integer
+                          format: int32
+                          description: 历史领取会员卡总人数
+                        new_user:
+                          type: integer
+                          format: int32
+                          description: 新用户数
+                        payOriginalFee:
+                          type: integer
+                          format: int32
+                          description: 应收金额（仅限使用快速买单的会员卡）
+                        fee:
+                          type: integer
+                          format: int32
+                          description: 实收金额（仅限使用快速买单的会员卡）
   /datacube/getcardmembercardinfo:
     post:
       summary: 拉取会员卡概况数据
-      description: '[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025272)'
+      description: 查询时间区间需<=62天。该接口只能拉取非当天的数据。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#12)
       security:
         - accessToken: []
       tags:
@@ -17148,13 +17661,90 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              begin_date:
+                type: string
+                format: date
+                description: 获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”
+              end_date:
+                type: string
+                format: date
+                description: 获取数据的结束日期，end_date允许设置的最大值为昨日
+              cond_source:
+                type: integer
+                format: int32
+                description: 卡券来源，0为公众平台创建的卡券数据 、1是API创建的卡券数据
+                enum: [0, 1]
+              card_id:
+                type: string
+                description: 卡券ID。填写后，指定拉出该卡券的相关数据。
+            required:
+              - begin_date
+              - end_date
+              - cond_source
+            example:
+              begin_date: '2014-12-01'
+              end_date: '2015-01-31'
+              cond_source: '1'
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ref_date:
+                          type: string
+                          description: 日期信息
+                        view_cnt:
+                          type: integer
+                          format: int32
+                          description: 浏览次数
+                        view_user:
+                          type: integer
+                          format: int32
+                          description: 浏览人数
+                        receive_cnt:
+                          type: integer
+                          format: int32
+                          description: 领取次数
+                        receive_user:
+                          type: integer
+                          format: int32
+                          description: 领取人数
+                        verify_cnt:
+                          type: integer
+                          format: int32
+                          description: 使用次数
+                        verify_user:
+                          type: integer
+                          format: int32
+                          description: 使用人数
+                        active_user:
+                          type: integer
+                          format: int32
+                          description: 激活人数
+                        total_user:
+                          type: integer
+                          format: int32
+                          description: 有效会员总人数
+                        total_receive_user:
+                          type: integer
+                          format: int32
+                          description: 历史领取会员卡总人数
+                        new_user:
+                          type: integer
+                          format: int32
+                          description: 新用户数
   /datacube/getinterfacesummary:
     post:
       summary: 获取接口分析数据
+      description: 仅存储了2014年12月1日之后的数据。最大时间跨度最多一次性获取30天的数据。每天上午8点后查询公众号前一天的数据。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/Analytics/Analytics_API.html)
       security:
         - accessToken: []
       tags:
@@ -17164,13 +17754,57 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              begin_date:
+                type: string
+                format: date
+                description: 获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”
+              end_date:
+                type: string
+                format: date
+                description: 获取数据的结束日期，end_date允许设置的最大值为昨日
+            required:
+              - begin_date
+              - end_date
+            example:
+              begin_date: '2014-12-01'
+              end_date: '2014-12-30'
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ref_date:
+                          type: string
+                          format: date
+                          description: 数据的日期，需在begin_date和end_date之间
+                        callback_count:
+                          type: integer
+                          format: int32
+                          description: 通过服务器配置地址获得消息后，被动回复用户消息的次数
+                        fail_count:
+                          type: integer
+                          format: int32
+                          description: 上述动作的失败次数
+                        total_time_cost:
+                          type: integer
+                          format: int32
+                          description: 总耗时，除以callback_count即为平均耗时
+                        max_time_cost:
+                          type: integer
+                          format: int32
+                          description: 最大耗时
   /datacube/getinterfacesummaryhour:
     post:
       summary: 获取接口分析分时数据
+      description: 仅存储了2014年12月1日之后的数据。最大时间跨度最多一次性获取1天的数据。每天上午8点后查询公众号前一天的数据。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/Analytics/Analytics_API.html)
       security:
         - accessToken: []
       tags:
@@ -17180,13 +17814,61 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              begin_date:
+                type: string
+                format: date
+                description: 获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”
+              end_date:
+                type: string
+                format: date
+                description: 获取数据的结束日期，end_date允许设置的最大值为昨日
+            required:
+              - begin_date
+              - end_date
+            example:
+              begin_date: '2014-12-01'
+              end_date: '2014-12-01'
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ref_date:
+                          type: string
+                          format: date
+                          description: 数据的日期，需在begin_date和end_date之间
+                        ref_hour:
+                          type: integer
+                          format: int32
+                          description: 数据的小时，包括从000到2300，分别代表的是[000,100)到[2300,2400)，即每日的第1小时和最后1小时
+                        callback_count:
+                          type: integer
+                          format: int32
+                          description: 通过服务器配置地址获得消息后，被动回复用户消息的次数
+                        fail_count:
+                          type: integer
+                          format: int32
+                          description: 上述动作的失败次数
+                        total_time_cost:
+                          type: integer
+                          format: int32
+                          description: 总耗时，除以callback_count即为平均耗时
+                        max_time_cost:
+                          type: integer
+                          format: int32
+                          description: 最大耗时
   /datacube/getupstreammsg:
     post:
       summary: 获取消息发送概况数据
+      description: 仅存储了2014年12月1日之后的数据。最大时间跨度最多一次性获取7天的数据。每天上午8点后查询公众号前一天的数据。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/Analytics/Message_analysis_data_interface.html)
       security:
         - accessToken: []
       tags:
@@ -17196,13 +17878,57 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              begin_date:
+                type: string
+                format: date
+                description: 获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”
+              end_date:
+                type: string
+                format: date
+                description: 获取数据的结束日期，end_date允许设置的最大值为昨日
+            required:
+              - begin_date
+              - end_date
+            example:
+              begin_date: '2014-12-01'
+              end_date: '2014-12-07'
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ref_date:
+                          type: string
+                          format: date
+                          description: 数据的日期，需在begin_date和end_date之间
+                        user_source:
+                          type: integer
+                          format: int32
+                        msg_type:
+                          type: integer
+                          format: int32
+                          description: 消息类型，代表含义如下： 1代表文字 2代表图片 3代表语音 4代表视频 6代表第三方应用消息（链接消息）
+                          enum: [1, 2, 3, 4, 6]
+                        msg_user:
+                          type: integer
+                          format: int32
+                          description: 上行发送了（向公众号发送了）消息的用户数
+                        msg_count:
+                          type: integer
+                          format: int32
+                          description: 上行发送了消息的消息总数
   /datacube/getupstreammsgdist:
     post:
       summary: 获取消息发送分布数据
+      description: 仅存储了2014年12月1日之后的数据。最大时间跨度最多一次性获取15天的数据。每天上午8点后查询公众号前一天的数据。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/Analytics/Message_analysis_data_interface.html)
       security:
         - accessToken: []
       tags:
@@ -17212,13 +17938,53 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              begin_date:
+                type: string
+                format: date
+                description: 获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”
+              end_date:
+                type: string
+                format: date
+                description: 获取数据的结束日期，end_date允许设置的最大值为昨日
+            required:
+              - begin_date
+              - end_date
+            example:
+              begin_date: '2014-12-01'
+              end_date: '2014-12-15'
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ref_date:
+                          type: string
+                          format: date
+                          description: 数据的日期，需在begin_date和end_date之间
+                        user_source:
+                          type: integer
+                          format: int32
+                        count_interval:
+                          type: integer
+                          format: int32
+                          description: 当日发送消息量分布的区间，0代表 “0”，1代表“1-5”，2代表“6-10”，3代表“10次以上”
+                          enum: [0, 1, 2, 3]
+                        msg_user:
+                          type: integer
+                          format: int32
+                          description: 上行发送了（向公众号发送了）消息的用户数
   /datacube/getupstreammsgdistmonth:
     post:
       summary: 获取消息发送分布月数据
+      description: 仅存储了2014年12月1日之后的数据。最大时间跨度最多一次性获取30天的数据。每天上午8点后查询公众号前一天的数据。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/Analytics/Message_analysis_data_interface.html)
       security:
         - accessToken: []
       tags:
@@ -17228,13 +17994,53 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              begin_date:
+                type: string
+                format: date
+                description: 获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”
+              end_date:
+                type: string
+                format: date
+                description: 获取数据的结束日期，end_date允许设置的最大值为昨日
+            required:
+              - begin_date
+              - end_date
+            example:
+              begin_date: '2014-12-01'
+              end_date: '2014-12-30'
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ref_date:
+                          type: string
+                          format: date
+                          description: 数据的日期，需在begin_date和end_date之间
+                        user_source:
+                          type: integer
+                          format: int32
+                        count_interval:
+                          type: integer
+                          format: int32
+                          description: 当日发送消息量分布的区间，0代表 “0”，1代表“1-5”，2代表“6-10”，3代表“10次以上”
+                          enum: [0, 1, 2, 3]
+                        msg_user:
+                          type: integer
+                          format: int32
+                          description: 上行发送了（向公众号发送了）消息的用户数
   /datacube/getupstreammsgdistweek:
     post:
       summary: 获取消息发送分布周数据
+      description: 仅存储了2014年12月1日之后的数据。最大时间跨度最多一次性获取30天的数据。每天上午8点后查询公众号前一天的数据。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/Analytics/Message_analysis_data_interface.html)
       security:
         - accessToken: []
       tags:
@@ -17244,13 +18050,53 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              begin_date:
+                type: string
+                format: date
+                description: 获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”
+              end_date:
+                type: string
+                format: date
+                description: 获取数据的结束日期，end_date允许设置的最大值为昨日
+            required:
+              - begin_date
+              - end_date
+            example:
+              begin_date: '2014-12-01'
+              end_date: '2014-12-30'
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ref_date:
+                          type: string
+                          format: date
+                          description: 数据的日期，需在begin_date和end_date之间
+                        user_source:
+                          type: integer
+                          format: int32
+                        count_interval:
+                          type: integer
+                          format: int32
+                          description: 当日发送消息量分布的区间，0代表 “0”，1代表“1-5”，2代表“6-10”，3代表“10次以上”
+                          enum: [0, 1, 2, 3]
+                        msg_user:
+                          type: integer
+                          format: int32
+                          description: 上行发送了（向公众号发送了）消息的用户数
   /datacube/getupstreammsghour:
     post:
       summary: 获取消息分送分时数据
+      description: 仅存储了2014年12月1日之后的数据。最大时间跨度最多一次性获取1天的数据。每天上午8点后查询公众号前一天的数据。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/Analytics/Message_analysis_data_interface.html)
       security:
         - accessToken: []
       tags:
@@ -17260,13 +18106,61 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              begin_date:
+                type: string
+                format: date
+                description: 获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”
+              end_date:
+                type: string
+                format: date
+                description: 获取数据的结束日期，end_date允许设置的最大值为昨日
+            required:
+              - begin_date
+              - end_date
+            example:
+              begin_date: '2014-12-01'
+              end_date: '2014-12-01'
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ref_date:
+                          type: string
+                          format: date
+                          description: 数据的日期，需在begin_date和end_date之间
+                        ref_hour:
+                          type: integer
+                          format: int32
+                          description: 数据的小时，包括从000到2300，分别代表的是[000,100)到[2300,2400)，即每日的第1小时和最后1小时
+                        user_source:
+                          type: integer
+                          format: int32
+                        msg_type:
+                          type: integer
+                          format: int32
+                          description: 消息类型，代表含义如下： 1代表文字 2代表图片 3代表语音 4代表视频 6代表第三方应用消息（链接消息）
+                          enum: [1, 2, 3, 4, 6]
+                        msg_user:
+                          type: integer
+                          format: int32
+                          description: 上行发送了（向公众号发送了）消息的用户数
+                        msg_count:
+                          type: integer
+                          format: int32
+                          description: 上行发送了消息的消息总数
   /datacube/getupstreammsgmonth:
     post:
       summary: 获取消息发送月数据
+      description: 仅存储了2014年12月1日之后的数据。最大时间跨度最多一次性获取30天的数据。每天上午8点后查询公众号前一天的数据。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/Analytics/Message_analysis_data_interface.html)
       security:
         - accessToken: []
       tags:
@@ -17276,13 +18170,57 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              begin_date:
+                type: string
+                format: date
+                description: 获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”
+              end_date:
+                type: string
+                format: date
+                description: 获取数据的结束日期，end_date允许设置的最大值为昨日
+            required:
+              - begin_date
+              - end_date
+            example:
+              begin_date: '2014-12-01'
+              end_date: '2014-12-30'
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ref_date:
+                          type: string
+                          format: date
+                          description: 数据的日期，需在begin_date和end_date之间
+                        user_source:
+                          type: integer
+                          format: int32
+                        msg_type:
+                          type: integer
+                          format: int32
+                          description: 消息类型，代表含义如下： 1代表文字 2代表图片 3代表语音 4代表视频 6代表第三方应用消息（链接消息）
+                          enum: [1, 2, 3, 4, 6]
+                        msg_user:
+                          type: integer
+                          format: int32
+                          description: 上行发送了（向公众号发送了）消息的用户数
+                        msg_count:
+                          type: integer
+                          format: int32
+                          description: 上行发送了消息的消息总数
   /datacube/getupstreammsgweek:
     post:
       summary: 获取消息发送周数据
+      description: 仅存储了2014年12月1日之后的数据。最大时间跨度最多一次性获取30天的数据。每天上午8点后查询公众号前一天的数据。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/Analytics/Message_analysis_data_interface.html)
       security:
         - accessToken: []
       tags:
@@ -17292,13 +18230,57 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              begin_date:
+                type: string
+                format: date
+                description: 获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”
+              end_date:
+                type: string
+                format: date
+                description: 获取数据的结束日期，end_date允许设置的最大值为昨日
+            required:
+              - begin_date
+              - end_date
+            example:
+              begin_date: '2014-12-01'
+              end_date: '2014-12-30'
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ref_date:
+                          type: string
+                          format: date
+                          description: 数据的日期，需在begin_date和end_date之间
+                        user_source:
+                          type: integer
+                          format: int32
+                        msg_type:
+                          type: integer
+                          format: int32
+                          description: 消息类型，代表含义如下： 1代表文字 2代表图片 3代表语音 4代表视频 6代表第三方应用消息（链接消息）
+                          enum: [1, 2, 3, 4, 6]
+                        msg_user:
+                          type: integer
+                          format: int32
+                          description: 上行发送了（向公众号发送了）消息的用户数
+                        msg_count:
+                          type: integer
+                          format: int32
+                          description: 上行发送了消息的消息总数
   /datacube/getusercumulate:
     post:
       summary: 获取累计用户数据
+      description: 仅存储了2014年12月1日之后的数据。最大时间跨度最多一次性获取7天的数据。每天上午8点后查询公众号前一天的数据。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/WiFi_via_WeChat/Stores_management/Query_store_Wi-Fi_information.html)
       security:
         - accessToken: []
       tags:
@@ -17308,13 +18290,50 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              begin_date:
+                type: string
+                format: date
+                description: 获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”
+              end_date:
+                type: string
+                format: date
+                description: 获取数据的结束日期，end_date允许设置的最大值为昨日
+            required:
+              - begin_date
+              - end_date
+            example:
+              begin_date: '2014-12-01'
+              end_date: '2014-12-07'
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ref_date:
+                          type: string
+                          format: date
+                          description: 数据的日期
+                        user_source:
+                          type: integer
+                          format: int32
+                          description: 用户的渠道，数值代表的含义如下： 0代表其他合计 1代表公众号搜索 17代表名片分享 30代表扫描二维码 43代表图文页右上角菜单 51代表支付后关注（在支付完成页） 57代表图文页内公众号名称 75代表公众号文章广告 78代表朋友圈广告
+                          enum: [0, 1, 17, 30, 43, 51, 57, 75, 78]
+                        cumulate_user:
+                          type: integer
+                          format: int32
+                          description: 总用户量
   /datacube/getuserread:
     post:
       summary: 获取图文统计数据
+      description: 仅存储了2014年12月1日之后的数据。最大时间跨度最多一次性获取3天的数据。每天上午8点后查询公众号前一天的数据。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/Analytics/Graphic_Analysis_Data_Interface.html)
       security:
         - accessToken: []
       tags:
@@ -17324,13 +18343,78 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              begin_date:
+                type: string
+                format: date
+                description: 获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”
+              end_date:
+                type: string
+                format: date
+                description: 获取数据的结束日期，end_date允许设置的最大值为昨日
+            required:
+              - begin_date
+              - end_date
+            example:
+              begin_date: '2014-12-01'
+              end_date: '2014-12-03'
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ref_date:
+                          type: string
+                          format: date
+                          description: 数据的日期，需在begin_date和end_date之间
+                        user_source:
+                          type: integer
+                          format: int32
+                          description: 在获取图文阅读分时数据时才有该字段，代表用户从哪里进入来阅读该图文。0:会话;1.好友;2.朋友圈;3.腾讯微博;4.历史消息页;5.其他;6.看一看;7.搜一搜
+                          enum: [0, 1, 2, 3, 4, 5, 6, 7]
+                        int_page_read_user:
+                          type: integer
+                          format: int32
+                          description: 图文页（点击群发图文卡片进入的页面）的阅读人数
+                        int_page_read_count:
+                          type: integer
+                          format: int32
+                          description: 图文页的阅读次数
+                        ori_page_read_user:
+                          type: integer
+                          format: int32
+                          description: 原文页（点击图文页“阅读原文”进入的页面）的阅读人数，无原文页时此处数据为0
+                        ori_page_read_count:
+                          type: integer
+                          format: int32
+                          description: 原文页的阅读次数
+                        share_user:
+                          type: integer
+                          format: int32
+                          description: 分享的人数
+                        share_count:
+                          type: integer
+                          format: int32
+                          description: 分享的次数
+                        add_to_fav_user:
+                          type: integer
+                          format: int32
+                          description: 收藏的人数
+                        add_to_fav_count:
+                          type: integer
+                          format: int32
+                          description: 收藏的次数
   /datacube/getuserreadhour:
     post:
       summary: 获取图文统计分时数据
+      description: 仅存储了2014年12月1日之后的数据。最大时间跨度最多一次性获取1天的数据。每天上午8点后查询公众号前一天的数据。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/Analytics/Graphic_Analysis_Data_Interface.html)
       security:
         - accessToken: []
       tags:
@@ -17340,13 +18424,85 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              begin_date:
+                type: string
+                format: date
+                description: 获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”
+              end_date:
+                type: string
+                format: date
+                description: 获取数据的结束日期，end_date允许设置的最大值为昨日
+            required:
+              - begin_date
+              - end_date
+            example:
+              begin_date: '2014-12-01'
+              end_date: '2014-12-01'
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ref_date:
+                          type: string
+                          format: date
+                          description: 数据的日期，需在begin_date和end_date之间
+                        ref_hour:
+                          type: integer
+                          format: int32
+                          description: 数据的小时，包括从000到2300，分别代表的是[000,100)到[2300,2400)，即每日的第1小时和最后1小时
+                        user_source:
+                          type: integer
+                          format: int32
+                          description: 在获取图文阅读分时数据时才有该字段，代表用户从哪里进入来阅读该图文。0:会话;1.好友;2.朋友圈;3.腾讯微博;4.历史消息页;5.其他;6.看一看;7.搜一搜
+                          enum: [0, 1, 2, 3, 4, 5, 6, 7]
+                        int_page_read_user:
+                          type: integer
+                          format: int32
+                          description: 图文页（点击群发图文卡片进入的页面）的阅读人数
+                        int_page_read_count:
+                          type: integer
+                          format: int32
+                          description: 图文页的阅读次数
+                        ori_page_read_user:
+                          type: integer
+                          format: int32
+                          description: 原文页（点击图文页“阅读原文”进入的页面）的阅读人数，无原文页时此处数据为0
+                        ori_page_read_count:
+                          type: integer
+                          format: int32
+                          description: 原文页的阅读次数
+                        share_user:
+                          type: integer
+                          format: int32
+                          description: 分享的人数
+                        share_count:
+                          type: integer
+                          format: int32
+                          description: 分享的次数
+                        add_to_fav_user:
+                          type: integer
+                          format: int32
+                          description: 收藏的人数
+                        add_to_fav_count:
+                          type: integer
+                          format: int32
+                          description: 收藏的次数
+                        total_online_time:
+                          type: integer
+                          format: int32
   /datacube/getusershare:
     post:
       summary: 获取图文分享转发数据
+      description: 仅存储了2014年12月1日之后的数据。最大时间跨度最多一次性获取7天的数据。每天上午8点后查询公众号前一天的数据。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/Analytics/Graphic_Analysis_Data_Interface.html)
       security:
         - accessToken: []
       tags:
@@ -17356,13 +18512,59 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              begin_date:
+                type: string
+                format: date
+                description: 获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”
+              end_date:
+                type: string
+                format: date
+                description: 获取数据的结束日期，end_date允许设置的最大值为昨日
+            required:
+              - begin_date
+              - end_date
+            example:
+              begin_date: '2014-12-01'
+              end_date: '2014-12-07'
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ref_date:
+                          type: string
+                          format: date
+                          description: 数据的日期，需在begin_date和end_date之间
+                        user_source:
+                          type: integer
+                          format: int32
+                          description: 在获取图文阅读分时数据时才有该字段，代表用户从哪里进入来阅读该图文。0:会话;1.好友;2.朋友圈;3.腾讯微博;4.历史消息页;5.其他;6.看一看;7.搜一搜
+                          enum: [0, 1, 2, 3, 4, 5, 6, 7]
+                        share_scene:
+                          type: integer
+                          format: int32
+                          description: 分享的场景 1代表好友转发 2代表朋友圈 3代表腾讯微博 255代表其他
+                          enum: [1, 2, 3, 255]
+                        share_count:
+                          type: integer
+                          format: int32
+                          description: 分享的次数
+                        share_user:
+                          type: integer
+                          format: int32
+                          description: 分享的人数
   /datacube/getusersharehour:
     post:
       summary: 获取图文分享转发分时数据
+      description: 仅存储了2014年12月1日之后的数据。最大时间跨度最多一次性获取1天的数据。每天上午8点后查询公众号前一天的数据。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/Analytics/Graphic_Analysis_Data_Interface.html)
       security:
         - accessToken: []
       tags:
@@ -17372,13 +18574,63 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              begin_date:
+                type: string
+                format: date
+                description: 获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”
+              end_date:
+                type: string
+                format: date
+                description: 获取数据的结束日期，end_date允许设置的最大值为昨日
+            required:
+              - begin_date
+              - end_date
+            example:
+              begin_date: '2014-12-01'
+              end_date: '2014-12-01'
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ref_date:
+                          type: string
+                          format: date
+                          description: 数据的日期，需在begin_date和end_date之间
+                        ref_hour:
+                          type: integer
+                          format: int32
+                          description: 数据的小时，包括从000到2300，分别代表的是[000,100)到[2300,2400)，即每日的第1小时和最后1小时
+                        user_source:
+                          type: integer
+                          format: int32
+                          description: 在获取图文阅读分时数据时才有该字段，代表用户从哪里进入来阅读该图文。0:会话;1.好友;2.朋友圈;3.腾讯微博;4.历史消息页;5.其他;6.看一看;7.搜一搜
+                          enum: [0, 1, 2, 3, 4, 5, 6, 7]
+                        share_scene:
+                          type: integer
+                          format: int32
+                          description: 分享的场景 1代表好友转发 2代表朋友圈 3代表腾讯微博 255代表其他
+                          enum: [1, 2, 3, 255]
+                        share_count:
+                          type: integer
+                          format: int32
+                          description: 分享的次数
+                        share_user:
+                          type: integer
+                          format: int32
+                          description: 分享的人数
   /datacube/getusersummary:
     post:
       summary: 获取用户增减数据
+      description: 仅存储了2014年12月1日之后的数据。最大时间跨度最多一次性获取7天的数据。每天上午8点后查询公众号前一天的数据。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/WiFi_via_WeChat/Stores_management/Query_store_Wi-Fi_information.html)
       security:
         - accessToken: []
       tags:
@@ -17388,10 +18640,50 @@ paths:
           name: body
           schema:
             type: object
-            properties: {}
+            properties:
+              begin_date:
+                type: string
+                format: date
+                description: 获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”
+              end_date:
+                type: string
+                format: date
+                description: 获取数据的结束日期，end_date允许设置的最大值为昨日
+            required:
+              - begin_date
+              - end_date
+            example:
+              begin_date: '2014-12-01'
+              end_date: '2014-12-07'
       responses:
         '200':
           description: ''
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ref_date:
+                          type: string
+                          format: date
+                          description: 数据的日期
+                        user_source:
+                          type: integer
+                          format: int32
+                          description: 用户的渠道，数值代表的含义如下： 0代表其他合计 1代表公众号搜索 17代表名片分享 30代表扫描二维码 43代表图文页右上角菜单 51代表支付后关注（在支付完成页） 57代表图文页内公众号名称 75代表公众号文章广告 78代表朋友圈广告
+                          enum: [0, 1, 17, 30, 43, 51, 57, 75, 78]
+                        new_user:
+                          type: integer
+                          format: int32
+                          description: 新增的用户数量
+                        cancel_user:
+                          type: integer
+                          format: int32
+                          description: 取消关注的用户数量，new_user减去cancel_user即为净增用户数量
   /datacube/getweanalysisappiddailyretaininfo:
     post:
       summary: 日留存

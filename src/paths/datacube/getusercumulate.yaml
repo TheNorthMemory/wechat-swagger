@@ -1,5 +1,6 @@
 post:
   summary: 获取累计用户数据
+  description: 仅存储了2014年12月1日之后的数据。最大时间跨度最多一次性获取7天的数据。每天上午8点后查询公众号前一天的数据。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/WiFi_via_WeChat/Stores_management/Query_store_Wi-Fi_information.html)
   security:
     - accessToken: []
   tags:
@@ -9,7 +10,43 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          begin_date:
+            type: string
+            format: date
+            description: 获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”
+          end_date:
+            type: string
+            format: date
+            description: 获取数据的结束日期，end_date允许设置的最大值为昨日
+        required:
+          - begin_date
+          - end_date
+        example:
+          begin_date: '2014-12-01'
+          end_date: '2014-12-07'
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - type: object
+            properties:
+              list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    ref_date:
+                      type: string
+                      format: date
+                      description: 数据的日期
+                    user_source:
+                      type: integer
+                      format: int32
+                      description: 用户的渠道，数值代表的含义如下： 0代表其他合计 1代表公众号搜索 17代表名片分享 30代表扫描二维码 43代表图文页右上角菜单 51代表支付后关注（在支付完成页） 57代表图文页内公众号名称 75代表公众号文章广告 78代表朋友圈广告
+                      enum: [0, 1, 17, 30, 43, 51, 57, 75, 78]
+                    cumulate_user:
+                      type: integer
+                      format: int32
+                      description: 总用户量

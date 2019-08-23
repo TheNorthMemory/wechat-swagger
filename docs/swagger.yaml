@@ -6109,7 +6109,7 @@ paths:
   /bizwifi/shop/clean:
     post:
       summary: 清空门店网络及设备
-      description: 通过此接口清空门店的网络配置及所有设备，恢复空门店状态。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457435430)
+      description: 通过此接口清空门店的网络配置及所有设备，恢复空门店状态。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/WiFi_via_WeChat/Stores_management/Empty_the_store_network_and_devices.html)
       security:
         - accessToken: []
       tags:
@@ -6124,6 +6124,9 @@ paths:
                 type: integer
                 format: int32
                 description: 门店ID
+              ssid:
+                type: string
+                description: 无线网络设备的ssid。若不填写ssid，默认为清空门店下所有设备；填写ssid则为清空该ssid下的所有设备
             required:
               - shop_id
       responses:
@@ -6134,7 +6137,7 @@ paths:
   /bizwifi/shop/get:
     post:
       summary: 查询门店WiFi信息接口
-      description: 通过此接口查询某一门店的详细Wi-Fi信息，包括门店内的设备类型、ssid、密码、设备数量、商家主页URL、顶部常驻入口文案。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457435331)
+      description: 通过此接口查询某一门店的详细Wi-Fi信息，包括门店内的设备类型、ssid、密码、设备数量、商家主页URL、顶部常驻入口文案。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/WiFi_via_WeChat/Stores_management/Query_store_Wi-Fi_information.html)
       security:
         - accessToken: []
       tags:
@@ -6236,7 +6239,7 @@ paths:
   /bizwifi/shop/list:
     post:
       summary: 获取Wi-Fi门店列表
-      description: 通过此接口获取WiFi的门店列表，该列表包括公众平台的门店信息、以及添加设备后的WiFi相关信息。注：微信连Wi-Fi下的所有接口中的shop_id，必需先通过此接口获取。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444894115)
+      description: 通过此接口获取WiFi的门店列表，该列表包括公众平台的门店信息、以及添加设备后的WiFi相关信息。注：微信连Wi-Fi下的所有接口中的shop_id，必需先通过此接口获取。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/WiFi_via_WeChat/Stores_management/Get_a_Wi-Fi_store_list.html)
       security:
         - accessToken: []
       tags:
@@ -6328,7 +6331,7 @@ paths:
   /bizwifi/shop/update:
     post:
       summary: 修改门店网络信息
-      description: 通过此接口修改门店的网络信息，包括网络名称（ssid）或密码。[官方文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1457435413)
+      description: 通过此接口修改门店的网络信息，包括网络名称（ssid）或密码。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/WiFi_via_WeChat/Stores_management/Modify_the_store_network_information.html)
       security:
         - accessToken: []
       tags:

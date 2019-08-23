@@ -1,5 +1,6 @@
 post:
   summary: 获取用户增减数据
+  description: 用户访问小程序非当天数据概况。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/data-analysis/analysis.getDailySummary.html)
   security:
     - accessToken: []
   tags:
@@ -9,7 +10,43 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          begin_date:
+            type: string
+            description: 开始日期。格式为 yyyymmdd
+          end_date:
+            type: string
+            description: 结束日期，限定查询1天数据，允许设置的最大值为昨日。格式为 yyyymmdd
+        required:
+          - begin_date
+          - end_date
+        example:
+          begin_date: '20170313'
+          end_date: '20170313'
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - type: object
+            properties:
+              list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    ref_date:
+                      type: string
+                      description: 日期，格式为 yyyymmdd
+                    visit_total:
+                      type: integer
+                      format: int32
+                      description: 累计用户数
+                    share_pv:
+                      type: integer
+                      format: int32
+                      description: 转发次数
+                    share_uv:
+                      type: integer
+                      format: int32
+                      description: 转发人数

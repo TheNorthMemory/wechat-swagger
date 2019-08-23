@@ -1,5 +1,6 @@
 post:
   summary: 访问页面
+  description: 目前只提供按 page_visit_pv 排序的 top200。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/data-analysis/analysis.getVisitPage.html)
   security:
     - accessToken: []
   tags:
@@ -9,7 +10,62 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          begin_date:
+            type: string
+            description: 开始日期。格式为 yyyymmdd
+          end_date:
+            type: string
+            description: 结束日期，限定查询 1 天数据，允许设置的最大值为昨日。格式为 yyyymmdd
+        required:
+          - begin_date
+          - end_date
+        example:
+          begin_date: '20170313'
+          end_date: '20170313'
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - type: object
+            properties:
+              ref_date:
+                type: string
+                description: 日期，格式为 yyyymmdd
+              list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    page_path:
+                      type: string
+                      description: 页面路径
+                    page_visit_pv:
+                      type: integer
+                      format: int32
+                      description: 访问次数
+                    page_visit_uv:
+                      type: integer
+                      format: int32
+                      description: 访问人数
+                    page_staytime_pv:
+                      type: number
+                      format: float
+                      description: 次均停留时长
+                    entrypage_pv:
+                      type: integer
+                      format: int32
+                      description: 进入页次数
+                    exitpage_pv:
+                      type: integer
+                      format: int32
+                      description: 退出页次数
+                    page_share_pv:
+                      type: integer
+                      format: int32
+                      description: 转发次数
+                    page_share_uv:
+                      type: integer
+                      format: int32
+                      description: 转发人数

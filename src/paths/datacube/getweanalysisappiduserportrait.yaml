@@ -1,5 +1,6 @@
 post:
   summary: 用户画像
+  description: 画像分布数据，时间范围支持昨天、最近7天、最近30天。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/data-analysis/analysis.getUserPortrait.html)
   security:
     - accessToken: []
   tags:
@@ -9,7 +10,226 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          begin_date:
+            type: string
+            description: 开始日期。格式为 yyyymmdd
+          end_date:
+            type: string
+            description: 结束日期，开始日期与结束日期相差的天数限定为0/6/29，分别表示查询最近1/7/30天数据，允许设置的最大值为昨日。格式为 yyyymmdd
+        required:
+          - begin_date
+          - end_date
+        example:
+          begin_date: '20170313'
+          end_date: '20170313'
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - type: object
+            properties:
+              ref_date:
+                type: string
+                description: 日期，格式为 yyyymmdd
+              visit_uv_new:
+                type: object
+                description: 新用户画像
+                properties:
+                  province:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int32
+                          description: 属性值id
+                        name:
+                          type: string
+                          description: 属性值名称，与id对应。
+                        value:
+                          type: integer
+                          format: int32
+                          description: 该场景访问uv
+                  city:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int32
+                          description: 属性值id
+                        name:
+                          type: string
+                          description: 属性值名称，与id对应。
+                        value:
+                          type: integer
+                          format: int32
+                          description: 该场景访问uv
+                  genders:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int32
+                          description: 属性值id
+                        name:
+                          type: string
+                          description: 属性值名称，与id对应。
+                        value:
+                          type: integer
+                          format: int32
+                          description: 该场景访问uv
+                  platforms:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int32
+                          description: 属性值id
+                        name:
+                          type: string
+                          description: 属性值名称，与id对应。
+                        value:
+                          type: integer
+                          format: int32
+                          description: 该场景访问uv
+                  devices:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int32
+                          description: 属性值id
+                        name:
+                          type: string
+                          description: 属性值名称，与id对应。
+                        value:
+                          type: integer
+                          format: int32
+                          description: 该场景访问uv
+                  ages:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int32
+                          description: 属性值id
+                        name:
+                          type: string
+                          description: 属性值名称，与id对应。
+                        value:
+                          type: integer
+                          format: int32
+                          description: 该场景访问uv
+              visit_uv:
+                type: object
+                description: 新用户画像
+                properties:
+                  province:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int32
+                          description: 属性值id
+                        name:
+                          type: string
+                          description: 属性值名称，与id对应。
+                        value:
+                          type: integer
+                          format: int32
+                          description: 该场景访问uv
+                  city:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int32
+                          description: 属性值id
+                        name:
+                          type: string
+                          description: 属性值名称，与id对应。
+                        value:
+                          type: integer
+                          format: int32
+                          description: 该场景访问uv
+                  genders:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int32
+                          description: 属性值id
+                        name:
+                          type: string
+                          description: 属性值名称，与id对应。
+                        value:
+                          type: integer
+                          format: int32
+                          description: 该场景访问uv
+                  platforms:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int32
+                          description: 属性值id
+                        name:
+                          type: string
+                          description: 属性值名称，与id对应。
+                        value:
+                          type: integer
+                          format: int32
+                          description: 该场景访问uv
+                  devices:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int32
+                          description: 属性值id
+                        name:
+                          type: string
+                          description: 属性值名称，与id对应。
+                        value:
+                          type: integer
+                          format: int32
+                          description: 该场景访问uv
+                  ages:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int32
+                          description: 属性值id
+                        name:
+                          type: string
+                          description: 属性值名称，与id对应。
+                        value:
+                          type: integer
+                          format: int32
+                          description: 该场景访问uv

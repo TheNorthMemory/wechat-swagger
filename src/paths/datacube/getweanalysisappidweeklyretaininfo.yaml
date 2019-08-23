@@ -1,5 +1,6 @@
 post:
   summary: 周留存
+  description: 限定查询一个自然周的数据，时间必须按照自然周的方式。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/data-analysis/visit-retain/analysis.getWeeklyRetain.html)
   security:
     - accessToken: []
   tags:
@@ -9,7 +10,61 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          begin_date:
+            type: string
+            description: 开始日期，为周一日期。格式为 yyyymmdd yyyymmdd
+          end_date:
+            type: string
+            description: 结束日期，为周日日期，限定查询一周数据。格式为 yyyymmdd
+        required:
+          - begin_date
+          - end_date
+        example:
+          begin_date: '20170306'
+          end_date: '20170312'
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - type: object
+            properties:
+              list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    ref_date:
+                      type: string
+                      description: 时间，如："20170306-20170312"
+                    visit_uv_new:
+                      type: array
+                      description: 新增用户留存
+                      items:
+                        type: object
+                        properties:
+                          key:
+                            type: integer
+                            format: int32
+                            description: 标识，0开始，表示当周，1表示1周后。依此类推，key取值分别是：0,1,2,3,4
+                            enum: [0,1,2,3,4]
+                          value:
+                            type: integer
+                            format: int32
+                            description: key对应日期的新增用户数/活跃用户数（key=0时）或留存用户数（k>0时）
+                    visit_uv:
+                      type: array
+                      description: 活跃用户留存
+                      items:
+                        type: object
+                        properties:
+                          key:
+                            type: integer
+                            format: int32
+                            description: 标识，0开始，表示当周，1表示1周后。依此类推，key取值分别是：0,1,2,3,4
+                            enum: [0,1,2,3,4]
+                          value:
+                            type: integer
+                            format: int32
+                            description: key对应日期的新增用户数/活跃用户数（key=0时）或留存用户数（k>0时）

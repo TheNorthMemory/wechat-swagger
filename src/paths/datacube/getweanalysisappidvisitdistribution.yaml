@@ -1,5 +1,6 @@
 post:
   summary: 访问分布
+  description: 用户小程序访问分布数据。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/data-analysis/analysis.getVisitDistribution.html)
   security:
     - accessToken: []
   tags:
@@ -9,7 +10,46 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          begin_date:
+            type: string
+            description: 开始日期。格式为 yyyymmdd
+          end_date:
+            type: string
+            description: 结束日期，限定查询 1 天数据，允许设置的最大值为昨日。格式为 yyyymmdd
+        required:
+          - begin_date
+          - end_date
+        example:
+          begin_date: '20170313'
+          end_date: '20170313'
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - type: object
+            properties:
+              ref_date:
+                type: string
+                description: 日期，格式为 yyyymmdd
+              list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    index:
+                      type: string
+                      description: access_source_session_cnt=访问来源分布;access_staytime_info=访问时长分布;access_depth_info=访问深度的分布
+                      enum: [access_source_session_cnt, access_staytime_info, access_depth_info]
+                    item_list:
+                      type: array
+                      items:
+                        key:
+                          type: integer
+                          format: int32
+                          description: 属性值id
+                        value:
+                          type: integer
+                          format: int32
+                          description: 该场景访问uv

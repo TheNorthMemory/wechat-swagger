@@ -1,0 +1,10 @@
+Dockerfile*
+*.diff
+.dockerignore
+.gitlab-ci.yml
+.gitignore
+.git/
+node_modules
+tmp
+log
+package-lock.json

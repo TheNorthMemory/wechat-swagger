@@ -1,5 +1,6 @@
 post:
   summary: 获取接口分析分时数据
+  description: 仅存储了2014年12月1日之后的数据。最大时间跨度最多一次性获取1天的数据。每天上午8点后查询公众号前一天的数据。[官方文档](https://developers.weixin.qq.com/doc/offiaccount/Analytics/Analytics_API.html)
   security:
     - accessToken: []
   tags:
@@ -9,7 +10,54 @@ post:
       name: body
       schema:
         type: object
-        properties: {}
+        properties:
+          begin_date:
+            type: string
+            format: date
+            description: 获取数据的起始日期，begin_date和end_date的差值需小于“最大时间跨度”
+          end_date:
+            type: string
+            format: date
+            description: 获取数据的结束日期，end_date允许设置的最大值为昨日
+        required:
+          - begin_date
+          - end_date
+        example:
+          begin_date: '2014-12-01'
+          end_date: '2014-12-01'
   responses:
     '200':
       description: ''
+      schema:
+        allOf:
+          - type: object
+            properties:
+              list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    ref_date:
+                      type: string
+                      format: date
+                      description: 数据的日期，需在begin_date和end_date之间
+                    ref_hour:
+                      type: integer
+                      format: int32
+                      description: 数据的小时，包括从000到2300，分别代表的是[000,100)到[2300,2400)，即每日的第1小时和最后1小时
+                    callback_count:
+                      type: integer
+                      format: int32
+                      description: 通过服务器配置地址获得消息后，被动回复用户消息的次数
+                    fail_count:
+                      type: integer
+                      format: int32
+                      description: 上述动作的失败次数
+                    total_time_cost:
+                      type: integer
+                      format: int32
+                      description: 总耗时，除以callback_count即为平均耗时
+                    max_time_cost:
+                      type: integer
+                      format: int32
+                      description: 最大耗时

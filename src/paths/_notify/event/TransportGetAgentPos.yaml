@@ -1,0 +1,69 @@
+post:
+  tags:
+    - 事件通知
+    - 小程序∙即时配送∙服务提供方使用
+  summary: 小程序/即时配送/服务提供方使用/查询骑手当前位置信息
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-provider/immediateDelivery.onAgentPosQuery.html)'
+  consumes:
+    - application/xml
+    - application/json
+  produces:
+    - application/xml
+    - application/json
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [Event]
+            properties:
+              Event:
+                type: string
+                description: 事件类型
+                enum: [transport_get_agent_pos]
+              shopid:
+                type: string
+                description: 商家id， 由配送公司分配，可以是dev_id或者appkey
+              shop_order_id:
+                type: string
+                description: 唯一标识订单的 ID，由商户生成
+              shop_no:
+                type: string
+                description: 商家门店编号， 在配送公司侧登记
+              waybill_id:
+                type: string
+                description: 配送单id
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [Event]
+            properties:
+              Event:
+                type: string
+                description: 事件类型
+                enum: [transport_get_agent_pos]
+              resultcode:
+                type: number
+                description: 错误码
+              resultmsg:
+                type: string
+                description: 错误描述
+              lng:
+                type: number
+                description: 经度，火星坐标，精确到小数点后6位
+              lat:
+                type: number
+                description: 纬度，火星坐标，精确到小数点后6位
+              distance:
+                type: number
+                description: 和目的地距离，已取货配送中需返回，单位米
+              reach_time:
+                type: number
+                description: 预计还剩多久送达时间, 单位秒， 已取货配送中需返回，比如5分钟后送达，填300

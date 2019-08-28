@@ -1,0 +1,45 @@
+post:
+  tags:
+    - 事件通知
+    - 小程序∙即时配送∙服务提供方使用
+  summary: 小程序/即时配送/服务提供方使用/真实发起下单任务
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-provider/immediateDelivery.onOrderAdd.html)'
+  consumes:
+    - application/xml
+    - application/json
+  produces:
+    - application/xml
+    - application/json
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [Event]
+            properties:
+              Event:
+                type: string
+                description: 事件类型
+                enum: [transport_add_order]
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [Event]
+            properties:
+              Event:
+                type: string
+                description: 事件类型
+                enum: [transport_add_order]
+              resultcode:
+                type: number
+                description: 错误码
+              resultmsg:
+                type: string
+                description: 错误描述

@@ -1,0 +1,97 @@
+post:
+  summary: 下配送单
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.addOrder.html)'
+  security:
+    - accessToken: []
+  tags:
+    - 小程序∙即时配送∙小程序使用
+  parameters:
+    - in: body
+      name: body
+      schema:
+        allOf:
+          - type: object
+            properties: {}
+            example:
+              cargo:
+                cargo_first_class: 美食宵夜
+                cargo_second_class: 零食小吃
+                goods_detail:
+                  goods:
+                    - good_count: 1
+                      good_name: 水果
+                      good_price: 10
+                      good_unit: 元
+                    - good_count: 2
+                      good_name: 蔬菜
+                      good_price: 20
+                      good_unit: 元
+                goods_height: 1
+                goods_length: 3
+                goods_value: 5
+                goods_weight: 1
+                goods_width: 2
+              delivery_id: SFTC
+              delivery_sign: 01234567890123456789
+              openid: oABC123456
+              order_info:
+                delivery_service_code: ''
+                expected_delivery_time: 0
+                is_direct_delivery: 0
+                is_finish_code_needed: 1
+                is_insured: 0
+                is_pickup_code_needed: 1
+                note: test_note
+                order_time: 1555220757
+                order_type: 0
+                poi_seq: '1111'
+                tips: 0
+              receiver:
+                address: xxx地铁站
+                address_detail: 2号楼202
+                city: 北京市
+                coordinate_type: 0
+                lat: 40.15296
+                lng: 116.50603
+                name: 老王
+                phone: '18512345678'
+              sender:
+                address: xx大厦
+                address_detail: 1号楼101
+                city: 北京市
+                coordinate_type: 0
+                lat: 40.448612
+                lng: 116.383075
+                name: 刘一
+                phone: '13712345678'
+              shop:
+                goods_count: 2
+                goods_name: 宝贝
+                img_url: 'https://mmbiz.qpic.cn/mmbiz_png/xxxxxxxxx/0?wx_fmt=png'
+                wxa_path: /page/index/index
+              shop_no: '12345678'
+              sub_biz_id: sub_biz_id_1
+              shop_order_id: SFTC_001
+              shopid: '122222222'
+              delivery_token: xxxxxxxx
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - type: object
+            properties: {}
+            example:
+              resultcode: 0
+              resultmsg: ok
+              fee: 10
+              deliverfee: 10
+              couponfee: 0
+              tips: 0
+              insurancfee: 0
+              distance: 1000
+              waybill_id: '123456789'
+              order_status: 101
+              finish_code: 1024
+              pickup_code: 2048
+              dispatch_duration: 300

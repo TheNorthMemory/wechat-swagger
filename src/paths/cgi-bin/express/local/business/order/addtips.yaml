@@ -1,0 +1,32 @@
+post:
+  summary: 对待接单状态的订单增加小费
+  description: 需要注意：订单的小费，以最新一次加小费动作的金额为准，故下一次增加小费额必须大于上一次小费额[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.addTip.html)
+  security:
+    - accessToken: []
+  tags:
+    - 小程序∙即时配送∙小程序使用
+  parameters:
+    - in: body
+      name: body
+      schema:
+        allOf:
+          - type: object
+            properties: {}
+            example:
+              shopid: '123456'
+              shop_order_id: '123456'
+              waybill_id: '123456'
+              tips: 5
+              remark: gogogo
+              delivery_sign: '123456'
+              shop_no: shop_no_111
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - type: object
+            properties: {}
+            example:
+              resultcode: 0
+              resultmsg: ok

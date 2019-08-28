@@ -1,0 +1,45 @@
+post:
+  tags:
+    - 事件通知
+    - 小程序∙即时配送∙服务提供方使用
+  summary: 小程序/即时配送/服务提供方使用/并非真正发单，用来验证是否配送公司是否可以接单
+  description: '并非真正发单，用来验证是否配送公司是否可以接单，并在成功时返回时效、计价等信息，也可用来验证地址以及时间是否在配送范围内。注意：预下单和下单时候由于时间差或者配送公司策略问题，返回的运费可能不一致，如果配送公司返回delivery_token，商家真正下单时候带上delivery_token，配送公司需保证在这一段时间内运费不变[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-provider/immediateDelivery.onOrderConfirmReturn.html)'
+  consumes:
+    - application/xml
+    - application/json
+  produces:
+    - application/xml
+    - application/json
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [Event]
+            properties:
+              Event:
+                type: string
+                description: 事件类型
+                enum: [transport_precreate_order]
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [Event]
+            properties:
+              Event:
+                type: string
+                description: 事件类型
+                enum: [transport_precreate_order]
+              resultcode:
+                type: number
+                description: 错误码
+              resultmsg:
+                type: string
+                description: 错误描述

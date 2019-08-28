@@ -1,0 +1,31 @@
+post:
+  summary: 模拟配送公司更新配送单状态
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.mockUpdateOrder.html)'
+  security:
+    - accessToken: []
+  tags:
+    - 小程序∙即时配送∙小程序使用
+  parameters:
+    - in: body
+      name: body
+      schema:
+        allOf:
+          - type: object
+            properties: {}
+            example:
+              shopid: test_shop_id
+              shop_order_id: xxxxxxxxxxx
+              waybill_id: xxxxxxxxxxxxx
+              action_time: 12345678
+              order_status: 101
+              action_msg: ''
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - type: object
+            properties: {}
+            example:
+              resultcode: 0
+              resultmsg: ok

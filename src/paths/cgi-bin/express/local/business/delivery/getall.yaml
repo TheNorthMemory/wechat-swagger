@@ -1,0 +1,29 @@
+post:
+  summary: 获取已支持的配送公司列表
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.getAllImmeDelivery.html)'
+  security:
+    - accessToken: []
+  tags:
+    - 小程序∙即时配送∙小程序使用
+  parameters:
+    - in: body
+      name: body
+      schema:
+        allOf:
+          - type: object
+            properties: {}
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - type: object
+            properties: {}
+            example:
+              resultcode: 0
+              resultmsg: ok
+              list:
+                - delivery_id: SFTC
+                  delivery_name: 顺发同城
+                - delivery_id: MTPS
+                  delivery_name: 美团配送

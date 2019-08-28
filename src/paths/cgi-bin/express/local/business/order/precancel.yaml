@@ -1,0 +1,35 @@
+post:
+  summary: 预取消配送单
+  description: '在用户提交外卖订单时，商家可调用本接口查询配送公司是否可接单、预计多久接单、运费预估等。预估运费可作为展示给用户的运费参考值。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.preCancelOrder.html)'
+  security:
+    - accessToken: []
+  tags:
+    - 小程序∙即时配送∙小程序使用
+  parameters:
+    - in: body
+      name: body
+      schema:
+        allOf:
+          - type: object
+            properties: {}
+            example:
+              shopid: '123456'
+              shop_order_id: '123456'
+              waybill_id: '123456'
+              delivery_id: '123456'
+              cancel_reason_id: 1
+              cancel_reason: ''
+              delivery_sign: '123456'
+              shop_no: shop_no_111
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - type: object
+            properties: {}
+            example:
+              resultcode: 0
+              resultmsg: ok
+              deduct_fee: 5
+              desc: blabla

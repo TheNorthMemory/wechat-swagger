@@ -1,0 +1,76 @@
+post:
+  tags:
+    - 事件通知
+    - 小程序∙即时配送∙小程序使用
+  summary: 小程序/即时配送/小程序使用/配送单配送状态更新通知
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.onOrderStatus.html)'
+  consumes:
+    - application/xml
+    - application/json
+  produces:
+    - application/xml
+    - application/json
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [Event]
+            properties:
+              Event:
+                type: string
+                description: 事件类型
+                enum: [udate_waybill_status]
+              shopid:
+                type: string
+                description: 商家id， 由配送公司分配的appkey
+              shop_order_id:
+                type: string
+                description: 唯一标识订单的 ID，由商户生成
+              shop_no:
+                type: string
+                description: 商家门店编号， 在配送公司侧登记
+              waybill_id:
+                type: string
+                description: 配送单id
+              action_time:
+                type: number
+                description: Unix时间戳
+              order_status:
+                type: number
+                description: 配送状态，枚举值
+              action_msg:
+                type: string
+                description: 附加信息
+              agent:
+                type: object
+                description: 骑手信息
+                properties:
+                  name:
+                    type: string
+                    description: 骑手姓名
+                  phone:
+                    type: string
+                    description: 骑手电话
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [Event]
+            properties:
+              Event:
+                type: string
+                description: 事件类型
+                enum: [udate_waybill_status]
+              resultcode:
+                type: number
+                description: 错误码
+              resultmsg:
+                type: string
+                description: 错误描述

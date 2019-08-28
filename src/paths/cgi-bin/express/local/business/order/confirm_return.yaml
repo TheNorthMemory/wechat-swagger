@@ -1,0 +1,61 @@
+post:
+  summary: 异常件退回商家商家确认收货
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.abnormalConfirm.html)'
+  security:
+    - accessToken: []
+  tags:
+    - 小程序∙即时配送∙小程序使用
+  parameters:
+    - in: body
+      name: body
+      schema:
+        allOf:
+          - type: object
+            properties:
+              shopid:
+                type: string
+                description: 商家id， 由配送公司分配的appkey
+              shop_order_id:
+                type: string
+                description: 唯一标识订单的 ID，由商户生成
+              shop_no:
+                type: string
+                description: 商家门店编号， 在配送公司登记，如果只有一个门店，可以不填
+              delivery_sign:
+                type: string
+                description: 用配送公司提供的appSecret加密的校验串
+              waybill_id:
+                type: string
+                description: 配送单id
+              remark:
+                type: string
+                description: 备注
+            required:
+              - shopid
+              - shop_order_id
+              - shop_no
+              - delivery_sign
+              - waybill_id
+            example:
+              shopid: '123456'
+              shop_order_id: '123456'
+              shop_no: shop_no_111
+              waybill_id: '123456'
+              remark: remark
+              delivery_sign: '123456'
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - type: object
+            properties:
+              resultcode:
+                type: number
+                description: 订单ID，下单成功时返回
+              resultmsg:
+                type: string
+                description: 运单ID，下单成功时返回
+            example:
+              resultcode: 0
+              resultmsg: ok

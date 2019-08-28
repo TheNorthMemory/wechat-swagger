@@ -116,6 +116,8 @@ tags:
   - name: 小程序∙动态消息
   - name: 小程序∙物流助手∙小程序使用
   - name: 小程序∙物流助手∙服务提供方使用
+  - name: 小程序∙即时配送∙小程序使用
+  - name: 小程序∙即时配送∙服务提供方使用
   - name: 小程序∙插件
   - name: 小程序∙插件∙搜索∙购物单∙已购订单
   - name: 小程序∙插件∙搜索∙购物单∙想买清单
@@ -797,6 +799,58 @@ paths:
       responses:
         '200':
           description: ''
+  /_notify/event/CancelAuthAccount:
+    post:
+      tags:
+        - 事件通知
+        - 小程序∙即时配送∙服务提供方使用
+      summary: 小程序/即时配送/服务提供方使用/取消授权帐号
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-provider/immediateDelivery.onCancelAuth.html)'
+      consumes:
+        - application/xml
+        - application/json
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [cancel_auth_account]
+                  wx_appid:
+                    type: string
+                    description: 发起授权的商户小程序appid
+                  code:
+                    type: string
+                    description: 授权码
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [get_auth_info]
+                  resultcode:
+                    type: number
+                    description: 错误码
+                  resultmsg:
+                    type: string
+                    description: 错误描述
   /_notify/event/CancelWaybill:
     post:
       tags:
@@ -1349,6 +1403,104 @@ paths:
       responses:
         '200':
           description: ''
+  /_notify/event/GetAuthInfo:
+    post:
+      tags:
+        - 事件通知
+        - 小程序∙即时配送∙服务提供方使用
+      summary: 小程序/即时配送/服务提供方使用/使用授权码拉取授权信息
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-provider/immediateDelivery.onAgentPosQuery.html)'
+      consumes:
+        - application/xml
+        - application/json
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [get_auth_info]
+                  wx_appid:
+                    type: string
+                    description: 发起授权的商户小程序appid
+                  code:
+                    type: string
+                    description: 授权码
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [get_auth_info]
+                  resultcode:
+                    type: number
+                    description: 错误码
+                  resultmsg:
+                    type: string
+                    description: 错误描述
+  /_notify/event/GetPreAuthCode:
+    post:
+      tags:
+        - 事件通知
+        - 小程序∙即时配送∙服务提供方使用
+      summary: 小程序/即时配送/服务提供方使用/获取预授权码
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-provider/immediateDelivery.onPreAuthCodeGet.html)'
+      consumes:
+        - application/xml
+        - application/json
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [get_pre_auth_code]
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [get_pre_auth_code]
+                  resultcode:
+                    type: number
+                    description: 错误码
+                  resultmsg:
+                    type: string
+                    description: 错误描述
   /_notify/event/GetQuota:
     post:
       tags:
@@ -2596,6 +2748,490 @@ paths:
       responses:
         '200':
           description: ''
+  /_notify/event/TransportAddOrder:
+    post:
+      tags:
+        - 事件通知
+        - 小程序∙即时配送∙服务提供方使用
+      summary: 小程序/即时配送/服务提供方使用/真实发起下单任务
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-provider/immediateDelivery.onOrderAdd.html)'
+      consumes:
+        - application/xml
+        - application/json
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [transport_add_order]
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [transport_add_order]
+                  resultcode:
+                    type: number
+                    description: 错误码
+                  resultmsg:
+                    type: string
+                    description: 错误描述
+  /_notify/event/TransportAddTips:
+    post:
+      tags:
+        - 事件通知
+        - 小程序∙即时配送∙服务提供方使用
+      summary: 小程序/即时配送/服务提供方使用/对待接单状态的订单增加小费
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-provider/immediateDelivery.onOrderAddTips.html)'
+      consumes:
+        - application/xml
+        - application/json
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [transport_add_tips]
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [transport_add_tips]
+                  resultcode:
+                    type: number
+                    description: 错误码
+                  resultmsg:
+                    type: string
+                    description: 错误描述
+  /_notify/event/TransportCancelOrder:
+    post:
+      tags:
+        - 事件通知
+        - 小程序∙即时配送∙服务提供方使用
+      summary: 小程序/即时配送/服务提供方使用/取消订单操作
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-provider/immediateDelivery.onOrderCancel.html)'
+      consumes:
+        - application/xml
+        - application/json
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [transport_cancel_order]
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [transport_cancel_order]
+                  resultcode:
+                    type: number
+                    description: 错误码
+                  resultmsg:
+                    type: string
+                    description: 错误描述
+  /_notify/event/TransportConfirmReturnToBiz:
+    post:
+      tags:
+        - 事件通知
+        - 小程序∙即时配送∙服务提供方使用
+      summary: 小程序/即时配送/服务提供方使用/异常妥投商户收货确认
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-provider/immediateDelivery.onOrderConfirmReturn.html)'
+      consumes:
+        - application/xml
+        - application/json
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [transport_confirm_return_to_biz]
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [transport_confirm_return_to_biz]
+                  resultcode:
+                    type: number
+                    description: 错误码
+                  resultmsg:
+                    type: string
+                    description: 错误描述
+  /_notify/event/TransportGetAgentPos:
+    post:
+      tags:
+        - 事件通知
+        - 小程序∙即时配送∙服务提供方使用
+      summary: 小程序/即时配送/服务提供方使用/查询骑手当前位置信息
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-provider/immediateDelivery.onAgentPosQuery.html)'
+      consumes:
+        - application/xml
+        - application/json
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [transport_get_agent_pos]
+                  shopid:
+                    type: string
+                    description: 商家id， 由配送公司分配，可以是dev_id或者appkey
+                  shop_order_id:
+                    type: string
+                    description: 唯一标识订单的 ID，由商户生成
+                  shop_no:
+                    type: string
+                    description: 商家门店编号， 在配送公司侧登记
+                  waybill_id:
+                    type: string
+                    description: 配送单id
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [transport_get_agent_pos]
+                  resultcode:
+                    type: number
+                    description: 错误码
+                  resultmsg:
+                    type: string
+                    description: 错误描述
+                  lng:
+                    type: number
+                    description: 经度，火星坐标，精确到小数点后6位
+                  lat:
+                    type: number
+                    description: 纬度，火星坐标，精确到小数点后6位
+                  distance:
+                    type: number
+                    description: 和目的地距离，已取货配送中需返回，单位米
+                  reach_time:
+                    type: number
+                    description: 预计还剩多久送达时间, 单位秒， 已取货配送中需返回，比如5分钟后送达，填300
+  /_notify/event/TransportPrecancelOrder:
+    post:
+      tags:
+        - 事件通知
+        - 小程序∙即时配送∙服务提供方使用
+      summary: 小程序/即时配送/服务提供方使用/预取消订单操作
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-provider/immediateDelivery.onOrderPreCancel.html)'
+      consumes:
+        - application/xml
+        - application/json
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [transport_precancel_order]
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [transport_precancel_order]
+                  resultcode:
+                    type: number
+                    description: 错误码
+                  resultmsg:
+                    type: string
+                    description: 错误描述
+  /_notify/event/TransportPrecreateOrder:
+    post:
+      tags:
+        - 事件通知
+        - 小程序∙即时配送∙服务提供方使用
+      summary: 小程序/即时配送/服务提供方使用/并非真正发单，用来验证是否配送公司是否可以接单
+      description: '并非真正发单，用来验证是否配送公司是否可以接单，并在成功时返回时效、计价等信息，也可用来验证地址以及时间是否在配送范围内。注意：预下单和下单时候由于时间差或者配送公司策略问题，返回的运费可能不一致，如果配送公司返回delivery_token，商家真正下单时候带上delivery_token，配送公司需保证在这一段时间内运费不变[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-provider/immediateDelivery.onOrderConfirmReturn.html)'
+      consumes:
+        - application/xml
+        - application/json
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [transport_precreate_order]
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [transport_precreate_order]
+                  resultcode:
+                    type: number
+                    description: 错误码
+                  resultmsg:
+                    type: string
+                    description: 错误描述
+  /_notify/event/TransportQueryOrderStatus:
+    post:
+      tags:
+        - 事件通知
+        - 小程序∙即时配送∙服务提供方使用
+      summary: 小程序/即时配送/服务提供方使用/查询订单状态
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-provider/immediateDelivery.onOrderQuery.html)'
+      consumes:
+        - application/xml
+        - application/json
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [transport_query_order_status]
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [transport_query_order_status]
+                  resultcode:
+                    type: number
+                    description: 错误码
+                  resultmsg:
+                    type: string
+                    description: 错误描述
+  /_notify/event/TransportReaddOrder:
+    post:
+      tags:
+        - 事件通知
+        - 小程序∙即时配送∙服务提供方使用
+      summary: 小程序/即时配送/服务提供方使用/重新下单
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-provider/immediateDelivery.onOrderReAdd.html)'
+      consumes:
+        - application/xml
+        - application/json
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [transport_readd_order]
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [transport_readd_order]
+                  resultcode:
+                    type: number
+                    description: 错误码
+                  resultmsg:
+                    type: string
+                    description: 错误描述
+  /_notify/event/TransportSetRiderScore:
+    post:
+      tags:
+        - 事件通知
+        - 小程序∙即时配送∙服务提供方使用
+      summary: 小程序/即时配送/服务提供方使用/给骑手评分
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-provider/immediateDelivery.onRiderScoreSet.html)'
+      consumes:
+        - application/xml
+        - application/json
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [transport_set_rider_score]
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [transport_set_rider_score]
+                  resultcode:
+                    type: number
+                    description: 错误码
+                  resultmsg:
+                    type: string
+                    description: 错误描述
   /_notify/event/Unsubscribe:
     post:
       tags:
@@ -2664,6 +3300,83 @@ paths:
       responses:
         '200':
           description: ''
+  /_notify/event/UpdateWaybillStatus:
+    post:
+      tags:
+        - 事件通知
+        - 小程序∙即时配送∙小程序使用
+      summary: 小程序/即时配送/小程序使用/配送单配送状态更新通知
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.onOrderStatus.html)'
+      consumes:
+        - application/xml
+        - application/json
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: buffer
+          in: body
+          required: true
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [udate_waybill_status]
+                  shopid:
+                    type: string
+                    description: 商家id， 由配送公司分配的appkey
+                  shop_order_id:
+                    type: string
+                    description: 唯一标识订单的 ID，由商户生成
+                  shop_no:
+                    type: string
+                    description: 商家门店编号， 在配送公司侧登记
+                  waybill_id:
+                    type: string
+                    description: 配送单id
+                  action_time:
+                    type: number
+                    description: Unix时间戳
+                  order_status:
+                    type: number
+                    description: 配送状态，枚举值
+                  action_msg:
+                    type: string
+                    description: 附加信息
+                  agent:
+                    type: object
+                    description: 骑手信息
+                    properties:
+                      name:
+                        type: string
+                        description: 骑手姓名
+                      phone:
+                        type: string
+                        description: 骑手电话
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/notify.BaseEvent'
+              - type: object
+                required: [Event]
+                properties:
+                  Event:
+                    type: string
+                    description: 事件类型
+                    enum: [udate_waybill_status]
+                  resultcode:
+                    type: number
+                    description: 错误码
+                  resultmsg:
+                    type: string
+                    description: 错误描述
   /_notify/event/UserAuthorizeInvoice:
     post:
       tags:
@@ -12505,6 +13218,604 @@ paths:
               errmsg: openapi.logistics.previewTemplate:ok
               waybill_id: '12345678901234567890'
               rendered_waybill_template: PGh0bWw+dGVzdDwvaHRtbD4=
+  /cgi-bin/express/local/business/delivery/getall:
+    post:
+      summary: 获取已支持的配送公司列表
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.getAllImmeDelivery.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙即时配送∙小程序使用
+      parameters:
+        - in: body
+          name: body
+          schema:
+            allOf:
+              - type: object
+                properties: {}
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - type: object
+                properties: {}
+                example:
+                  resultcode: 0
+                  resultmsg: ok
+                  list:
+                    - delivery_id: SFTC
+                      delivery_name: 顺发同城
+                    - delivery_id: MTPS
+                      delivery_name: 美团配送
+  /cgi-bin/express/local/business/delivery/update_order:
+    post:
+      summary: 配送公司更新配送单状态
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-provider/immediateDelivery.updateOrder.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙即时配送∙服务提供方使用
+      parameters:
+        - in: body
+          name: body
+          schema:
+            allOf:
+              - type: object
+                properties: {}
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - type: object
+                properties: {}
+                example:
+                  resultcode: 0
+                  resultmsg: ok
+  /cgi-bin/express/local/business/order/add:
+    post:
+      summary: 下配送单
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.addOrder.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙即时配送∙小程序使用
+      parameters:
+        - in: body
+          name: body
+          schema:
+            allOf:
+              - type: object
+                properties: {}
+                example:
+                  cargo:
+                    cargo_first_class: 美食宵夜
+                    cargo_second_class: 零食小吃
+                    goods_detail:
+                      goods:
+                        - good_count: 1
+                          good_name: 水果
+                          good_price: 10
+                          good_unit: 元
+                        - good_count: 2
+                          good_name: 蔬菜
+                          good_price: 20
+                          good_unit: 元
+                    goods_height: 1
+                    goods_length: 3
+                    goods_value: 5
+                    goods_weight: 1
+                    goods_width: 2
+                  delivery_id: SFTC
+                  delivery_sign: 01234567890123456789
+                  openid: oABC123456
+                  order_info:
+                    delivery_service_code: ''
+                    expected_delivery_time: 0
+                    is_direct_delivery: 0
+                    is_finish_code_needed: 1
+                    is_insured: 0
+                    is_pickup_code_needed: 1
+                    note: test_note
+                    order_time: 1555220757
+                    order_type: 0
+                    poi_seq: '1111'
+                    tips: 0
+                  receiver:
+                    address: xxx地铁站
+                    address_detail: 2号楼202
+                    city: 北京市
+                    coordinate_type: 0
+                    lat: 40.15296
+                    lng: 116.50603
+                    name: 老王
+                    phone: '18512345678'
+                  sender:
+                    address: xx大厦
+                    address_detail: 1号楼101
+                    city: 北京市
+                    coordinate_type: 0
+                    lat: 40.448612
+                    lng: 116.383075
+                    name: 刘一
+                    phone: '13712345678'
+                  shop:
+                    goods_count: 2
+                    goods_name: 宝贝
+                    img_url: 'https://mmbiz.qpic.cn/mmbiz_png/xxxxxxxxx/0?wx_fmt=png'
+                    wxa_path: /page/index/index
+                  shop_no: '12345678'
+                  sub_biz_id: sub_biz_id_1
+                  shop_order_id: SFTC_001
+                  shopid: '122222222'
+                  delivery_token: xxxxxxxx
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - type: object
+                properties: {}
+                example:
+                  resultcode: 0
+                  resultmsg: ok
+                  fee: 10
+                  deliverfee: 10
+                  couponfee: 0
+                  tips: 0
+                  insurancfee: 0
+                  distance: 1000
+                  waybill_id: '123456789'
+                  order_status: 101
+                  finish_code: 1024
+                  pickup_code: 2048
+                  dispatch_duration: 300
+  /cgi-bin/express/local/business/order/addtips:
+    post:
+      summary: 对待接单状态的订单增加小费
+      description: 需要注意：订单的小费，以最新一次加小费动作的金额为准，故下一次增加小费额必须大于上一次小费额[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.addTip.html)
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙即时配送∙小程序使用
+      parameters:
+        - in: body
+          name: body
+          schema:
+            allOf:
+              - type: object
+                properties: {}
+                example:
+                  shopid: '123456'
+                  shop_order_id: '123456'
+                  waybill_id: '123456'
+                  tips: 5
+                  remark: gogogo
+                  delivery_sign: '123456'
+                  shop_no: shop_no_111
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - type: object
+                properties: {}
+                example:
+                  resultcode: 0
+                  resultmsg: ok
+  /cgi-bin/express/local/business/order/cancel:
+    post:
+      summary: 取消配送单
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.cancelOrder.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙即时配送∙小程序使用
+      parameters:
+        - in: body
+          name: body
+          schema:
+            allOf:
+              - type: object
+                properties: {}
+                example:
+                  shopid: '123456'
+                  shop_order_id: '123456'
+                  waybill_id: '123456'
+                  delivery_id: '123456'
+                  cancel_reason_id: 1
+                  cancel_reason: ''
+                  delivery_sign: '123456'
+                  shop_no: shop_no_111
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - type: object
+                properties: {}
+                example:
+                  resultcode: 0
+                  resultmsg: ok
+                  deduct_fee: 5
+                  desc: blabla
+  /cgi-bin/express/local/business/order/confirm_return:
+    post:
+      summary: 异常件退回商家商家确认收货
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.abnormalConfirm.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙即时配送∙小程序使用
+      parameters:
+        - in: body
+          name: body
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  shopid:
+                    type: string
+                    description: 商家id， 由配送公司分配的appkey
+                  shop_order_id:
+                    type: string
+                    description: 唯一标识订单的 ID，由商户生成
+                  shop_no:
+                    type: string
+                    description: 商家门店编号， 在配送公司登记，如果只有一个门店，可以不填
+                  delivery_sign:
+                    type: string
+                    description: 用配送公司提供的appSecret加密的校验串
+                  waybill_id:
+                    type: string
+                    description: 配送单id
+                  remark:
+                    type: string
+                    description: 备注
+                required:
+                  - shopid
+                  - shop_order_id
+                  - shop_no
+                  - delivery_sign
+                  - waybill_id
+                example:
+                  shopid: '123456'
+                  shop_order_id: '123456'
+                  shop_no: shop_no_111
+                  waybill_id: '123456'
+                  remark: remark
+                  delivery_sign: '123456'
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  resultcode:
+                    type: number
+                    description: 订单ID，下单成功时返回
+                  resultmsg:
+                    type: string
+                    description: 运单ID，下单成功时返回
+                example:
+                  resultcode: 0
+                  resultmsg: ok
+  /cgi-bin/express/local/business/order/get:
+    post:
+      summary: 拉取配送单信息
+      description: '商家可使用本接口查询某一配送单的配送状态，便于商家掌握配送情况。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.getOrder.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙即时配送∙小程序使用
+      parameters:
+        - in: body
+          name: body
+          schema:
+            allOf:
+              - type: object
+                properties: {}
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - type: object
+                properties: {}
+  /cgi-bin/express/local/business/order/pre_add:
+    post:
+      summary: 预下配送单
+      description: '在用户提交外卖订单时，商家可调用本接口查询配送公司是否可接单、预计多久接单、运费预估等。预估运费可作为展示给用户的运费参考值。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.preAddOrder.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙即时配送∙小程序使用
+      parameters:
+        - in: body
+          name: body
+          schema:
+            allOf:
+              - type: object
+                properties: {}
+                example:
+                  cargo:
+                    cargo_first_class: 美食宵夜
+                    cargo_second_class: 零食小吃
+                    goods_detail:
+                      goods:
+                        - good_count: 1
+                          good_name: 水果
+                          good_price: 10
+                          good_unit: 元
+                        - good_count: 2
+                          good_name: 蔬菜
+                          good_price: 20
+                          good_unit: 元
+                    goods_height: 1
+                    goods_length: 3
+                    goods_value: 5
+                    goods_weight: 1
+                    goods_width: 2
+                  delivery_id: SFTC
+                  delivery_sign: 01234567890123456789
+                  openid: oABC123456
+                  order_info:
+                    delivery_service_code: ''
+                    expected_delivery_time: 0
+                    is_direct_delivery: 0
+                    is_finish_code_needed: 1
+                    is_insured: 0
+                    is_pickup_code_needed: 1
+                    note: test_note
+                    order_time: 1555220757
+                    order_type: 0
+                    poi_seq: '1111'
+                    tips: 0
+                  receiver:
+                    address: xxx地铁站
+                    address_detail: 2号楼202
+                    city: 北京市
+                    coordinate_type: 0
+                    lat: 40.15296
+                    lng: 116.50603
+                    name: 老王
+                    phone: '18512345678'
+                  sender:
+                    address: xx大厦
+                    address_detail: 1号楼101
+                    city: 北京市
+                    coordinate_type: 0
+                    lat: 40.448612
+                    lng: 116.383075
+                    name: 刘一
+                    phone: '13712345678'
+                  shop:
+                    goods_count: 2
+                    goods_name: 宝贝
+                    img_url: 'https://mmbiz.qpic.cn/mmbiz_png/xxxxxxxxx/0?wx_fmt=png'
+                    wxa_path: /page/index/index
+                  shop_no: '12345678'
+                  sub_biz_id: sub_biz_id_1
+                  shop_order_id: SFTC_001
+                  shopid: '122222222'
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - type: object
+                properties: {}
+                example:
+                  resultcode: 0
+                  resultmsg: ok
+                  fee: 10
+                  deliverfee: 10
+                  couponfee: 0
+                  tips: 0
+                  insurancfee: 0
+                  distance: 1000
+                  dispatch_duration: 300
+                  delivery_token: '1111111'
+  /cgi-bin/express/local/business/order/precancel:
+    post:
+      summary: 预取消配送单
+      description: '在用户提交外卖订单时，商家可调用本接口查询配送公司是否可接单、预计多久接单、运费预估等。预估运费可作为展示给用户的运费参考值。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.preCancelOrder.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙即时配送∙小程序使用
+      parameters:
+        - in: body
+          name: body
+          schema:
+            allOf:
+              - type: object
+                properties: {}
+                example:
+                  shopid: '123456'
+                  shop_order_id: '123456'
+                  waybill_id: '123456'
+                  delivery_id: '123456'
+                  cancel_reason_id: 1
+                  cancel_reason: ''
+                  delivery_sign: '123456'
+                  shop_no: shop_no_111
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - type: object
+                properties: {}
+                example:
+                  resultcode: 0
+                  resultmsg: ok
+                  deduct_fee: 5
+                  desc: blabla
+  /cgi-bin/express/local/business/order/readd:
+    post:
+      summary: 重新下单
+      description: '在调用下配送单接口、订单被取消、过期或者投递异常的情况下，可调用此接口，重新下单，需要保持orderid一致。 备注：美团不支持重新下单接口，如果订单被取消商家需要重新下单，请修改orderid之后，调用下配送单接口下单。[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.reOrder.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙即时配送∙小程序使用
+      parameters:
+        - in: body
+          name: body
+          schema:
+            allOf:
+              - type: object
+                properties: {}
+                example:
+                  cargo:
+                    cargo_first_class: 美食宵夜
+                    cargo_second_class: 零食小吃
+                    goods_detail:
+                      goods:
+                        - good_count: 1
+                          good_name: 水果
+                          good_price: 10
+                          good_unit: 元
+                        - good_count: 2
+                          good_name: 蔬菜
+                          good_price: 20
+                          good_unit: 元
+                    goods_height: 1
+                    goods_length: 3
+                    goods_value: 5
+                    goods_weight: 1
+                    goods_width: 2
+                  delivery_id: SFTC
+                  delivery_sign: 01234567890123456789
+                  openid: oABC123456
+                  order_info:
+                    delivery_service_code: ''
+                    expected_delivery_time: 0
+                    is_direct_delivery: 0
+                    is_finish_code_needed: 1
+                    is_insured: 0
+                    is_pickup_code_needed: 1
+                    note: test_note
+                    order_time: 1555220757
+                    order_type: 0
+                    poi_seq: '1111'
+                    tips: 0
+                  receiver:
+                    address: xxx地铁站
+                    address_detail: 2号楼202
+                    city: 北京市
+                    coordinate_type: 0
+                    lat: 40.15296
+                    lng: 116.50603
+                    name: 老王
+                    phone: '18512345678'
+                  sender:
+                    address: xx大厦
+                    address_detail: 1号楼101
+                    city: 北京市
+                    coordinate_type: 0
+                    lat: 40.448612
+                    lng: 116.383075
+                    name: 刘一
+                    phone: '13712345678'
+                  shop:
+                    goods_count: 2
+                    goods_name: 宝贝
+                    img_url: 'https://mmbiz.qpic.cn/mmbiz_png/xxxxxxxxx/0?wx_fmt=png'
+                    wxa_path: /page/index/index
+                  shop_no: '12345678'
+                  sub_biz_id: sub_biz_id_1
+                  shop_order_id: SFTC_001
+                  shopid: '122222222'
+                  delivery_token: xxxxxxxx
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - type: object
+                properties: {}
+                example:
+                  resultcode: 0
+                  resultmsg: ok
+                  fee: 10
+                  deliverfee: 10
+                  couponfee: 0
+                  tips: 0
+                  insurancfee: 0
+                  distance: 1000
+                  waybill_id: '123456789'
+                  order_status: 101
+                  finish_code: 1024
+                  pickup_code: 2048
+                  dispatch_duration: 300
+  /cgi-bin/express/local/business/shop/get:
+    post:
+      summary: 拉取已绑定账号
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.getBindAccount.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙即时配送∙小程序使用
+      parameters:
+        - in: body
+          name: body
+          schema:
+            allOf:
+              - type: object
+                properties: {}
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - type: object
+                properties: {}
+                example:
+                  resultcode: 0
+                  resultmsg: ok
+                  shop_list:
+                    - delivery_id: SFTC
+                      shopid: '123456'
+                      audit_result: 0
+                    - delivery_id: MTPS
+                      shopid: '123456'
+                      audit_result: 0
+  /cgi-bin/express/local/business/test_update_order:
+    post:
+      summary: 模拟配送公司更新配送单状态
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.mockUpdateOrder.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙即时配送∙小程序使用
+      parameters:
+        - in: body
+          name: body
+          schema:
+            allOf:
+              - type: object
+                properties: {}
+                example:
+                  shopid: test_shop_id
+                  shop_order_id: xxxxxxxxxxx
+                  waybill_id: xxxxxxxxxxxxx
+                  action_time: 12345678
+                  order_status: 101
+                  action_msg: ''
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - type: object
+                properties: {}
+                example:
+                  resultcode: 0
+                  resultmsg: ok
   /cgi-bin/get_current_selfmenu_info:
     get:
       summary: 获取自定义配置

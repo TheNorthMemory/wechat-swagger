@@ -2,8 +2,11 @@
 
 An easy way to document/play/debug the wechat api using the swagger-ui.
 
-[![](https://img.shields.io/docker/cloud/automated/thenorthmemory/wechat-swagger.svg)](https://hub.docker.com/r/thenorthmemory/wechat-swagger)
-[![](https://img.shields.io/docker/pulls/thenorthmemory/wechat-swagger.svg)](https://hub.docker.com/r/thenorthmemory/wechat-swagger)
+[![](https://img.shields.io/docker/cloud/build/thenorthmemory/wechat-swagger.svg?logo=docker&label=&logoColor=fff)](https://hub.docker.com/r/thenorthmemory/wechat-swagger)
+[![](https://img.shields.io/microbadger/image-size/thenorthmemory/wechat-swagger.svg?logo=docker&label=&logoColor=fff)](https://hub.docker.com/r/thenorthmemory/wechat-swagger)
+[![](https://img.shields.io/docker/cloud/automated/thenorthmemory/wechat-swagger.svg?logo=docker&label=&logoColor=fff)](https://hub.docker.com/r/thenorthmemory/wechat-swagger)
+[![](https://img.shields.io/docker/pulls/thenorthmemory/wechat-swagger.svg?logo=docker&label=&logoColor=fff)](https://hub.docker.com/r/thenorthmemory/wechat-swagger)
+[![](https://img.shields.io/github/license/thenorthmemory/wechat-swagger.svg?logo=github&label=&logoColor=fff)](https://github.com/thenorthmemory/wechat-swagger)
 
 ## usage
 

@@ -3,8 +3,11 @@
 基于 `Swagger 2.0` 版本的微信服务端接口文档及工具，配合 `swagger-ui` 可作为本地开发者调试工具。
 
 
-[![](https://img.shields.io/docker/cloud/automated/thenorthmemory/wechat-swagger.svg)](https://hub.docker.com/r/thenorthmemory/wechat-swagger)
-[![](https://img.shields.io/docker/pulls/thenorthmemory/wechat-swagger.svg)](https://hub.docker.com/r/thenorthmemory/wechat-swagger)
+[![](https://img.shields.io/docker/cloud/build/thenorthmemory/wechat-swagger.svg?logo=docker&label=&logoColor=fff)](https://hub.docker.com/r/thenorthmemory/wechat-swagger)
+[![](https://img.shields.io/microbadger/image-size/thenorthmemory/wechat-swagger.svg?logo=docker&label=&logoColor=fff)](https://hub.docker.com/r/thenorthmemory/wechat-swagger)
+[![](https://img.shields.io/docker/cloud/automated/thenorthmemory/wechat-swagger.svg?logo=docker&label=&logoColor=fff)](https://hub.docker.com/r/thenorthmemory/wechat-swagger)
+[![](https://img.shields.io/docker/pulls/thenorthmemory/wechat-swagger.svg?logo=docker&label=&logoColor=fff)](https://hub.docker.com/r/thenorthmemory/wechat-swagger)
+[![](https://img.shields.io/github/license/thenorthmemory/wechat-swagger.svg?logo=github&label=&logoColor=fff)](https://github.com/thenorthmemory/wechat-swagger)
 
 ## 说明
 

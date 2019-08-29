@@ -1,0 +1,61 @@
+post:
+  tags:
+    - 事件通知
+    - 开放平台∙第三方平台∙代小程序
+  summary: 开放平台/第三方平台/代小程序/快速创建小程序注册审核事件
+  description: '可以使用接口请求的企业名称、企业代码、法人微信、法人姓名四个字段作为每次任务的唯一标示，来区别每次任务。[官方文档](https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/Fast_Registration_Interface_document.html)'
+  consumes:
+    - application/xml
+  produces:
+    - text/plain
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        allOf:
+          - $ref: '#/definitions/notify.BaseInform'
+          - type: object
+            required: [InfoType]
+            properties:
+              InfoType:
+                type: string
+                description: 事件类型
+                enum: [notify_third_fasteregister]
+              appid:
+                type: string
+                description: 创建小程序appid
+              status:
+                type: number
+                description: 认证失败的原因
+                enum: [0,100001,100002,100003,101,102,103,104,105,1000,1001,1002,1003,1004,1005,1006,1007,1008,-1]
+              auth_code:
+                type: string
+                description: 第三方授权码
+              msg:
+                type: string
+              info:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: 企业名（需与工商部门登记信息一致）
+                  code:
+                    type: string
+                    description: 企业代码
+                  code_type:
+                    type: number
+                    description: 企业代码类型 1：统一社会信用代码（18 位） 2：组织机构代码（9 位 xxxxxxxx-x） 3：营业执照注册号(15 位)
+                    enum: [1, 2, 3]
+                  legal_persona_wechat:
+                    type: string
+                    description: 法人微信号
+                  legal_persona_name:
+                    type: string
+                    description: 法人姓名
+                  component_phone:
+                    type: string
+                    description: 第三方联系电话
+  responses:
+    '200':
+      description: ''

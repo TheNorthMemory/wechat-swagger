@@ -1,0 +1,39 @@
+post:
+  tags:
+    - 事件通知
+    - 开放平台∙第三方平台∙代小程序
+  summary: 开放平台/第三方平台/代小程序/快速创建小程序创建成功后通知事件
+  description: '[社区文档](https://developers.weixin.qq.com/community/develop/doc/000aa05b39cc78443b099d9e75bc00)'
+  consumes:
+    - application/xml
+  produces:
+    - text/plain
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        allOf:
+          - $ref: '#/definitions/notify.BaseInform'
+          - type: object
+            required: [InfoType, AuthorizerAppid, AuthorizationCode, AuthorizationCodeExpiredTime, PreAuthCode]
+            properties:
+              InfoType:
+                type: string
+                description: 事件类型
+                enum: [authorized]
+              AuthorizerAppid:
+                type: string
+                description: 公众号appid
+              AuthorizationCode:
+                type: string
+                description: 授权码
+              AuthorizationCodeExpiredTime:
+                type: number
+                description: 过期时间
+              PreAuthCode:
+                type: string
+                description: 预授权码
+  responses:
+    '200':
+      description: ''

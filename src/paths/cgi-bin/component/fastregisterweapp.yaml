@@ -1,0 +1,46 @@
+post:
+  summary: 快速创建/查询创建任务状态
+  description: create=创建小程序,search=查询创建任务状态 [官方文档](https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/Fast_Registration_Interface_document.html)
+  security:
+    - componentAccessToken: []
+  tags:
+    - 开放平台∙第三方平台∙代小程序
+  parameters:
+    - name: action
+      in: query
+      type: string
+      required: true
+      description: create=创建小程序,search=查询创建任务状态
+      enum:
+        - create
+        - search
+    - in: body
+      name: body
+      schema:
+        type: object
+        properties:
+          name:
+            type: string
+            description: 企业名（需与工商部门登记信息一致）
+          code:
+            type: string
+            description: 企业代码
+          code_type:
+            type: number
+            description: 企业代码类型 1：统一社会信用代码（18 位） 2：组织机构代码（9 位 xxxxxxxx-x） 3：营业执照注册号(15 位)
+            enum: [1, 2, 3]
+          legal_persona_wechat:
+            type: string
+            description: 法人微信号
+          legal_persona_name:
+            type: string
+            description: 法人姓名
+          component_phone:
+            type: string
+            description: 第三方联系电话
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'

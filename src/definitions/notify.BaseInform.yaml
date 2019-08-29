@@ -1,0 +1,14 @@
+type: object
+xml:
+  name: xml
+required: [AppId, CreateTime]
+properties:
+  AppId:
+    type: string
+    description: 开发者微信号
+  CreateTime:
+    type: number
+    description: 消息创建时间 （整型）
+example:
+  AppId: 第三方平台appid
+  CreateTime: 1413192760

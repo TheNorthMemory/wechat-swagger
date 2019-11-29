@@ -1,0 +1,37 @@
+post:
+  summary: 拉取粉丝对应的导购
+  security:
+    - accessToken: []
+  tags:
+    - 导购助手∙粉丝管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        required:
+          - openid
+        properties:
+          openid:
+            type: string
+            description: 粉丝openid
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              guide_account:
+                type: string
+                description: 导购微信号
+              buyer_nickname:
+                type: string
+                description: 粉丝昵称
+              openid:
+                type: string
+                description: 粉丝openid
+              create_time:
+                type: integer
+                format: int32

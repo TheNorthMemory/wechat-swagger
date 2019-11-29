@@ -1,0 +1,33 @@
+post:
+  summary: 拉取账号相关属性（敏感词等）
+  security:
+    - accessToken: []
+  tags:
+    - 导购助手∙账号属性设置
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        required:
+          - is_delete
+        properties: {}
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              black_keyword:
+                type: object
+                properties:
+                  values:
+                    type: array
+                    items:
+                      type: string
+                      description: 敏感词
+                  updatetime:
+                    type: integer
+                    format: int32

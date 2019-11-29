@@ -1,0 +1,54 @@
+post:
+  summary: 查询文字素材
+  security:
+    - accessToken: []
+  tags:
+    - 导购助手∙公司素材库
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        required:
+          - guide_account
+          - type
+          - start
+          - num
+        properties:
+          guide_account:
+            type: string
+            description: 导购微信号
+          type:
+            type: integer
+            format: int32
+            description: 操作类型，0表示公司素材， 1表示导购素材
+            enum: [0, 1]
+          start:
+            type: integer
+            format: int32
+            description: 起始位置
+          num:
+            type: integer
+            format: int32
+            description: 查询个数
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              total_num:
+                type: integer
+                format: int32
+              word_list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    word:
+                      type: string
+                    create_time:
+                      type: integer
+                      format: int32

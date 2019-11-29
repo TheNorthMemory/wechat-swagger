@@ -1,0 +1,45 @@
+post:
+  summary: 添加小程序卡片素材
+  security:
+    - accessToken: []
+  tags:
+    - 导购助手∙公司素材库
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        required:
+          - guide_account
+          - type
+          - media_id
+          - title
+          - path
+          - appid
+        properties:
+          guide_account:
+            type: string
+            description: 导购微信号
+          type:
+            type: integer
+            format: int32
+            description: 操作类型，0表示公司素材， 1表示导购素材
+            enum: [0, 1]
+          media_id:
+            type: string
+            description: 图片素材
+          title:
+            type: string
+            description: 卡片名字
+          path:
+            type: string
+            description: 小程序路径
+          appid:
+            type: string
+            description: 小程序appid
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'

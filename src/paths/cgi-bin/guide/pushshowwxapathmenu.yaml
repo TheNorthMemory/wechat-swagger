@@ -1,0 +1,27 @@
+post:
+  summary: 复制小程序页面路径开关
+  security:
+    - accessToken: []
+  tags:
+    - 导购助手∙导购管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        required:
+          - wxa_appid
+          - wx_username
+        properties:
+          wxa_appid:
+            type: string
+            description: 小程序appid
+          wx_username:
+            type: string
+            description: 微信号
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'

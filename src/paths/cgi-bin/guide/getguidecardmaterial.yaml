@@ -1,0 +1,49 @@
+post:
+  summary: 查询小程序卡片素材
+  security:
+    - accessToken: []
+  tags:
+    - 导购助手∙公司素材库
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        required:
+          - guide_account
+          - type
+        properties:
+          guide_account:
+            type: string
+            description: 导购微信号
+          type:
+            type: integer
+            format: int32
+            description: 操作类型，0表示公司素材， 1表示导购素材
+            enum: [0, 1]
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              total_num:
+                type: integer
+                format: int32
+              card_list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    appid:
+                      type: string
+                    path:
+                      type: string
+                    picurl:
+                      type: string
+                    master_id:
+                      type: string
+                    slave_id:
+                      type: string

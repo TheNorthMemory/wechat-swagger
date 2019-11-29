@@ -1,0 +1,52 @@
+post:
+  summary: 拉取粉丝导购关系对列表
+  security:
+    - accessToken: []
+  tags:
+    - 导购助手∙粉丝管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        required:
+          - guide_account
+          - page
+          - num
+        properties:
+          guide_account:
+            type: string
+            description: 导购微信号
+          page:
+            type: integer
+            format: int32
+            description: 分页页数，从0开始
+          num:
+            type: integer
+            format: int32
+            description: 每页数量
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              total_num:
+                type: integer
+                format: int32
+              list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    buyer_nickname:
+                      type: string
+                      description: 粉丝昵称
+                    openid:
+                      type: string
+                      description: 粉丝openid
+                    create_time:
+                      type: integer
+                      format: int32

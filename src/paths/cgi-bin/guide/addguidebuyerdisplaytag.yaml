@@ -1,0 +1,33 @@
+post:
+  summary: 设置展示标签信息
+  security:
+    - accessToken: []
+  tags:
+    - 导购助手∙标签管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        required:
+          - guide_account
+          - openid
+          - display_tag_list
+        properties:
+          guide_account:
+            type: string
+            description: 导购微信号
+          openid:
+            type: string
+            description: 粉丝openid
+          display_tag_list:
+            type: array
+            items:
+              type: string
+              description: 展示标签值，全量更新，每次传全量的信息。
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'

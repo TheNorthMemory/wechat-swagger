@@ -1,0 +1,42 @@
+post:
+  summary: 设置导购相关属性（敏感词等）
+  security:
+    - accessToken: []
+  tags:
+    - 导购助手∙账号属性设置
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        required:
+          - guide_account
+          - is_delete
+        properties:
+          guide_account:
+            type: string
+            description: 导购微信号
+          is_delete:
+            type: boolean
+            description: 操作类型，false表示添加 true表示删除
+            enum: [false, true]
+          guide_fast_reply_list:
+            type: array
+            items:
+              type: object
+              properties:
+                content:
+                  type: string
+                  description: 快捷回复内容
+          guide_auto_reply:
+            type: object
+            properties:
+              content:
+                type: string
+                description: 自动回复内容
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'

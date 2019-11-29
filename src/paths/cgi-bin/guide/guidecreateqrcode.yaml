@@ -1,0 +1,28 @@
+post:
+  summary: 生成导购二维码
+  security:
+    - accessToken: []
+  tags:
+    - 导购助手∙导购管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        required:
+          - guide_account
+        properties:
+          guide_account:
+            type: string
+            description: 导购微信号
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              qrcode_url:
+                type: string
+                format: url

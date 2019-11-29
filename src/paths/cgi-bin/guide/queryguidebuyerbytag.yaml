@@ -1,0 +1,40 @@
+post:
+  summary: 根据标签值筛选粉丝
+  security:
+    - accessToken: []
+  tags:
+    - 导购助手∙标签管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        required:
+          - guide_account
+        properties:
+          guide_account:
+            type: string
+            description: 导购微信号
+          push_count:
+            type: integer
+            format: int32
+            enum: [0, 1, 2, 3, 4]
+            description: 已推送次数
+          tag_values:
+            type: array
+            items:
+              type: string
+              description: 标签值(该值必须在可选标签值集合中)
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              openid_list:
+                type: array
+                items:
+                  type: string
+                  description: 粉丝openid

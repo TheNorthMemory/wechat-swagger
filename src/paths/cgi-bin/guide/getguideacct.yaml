@@ -1,0 +1,37 @@
+post:
+  summary: 拉取单个导购
+  security:
+    - accessToken: []
+  tags:
+    - 导购助手∙导购管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        required:
+          - guide_account
+        properties:
+          guide_account:
+            type: string
+            description: 导购微信号
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              guide_account:
+                type: string
+                description: 导购微信号
+              guide_headimgurl:
+                type: string
+                description: 导购头像
+              guide_nickname:
+                type: string
+                description: 导购昵称
+              create_time:
+                type: integer
+                format: int32

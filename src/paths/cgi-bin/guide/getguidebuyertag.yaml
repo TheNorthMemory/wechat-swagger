@@ -1,0 +1,34 @@
+post:
+  summary: 查询粉丝标签
+  security:
+    - accessToken: []
+  tags:
+    - 导购助手∙标签管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        required:
+          - guide_account
+          - openid
+        properties:
+          guide_account:
+            type: string
+            description: 导购微信号
+          openid:
+            type: string
+            description: 粉丝openid
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              openid_list:
+                type: array
+                items:
+                  type: string
+                  description: 粉丝openid

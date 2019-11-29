@@ -1,0 +1,51 @@
+post:
+  summary: 拉取导购列表
+  security:
+    - accessToken: []
+  tags:
+    - 导购助手∙导购管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        required:
+          - page
+          - num
+        properties:
+          page:
+            type: integer
+            format: int32
+            description: 分页页数，从0开始
+          num:
+            type: integer
+            format: int32
+            description: 每页数量
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              total_num:
+                type: integer
+                format: int32
+              list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    guide_account:
+                      type: string
+                      description: 导购微信号
+                    guide_headimgurl:
+                      type: string
+                      description: 导购头像
+                    guide_nickname:
+                      type: string
+                      description: 导购昵称
+                    create_time:
+                      type: integer
+                      format: int32

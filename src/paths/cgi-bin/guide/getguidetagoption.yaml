@@ -1,0 +1,44 @@
+post:
+  summary: 查询标签可选值
+  security:
+    - accessToken: []
+  tags:
+    - 导购助手∙标签管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        required:
+          - guide_account
+        properties:
+          guide_account:
+            type: string
+            description: 导购微信号
+          tag_name:
+            type: string
+            description: 标签名字
+          tag_values:
+            type: array
+            items:
+              type: string
+              description: 标签可选值，不同标签类型的之间的可选值不允许相同。请避免直接只用“是/否”这样的标签值，可以带上更详细的信息“是xxx/否xxx”
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              options:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    tag_name:
+                      type: string
+                    tag_values:
+                      type: array
+                      items:
+                        type: string

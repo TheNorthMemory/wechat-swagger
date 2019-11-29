@@ -1,0 +1,36 @@
+post:
+  summary: 查询标签信息
+  security:
+    - accessToken: []
+  tags:
+    - 导购助手∙标签管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        required:
+          - guide_account
+        properties:
+          guide_account:
+            type: string
+            description: 导购微信号
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              tag_infos:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    tag_name:
+                      type: string
+                    tag_values:
+                      type: array
+                      items:
+                        type: string

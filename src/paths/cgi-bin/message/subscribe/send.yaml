@@ -43,7 +43,6 @@ post:
               value: TIT创意园
             site02:
               value: 广州市新港中路397号
-
   responses:
     '200':
       description: ''

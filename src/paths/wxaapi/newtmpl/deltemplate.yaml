@@ -10,7 +10,7 @@ post:
   parameters:
     - name: priTmplId
       in: formData
-      type: number
+      type: string
       required: true
       description: 要删除的模板id
   responses:

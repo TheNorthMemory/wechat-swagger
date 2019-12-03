@@ -1,0 +1,36 @@
+post:
+  summary: 组合模板并添加至帐号下的个人模板库
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.addTemplate.html)'
+  security:
+    - accessToken: []
+  tags:
+    - 小程序∙订阅消息
+  consumes:
+    - application/x-www-form-urlencoded
+  parameters:
+    - name: tid
+      in: formData
+      type: number
+      required: true
+      description: 模板标题 id，可通过接口获取
+    - name: kidList
+      in: formData
+      type: array
+      required: true
+      collectionFormat: multi
+      items:
+        type: number
+    - name: sceneDesc
+      in: formData
+      type: string
+      allowEmptyValue: true
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              priTmplId:
+                type: string

@@ -1,0 +1,55 @@
+get:
+  summary: 获取帐号所属类目下的公共模板标题
+  description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.getTemplateList.html)'
+  security:
+    - accessToken: []
+  tags:
+    - 小程序∙订阅消息
+  parameters:
+    - name: ids
+      in: query
+      type: array
+      items:
+        type: integer
+        format: int32
+      required: true
+      description: 类目 id，多个用逗号隔开
+    - name: start
+      in: query
+      type: integer
+      format: int32
+      required: true
+    - name: limit
+      in: query
+      type: integer
+      format: int32
+      required: true
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              count:
+                type: number
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    tid:
+                      type: integer
+                      format: int32
+                    title:
+                      type: string
+                    type:
+                      type: integer
+                      format: int32
+                      enum: [2, 3]
+                      description: 模版类型，2 为一次性订阅，3 为长期订阅
+                    categoryId:
+                      type: integer
+                      format: int32
+                      description: 模版所属类目 id

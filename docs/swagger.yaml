@@ -119,6 +119,7 @@ tags:
   - name: 小程序∙统一服务消息
   - name: 小程序∙模版消息
   - name: 小程序∙动态消息
+  - name: 小程序∙订阅消息
   - name: 小程序∙物流助手∙小程序使用
   - name: 小程序∙物流助手∙服务提供方使用
   - name: 小程序∙即时配送∙小程序使用
@@ -16707,6 +16708,58 @@ paths:
           description: ''
           schema:
             $ref: '#/definitions/base.ResponseBo'
+  /cgi-bin/message/subscribe/send:
+    post:
+      summary: 获取当前帐号下的个人模板列表
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.send.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙订阅消息
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              touser:
+                type: string
+                description: 接收者openid
+              template_id:
+                type: string
+                description: 所需下发的模板消息的id
+              page:
+                type: string
+                description: 点击模板卡片后的跳转页面，仅限本小程序内的页面。支持带参数,（示例index?foo=bar）。该字段不填则模板无跳转。
+              data:
+                type: object
+                description: 模板数据
+                additionalProperties:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                      description: 模版数据值
+            example:
+              touser: OPENID
+              template_id: TEMPLATE_ID
+              page: index
+              data:
+                number01:
+                  value: '339208499'
+                date01:
+                  value: 2015年01月05日
+                site01:
+                  value: TIT创意园
+                site02:
+                  value: 广州市新港中路397号
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
   /cgi-bin/message/wxopen/activityid/create:
     get:
       summary: 创建被分享动态消息的 activity_id
@@ -34611,6 +34664,215 @@ paths:
                         type: integer
                         format: int32
                         description: 审核单id
+  /wxaapi/newtmpl/addtemplate:
+    post:
+      summary: 组合模板并添加至帐号下的个人模板库
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.addTemplate.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙订阅消息
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - name: tid
+          in: formData
+          type: number
+          required: true
+          description: 模板标题 id，可通过接口获取
+        - name: kidList
+          in: formData
+          type: array
+          required: true
+          collectionFormat: multi
+          items:
+            type: number
+        - name: sceneDesc
+          in: formData
+          type: string
+          allowEmptyValue: true
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  priTmplId:
+                    type: string
+  /wxaapi/newtmpl/deltemplate:
+    post:
+      summary: 删除帐号下的个人模板
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.deleteTemplate.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙订阅消息
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - name: priTmplId
+          in: formData
+          type: string
+          required: true
+          description: 要删除的模板id
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+  /wxaapi/newtmpl/getcategory:
+    get:
+      summary: 获取小程序账号的类目
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.getCategory.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙订阅消息
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        name:
+                          type: string
+  /wxaapi/newtmpl/getpubtemplatekeywords:
+    get:
+      summary: 获取模板标题下的关键词列表
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.getPubTemplateKeyWordsById.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙订阅消息
+      parameters:
+        - name: tid
+          in: query
+          type: number
+          required: true
+          description: 模板标题 id，可通过接口获取
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        kid:
+                          type: number
+                        name:
+                          type: string
+                        example:
+                          type: string
+                        rule:
+                          type: string
+  /wxaapi/newtmpl/getpubtemplatetitles:
+    get:
+      summary: 获取帐号所属类目下的公共模板标题
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.getTemplateList.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙订阅消息
+      parameters:
+        - name: ids
+          in: query
+          type: array
+          items:
+            type: integer
+            format: int32
+          required: true
+          description: 类目 id，多个用逗号隔开
+        - name: start
+          in: query
+          type: integer
+          format: int32
+          required: true
+        - name: limit
+          in: query
+          type: integer
+          format: int32
+          required: true
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  count:
+                    type: number
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        tid:
+                          type: integer
+                          format: int32
+                        title:
+                          type: string
+                        type:
+                          type: integer
+                          format: int32
+                          enum: [2, 3]
+                          description: 模版类型，2 为一次性订阅，3 为长期订阅
+                        categoryId:
+                          type: integer
+                          format: int32
+                          description: 模版所属类目 id
+  /wxaapi/newtmpl/gettemplate:
+    get:
+      summary: 获取当前帐号下的个人模板列表
+      description: '[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.getTemplateList.html)'
+      security:
+        - accessToken: []
+      tags:
+        - 小程序∙订阅消息
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/base.ResponseBo'
+              - type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        priTmplId:
+                          type: string
+                        title:
+                          type: string
+                        content:
+                          type: string
+                        example:
+                          type: string
+                        type:
+                          type: number
+                          enum: [2, 3]
 definitions:
   base.ArticleItemBo:
     type: object

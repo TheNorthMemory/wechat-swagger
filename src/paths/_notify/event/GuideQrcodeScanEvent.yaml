@@ -1,0 +1,36 @@
+post:
+  tags:
+    - 事件通知
+    - 导购助手∙粉丝管理
+  summary: 粉丝扫码后会触发的事件推送
+  consumes:
+    - application/xml
+  produces:
+    - text/plain
+  parameters:
+    - name: buffer
+      in: body
+      required: true
+      schema:
+        allOf:
+          - $ref: '#/definitions/notify.BaseEvent'
+          - type: object
+            required: [Event, qrcode_guide_account, openid, action]
+            properties:
+              Event:
+                type: string
+                description: 事件类型
+                enum: [guide_qrcode_scan_event]
+              qrcode_guide_account:
+                type: string
+                description: 二维码中的导购微信号
+              openid:
+                type: string
+                description: 扫码用户openid
+              action:
+                type: string
+                enum: [1, 2, 3, 4]
+                description: 1=表示当前二维码里的人不是导购 2=表示绑定导购 3=表示之前已经绑定该导购 4=表示已经被其他导购绑定
+  responses:
+    '200':
+      description: ''

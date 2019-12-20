@@ -1,0 +1,67 @@
+post:
+  summary: 导购聊天记录获取
+  security:
+    - accessToken: []
+  tags:
+    - 导购助手∙导购管理
+  parameters:
+    - in: body
+      name: body
+      schema:
+        type: object
+        required:
+          - guide_account
+        properties:
+          guide_account:
+            type: string
+            description: 导购微信号
+          openid:
+            type: string
+            description: 粉丝openid，如果拉取该导购所有粉丝的聊天记录，则不填。如果拉取导购与某一个粉丝的聊天记录，则需要填写
+          begin_time:
+            type: number
+            description: 消息起始时间戳(unix时间戳)
+          end_time:
+            type: number
+            description: 消息截止时间戳(unix时间戳)
+          page:
+            type: number
+            description: 分页页数
+          num:
+            type: number
+            description: 每页数量
+  responses:
+    '200':
+      description: ''
+      schema:
+        allOf:
+          - $ref: '#/definitions/base.ResponseBo'
+          - type: object
+            properties:
+              total_num:
+                type: number
+              msg_list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    guide_account:
+                      type: string
+                      description: 导购微信号
+                    openid:
+                      type: string
+                      description: 粉丝openid
+                    create_time:
+                      type: number
+                    content:
+                      type: string
+                    content_type:
+                      type: integer
+                      format: int32
+                      enum: [1,3]
+                      description: 1 表示文字类型消息；3 表示图片类型消息
+                    direction:
+                      type: integer
+                      format: int32
+                      enum: [1,2]
+                      description: 1=表示导购给用户发送；2=表示用户给导购发送

@@ -31,6 +31,9 @@ post:
                 type: string
                 enum: [1, 2, 3, 4]
                 description: 1=表示当前二维码里的人不是导购 2=表示绑定导购 3=表示之前已经绑定该导购 4=表示已经被其他导购绑定
+              qrcode_info:
+                type: string
+                description: 这是生成二维码的时候的qrcode_info，用于业务做关联
   responses:
     '200':
       description: ''

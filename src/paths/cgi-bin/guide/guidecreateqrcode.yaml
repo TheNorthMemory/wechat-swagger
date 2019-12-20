@@ -15,6 +15,9 @@ post:
           guide_account:
             type: string
             description: 导购微信号
+          qrcode_info:
+            type: string
+            description: 额外参数
   responses:
     '200':
       description: ''
